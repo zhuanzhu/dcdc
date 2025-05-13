@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.order.dao.write.SoReturnConfigWriteDAO">
+	<insert id="insert" parameterType="com.egeo.components.order.po.SoReturnConfigPO">
+		INSERT INTO so_return_config(
+        <trim suffixOverrides=",">
+			<if test="returnDays != null">
+				return_days,
+			</if>
+			<if test="replacementDays != null">
+				replacement_days,
+			</if>
+			<if test="platformId != null">
+				platform_id,
+			</if>
+			<if test="replacementType != null">
+				replacement_type,
+			</if>
+			<if test="returnType != null">
+				return_type,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+        </trim>		
+		) VALUES (
+        <trim suffixOverrides=",">
+			<if test="returnDays != null">
+				#{returnDays},
+			</if>
+			<if test="replacementDays != null">
+				#{replacementDays},
+			</if>
+			<if test="platformId != null">
+				#{platformId},
+			</if>
+			<if test="replacementType != null">
+				#{replacementType},
+			</if>
+			<if test="returnType != null">
+				#{returnType},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+        </trim>		
+		)
+		<selectKey keyProperty="id" resultType="java.lang.Long">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+
+	
+	
+	<update id="update">
+	UPDATE so_return_config 
+		<set>
+			<if test="returnDays != null">
+				return_days = #{returnDays},
+			</if>			
+			<if test="replacementDays != null">
+				replacement_days = #{replacementDays},
+			</if>			
+			<if test="platformId != null">
+				platform_id = #{platformId},
+			</if>			
+			<if test="replacementType != null">
+				replacement_type = #{replacementType},
+			</if>			
+			<if test="returnType != null">
+				return_type = #{returnType},
+			</if>			
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>			
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>			
+		</set>
+			WHERE id = #{id}
+	</update>	
+	
+
+	<delete id="delete">
+		delete from so_return_config where id = #{id}
+	</delete>
+
+	<delete id="deleteByPara">
+		delete from so_return_config 
+		<where>
+			<if test="returnDays != null">
+				and return_days = #{returnDays}
+			</if>
+			<if test="replacementDays != null">
+				and replacement_days = #{replacementDays}
+			</if>
+			<if test="platformId != null">
+				and platform_id = #{platformId}
+			</if>
+			<if test="replacementType != null">
+				and replacement_type = #{replacementType}
+			</if>
+			<if test="returnType != null">
+				and return_type = #{returnType}
+			</if>
+			<if test="updateTime != null">
+				and update_time = #{updateTime}
+			</if>
+			<if test="createTime != null">
+				and create_time = #{createTime}
+			</if>
+		</where>
+	</delete>
+
+
+</mapper>
+	

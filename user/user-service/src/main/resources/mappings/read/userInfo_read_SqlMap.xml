@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.user.dao.read.UserInfoReadDAO">
+	<resultMap type="com.egeo.components.user.po.UserInfoPO" id="userInfoMap">
+		<result property="id" column="id" />
+		<result property="userId" column="user_id" />
+		<result property="infoId" column="info_id" />
+		<result property="isRead" column="is_read" />
+		<result property="isDeleted" column="is_deleted" />
+		<result property="platformId" column="platform_id" />
+	</resultMap>
+
+	<sql id="userInfoColumns">
+		id,
+		user_id,
+		info_id,
+		is_read,
+		is_deleted,
+		platform_id
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.user.po.UserInfoPO" resultMap="userInfoMap">
+		SELECT
+		<include refid="userInfoColumns" />
+		FROM u_user_info
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="userInfoMap">
+		SELECT
+		<include refid="userInfoColumns" />
+		FROM u_user_info
+		<where>
+			<if test="po.userId != null">
+				and user_id = #{po.userId}
+			</if>
+			<if test="po.infoId != null">
+				and info_id = #{po.infoId}
+			</if>
+			<if test="po.isRead != null">
+				and is_read = #{po.isRead}
+			</if>
+			<if test="po.isDeleted != null">
+				and is_deleted = #{po.isDeleted}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY create_time desc
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM u_user_info
+		<where>
+			<if test="po.userId != null">
+				and user_id = #{po.userId}
+			</if>
+			<if test="po.infoId != null">
+				and info_id = #{po.infoId}
+			</if>
+			<if test="po.isRead != null">
+				and is_read = #{po.isRead}
+			</if>
+			<if test="po.isDeleted != null">
+				and is_deleted = #{po.isDeleted}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="userInfoMap">
+		SELECT
+		<include refid="userInfoColumns" />
+		FROM u_user_info
+		<where>
+			<if test="po.userId != null">
+				and user_id = #{po.userId}
+			</if>
+			<if test="po.infoId != null">
+				and info_id = #{po.infoId}
+			</if>
+			<if test="po.isRead != null">
+				and is_read = #{po.isRead}
+			</if>
+			<if test="po.isDeleted != null">
+				and is_deleted = #{po.isDeleted}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findUserSumByInfoId" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM u_user_info
+		where info_id = #{infoId} and platform_id = #{platformId}
+	</select>
+	
+	<select id="findUserInfoSumByUserId" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM u_user_info ui,(SELECT info_template_id from u_info_send_way WHERE send_way_id = 1 or send_way_id = 2) isw
+		where isw.info_template_id = ui.info_id and ui.is_deleted = 0 and ui.is_read = 0 and ui.user_id = #{po.userId} and ui.platform_id = #{po.platformId}
+	</select>
+	
+	<select id="findByUserIdType" resultType="java.lang.Long">
+		SELECT 
+		ui.id 
+		from u_user_info ui, u_info i,u_info_send_way isw  
+		WHERE ui.info_id = i.id 
+		and i.id = isw.info_template_id 
+		and ui.is_read = 0 
+		and isw.send_way_id = #{type}
+		and ui.user_id = #{userId} 
+		and i.platform_id = #{platformId}
+	</select>
+</mapper>
+	

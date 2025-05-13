@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.product.dao.read.CategoryTreeNodeRelationReadDAO">
+	<resultMap type="com.egeo.components.product.po.CategoryTreeNodeRelationPO" id="categoryTreeNodeRelationMap">
+		<result property="id" column="id" />
+		<result property="backTreeNodeId" column="back_tree_node_id" />
+		<result property="frontTreeNodeId" column="front_tree_node_id" />
+		<result property="sortValue" column="sort_value" />
+		<result property="platformId" column="platform_id" />
+		<result property="type" column="type" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+	</resultMap>
+
+	<sql id="categoryTreeNodeRelationColumns">
+		id,
+		back_tree_node_id,
+		front_tree_node_id,
+		sort_value,
+		platform_id,
+		type,
+		create_time,
+		update_time
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.product.po.CategoryTreeNodeRelationPO" resultMap="categoryTreeNodeRelationMap">
+		SELECT
+		<include refid="categoryTreeNodeRelationColumns" />
+		FROM category_tree_node_relation
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="categoryTreeNodeRelationMap">
+		SELECT
+		<include refid="categoryTreeNodeRelationColumns" />
+		FROM category_tree_node_relation
+		<where>
+			<if test="po.backTreeNodeId != null">
+				and back_tree_node_id = #{po.backTreeNodeId}
+			</if>
+			<if test="po.frontTreeNodeId != null">
+				and front_tree_node_id = #{po.frontTreeNodeId}
+			</if>
+			<if test="po.sortValue != null">
+				and sort_value = #{po.sortValue}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY sort_value
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM category_tree_node_relation
+		<where>
+			<if test="po.backTreeNodeId != null">
+				and back_tree_node_id = #{po.backTreeNodeId}
+			</if>
+			<if test="po.frontTreeNodeId != null">
+				and front_tree_node_id = #{po.frontTreeNodeId}
+			</if>
+			<if test="po.sortValue != null">
+				and sort_value = #{po.sortValue}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="categoryTreeNodeRelationMap">
+		SELECT
+		<include refid="categoryTreeNodeRelationColumns" />
+		FROM category_tree_node_relation
+		<where>
+			<if test="po.backTreeNodeId != null">
+				and back_tree_node_id = #{po.backTreeNodeId}
+			</if>
+			<if test="po.frontTreeNodeId != null">
+				and front_tree_node_id = #{po.frontTreeNodeId}
+			</if>
+			<if test="po.sortValue != null">
+				and sort_value = #{po.sortValue}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY sort_value
+			</otherwise>
+		</choose>
+	</select>
+</mapper>
+	

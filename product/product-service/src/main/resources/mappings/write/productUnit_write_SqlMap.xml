@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.product.dao.write.ProductUnitWriteDAO">
+	<insert id="saveProductUnit" parameterType="com.egeo.components.product.po.ProductUnitPO" >
+		insert into product_unit(
+		id,
+		product_unit_serial_number,
+		sku_id,
+		merchant_product_id,
+		name,
+		sale_price,
+		status,
+		is_vendible,
+		platform_id,
+		demo_sale_price,
+		competing_sale_price
+		)values
+		<foreach collection="poList" item="po"  separator="," >
+			(#{po.id},
+			#{po.productUnitSerialNumber},
+			#{po.skuId},
+			#{po.merchantProductId},
+			#{po.name},
+			#{po.salePrice},
+			#{po.status},
+			#{po.isVendible},
+			#{po.platformId},
+			#{po.demoSalePrice},
+			#{po.competingSalePrice}
+			)
+		</foreach>
+	</insert>
+	<insert id="updateProductUnitList" parameterType="com.egeo.components.product.po.ProductUnitPO" >
+		insert into product_unit(
+		id,
+		name,
+		sale_price,
+		demo_sale_price,
+		competing_sale_price
+		)values
+		<foreach collection="poList" item="po"  separator="," >
+			(#{po.id},
+			#{po.name},
+			#{po.salePrice},
+			#{po.demoSalePrice},
+			#{po.competingSalePrice}
+			)
+		</foreach>
+		on duplicate key update
+		name=VALUES (name),
+		sale_price=VALUES (sale_price),
+		demo_sale_price=VALUES (demo_sale_price),
+		competing_sale_price=VALUES (competing_sale_price)
+	</insert>
+
+
+
+
+
+
+	<insert id="insert" parameterType="com.egeo.components.product.po.ProductUnitPO">
+		INSERT INTO product_unit(
+        <trim suffixOverrides=",">
+			<if test="productUnitSerialNumber != null">
+				product_unit_serial_number,
+			</if>
+			<if test="skuId != null">
+				sku_id,
+			</if>
+			<if test="merchantProductId != null">
+				merchant_product_id,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+			<if test="salePrice != null">
+				sale_price,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="isVendible != null">
+				is_vendible,
+			</if>
+			<if test="code != null">
+				code,
+			</if>
+			<if test="puPicUrl != null">
+				pu_pic_url,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="platformId != null">
+				platform_id,
+			</if>
+			<if test="demoSalePrice != null">
+				demo_sale_price,
+			</if>
+			<if test="competingSalePrice != null">
+				competing_sale_price,
+			</if>
+        </trim>		
+		) VALUES (
+        <trim suffixOverrides=",">
+			<if test="productUnitSerialNumber != null">
+				#{productUnitSerialNumber},
+			</if>
+			<if test="skuId != null">
+				#{skuId},
+			</if>
+			<if test="merchantProductId != null">
+				#{merchantProductId},
+			</if>
+			<if test="name != null">
+				#{name},
+			</if>
+			<if test="remark != null">
+				#{remark},
+			</if>
+			<if test="salePrice != null">
+				#{salePrice},
+			</if>
+			<if test="status != null">
+				#{status},
+			</if>
+			<if test="isVendible != null">
+				#{isVendible},
+			</if>
+			<if test="code != null">
+				#{code},
+			</if>
+			<if test="puPicUrl != null">
+				#{puPicUrl},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
+			</if>
+			<if test="platformId != null">
+				#{platformId},
+			</if>
+			<if test="demoSalePrice != null">
+				#{demoSalePrice},
+			</if>
+			<if test="competingSalePrice != null">
+				#{competingSalePrice},
+			</if>
+        </trim>		
+		)
+		<selectKey keyProperty="id" resultType="java.lang.Long">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+
+	
+	
+	<update id="update">
+	UPDATE product_unit 
+		<set>
+			<if test="productUnitSerialNumber != null">
+				product_unit_serial_number = #{productUnitSerialNumber},
+			</if>			
+			<if test="skuId != null">
+				sku_id = #{skuId},
+			</if>			
+			<if test="merchantProductId != null">
+				merchant_product_id = #{merchantProductId},
+			</if>			
+			<if test="name != null">
+				name = #{name},
+			</if>			
+			<if test="remark != null">
+				remark = #{remark},
+			</if>			
+			<if test="salePrice != null">
+				sale_price = #{salePrice},
+			</if>			
+			<if test="status != null">
+				status = #{status},
+			</if>			
+			<if test="isVendible != null">
+				is_vendible = #{isVendible},
+			</if>			
+			<if test="code != null">
+				code = #{code},
+			</if>			
+			<if test="puPicUrl != null">
+				pu_pic_url = #{puPicUrl},
+			</if>			
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>			
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>			
+			<if test="platformId != null">
+				platform_id = #{platformId},
+			</if>
+			<if test="demoSalePrice != null">
+				demo_sale_price=#{demoSalePrice},
+			</if>
+			<if test="competingSalePrice != null">
+				competing_sale_price=#{competingSalePrice},
+			</if>
+		</set>
+			WHERE id = #{id}
+	</update>	
+	
+
+	<delete id="delete">
+		delete from product_unit where id = #{id}
+	</delete>
+
+	<delete id="deleteByPara">
+		delete from product_unit 
+		<where>
+			<if test="productUnitSerialNumber != null">
+				and product_unit_serial_number = #{productUnitSerialNumber}
+			</if>
+			<if test="skuId != null">
+				and sku_id = #{skuId}
+			</if>
+			<if test="merchantProductId != null">
+				and merchant_product_id = #{merchantProductId}
+			</if>
+			<if test="name != null">
+				and name = #{name}
+			</if>
+			<if test="remark != null">
+				and remark = #{remark}
+			</if>
+			<if test="salePrice != null">
+				and sale_price = #{salePrice}
+			</if>
+			<if test="status != null">
+				and status = #{status}
+			</if>
+			<if test="isVendible != null">
+				and is_vendible = #{isVendible}
+			</if>
+			<if test="code != null">
+				and code = #{code}
+			</if>
+			<if test="puPicUrl != null">
+				and pu_pic_url = #{puPicUrl}
+			</if>
+			<if test="createTime != null">
+				and create_time = #{createTime}
+			</if>
+			<if test="updateTime != null">
+				and update_time = #{updateTime}
+			</if>
+			<if test="platformId != null">
+				and platform_id = #{platformId}
+			</if>
+			<if test="demoSalePrice != null">
+				and demo_sale_price=#{demoSalePrice},
+			</if>
+			<if test="competingSalePrice != null">
+				AND competing_sale_price=#{competingSalePrice},
+			</if>
+		</where>
+	</delete>
+	
+	<update id="updateProductUnitStatusByStandardUnitIdWithTx">
+	UPDATE product_unit pu,sku s set pu.status = #{status} WHERE pu.sku_id = s.id and s.is_available = 1 and pu.merchant_product_id = #{standardUnitId}
+	</update>	
+	
+	<update id="updateStatusBySkuId">
+	UPDATE product_unit set `status` = 4 WHERE sku_id = #{skuId}
+	</update>	
+	
+	<update id="updatePUIsVendibleBySkuIdWithTx">
+	UPDATE product_unit set is_vendible = 0 WHERE sku_id = #{skuId}
+	</update>
+
+	<insert id="updateProductUnitPrice" parameterType="com.egeo.components.product.po.ProductUnitPO" >
+		insert into product_unit(
+		id,
+		sale_price,
+		demo_sale_price,
+		competing_sale_price
+		)values
+		<foreach collection="poList" item="po"  separator="," >
+			(#{po.id},
+			#{po.salePrice},
+			#{po.demoSalePrice},
+			#{po.competingSalePrice}
+			)
+		</foreach>
+		on duplicate key update
+		sale_price=VALUES (sale_price),
+		demo_sale_price=VALUES (demo_sale_price),
+		competing_sale_price=VALUES (competing_sale_price)
+	</insert>
+
+
+	<!--<update id="updateJdProductPriceByRate">
+		UPDATE product_unit
+		set
+		sale_price=sale_price/#{standardCompanyRateOld}*#{standardCompanyRate},
+		demo_sale_price=demo_sale_price/#{democompanysCompanyRateOld}*#{democompanysCompanyRate},
+		competing_sale_price=competing_sale_price/#{competingCompanyRateOld}*#{competingCompanyRate}
+		WHERE merchant_product_id in (select id from merchant_product where merchant_id=6)
+	</update>-->
+</mapper>
+	

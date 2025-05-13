@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.promotion.dao.read.CouponGroupRelReadDAO">
+	<resultMap type="com.egeo.components.promotion.po.CouponGroupRelPO" id="couponGroupRelMap">
+		<result property="id" column="id" />
+		<result property="couponGroupId" column="coupon_group_id" />
+		<result property="couponId" column="coupon_id" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+	</resultMap>
+
+	<sql id="couponGroupRelColumns">
+		id,
+		coupon_group_id,
+		coupon_id,
+		create_time,
+		update_time
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.promotion.po.CouponGroupRelPO" resultMap="couponGroupRelMap">
+		SELECT
+		<include refid="couponGroupRelColumns" />
+		FROM coupon_group_rel
+		WHERE id = #{po.id}
+	</select>
+
+
+	<select id="findCouponIdListByGroupId" resultType="java.lang.Long">
+		SELECT
+		coupon_id
+		FROM coupon_group_rel
+		WHERE coupon_group_id= #{couponGroupId}
+	</select>
+
+	<select id="findOfPage" resultMap="couponGroupRelMap">
+		SELECT
+		<include refid="couponGroupRelColumns" />
+		FROM coupon_group_rel
+		<where>
+			<if test="po.couponGroupId != null">
+				and coupon_group_id = #{po.couponGroupId}
+			</if>
+			<if test="po.couponId != null">
+				and coupon_id = #{po.couponId}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM coupon_group_rel
+		<where>
+			<if test="po.couponGroupId != null">
+				and coupon_group_id = #{po.couponGroupId}
+			</if>
+			<if test="po.couponId != null">
+				and coupon_id = #{po.couponId}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="couponGroupRelMap">
+		SELECT
+		<include refid="couponGroupRelColumns" />
+		FROM coupon_group_rel
+		<where>
+			<if test="po.couponGroupId != null">
+				and coupon_group_id = #{po.couponGroupId}
+			</if>
+			<if test="po.couponId != null">
+				and coupon_id = #{po.couponId}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+</mapper>
+	

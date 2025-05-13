@@ -1,0 +1,59 @@
+package com.egeo.components.user.converter;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.egeo.components.user.dto.RoleUrlDTO;
+import com.egeo.components.user.po.RoleUrlPO;
+
+/**
+ * DTO和PO相互转换工具类
+ * 
+ * @author xiaping
+ * @date 2017-08-18 18:50:29
+ */
+public class RoleUrlConverter {
+	
+	public static RoleUrlDTO toDTO(RoleUrlPO src) {
+		RoleUrlDTO tar = new RoleUrlDTO();
+		tar.setId(src.getId());
+		tar.setRoleId(src.getRoleId());
+		tar.setUrlId(src.getUrlId());
+		tar.setCreateTime(src.getCreateTime());
+		tar.setUpdateTime(src.getUpdateTime());
+		tar.setPlatformId(src.getPlatformId());
+		return tar;
+	}
+
+	public static RoleUrlPO toPO(RoleUrlDTO src) {
+		RoleUrlPO tar = new RoleUrlPO();
+		tar.setId(src.getId());
+		tar.setRoleId(src.getRoleId());
+		tar.setUrlId(src.getUrlId());
+		tar.setCreateTime(src.getCreateTime());
+		tar.setUpdateTime(src.getUpdateTime());
+		tar.setPlatformId(src.getPlatformId());
+		return tar;
+	}
+
+	public static List<RoleUrlDTO> toDTO(List<RoleUrlPO> srcs) {
+		if (srcs == null)
+			return null;
+		List<RoleUrlDTO> list = new ArrayList<RoleUrlDTO>();
+		for (RoleUrlPO src : srcs) {
+			list.add(toDTO(src));
+		}
+		return list;
+	}
+
+	public static List<RoleUrlPO> toPO(List<RoleUrlDTO> srcs) {
+		if (srcs == null)
+			return null;
+		List<RoleUrlPO> list = new ArrayList<RoleUrlPO>();
+		for (RoleUrlDTO src : srcs) {
+			list.add(toPO(src));
+		}
+		return list;
+	}
+}
+	

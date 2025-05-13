@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.order.dao.write.SoModifyPriceItemWriteDAO">
+	<insert id="insert" parameterType="com.egeo.components.order.po.SoModifyPriceItemPO">
+		INSERT INTO so_modify_price_item(
+        <trim suffixOverrides=",">
+			<if test="orderCode != null">
+				order_code,
+			</if>
+			<if test="parentOrderCode != null">
+				parent_order_code,
+			</if>
+			<if test="mpId != null">
+				mp_id,
+			</if>
+			<if test="productItemAmount != null">
+				product_item_amount,
+			</if>
+			<if test="productItemAmountAfter != null">
+				product_item_amount_after,
+			</if>
+			<if test="productItemDiscountAmount != null">
+				product_item_discount_amount,
+			</if>
+			<if test="productPriceFinal != null">
+				product_price_final,
+			</if>
+			<if test="productPriceDiscount != null">
+				product_price_discount,
+			</if>
+			<if test="productItemNum != null">
+				product_item_num,
+			</if>
+			<if test="productCname != null">
+				product_cname,
+			</if>
+			<if test="productEname != null">
+				product_ename,
+			</if>
+			<if test="code != null">
+				code,
+			</if>
+			<if test="unit != null">
+				unit,
+			</if>
+			<if test="placeOfOrigin != null">
+				place_of_origin,
+			</if>
+			<if test="productSaleType != null">
+				product_sale_type,
+			</if>
+			<if test="modifyId != null">
+				modify_id,
+			</if>
+			<if test="soItemId != null">
+				so_item_id,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="platformId != null">
+				platform_id,
+			</if>
+			<if test="skuId != null">
+				sku_id,
+			</if>
+        </trim>		
+		) VALUES (
+        <trim suffixOverrides=",">
+			<if test="orderCode != null">
+				#{orderCode},
+			</if>
+			<if test="parentOrderCode != null">
+				#{parentOrderCode},
+			</if>
+			<if test="mpId != null">
+				#{mpId},
+			</if>
+			<if test="productItemAmount != null">
+				#{productItemAmount},
+			</if>
+			<if test="productItemAmountAfter != null">
+				#{productItemAmountAfter},
+			</if>
+			<if test="productItemDiscountAmount != null">
+				#{productItemDiscountAmount},
+			</if>
+			<if test="productPriceFinal != null">
+				#{productPriceFinal},
+			</if>
+			<if test="productPriceDiscount != null">
+				#{productPriceDiscount},
+			</if>
+			<if test="productItemNum != null">
+				#{productItemNum},
+			</if>
+			<if test="productCname != null">
+				#{productCname},
+			</if>
+			<if test="productEname != null">
+				#{productEname},
+			</if>
+			<if test="code != null">
+				#{code},
+			</if>
+			<if test="unit != null">
+				#{unit},
+			</if>
+			<if test="placeOfOrigin != null">
+				#{placeOfOrigin},
+			</if>
+			<if test="productSaleType != null">
+				#{productSaleType},
+			</if>
+			<if test="modifyId != null">
+				#{modifyId},
+			</if>
+			<if test="soItemId != null">
+				#{soItemId},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="platformId != null">
+				#{platformId},
+			</if>
+			<if test="skuId != null">
+				#{skuId},
+			</if>
+        </trim>		
+		)
+		<selectKey keyProperty="id" resultType="java.lang.Long">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+
+	
+	
+	<update id="update">
+	UPDATE so_modify_price_item 
+		<set>
+			<if test="orderCode != null">
+				order_code = #{orderCode},
+			</if>			
+			<if test="parentOrderCode != null">
+				parent_order_code = #{parentOrderCode},
+			</if>			
+			<if test="mpId != null">
+				mp_id = #{mpId},
+			</if>			
+			<if test="productItemAmount != null">
+				product_item_amount = #{productItemAmount},
+			</if>			
+			<if test="productItemAmountAfter != null">
+				product_item_amount_after = #{productItemAmountAfter},
+			</if>			
+			<if test="productItemDiscountAmount != null">
+				product_item_discount_amount = #{productItemDiscountAmount},
+			</if>			
+			<if test="productPriceFinal != null">
+				product_price_final = #{productPriceFinal},
+			</if>			
+			<if test="productPriceDiscount != null">
+				product_price_discount = #{productPriceDiscount},
+			</if>			
+			<if test="productItemNum != null">
+				product_item_num = #{productItemNum},
+			</if>			
+			<if test="productCname != null">
+				product_cname = #{productCname},
+			</if>			
+			<if test="productEname != null">
+				product_ename = #{productEname},
+			</if>			
+			<if test="code != null">
+				code = #{code},
+			</if>			
+			<if test="unit != null">
+				unit = #{unit},
+			</if>			
+			<if test="placeOfOrigin != null">
+				place_of_origin = #{placeOfOrigin},
+			</if>			
+			<if test="productSaleType != null">
+				product_sale_type = #{productSaleType},
+			</if>			
+			<if test="modifyId != null">
+				modify_id = #{modifyId},
+			</if>			
+			<if test="soItemId != null">
+				so_item_id = #{soItemId},
+			</if>			
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>			
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>			
+			<if test="platformId != null">
+				platform_id = #{platformId},
+			</if>			
+			<if test="skuId != null">
+				sku_id = #{skuId},
+			</if>			
+		</set>
+			WHERE id = #{id}
+	</update>	
+	
+
+	<delete id="delete">
+		delete from so_modify_price_item where id = #{id}
+	</delete>
+
+	<delete id="deleteByPara">
+		delete from so_modify_price_item 
+		<where>
+			<if test="orderCode != null">
+				and order_code = #{orderCode}
+			</if>
+			<if test="parentOrderCode != null">
+				and parent_order_code = #{parentOrderCode}
+			</if>
+			<if test="mpId != null">
+				and mp_id = #{mpId}
+			</if>
+			<if test="productItemAmount != null">
+				and product_item_amount = #{productItemAmount}
+			</if>
+			<if test="productItemAmountAfter != null">
+				and product_item_amount_after = #{productItemAmountAfter}
+			</if>
+			<if test="productItemDiscountAmount != null">
+				and product_item_discount_amount = #{productItemDiscountAmount}
+			</if>
+			<if test="productPriceFinal != null">
+				and product_price_final = #{productPriceFinal}
+			</if>
+			<if test="productPriceDiscount != null">
+				and product_price_discount = #{productPriceDiscount}
+			</if>
+			<if test="productItemNum != null">
+				and product_item_num = #{productItemNum}
+			</if>
+			<if test="productCname != null">
+				and product_cname = #{productCname}
+			</if>
+			<if test="productEname != null">
+				and product_ename = #{productEname}
+			</if>
+			<if test="code != null">
+				and code = #{code}
+			</if>
+			<if test="unit != null">
+				and unit = #{unit}
+			</if>
+			<if test="placeOfOrigin != null">
+				and place_of_origin = #{placeOfOrigin}
+			</if>
+			<if test="productSaleType != null">
+				and product_sale_type = #{productSaleType}
+			</if>
+			<if test="modifyId != null">
+				and modify_id = #{modifyId}
+			</if>
+			<if test="soItemId != null">
+				and so_item_id = #{soItemId}
+			</if>
+			<if test="updateTime != null">
+				and update_time = #{updateTime}
+			</if>
+			<if test="createTime != null">
+				and create_time = #{createTime}
+			</if>
+			<if test="platformId != null">
+				and platform_id = #{platformId}
+			</if>
+			<if test="skuId != null">
+				and sku_id = #{skuId}
+			</if>
+		</where>
+	</delete>
+
+
+</mapper>
+	

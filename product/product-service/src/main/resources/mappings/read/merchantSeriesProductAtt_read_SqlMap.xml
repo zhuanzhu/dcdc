@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.product.dao.read.MerchantSeriesProductAttReadDAO">
+	<resultMap type="com.egeo.components.product.po.MerchantSeriesProductAttPO" id="merchantSeriesProductAttMap">
+		<result property="id" column="id" />
+		<result property="merchantSeriesId" column="merchant_series_id" />
+		<result property="attNameId" column="att_name_id" />
+		<result property="platformId" column="platform_id" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+	</resultMap>
+
+	<sql id="merchantSeriesProductAttColumns">
+		id,
+		merchant_series_id,
+		att_name_id,
+		platform_id,
+		create_time,
+		update_time
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.product.po.MerchantSeriesProductAttPO" resultMap="merchantSeriesProductAttMap">
+		SELECT
+		<include refid="merchantSeriesProductAttColumns" />
+		FROM merchant_series_product_att
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="merchantSeriesProductAttMap">
+		SELECT
+		<include refid="merchantSeriesProductAttColumns" />
+		FROM merchant_series_product_att
+		<where>
+			<if test="po.merchantSeriesId != null">
+				and merchant_series_id = #{po.merchantSeriesId}
+			</if>
+			<if test="po.attNameId != null">
+				and att_name_id = #{po.attNameId}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM merchant_series_product_att
+		<where>
+			<if test="po.merchantSeriesId != null">
+				and merchant_series_id = #{po.merchantSeriesId}
+			</if>
+			<if test="po.attNameId != null">
+				and att_name_id = #{po.attNameId}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="merchantSeriesProductAttMap">
+		SELECT
+		<include refid="merchantSeriesProductAttColumns" />
+		FROM merchant_series_product_att
+		<where>
+			<if test="po.merchantSeriesId != null">
+				and merchant_series_id = #{po.merchantSeriesId}
+			</if>
+			<if test="po.attNameId != null">
+				and att_name_id = #{po.attNameId}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+</mapper>
+	

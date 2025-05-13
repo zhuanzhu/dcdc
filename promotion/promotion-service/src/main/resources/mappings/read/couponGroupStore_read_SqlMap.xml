@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.promotion.dao.read.CouponGroupStoreReadDAO">
+	<resultMap type="com.egeo.components.promotion.po.CouponGroupStorePO" id="couponGroupStoreMap">
+		<result property="id" column="id" />
+		<result property="couponGroupId" column="coupon_group_id" />
+		<result property="storeId" column="store_id" />
+		<result property="createTime" column="create_time" />
+	</resultMap>
+
+	<sql id="couponGroupStoreColumns">
+		id,
+		coupon_group_id,
+		store_id,
+		create_time
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.promotion.po.CouponGroupStorePO" resultMap="couponGroupStoreMap">
+		SELECT
+		<include refid="couponGroupStoreColumns" />
+		FROM coupon_group_store
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="couponGroupStoreMap">
+		SELECT
+		<include refid="couponGroupStoreColumns" />
+		FROM coupon_group_store
+		<where>
+			<if test="po.couponGroupId != null">
+				and coupon_group_id = #{po.couponGroupId}
+			</if>
+			<if test="po.storeId != null">
+				and store_id = #{po.storeId}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM coupon_group_store
+		<where>
+			<if test="po.couponGroupId != null">
+				and coupon_group_id = #{po.couponGroupId}
+			</if>
+			<if test="po.storeId != null">
+				and store_id = #{po.storeId}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="couponGroupStoreMap">
+		SELECT
+		<include refid="couponGroupStoreColumns" />
+		FROM coupon_group_store
+		<where>
+			<if test="po.couponGroupId != null">
+				and coupon_group_id = #{po.couponGroupId}
+			</if>
+			<if test="po.storeId != null">
+				and store_id = #{po.storeId}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+
+	<select id="findCouponGroupStoreByKey"  parameterType="java.util.Map" resultMap="couponGroupStoreMap">
+		SELECT
+		<include refid="couponGroupStoreColumns" />
+		FROM coupon_group_store
+		<where>
+			<if test="couponGroupId != null">
+				and coupon_group_id = #{couponGroupId}
+			</if>
+			<if test="storeId != null">
+				and store_id = #{storeId}
+			</if>
+			<if test="createTime != null">
+				and create_time = #{createTime}
+			</if>
+			<if test="storeIds !=null and storeIds.size() > 0 ">
+				AND store_id IN
+				<foreach  collection="storeIds"  item="storeId"  open="("  separator=","   close=")">
+					#{storeId}
+				</foreach>
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY id desc
+			</otherwise>
+		</choose>
+	</select>
+
+</mapper>
+	

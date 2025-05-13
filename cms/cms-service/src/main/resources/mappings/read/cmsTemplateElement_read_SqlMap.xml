@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.cms.dao.read.CmsTemplateElementReadDAO">
+	<resultMap type="com.egeo.components.cms.po.CmsTemplateElementPO" id="cmsTemplateElementMap">
+		<result property="id" column="id" />
+		<result property="templateId" column="template_id" />
+		<result property="elementId" column="element_id" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+	</resultMap>
+
+	<sql id="cmsTemplateElementColumns">
+		id,
+		template_id,
+		element_id,
+		create_time,
+		update_time,
+		sort
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.cms.po.CmsTemplateElementPO" resultMap="cmsTemplateElementMap">
+		SELECT
+		<include refid="cmsTemplateElementColumns" />
+		FROM cms_template_element
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="cmsTemplateElementMap">
+		SELECT
+		<include refid="cmsTemplateElementColumns" />
+		FROM cms_template_element
+		<where>
+			<if test="po.templateId != null">
+				and template_id = #{po.templateId}
+			</if>
+			<if test="po.elementId != null">
+				and element_id = #{po.elementId}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM cms_template_element
+		<where>
+			<if test="po.templateId != null">
+				and template_id = #{po.templateId}
+			</if>
+			<if test="po.elementId != null">
+				and element_id = #{po.elementId}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="cmsTemplateElementMap">
+		SELECT
+		<include refid="cmsTemplateElementColumns" />
+		FROM cms_template_element
+		<where>
+			<if test="po.templateId != null">
+				and template_id = #{po.templateId}
+			</if>
+			<if test="po.elementId != null">
+				and element_id = #{po.elementId}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+</mapper>
+	

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.order.dao.read.QmOrderReadDAO">
+
+	<resultMap type="com.egeo.components.order.po.QmOrderPO" id="qmOrderMap">
+		<result property="id" column="id" />
+		<result property="soId" column="so_id" />
+		<result property="outTradeNo" column="out_trade_no" />
+		<result property="returnUrl" column="return_url" />
+		<result property="notifyUrl" column="notify_url" />
+		<result property="remark" column="remark" />
+		<result property="orderCode" column="order_code" />
+		<result property="orderTime" column="order_time" />
+		<result property="expireTime" column="expire_time" />
+		<result property="createTime" column="create_time" />
+		<result property="syncPayStatus" column="sync_pay_status"/>
+		<result property="syncPayCount" column="sync_pay_count"/>
+		<result property="orderPayTime" column="order_pay_time"/>
+		<result property="syncTime" column="sync_time"/>
+	</resultMap>
+
+
+
+
+
+	<select id="findById" resultMap="qmOrderMap">
+		SELECT *
+		FROM qm_order
+		WHERE id = #{id}
+	</select>
+	
+	
+	<select id="findByOutTradeNo" resultMap="qmOrderMap">
+		SELECT *
+		FROM qm_order
+		WHERE out_trade_no =#{outTradeNo}
+	</select>
+
+	<select id="findByOrderCode" resultMap="qmOrderMap">
+		SELECT *
+		FROM qm_order
+		WHERE order_code =#{orderCode}
+	</select>
+
+	<select id="findBySoId" resultMap="qmOrderMap">
+		SELECT *
+		FROM qm_order
+		WHERE so_id =#{soId}
+	</select>
+
+	<select id="findAll" resultMap="qmOrderMap">
+		SELECT
+		*
+		FROM qm_order
+		<where>
+			<if test="soId != null">
+				and so_id=#{soId}
+			</if>
+			<if test="outTradeNo != null">
+				and out_trade_no=#{outTradeNo}
+			</if>
+			<if test="returnUrl != null">
+				and return_url=#{returnUrl}
+			</if>
+			<if test="notifyUrl != null">
+				and notify_url=#{notifyUrl}
+			</if>
+			<if test="remark != null">
+				and remark=#{remark}
+			</if>
+			<if test="orderCode != null">
+				and order_code=#{orderCode}
+			</if>
+			<if test="orderTime != null">
+				and order_time=#{orderTime}
+			</if>
+			<if test="expireTime != null">
+				and expire_time#{expireTime}
+			</if>
+			<if test="createTime != null">
+				and create_time=#{createTime}
+			</if>
+			<if test="syncPayStatus != null">
+				and sync_pay_status=#{syncPayStatus}
+			</if>
+			<if test="syncPayCount != null">
+				and sync_pay_count=#{syncPayCount}
+			</if>
+			<if test="orderPayTime != null">
+				order_pay_time=#{orderPayTime}
+			</if>
+			<if test="syncTime != null">
+				sync_time=#{syncTime}
+			</if>
+		</where>
+		<choose>
+			<when
+					test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY id desc
+			</otherwise>
+		</choose>
+	</select>
+
+	<select id="findWaitSyncOrder" resultMap="qmOrderMap">
+		SELECT
+		q.*
+		FROM qm_order q
+		where q.sync_pay_status=1 and  #{synPayMaxTimes}>q.sync_pay_count
+		and EXISTS (select 1 from so s where q.so_id=s.id and s.order_pay_status=1)
+		order by q.expire_time,q.order_pay_time
+		limit #{pageSize}
+	</select>
+</mapper>
+	

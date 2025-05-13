@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.order.dao.read.SoChildFlowReadDAO">
+
+	<select id="queryFlowListBySoChildId" resultMap="soChildFlowMap">
+		select * from so_child_flow
+		where so_child_id=#{soChildId}
+		order by creat_time desc
+	</select>
+
+	<select id="queryFlowListBySoId" resultMap="soChildFlowMap">
+		select * from so_child_flow
+		where so_id=#{orderId}
+		order by creat_time desc
+	</select>
+
+	<resultMap type="com.egeo.components.order.po.SoChildFlowPO" id="soChildFlowMap">
+		<result property="id" column="id" />
+		<result property="soChildId" column="so_child_id" />
+		<result property="operate" column="operate" />
+		<result property="operatorId" column="operator_id" />
+		<result property="doMail" column="do_mail" />
+		<result property="creatTime" column="creat_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="soId" column="so_id" />
+	</resultMap>
+
+	<sql id="soChildFlowColumns">
+		id,
+		so_child_id,
+		operate,
+		do_mail,
+		creat_time,
+		update_time,
+		so_id,
+		operator_id
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.order.po.SoChildFlowPO" resultMap="soChildFlowMap">
+		SELECT
+		<include refid="soChildFlowColumns" />
+		FROM so_child_flow
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="soChildFlowMap">
+		SELECT
+		<include refid="soChildFlowColumns" />
+		FROM so_child_flow
+		<where>
+			<if test="po.soChildId != null">
+				and so_child_id = #{po.soChildId}
+			</if>
+			<if test="po.operate != null">
+				and operate = #{po.operate}
+			</if>
+			<if test="po.operatorId != null">
+				and operator_id = #{po.operatorId}
+			</if>
+			<if test="po.doMail != null">
+				and do_mail = #{po.doMail}
+			</if>
+			<if test="po.creatTime != null">
+				and creat_time = #{po.creatTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.soId != null">
+				and so_id = #{po.soId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM so_child_flow
+		<where>
+			<if test="po.soChildId != null">
+				and so_child_id = #{po.soChildId}
+			</if>
+			<if test="po.operate != null">
+				and operate = #{po.operate}
+			</if>
+			<if test="po.operatorId != null">
+				and operator_id = #{po.operatorId}
+			</if>
+			<if test="po.doMail != null">
+				and do_mail = #{po.doMail}
+			</if>
+			<if test="po.creatTime != null">
+				and creat_time = #{po.creatTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.soId != null">
+				and so_id = #{po.soId}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="soChildFlowMap">
+		SELECT
+		<include refid="soChildFlowColumns" />
+		FROM so_child_flow
+		<where>
+			<if test="po.soChildId != null">
+				and so_child_id = #{po.soChildId}
+			</if>
+			<if test="po.operate != null">
+				and operate = #{po.operate}
+			</if>
+			<if test="po.operatorId != null">
+				and operator_id = #{po.operatorId}
+			</if>
+			<if test="po.doMail != null">
+				and do_mail = #{po.doMail}
+			</if>
+			<if test="po.creatTime != null">
+				and creat_time = #{po.creatTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.soId != null">
+				and so_id = #{po.soId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+</mapper>
+	

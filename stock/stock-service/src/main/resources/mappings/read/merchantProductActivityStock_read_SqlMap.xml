@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.stock.dao.read.MerchantProductActivityStockReadDAO">
+	<resultMap type="com.egeo.components.stock.po.MerchantProductActivityStockPO" id="merchantProductActivityStockMap">
+		<result property="id" column="id" />
+		<result property="activityId" column="activity_id" />
+		<result property="activityName" column="activity_name" />
+		<result property="activityType" column="activity_type" />
+		<result property="thresholdNum" column="threshold_num" />
+		<result property="alreadySaleNum" column="already_sale_num" />
+		<result property="parentId" column="parent_id" />
+		<result property="singleProductNum" column="single_product_num" />
+		<result property="warehouseId" column="warehouse_id" />
+		<result property="stockLimit" column="stock_limit" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="platformId" column="platform_id" />
+		<result property="skuId" column="sku_id" />
+	</resultMap>
+
+	<sql id="merchantProductActivityStockColumns">
+		id,
+		activity_id,
+		activity_name,
+		activity_type,
+		threshold_num,
+		already_sale_num,
+		parent_id,
+		single_product_num,
+		warehouse_id,
+		stock_limit,
+		create_time,
+		update_time,
+		platform_id,
+		sku_id
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.stock.po.MerchantProductActivityStockPO" resultMap="merchantProductActivityStockMap">
+		SELECT
+		<include refid="merchantProductActivityStockColumns" />
+		FROM merchant_product_activity_stock
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="merchantProductActivityStockMap">
+		SELECT
+		<include refid="merchantProductActivityStockColumns" />
+		FROM merchant_product_activity_stock
+		<where>
+			<if test="po.activityId != null">
+				and activity_id = #{po.activityId}
+			</if>
+			<if test="po.activityName != null">
+				and activity_name = #{po.activityName}
+			</if>
+			<if test="po.activityType != null">
+				and activity_type = #{po.activityType}
+			</if>
+			<if test="po.thresholdNum != null">
+				and threshold_num = #{po.thresholdNum}
+			</if>
+			<if test="po.alreadySaleNum != null">
+				and already_sale_num = #{po.alreadySaleNum}
+			</if>
+			<if test="po.parentId != null">
+				and parent_id = #{po.parentId}
+			</if>
+			<if test="po.singleProductNum != null">
+				and single_product_num = #{po.singleProductNum}
+			</if>
+			<if test="po.warehouseId != null">
+				and warehouse_id = #{po.warehouseId}
+			</if>
+			<if test="po.stockLimit != null">
+				and stock_limit = #{po.stockLimit}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.skuId != null">
+				and sku_id = #{po.skuId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM merchant_product_activity_stock
+		<where>
+			<if test="po.activityId != null">
+				and activity_id = #{po.activityId}
+			</if>
+			<if test="po.activityName != null">
+				and activity_name = #{po.activityName}
+			</if>
+			<if test="po.activityType != null">
+				and activity_type = #{po.activityType}
+			</if>
+			<if test="po.thresholdNum != null">
+				and threshold_num = #{po.thresholdNum}
+			</if>
+			<if test="po.alreadySaleNum != null">
+				and already_sale_num = #{po.alreadySaleNum}
+			</if>
+			<if test="po.parentId != null">
+				and parent_id = #{po.parentId}
+			</if>
+			<if test="po.singleProductNum != null">
+				and single_product_num = #{po.singleProductNum}
+			</if>
+			<if test="po.warehouseId != null">
+				and warehouse_id = #{po.warehouseId}
+			</if>
+			<if test="po.stockLimit != null">
+				and stock_limit = #{po.stockLimit}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.skuId != null">
+				and sku_id = #{po.skuId}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="merchantProductActivityStockMap">
+		SELECT
+		<include refid="merchantProductActivityStockColumns" />
+		FROM merchant_product_activity_stock
+		<where>
+			<if test="po.activityId != null">
+				and activity_id = #{po.activityId}
+			</if>
+			<if test="po.activityName != null">
+				and activity_name = #{po.activityName}
+			</if>
+			<if test="po.activityType != null">
+				and activity_type = #{po.activityType}
+			</if>
+			<if test="po.thresholdNum != null">
+				and threshold_num = #{po.thresholdNum}
+			</if>
+			<if test="po.alreadySaleNum != null">
+				and already_sale_num = #{po.alreadySaleNum}
+			</if>
+			<if test="po.parentId != null">
+				and parent_id = #{po.parentId}
+			</if>
+			<if test="po.singleProductNum != null">
+				and single_product_num = #{po.singleProductNum}
+			</if>
+			<if test="po.warehouseId != null">
+				and warehouse_id = #{po.warehouseId}
+			</if>
+			<if test="po.stockLimit != null">
+				and stock_limit = #{po.stockLimit}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.skuId != null">
+				and sku_id = #{po.skuId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+</mapper>
+	

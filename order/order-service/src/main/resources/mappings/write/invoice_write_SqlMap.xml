@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.order.dao.write.InvoiceWriteDAO">
+	<insert id="insert" parameterType="com.egeo.components.order.po.InvoicePO">
+		INSERT INTO invoice(
+        <trim suffixOverrides=",">
+			<if test="titleContent != null">
+				title_content,
+			</if>
+			<if test="taxpayerIdentificationCode != null">
+				taxpayer_identification_code,
+			</if>
+			<if test="registerAddr != null">
+				register_addr,
+			</if>
+			<if test="registerTel != null">
+				register_tel,
+			</if>
+			<if test="depositBank != null">
+				deposit_bank,
+			</if>
+			<if test="bankAccount != null">
+				bank_account,
+			</if>
+			<if test="businessLicenceUrl != null">
+				business_licence_url,
+			</if>
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="isDefault != null">
+				is_default,
+			</if>
+			<if test="createType != null">
+				create_type,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="platformId != null">
+				platform_id,
+			</if>
+			<if test="titleType != null">
+				title_type,
+			</if>
+			<if test="isDelete != null">
+				is_delete,
+			</if>
+        </trim>		
+		) VALUES (
+        <trim suffixOverrides=",">
+			<if test="titleContent != null">
+				#{titleContent},
+			</if>
+			<if test="taxpayerIdentificationCode != null">
+				#{taxpayerIdentificationCode},
+			</if>
+			<if test="registerAddr != null">
+				#{registerAddr},
+			</if>
+			<if test="registerTel != null">
+				#{registerTel},
+			</if>
+			<if test="depositBank != null">
+				#{depositBank},
+			</if>
+			<if test="bankAccount != null">
+				#{bankAccount},
+			</if>
+			<if test="businessLicenceUrl != null">
+				#{businessLicenceUrl},
+			</if>
+			<if test="userId != null">
+				#{userId},
+			</if>
+			<if test="isDefault != null">
+				#{isDefault},
+			</if>
+			<if test="createType != null">
+				#{createType},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="platformId != null">
+				#{platformId},
+			</if>
+			<if test="titleType != null">
+				#{titleType},
+			</if>
+			<if test="isDelete != null">
+				#{isDelete},
+			</if>
+        </trim>		
+		)
+		<selectKey keyProperty="id" resultType="java.lang.Long">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+
+	
+	
+	<update id="update">
+	UPDATE invoice 
+		<set>
+			<if test="titleContent != null">
+				title_content = #{titleContent},
+			</if>			
+			<if test="taxpayerIdentificationCode != null">
+				taxpayer_identification_code = #{taxpayerIdentificationCode},
+			</if>			
+			<if test="registerAddr != null">
+				register_addr = #{registerAddr},
+			</if>			
+			<if test="registerTel != null">
+				register_tel = #{registerTel},
+			</if>			
+			<if test="depositBank != null">
+				deposit_bank = #{depositBank},
+			</if>			
+			<if test="bankAccount != null">
+				bank_account = #{bankAccount},
+			</if>			
+			<if test="businessLicenceUrl != null">
+				business_licence_url = #{businessLicenceUrl},
+			</if>			
+			<if test="userId != null">
+				user_id = #{userId},
+			</if>			
+			<if test="isDefault != null">
+				is_default = #{isDefault},
+			</if>			
+			<if test="createType != null">
+				create_type = #{createType},
+			</if>			
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>			
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>			
+			<if test="platformId != null">
+				platform_id = #{platformId},
+			</if>			
+			<if test="titleType != null">
+				title_type = #{titleType},
+			</if>			
+			<if test="isDelete != null">
+				is_delete = #{isDelete},
+			</if>			
+		</set>
+			WHERE id = #{id}
+	</update>	
+	
+
+	<delete id="delete">
+		delete from invoice where id = #{id}
+	</delete>
+
+	<delete id="deleteByPara">
+		delete from invoice 
+		<where>
+			<if test="titleContent != null">
+				and title_content = #{titleContent}
+			</if>
+			<if test="taxpayerIdentificationCode != null">
+				and taxpayer_identification_code = #{taxpayerIdentificationCode}
+			</if>
+			<if test="registerAddr != null">
+				and register_addr = #{registerAddr}
+			</if>
+			<if test="registerTel != null">
+				and register_tel = #{registerTel}
+			</if>
+			<if test="depositBank != null">
+				and deposit_bank = #{depositBank}
+			</if>
+			<if test="bankAccount != null">
+				and bank_account = #{bankAccount}
+			</if>
+			<if test="businessLicenceUrl != null">
+				and business_licence_url = #{businessLicenceUrl}
+			</if>
+			<if test="userId != null">
+				and user_id = #{userId}
+			</if>
+			<if test="isDefault != null">
+				and is_default = #{isDefault}
+			</if>
+			<if test="createType != null">
+				and create_type = #{createType}
+			</if>
+			<if test="updateTime != null">
+				and update_time = #{updateTime}
+			</if>
+			<if test="createTime != null">
+				and create_time = #{createTime}
+			</if>
+			<if test="platformId != null">
+				and platform_id = #{platformId}
+			</if>
+			<if test="titleType != null">
+				and title_type = #{titleType}
+			</if>
+			<if test="isDelete != null">
+				and is_delete = #{isDelete}
+			</if>
+		</where>
+	</delete>
+
+	<update id="resetDefaultInvoice">
+		update invoice set is_default = #{po.isDefault} where user_id = #{po.userId} and platform_id = #{po.platformId}
+	</update>
+
+</mapper>
+	

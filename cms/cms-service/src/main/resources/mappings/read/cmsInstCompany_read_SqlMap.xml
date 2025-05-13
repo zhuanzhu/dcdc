@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.cms.dao.read.CmsInstCompanyReadDAO">
+	<resultMap type="com.egeo.components.cms.po.CmsInstCompanyPO" id="cmsInstCompanyMap">
+		<result property="id" column="id" />
+		<result property="instId" column="inst_id" />
+		<result property="companyId" column="company_id" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+	</resultMap>
+
+	<sql id="cmsInstCompanyColumns">
+		id,
+		inst_id,
+		company_id,
+		create_time,
+		update_time
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.cms.po.CmsInstCompanyPO" resultMap="cmsInstCompanyMap">
+		SELECT
+		<include refid="cmsInstCompanyColumns" />
+		FROM cms_inst_company
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="cmsInstCompanyMap">
+		SELECT
+		<include refid="cmsInstCompanyColumns" />
+		FROM cms_inst_company
+		<where>
+			<if test="po.instId != null">
+				and inst_id = #{po.instId}
+			</if>
+			<if test="po.companyId != null">
+				and company_id = #{po.companyId}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM cms_inst_company
+		<where>
+			<if test="po.instId != null">
+				and inst_id = #{po.instId}
+			</if>
+			<if test="po.companyId != null">
+				and company_id = #{po.companyId}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="cmsInstCompanyMap">
+		SELECT
+		<include refid="cmsInstCompanyColumns" />
+		FROM cms_inst_company
+		<where>
+			<if test="po.instId != null">
+				and inst_id = #{po.instId}
+			</if>
+			<if test="po.companyId != null">
+				and company_id = #{po.companyId}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+</mapper>
+	

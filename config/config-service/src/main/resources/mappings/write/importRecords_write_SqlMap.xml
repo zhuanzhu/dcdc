@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.config.dao.write.ImportRecordsWriteDAO">
+
+	<delete id="deleteBySn">
+		delete from import_records
+		where file_sequence_number=#{sn}
+	</delete>
+
+	<insert id="insert" parameterType="com.egeo.components.config.po.ImportRecordsPO">
+		INSERT INTO import_records(
+        <trim suffixOverrides=",">
+			<if test="companyName != null">
+				company_name,
+			</if>
+			<if test="templateType != null">
+				template_type,
+			</if>
+			<if test="generatedTime != null">
+				generated_time,
+			</if>
+			<if test="fileSequenceNumber != null">
+				file_sequence_number,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+        </trim>		
+		) VALUES (
+        <trim suffixOverrides=",">
+			<if test="companyName != null">
+				#{companyName},
+			</if>
+			<if test="templateType != null">
+				#{templateType},
+			</if>
+			<if test="generatedTime != null">
+				#{generatedTime},
+			</if>
+			<if test="fileSequenceNumber != null">
+				#{fileSequenceNumber},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+        </trim>		
+		)
+		<selectKey keyProperty="id" resultType="java.lang.Long">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+
+	
+	
+	<update id="update">
+	UPDATE import_records 
+		<set>
+			<if test="companyName != null">
+				company_name = #{companyName},
+			</if>			
+			<if test="templateType != null">
+				template_type = #{templateType},
+			</if>			
+			<if test="generatedTime != null">
+				generated_time = #{generatedTime},
+			</if>			
+			<if test="fileSequenceNumber != null">
+				file_sequence_number = #{fileSequenceNumber},
+			</if>			
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>			
+		</set>
+			WHERE id = #{id}
+	</update>	
+	
+
+	<delete id="delete">
+		delete from import_records where id = #{id}
+	</delete>
+
+	<delete id="deleteByPara">
+		delete from import_records 
+		<where>
+			<if test="companyName != null">
+				and company_name = #{companyName}
+			</if>
+			<if test="templateType != null">
+				and template_type = #{templateType}
+			</if>
+			<if test="generatedTime != null">
+				and generated_time = #{generatedTime}
+			</if>
+			<if test="fileSequenceNumber != null">
+				and file_sequence_number = #{fileSequenceNumber}
+			</if>
+			<if test="createTime != null">
+				and create_time = #{createTime}
+			</if>
+		</where>
+	</delete>
+
+
+</mapper>
+	

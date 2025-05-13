@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.order.dao.read.SoPackageBoxReadDAO">
+
+	<select id="queryBoxByBoxCodeAndChildId" resultMap="soPackageBoxMap">
+		select * from so_package_box
+		where so_box_code=#{boxCode}
+		and so_child_id=#{soChildId}
+	</select>
+
+	<resultMap type="com.egeo.components.order.po.SoPackageBoxPO" id="soPackageBoxMap">
+		<result property="id" column="id" />
+		<result property="soChildId" column="so_child_id" />
+		<result property="soBoxCode" column="so_box_code" />
+		<result property="soPackageId" column="so_package_id" />
+	</resultMap>
+
+	<sql id="soPackageBoxColumns">
+		id,
+		so_child_id,
+		so_box_code,
+		so_package_id
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.order.po.SoPackageBoxPO" resultMap="soPackageBoxMap">
+		SELECT
+		<include refid="soPackageBoxColumns" />
+		FROM so_package_box
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="soPackageBoxMap">
+		SELECT
+		<include refid="soPackageBoxColumns" />
+		FROM so_package_box
+		<where>
+			<if test="po.soChildId != null">
+				and so_child_id = #{po.soChildId}
+			</if>
+			<if test="po.soBoxCode != null">
+				and so_box_code = #{po.soBoxCode}
+			</if>
+			<if test="po.soPackageId != null">
+				and so_package_id = #{po.soPackageId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM so_package_box
+		<where>
+			<if test="po.soChildId != null">
+				and so_child_id = #{po.soChildId}
+			</if>
+			<if test="po.soBoxCode != null">
+				and so_box_code = #{po.soBoxCode}
+			</if>
+			<if test="po.soPackageId != null">
+				and so_package_id = #{po.soPackageId}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="soPackageBoxMap">
+		SELECT
+		<include refid="soPackageBoxColumns" />
+		FROM so_package_box
+		<where>
+			<if test="po.soChildId != null">
+				and so_child_id = #{po.soChildId}
+			</if>
+			<if test="po.soBoxCode != null">
+				and so_box_code = #{po.soBoxCode}
+			</if>
+			<if test="po.soPackageId != null">
+				and so_package_id = #{po.soPackageId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+</mapper>
+	

@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.promotion.dao.read.BuyCardItemRefundReadDAO">
+
+	<resultMap type="com.egeo.components.promotion.po.BuyCardItemRefundPO" id="resultPoMap">
+		<result property="id" column="id" />
+		<result property="itemId" column="item_id" />
+		<result property="cardId" column="card_id" />
+		<result property="userId" column="user_id" />
+		<result property="refundAmount" column="refund_amount" />
+		<result property="soId" column="so_id" />
+		<result property="childId" column="child_id" />
+		<result property="orderCode" column="order_code" />
+		<result property="remark" column="remark" />
+		<result property="refundNo" column="refund_no" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="refundId" column="refund_id" />
+		<result property="cardUseId" column="card_use_id" />
+
+	</resultMap>
+
+	<sql id="columnsSql">
+		id,
+		item_id,
+		card_id,
+		user_id,
+		refund_amount,
+		so_id,
+		child_id,
+		order_code,
+		refund_no,
+		remark,
+		create_time,
+		update_time,
+		refund_id,
+		card_use_id
+	</sql>
+
+
+	<sql id="whereSql">
+		<where>
+			<if test="po.id != null">
+				and id =  #{po.id}
+			</if>
+			<if test="po.itemId != null">
+				and item_id = #{po.itemId}
+			</if>
+			<if test="po.childId != null">
+				and child_id = #{po.childId}
+			</if>
+			<if test="po.userId != null">
+				and user_id = #{po.userId}
+			</if>
+			<if test="po.cardId != null">
+				and card_id = #{po.cardId}
+			</if>
+			<if test="po.soId != null">
+				and so_id = #{po.soId}
+			</if>
+			<if test="po.orderCode != null">
+				and order_code = #{po.orderCode}
+			</if>
+			<if test="po.refundNo != null">
+				and refund_no = #{po.refundNo}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.refundId != null">
+				and refund_id = #{po.refundId}
+			</if>
+			<if test="po.cardUseId != null">
+				and card_use_id = #{po.cardUseId}
+			</if>
+		</where>
+	</sql>
+
+	<sql id="tableNameId">
+		buy_card_item_refund
+	</sql>
+
+	<sql id="inClause">
+		in
+		<foreach collection="ids" item="id" open="(" separator=","
+				 close=")">
+			#{id}
+		</foreach>
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.promotion.po.CardUseRecordPO" resultMap="resultPoMap">
+		SELECT
+		<include refid="columnsSql" />
+		FROM
+		<include refid="tableNameId" />
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="resultPoMap">
+		SELECT
+			<include refid="columnsSql" />
+		FROM
+			<include refid="tableNameId" />
+			<include refid="whereSql"/>
+			<choose>
+				<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+					ORDER BY ${page.orderBy}
+				</when>
+				<otherwise>
+					ORDER BY id desc
+				</otherwise>
+			</choose>
+			<if test="page != null">
+			limit #{page.limitStart},#{page.pageSize}
+			</if>
+	</select>
+
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+			count(1) cnt
+		FROM
+			<include refid="tableNameId" />
+			<include refid="whereSql"/>
+	</select>
+
+	<select id="findAll" resultMap="resultPoMap">
+		SELECT
+		<include refid="columnsSql" />
+		FROM
+		<include refid="tableNameId" />
+		<include refid="whereSql"/>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY id desc
+			</otherwise>
+		</choose>
+	</select>
+</mapper>

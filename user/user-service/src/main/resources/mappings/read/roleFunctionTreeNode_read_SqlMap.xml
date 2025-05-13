@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.user.dao.read.RoleFunctionTreeNodeReadDAO">
+	<resultMap type="com.egeo.components.user.po.RoleFunctionTreeNodePO" id="roleFunctionTreeNodeMap">
+		<result property="id" column="id" />
+		<result property="roleId" column="role_id" />
+		<result property="functionTreeNodeId" column="function_tree_node_id" />
+		<result property="fullCheck" column="full_check" />
+		<result property="platformId" column="platform_id" />
+		<result property="createTime" column="create_time" />
+		<result property="updateUserId" column="update_user_id" />
+		<result property="updateUserName" column="update_user_name" />
+		<result property="updateTime" column="update_time" />
+	</resultMap>
+
+	<sql id="roleFunctionTreeNodeColumns">
+		id,
+		role_id,
+		function_tree_node_id,
+		full_check,
+		platform_id,
+		create_time,
+		update_user_id,
+		update_user_name,
+		update_time
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.user.po.RoleFunctionTreeNodePO" resultMap="roleFunctionTreeNodeMap">
+		SELECT
+		<include refid="roleFunctionTreeNodeColumns" />
+		FROM u_role_function_tree_node
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="roleFunctionTreeNodeMap">
+		SELECT
+		<include refid="roleFunctionTreeNodeColumns" />
+		FROM u_role_function_tree_node
+		<where>
+			<if test="po.roleId != null">
+				and role_id = #{po.roleId}
+			</if>
+			<if test="po.functionTreeNodeId != null">
+				and function_tree_node_id = #{po.functionTreeNodeId}
+			</if>
+			<if test="po.fullCheck != null">
+				and full_check = #{po.fullCheck}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateUserId != null">
+				and update_user_id = #{po.updateUserId}
+			</if>
+			<if test="po.updateUserName != null">
+				and update_user_name = #{po.updateUserName}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM u_role_function_tree_node
+		<where>
+			<if test="po.roleId != null">
+				and role_id = #{po.roleId}
+			</if>
+			<if test="po.functionTreeNodeId != null">
+				and function_tree_node_id = #{po.functionTreeNodeId}
+			</if>
+			<if test="po.fullCheck != null">
+				and full_check = #{po.fullCheck}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateUserId != null">
+				and update_user_id = #{po.updateUserId}
+			</if>
+			<if test="po.updateUserName != null">
+				and update_user_name = #{po.updateUserName}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="roleFunctionTreeNodeMap">
+		SELECT
+		<include refid="roleFunctionTreeNodeColumns" />
+		FROM u_role_function_tree_node
+		<where>
+			<if test="po.roleId != null">
+				and role_id = #{po.roleId}
+			</if>
+			<if test="po.functionTreeNodeId != null">
+				and function_tree_node_id = #{po.functionTreeNodeId}
+			</if>
+			<if test="po.fullCheck != null">
+				and full_check = #{po.fullCheck}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateUserId != null">
+				and update_user_id = #{po.updateUserId}
+			</if>
+			<if test="po.updateUserName != null">
+				and update_user_name = #{po.updateUserName}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+</mapper>
+	

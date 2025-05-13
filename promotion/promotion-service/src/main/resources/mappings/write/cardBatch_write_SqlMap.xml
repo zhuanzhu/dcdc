@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.promotion.dao.write.CardBatchWriteDAO">
+	<insert id="insert" parameterType="com.egeo.components.promotion.po.CardBatchPO">
+		INSERT INTO card_batch(
+        <trim suffixOverrides=",">
+			<if test="batchCode != null">
+				batch_code,
+			</if>
+			<if test="importSum != null">
+				import_sum,
+			</if>
+			<if test="source != null">
+				source,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+			<if test="createUserid != null">
+				create_userid,
+			</if>
+			<if test="createUsername != null">
+				create_username,
+			</if>
+			<if test="createUserip != null">
+				create_userip,
+			</if>
+			<if test="createUsermac != null">
+				create_usermac,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="platformId != null">
+				platform_id,
+			</if>
+        </trim>		
+		) VALUES (
+        <trim suffixOverrides=",">
+			<if test="batchCode != null">
+				#{batchCode},
+			</if>
+			<if test="importSum != null">
+				#{importSum},
+			</if>
+			<if test="source != null">
+				#{source},
+			</if>
+			<if test="remark != null">
+				#{remark},
+			</if>
+			<if test="createUserid != null">
+				#{createUserid},
+			</if>
+			<if test="createUsername != null">
+				#{createUsername},
+			</if>
+			<if test="createUserip != null">
+				#{createUserip},
+			</if>
+			<if test="createUsermac != null">
+				#{createUsermac},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="platformId != null">
+				#{platformId},
+			</if>
+        </trim>		
+		)
+		<selectKey keyProperty="id" resultType="java.lang.Long">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+
+	
+	
+	<update id="update">
+	UPDATE card_batch 
+		<set>
+			<if test="batchCode != null">
+				batch_code = #{batchCode},
+			</if>			
+			<if test="importSum != null">
+				import_sum = #{importSum},
+			</if>			
+			<if test="source != null">
+				source = #{source},
+			</if>			
+			<if test="remark != null">
+				remark = #{remark},
+			</if>			
+			<if test="createUserid != null">
+				create_userid = #{createUserid},
+			</if>			
+			<if test="createUsername != null">
+				create_username = #{createUsername},
+			</if>			
+			<if test="createUserip != null">
+				create_userip = #{createUserip},
+			</if>			
+			<if test="createUsermac != null">
+				create_usermac = #{createUsermac},
+			</if>			
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>			
+			<if test="platformId != null">
+				platform_id = #{platformId},
+			</if>			
+		</set>
+			WHERE id = #{id}
+	</update>	
+	
+
+	<delete id="delete">
+		delete from card_batch where id = #{id}
+	</delete>
+
+	<delete id="deleteByPara">
+		delete from card_batch 
+		<where>
+			<if test="batchCode != null">
+				and batch_code = #{batchCode}
+			</if>
+			<if test="importSum != null">
+				and import_sum = #{importSum}
+			</if>
+			<if test="source != null">
+				and source = #{source}
+			</if>
+			<if test="remark != null">
+				and remark = #{remark}
+			</if>
+			<if test="createUserid != null">
+				and create_userid = #{createUserid}
+			</if>
+			<if test="createUsername != null">
+				and create_username = #{createUsername}
+			</if>
+			<if test="createUserip != null">
+				and create_userip = #{createUserip}
+			</if>
+			<if test="createUsermac != null">
+				and create_usermac = #{createUsermac}
+			</if>
+			<if test="createTime != null">
+				and create_time = #{createTime}
+			</if>
+			<if test="platformId != null">
+				and platform_id = #{platformId}
+			</if>
+		</where>
+	</delete>
+
+
+</mapper>
+	

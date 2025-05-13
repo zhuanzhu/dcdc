@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.cms.dao.write.IconGroupWriteDAO">
+	<insert id="insert" parameterType="com.egeo.components.cms.po.IconGroupPO">
+		INSERT INTO icon_group(
+        <trim suffixOverrides=",">
+			<if test="count != null">
+				count,
+			</if>
+			<if test="type != null">
+				type,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="instId != null">
+				inst_id,
+			</if>
+			<if test="title != null">
+				title,
+			</if>
+        </trim>		
+		) VALUES (
+        <trim suffixOverrides=",">
+			<if test="count != null">
+				#{count},
+			</if>
+			<if test="type != null">
+				#{type},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
+			</if>
+			<if test="instId != null">
+				#{instId},
+			</if>
+			<if test="title != null">
+				#{title},
+			</if>
+        </trim>		
+		)
+		<selectKey keyProperty="id" resultType="java.lang.Long">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+
+	
+	
+	<update id="update">
+	UPDATE icon_group 
+		<set>
+			<if test="count != null">
+				count = #{count},
+			</if>			
+			<if test="type != null">
+				type = #{type},
+			</if>			
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>			
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>
+			<if test="instId != null">
+				inst_id=#{instId},
+			</if>
+			<if test="title != null">
+				title=#{title},
+			</if>	
+		</set>
+			WHERE id = #{id}
+	</update>	
+	
+
+	<delete id="delete">
+		delete from icon_group where id = #{id}
+	</delete>
+
+	<delete id="deleteByPara">
+		delete from icon_group 
+		<where>
+			<if test="count != null">
+				and count = #{count}
+			</if>
+			<if test="type != null">
+				and type = #{type}
+			</if>
+			<if test="createTime != null">
+				and create_time = #{createTime}
+			</if>
+			<if test="updateTime != null">
+				and update_time = #{updateTime}
+			</if>
+			<if test="instId != null">
+				and inst_id=#{instId}
+			</if>
+			<if test="title != null">
+				and title=#{title}
+			</if>
+		</where>
+	</delete>
+
+
+</mapper>
+	

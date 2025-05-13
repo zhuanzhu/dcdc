@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.product.dao.read.PictureReadDAO">
+	<resultMap type="com.egeo.components.product.po.PicturePO" id="pictureMap">
+		<result property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="url" column="url" />
+		<result property="platformId" column="platform_id" />
+		<result property="sortValue" column="sort_value" />
+		<result property="type" column="type" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+	</resultMap>
+	
+	<resultMap type="com.egeo.components.product.condition.PictureCondition" id="pictureCondition" extends="pictureMap">
+		<result property="merchantProdPictureId" column="merchant_prod_picture_id" />
+		<result property="merchantPictureId" column="merchant_picture_id" />
+	</resultMap>
+
+	<sql id="pictureColumns">
+		id,
+		name,
+		url,
+		platform_id,
+		sort_value,
+		type,
+		create_time,
+		update_time
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.product.po.PicturePO" resultMap="pictureMap">
+		SELECT
+		<include refid="pictureColumns" />
+		FROM picture
+		WHERE id = #{po.id}
+	</select>
+	<select id="findLastId" resultType="java.lang.Long">
+		SELECT
+		MAX(id)
+		FROM picture
+	</select>
+
+	<select id="findOfPage" resultMap="pictureMap">
+		SELECT
+		<include refid="pictureColumns" />
+		FROM picture
+		<where>
+			<if test="po.name != null">
+				and name = #{po.name}
+			</if>
+			<if test="po.url != null">
+				and url = #{po.url}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.sortValue != null">
+				and sort_value = #{po.sortValue}
+			</if>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY sort_value
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM picture
+		<where>
+			<if test="po.name != null">
+				and name = #{po.name}
+			</if>
+			<if test="po.url != null">
+				and url = #{po.url}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.sortValue != null">
+				and sort_value = #{po.sortValue}
+			</if>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="pictureMap">
+		SELECT
+		<include refid="pictureColumns" />
+		FROM picture
+		<where>
+			<if test="po.name != null">
+				and name = #{po.name}
+			</if>
+			<if test="po.url != null">
+				and url = #{po.url}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.sortValue != null">
+				and sort_value = #{po.sortValue}
+			</if>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY sort_value
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findByStandardUnitId" resultType="java.lang.String">
+		SELECT
+		p.url
+		FROM picture p
+		LEFT JOIN merchant_picture mp on mp.picture_id = p.id
+		LEFT JOIN standard_unit_picture sup on sup.merchant_picture_id = mp.id
+		WHERE sup.type = 2 and sup.standard_unit_id = #{standardUnitId}
+		ORDER BY sup.merchant_picture_id
+	</select>
+	
+	<select id="findByStandardUnitIdAndType" resultType="java.lang.String">
+		SELECT
+		p.url
+		FROM picture p
+		LEFT JOIN merchant_picture mp on mp.picture_id = p.id
+		LEFT JOIN standard_unit_picture sup on sup.merchant_picture_id = mp.id
+		WHERE sup.type = #{type} and sup.standard_unit_id = #{standardUnitId}
+		ORDER BY sup.merchant_picture_id
+	</select>
+	
+	<select id="picturesByStandardUnitId" resultMap="pictureCondition">
+		SELECT
+		p.id,
+		sup.merchant_picture_id,
+		p.name,
+		p.url,
+		p.platform_id,
+		p.sort_value,
+		sup.type,
+		p.create_time,
+		p.update_time
+		FROM picture p
+		LEFT JOIN merchant_picture mp on mp.picture_id = p.id
+		LEFT JOIN standard_unit_picture sup on sup.merchant_picture_id = mp.id
+		WHERE sup.standard_unit_id = #{standardUnitId}
+		ORDER BY sup.id
+	</select>
+	
+	<select id="findPictureByStandardUnitId" resultType="java.lang.String">
+		SELECT
+		p.url
+		FROM picture p
+		LEFT JOIN merchant_picture mp on mp.picture_id = p.id
+		LEFT JOIN standard_unit_picture sup on sup.merchant_picture_id = mp.id
+		WHERE sup.type = 1 and sup.standard_unit_id = #{standardUnitId}
+		ORDER BY sup.id
+	</select>
+	
+	<select id="pictureByProductId" resultMap="pictureMap">
+		SELECT 
+		p.id,
+		p.name,
+		p.url,
+		p.platform_id,
+		p.sort_value,
+		p.type
+		from picture p
+		LEFT JOIN product_picture pp on pp.picture_id = p.id
+		WHERE pp.product_id = #{pictureId}
+	</select>
+	
+	<select id="findMPictureByMerchantProdId" resultMap="pictureCondition">
+		SELECT
+		p.id,
+		mpp.id merchant_prod_picture_id,
+		mpp.merchant_picture_id,
+		p.name,
+		p.url,
+		p.platform_id,
+		p.sort_value,
+		mpp.type,
+		p.create_time,
+		p.update_time
+		from picture p
+		LEFT JOIN merchant_picture mp on mp.picture_id = p.id
+		LEFT JOIN merchant_prod_picture mpp on mpp.merchant_picture_id = mp.id
+		WHERE mpp.merchant_prod_id = #{merchantProdId}
+	</select>
+	
+	<select id="findByStandardProductUnitId" resultMap="pictureCondition">
+		SELECT
+		p.id,
+		p.name,
+		p.url,
+		p.platform_id,
+		p.sort_value,
+		spup.type,
+		p.create_time,
+		p.update_time
+		from picture p
+		LEFT JOIN standard_product_unit_picture spup on spup.picture_id = p.id
+		WHERE spup.standard_product_unit_id = #{standardProductUnitId}
+	</select>
+	
+	<select id="skuPicUrlByStandardProductUnitId" resultType="java.lang.String">
+		SELECT p.url FROM picture p
+		LEFT JOIN product_picture pp on pp.picture_id = p.id
+		WHERE pp.type = 1 and pp.product_id = #{standardProductUnitId}
+	</select>
+	
+</mapper>
+	

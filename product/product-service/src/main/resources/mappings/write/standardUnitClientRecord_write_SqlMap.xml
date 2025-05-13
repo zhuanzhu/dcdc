@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.product.dao.write.StandardUnitClientRecordWriteDAO">
+	
+	<sql id="insertAllClause">
+		<foreach collection="poList" item="po" separator=",">
+				(#{po.standardUnitRecordId},
+				#{po.clientId},
+				#{po.createTime})
+		</foreach>
+	</sql>
+	
+	<insert id="insert" parameterType="com.egeo.components.product.po.StandardUnitClientRecordPO">
+		INSERT INTO standard_unit_client_record(
+        <trim suffixOverrides=",">
+			<if test="standardUnitRecordId != null">
+				standard_unit_record_id,
+			</if>
+			<if test="clientId != null">
+				client_id,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+        </trim>		
+		) VALUES (
+        <trim suffixOverrides=",">
+			<if test="standardUnitRecordId != null">
+				#{standardUnitRecordId},
+			</if>
+			<if test="clientId != null">
+				#{clientId},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+        </trim>		
+		)
+		<selectKey keyProperty="id" resultType="java.lang.Long">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	
+	<insert id="insertAll">
+		INSERT INTO standard_unit_client_record(
+				standard_unit_record_id,
+				client_id,
+				create_time
+		) VALUES <include refid="insertAllClause" /> 
+	</insert>
+
+
+	
+	
+	<update id="update">
+	UPDATE standard_unit_client_record 
+		<set>
+			<if test="standardUnitRecordId != null">
+				standard_unit_record_id = #{standardUnitRecordId},
+			</if>			
+			<if test="clientId != null">
+				client_id = #{clientId},
+			</if>			
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>			
+		</set>
+			WHERE id = #{id}
+	</update>	
+	
+
+	<delete id="delete">
+		delete from standard_unit_client_record where id = #{id}
+	</delete>
+
+	<delete id="deleteByPara">
+		delete from standard_unit_client_record 
+		<where>
+			<if test="standardUnitRecordId != null">
+				and standard_unit_record_id = #{standardUnitRecordId}
+			</if>
+			<if test="clientId != null">
+				and client_id = #{clientId}
+			</if>
+			<if test="createTime != null">
+				and create_time = #{createTime}
+			</if>
+		</where>
+	</delete>
+
+
+</mapper>
+	

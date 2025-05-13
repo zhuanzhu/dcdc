@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.order.dao.read.ExpressConfigReadDAO">
+	<resultMap type="com.egeo.components.order.po.ExpressConfigPO" id="expressConfigMap">
+		<result property="id" column="id" />
+		<result property="deliveryCompanyId" column="delivery_company_id" />
+		<result property="deliveryCompanyName" column="delivery_company_name" />
+		<result property="updateTime" column="update_time" />
+		<result property="createTime" column="create_time" />
+		<result property="platformId" column="platform_id" />
+	</resultMap>
+
+	<sql id="expressConfigColumns">
+		id,
+		delivery_company_id,
+		delivery_company_name,
+		update_time,
+		create_time,
+		platform_id
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.order.po.ExpressConfigPO" resultMap="expressConfigMap">
+		SELECT
+		<include refid="expressConfigColumns" />
+		FROM express_config
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="expressConfigMap">
+		SELECT
+		<include refid="expressConfigColumns" />
+		FROM express_config
+		<where>
+			<if test="po.deliveryCompanyId != null">
+				and delivery_company_id = #{po.deliveryCompanyId}
+			</if>
+			<if test="po.deliveryCompanyName != null">
+				and delivery_company_name = #{po.deliveryCompanyName}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM express_config
+		<where>
+			<if test="po.deliveryCompanyId != null">
+				and delivery_company_id = #{po.deliveryCompanyId}
+			</if>
+			<if test="po.deliveryCompanyName != null">
+				and delivery_company_name = #{po.deliveryCompanyName}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="expressConfigMap">
+		SELECT
+		<include refid="expressConfigColumns" />
+		FROM express_config
+		<where>
+			<if test="po.deliveryCompanyId != null">
+				and delivery_company_id = #{po.deliveryCompanyId}
+			</if>
+			<if test="po.deliveryCompanyName != null">
+				and delivery_company_name = #{po.deliveryCompanyName}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+</mapper>
+	

@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.product.dao.read.StandardUnitPictureReadDAO">
+	<resultMap type="com.egeo.components.product.po.StandardUnitPicturePO" id="standardUnitPictureMap">
+		<result property="id" column="id" />
+		<result property="merchantPictureId" column="merchant_picture_id" />
+		<result property="type" column="type" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="platformId" column="platform_id" />
+		<result property="standardUnitId" column="standard_unit_id" />
+	</resultMap>
+
+	<sql id="standardUnitPictureColumns">
+		id,
+		merchant_picture_id,
+		type,
+		create_time,
+		update_time,
+		platform_id,
+		standard_unit_id
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.product.po.StandardUnitPicturePO" resultMap="standardUnitPictureMap">
+		SELECT
+		<include refid="standardUnitPictureColumns" />
+		FROM standard_unit_picture
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="standardUnitPictureMap">
+		SELECT
+		<include refid="standardUnitPictureColumns" />
+		FROM standard_unit_picture
+		<where>
+			<if test="po.merchantPictureId != null">
+				and merchant_picture_id = #{po.merchantPictureId}
+			</if>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.standardUnitId != null">
+				and standard_unit_id = #{po.standardUnitId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM standard_unit_picture
+		<where>
+			<if test="po.merchantPictureId != null">
+				and merchant_picture_id = #{po.merchantPictureId}
+			</if>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.standardUnitId != null">
+				and standard_unit_id = #{po.standardUnitId}
+			</if>
+		</where>
+	</select>
+
+
+
+	<select id="findPictureUrlBySUId" resultType="java.lang.String">
+		SELECT
+		p.url
+		FROM standard_unit_picture sup LEFT JOIN merchant_picture mp on sup.merchant_picture_id=mp.id
+		LEFT JOIN picture p ON p.id=mp.picture_id
+		where sup.standard_unit_id=#{id} and sup.type=1
+
+	</select>
+	
+	<select id="findAll" resultMap="standardUnitPictureMap">
+		SELECT
+		<include refid="standardUnitPictureColumns" />
+		FROM standard_unit_picture
+		<where>
+			<if test="po.merchantPictureId != null">
+				and merchant_picture_id = #{po.merchantPictureId}
+			</if>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.standardUnitId != null">
+				and standard_unit_id = #{po.standardUnitId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+</mapper>
+	

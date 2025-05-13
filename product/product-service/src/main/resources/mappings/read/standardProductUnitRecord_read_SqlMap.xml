@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.product.dao.read.StandardProductUnitRecordReadDAO">
+	<resultMap type="com.egeo.components.product.po.StandardProductUnitRecordPO" id="standardProductUnitRecordMap">
+		<result property="id" column="id" />
+		<result property="standardProductUnitId" column="standard_product_unit_id" />
+		<result property="productSerialNumber" column="product_serial_number" />
+		<result property="brandId" column="brand_id" />
+		<result property="categoryTreeNodeId" column="category_tree_node_id" />
+		<result property="title" column="title" />
+		<result property="name" column="name" />
+		<result property="chineseName" column="chinese_name" />
+		<result property="marketPrice" column="market_price" />
+		<result property="taxNo" column="tax_no" />
+		<result property="eanNo" column="ean_no" />
+		<result property="placeOfOrigin" column="place_of_origin" />
+		<result property="calculationUnit" column="calculation_unit" />
+		<result property="status" column="status" />
+		<result property="isAvailable" column="is_available" />
+		<result property="productDetails" column="product_details" />
+		<result property="createUserid" column="create_userid" />
+		<result property="createUsername" column="create_username" />
+		<result property="createUserip" column="create_userip" />
+		<result property="createUsermac" column="create_usermac" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="platformId" column="platform_id" />
+	</resultMap>
+
+	<sql id="standardProductUnitRecordColumns">
+		id,
+		standard_product_unit_id,
+		product_serial_number,
+		brand_id,
+		category_tree_node_id,
+		title,
+		name,
+		chinese_name,
+		market_price,
+		tax_no,
+		ean_no,
+		place_of_origin,
+		calculation_unit,
+		status,
+		is_available,
+		product_details,
+		create_userid,
+		create_username,
+		create_userip,
+		create_usermac,
+		create_time,
+		update_time,
+		platform_id
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.product.po.StandardProductUnitRecordPO" resultMap="standardProductUnitRecordMap">
+		SELECT
+		<include refid="standardProductUnitRecordColumns" />
+		FROM standard_product_unit_record
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="standardProductUnitRecordMap">
+		SELECT
+		<include refid="standardProductUnitRecordColumns" />
+		FROM standard_product_unit_record
+		<where>
+			<if test="po.standardProductUnitId != null">
+				and standard_product_unit_id = #{po.standardProductUnitId}
+			</if>
+			<if test="po.productSerialNumber != null">
+				and product_serial_number = #{po.productSerialNumber}
+			</if>
+			<if test="po.brandId != null">
+				and brand_id = #{po.brandId}
+			</if>
+			<if test="po.categoryTreeNodeId != null">
+				and category_tree_node_id = #{po.categoryTreeNodeId}
+			</if>
+			<if test="po.title != null">
+				and title = #{po.title}
+			</if>
+			<if test="po.name != null">
+				and name = #{po.name}
+			</if>
+			<if test="po.chineseName != null">
+				and chinese_name = #{po.chineseName}
+			</if>
+			<if test="po.marketPrice != null">
+				and market_price = #{po.marketPrice}
+			</if>
+			<if test="po.taxNo != null">
+				and tax_no = #{po.taxNo}
+			</if>
+			<if test="po.eanNo != null">
+				and ean_no = #{po.eanNo}
+			</if>
+			<if test="po.placeOfOrigin != null">
+				and place_of_origin = #{po.placeOfOrigin}
+			</if>
+			<if test="po.calculationUnit != null">
+				and calculation_unit = #{po.calculationUnit}
+			</if>
+			<if test="po.status != null">
+				and status = #{po.status}
+			</if>
+			<if test="po.isAvailable != null">
+				and is_available = #{po.isAvailable}
+			</if>
+			<if test="po.productDetails != null">
+				and product_details = #{po.productDetails}
+			</if>
+			<if test="po.createUserid != null">
+				and create_userid = #{po.createUserid}
+			</if>
+			<if test="po.createUsername != null">
+				and create_username = #{po.createUsername}
+			</if>
+			<if test="po.createUserip != null">
+				and create_userip = #{po.createUserip}
+			</if>
+			<if test="po.createUsermac != null">
+				and create_usermac = #{po.createUsermac}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM standard_product_unit_record
+		<where>
+			<if test="po.standardProductUnitId != null">
+				and standard_product_unit_id = #{po.standardProductUnitId}
+			</if>
+			<if test="po.productSerialNumber != null">
+				and product_serial_number = #{po.productSerialNumber}
+			</if>
+			<if test="po.brandId != null">
+				and brand_id = #{po.brandId}
+			</if>
+			<if test="po.categoryTreeNodeId != null">
+				and category_tree_node_id = #{po.categoryTreeNodeId}
+			</if>
+			<if test="po.title != null">
+				and title = #{po.title}
+			</if>
+			<if test="po.name != null">
+				and name = #{po.name}
+			</if>
+			<if test="po.chineseName != null">
+				and chinese_name = #{po.chineseName}
+			</if>
+			<if test="po.marketPrice != null">
+				and market_price = #{po.marketPrice}
+			</if>
+			<if test="po.taxNo != null">
+				and tax_no = #{po.taxNo}
+			</if>
+			<if test="po.eanNo != null">
+				and ean_no = #{po.eanNo}
+			</if>
+			<if test="po.placeOfOrigin != null">
+				and place_of_origin = #{po.placeOfOrigin}
+			</if>
+			<if test="po.calculationUnit != null">
+				and calculation_unit = #{po.calculationUnit}
+			</if>
+			<if test="po.status != null">
+				and status = #{po.status}
+			</if>
+			<if test="po.isAvailable != null">
+				and is_available = #{po.isAvailable}
+			</if>
+			<if test="po.productDetails != null">
+				and product_details = #{po.productDetails}
+			</if>
+			<if test="po.createUserid != null">
+				and create_userid = #{po.createUserid}
+			</if>
+			<if test="po.createUsername != null">
+				and create_username = #{po.createUsername}
+			</if>
+			<if test="po.createUserip != null">
+				and create_userip = #{po.createUserip}
+			</if>
+			<if test="po.createUsermac != null">
+				and create_usermac = #{po.createUsermac}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="standardProductUnitRecordMap">
+		SELECT
+		<include refid="standardProductUnitRecordColumns" />
+		FROM standard_product_unit_record
+		<where>
+			<if test="po.standardProductUnitId != null">
+				and standard_product_unit_id = #{po.standardProductUnitId}
+			</if>
+			<if test="po.productSerialNumber != null">
+				and product_serial_number = #{po.productSerialNumber}
+			</if>
+			<if test="po.brandId != null">
+				and brand_id = #{po.brandId}
+			</if>
+			<if test="po.categoryTreeNodeId != null">
+				and category_tree_node_id = #{po.categoryTreeNodeId}
+			</if>
+			<if test="po.title != null">
+				and title = #{po.title}
+			</if>
+			<if test="po.name != null">
+				and name = #{po.name}
+			</if>
+			<if test="po.chineseName != null">
+				and chinese_name = #{po.chineseName}
+			</if>
+			<if test="po.marketPrice != null">
+				and market_price = #{po.marketPrice}
+			</if>
+			<if test="po.taxNo != null">
+				and tax_no = #{po.taxNo}
+			</if>
+			<if test="po.eanNo != null">
+				and ean_no = #{po.eanNo}
+			</if>
+			<if test="po.placeOfOrigin != null">
+				and place_of_origin = #{po.placeOfOrigin}
+			</if>
+			<if test="po.calculationUnit != null">
+				and calculation_unit = #{po.calculationUnit}
+			</if>
+			<if test="po.status != null">
+				and status = #{po.status}
+			</if>
+			<if test="po.isAvailable != null">
+				and is_available = #{po.isAvailable}
+			</if>
+			<if test="po.productDetails != null">
+				and product_details = #{po.productDetails}
+			</if>
+			<if test="po.createUserid != null">
+				and create_userid = #{po.createUserid}
+			</if>
+			<if test="po.createUsername != null">
+				and create_username = #{po.createUsername}
+			</if>
+			<if test="po.createUserip != null">
+				and create_userip = #{po.createUserip}
+			</if>
+			<if test="po.createUsermac != null">
+				and create_usermac = #{po.createUsermac}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+</mapper>
+	

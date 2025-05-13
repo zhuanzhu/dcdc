@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.product.dao.read.JdCategoryReadDAO">
+	<resultMap type="com.egeo.components.product.po.JdCategoryPO" id="jdCategoryMap">
+		<result property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="parentId" column="parent_id" />
+		<result property="innerCategoryId" column="inner_category_id" />
+	</resultMap>
+
+	<sql id="jdCategoryColumns">
+		id,
+		name,
+		parent_id,
+		inner_category_id,
+		cat_class
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.product.po.JdCategoryPO" resultMap="jdCategoryMap">
+		SELECT
+		<include refid="jdCategoryColumns" />
+		FROM jd_category
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="jdCategoryMap">
+		SELECT
+		<include refid="jdCategoryColumns" />
+		FROM jd_category
+		<where>
+			<if test="po.name != null">
+				and name = #{po.name}
+			</if>
+			<if test="po.parentId != null">
+				and parent_id = #{po.parentId}
+			</if>
+			<if test="po.innerCategoryId != null">
+				and inner_category_id = #{po.innerCategoryId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM jd_category
+		<where>
+			<if test="po.name != null">
+				and name = #{po.name}
+			</if>
+			<if test="po.parentId != null">
+				and parent_id = #{po.parentId}
+			</if>
+			<if test="po.innerCategoryId != null">
+				and inner_category_id = #{po.innerCategoryId}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="jdCategoryMap">
+		SELECT
+		<include refid="jdCategoryColumns" />
+		FROM jd_category
+		<where>
+			<if test="po.name != null">
+				and name = #{po.name}
+			</if>
+			<if test="po.parentId != null">
+				and parent_id = #{po.parentId}
+			</if>
+			<if test="po.innerCategoryId != null">
+				and inner_category_id = #{po.innerCategoryId}
+			</if>
+			<if test="po.catClass != null">
+			and cat_class  = #{po.catClass }
+		</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+
+
+
+	<select id="findJdCategoryIdByCatClass" resultType="java.lang.Long">
+		SELECT
+		id
+		FROM jd_category
+		<where>
+			<if test="catClass != null">
+				and cat_class= #{catClass}
+			</if>
+		</where>
+	</select>
+</mapper>
+	

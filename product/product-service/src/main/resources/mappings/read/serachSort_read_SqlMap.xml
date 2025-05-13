@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.product.dao.read.SerachSortReadDAO">
+	<resultMap type="com.egeo.components.product.po.SerachSortPO" id="serachSortMap">
+		<result property="id" column="id" />
+		<result property="sortValue" column="sort_value" />
+		<result property="regulation" column="regulation" />
+		<result property="description" column="description" />
+		<result property="platformId" column="platform_id" />
+	</resultMap>
+
+	<sql id="serachSortColumns">
+		id,
+		sort_value,
+		regulation,
+		description,
+		platform_id
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.product.po.SerachSortPO" resultMap="serachSortMap">
+		SELECT
+		<include refid="serachSortColumns" />
+		FROM serach_sort
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="serachSortMap">
+		SELECT
+		<include refid="serachSortColumns" />
+		FROM serach_sort
+		<where>
+			<if test="po.sortValue != null">
+				and sort_value = #{po.sortValue}
+			</if>
+			<if test="po.regulation != null">
+				and regulation = #{po.regulation}
+			</if>
+			<if test="po.description != null">
+				and description = #{po.description}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY sort_value
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM serach_sort
+		<where>
+			<if test="po.sortValue != null">
+				and sort_value = #{po.sortValue}
+			</if>
+			<if test="po.regulation != null">
+				and regulation = #{po.regulation}
+			</if>
+			<if test="po.description != null">
+				and description = #{po.description}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="serachSortMap">
+		SELECT
+		<include refid="serachSortColumns" />
+		FROM serach_sort
+		<where>
+			<if test="po.sortValue != null">
+				and sort_value = #{po.sortValue}
+			</if>
+			<if test="po.regulation != null">
+				and regulation = #{po.regulation}
+			</if>
+			<if test="po.description != null">
+				and description = #{po.description}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY sort_value
+			</otherwise>
+		</choose>
+	</select>
+</mapper>
+	

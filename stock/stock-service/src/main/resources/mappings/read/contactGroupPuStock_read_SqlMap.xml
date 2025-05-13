@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.stock.dao.read.ContactGroupPuStockReadDAO">
+	<resultMap type="com.egeo.components.stock.po.ContactGroupPuStockPO" id="contactGroupPuStockMap">
+		<result property="id" column="id" />
+		<result property="suId" column="su_id" />
+		<result property="puId" column="pu_id" />
+		<result property="contactGroupSkuId" column="contact_group_sku_id" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+	</resultMap>
+
+	<sql id="contactGroupPuStockColumns">
+		id,
+		su_id,
+		pu_id,
+		contact_group_sku_id,
+		create_time,
+		update_time
+	</sql>
+
+	
+	<select id="findPuIdListByPuId" resultType="java.lang.Long">
+		SELECT
+		pu_id
+		FROM contact_group_pu_stock
+		where contact_group_sku_id = (
+		select contact_group_sku_id FROM contact_group_pu_stock where pu_id = #{puId}
+		)
+	</select>
+	
+	<select id="findContactGroupPuStockBySkuId" resultMap="contactGroupPuStockMap">
+		SELECT
+		<include refid="contactGroupPuStockColumns" />
+		FROM contact_group_pu_stock
+		WHERE contact_group_sku_id = #{contactGroupSkuId}
+	</select>
+	
+	<select id="findById" parameterType="com.egeo.components.stock.po.ContactGroupPuStockPO" resultMap="contactGroupPuStockMap">
+		SELECT
+		<include refid="contactGroupPuStockColumns" />
+		FROM contact_group_pu_stock
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="contactGroupPuStockMap">
+		SELECT
+		<include refid="contactGroupPuStockColumns" />
+		FROM contact_group_pu_stock
+		<where>
+			<if test="po.suId != null">
+				and su_id = #{po.suId}
+			</if>
+			<if test="po.puId != null">
+				and pu_id = #{po.puId}
+			</if>
+			<if test="po.contactGroupSkuId != null">
+				and contact_group_sku_id = #{po.contactGroupSkuId}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM contact_group_pu_stock
+		<where>
+			<if test="po.suId != null">
+				and su_id = #{po.suId}
+			</if>
+			<if test="po.puId != null">
+				and pu_id = #{po.puId}
+			</if>
+			<if test="po.contactGroupSkuId != null">
+				and contact_group_sku_id = #{po.contactGroupSkuId}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="contactGroupPuStockMap">
+		SELECT
+		<include refid="contactGroupPuStockColumns" />
+		FROM contact_group_pu_stock
+		<where>
+			<if test="po.suId != null">
+				and su_id = #{po.suId}
+			</if>
+			<if test="po.puId != null">
+				and pu_id = #{po.puId}
+			</if>
+			<if test="po.contactGroupSkuId != null">
+				and contact_group_sku_id = #{po.contactGroupSkuId}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+</mapper>
+	

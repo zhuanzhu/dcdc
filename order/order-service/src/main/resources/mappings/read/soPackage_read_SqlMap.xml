@@ -1,0 +1,508 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.order.dao.read.SoPackageReadDAO">
+
+	<select id="queryPackageBySoChildId" resultMap="soPackageMap">
+		select * from so_package
+		where so_child_id=#{id}
+	</select>
+
+
+	<resultMap type="com.egeo.components.order.po.SoPackagePO" id="soPackageMap">
+		<result property="id" column="id" />
+		<result property="userId" column="user_id" />
+		<result property="soId" column="so_id" />
+		<result property="soChildId" column="so_child_id" />
+		<result property="receiverAddressId" column="receiver_address_id" />
+		<result property="orderCode" column="order_code" />
+		<result property="merchantId" column="merchant_id" />
+		<result property="soChildDeliveryFee" column="so_child_delivery_fee" />
+		<result property="packageType" column="package_type" />
+		<result property="deliveryCode" column="delivery_code" />
+		<result property="deliveryStatus" column="delivery_status" />
+		<result property="deliveryMode" column="delivery_mode" />
+		<result property="deliveryCompanyId" column="delivery_company_id" />
+		<result property="deliveryCompanyName" column="delivery_company_name" />
+		<result property="deliveryMessage" column="delivery_message" />
+		<result property="orderDeliveryMethodId" column="order_delivery_method_id" />
+		<result property="goodReceiverName" column="good_receiver_name" />
+		<result property="goodReceiverMobile" column="good_receiver_mobile" />
+		<result property="proCityArea" column="pro_city_area" />
+		<result property="deliveryDate" column="delivery_date" />
+		<result property="goodReceiverAddress" column="good_receiver_address" />
+		<result property="deliveryName" column="delivery_name" />
+		<result property="deliveryNameMobile" column="delivery_name_mobile" />
+		<result property="signName" column="sign_name" />
+		<result property="signDate" column="sign_date" />
+		<result property="signRemark" column="sign_remark" />
+		<result property="updateTime" column="update_time" />
+		<result property="createTime" column="create_time" />
+		<result property="platformId" column="platform_id" />
+	</resultMap>
+	<resultMap type="com.egeo.components.order.condition.SoPackageCondition" id="soPackageConditionMap" extends="soPackageMap">
+		<result property="soBoxCode" column="so_box_bode" />
+	</resultMap>
+
+	<sql id="soPackageColumns">
+		id,
+		user_id,
+		so_id,
+		so_child_id,
+		receiver_address_id,
+		order_code,
+		merchant_id,
+		so_child_delivery_fee,
+		package_type,
+		delivery_code,
+		delivery_status,
+		delivery_mode,
+		delivery_company_id,
+		delivery_company_name,
+		delivery_message,
+		order_delivery_method_id,
+		good_receiver_name,
+		good_receiver_mobile,
+		pro_city_area,
+		delivery_date,
+		good_receiver_address,
+		delivery_name,
+		delivery_name_mobile,
+		sign_name,
+		sign_date,
+		sign_remark,
+		update_time,
+		create_time,
+		platform_id
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.order.po.SoPackagePO" resultMap="soPackageMap">
+		SELECT
+		<include refid="soPackageColumns" />
+		FROM so_package
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="soPackageMap">
+		SELECT
+		<include refid="soPackageColumns" />
+		FROM so_package
+		<where>
+			<if test="po.userId != null">
+				and user_id = #{po.userId}
+			</if>
+			<if test="po.soId != null">
+				and so_id = #{po.soId}
+			</if>
+			<if test="po.soChildId != null">
+				and so_child_id = #{po.soChildId}
+			</if>
+			<if test="po.receiverAddressId != null">
+				and receiver_address_id = #{po.receiverAddressId}
+			</if>
+			<if test="po.orderCode != null">
+				and order_code = #{po.orderCode}
+			</if>
+			<if test="po.merchantId != null">
+				and merchant_id = #{po.merchantId}
+			</if>
+			<if test="po.soChildDeliveryFee != null">
+				and so_child_delivery_fee = #{po.soChildDeliveryFee}
+			</if>
+			<if test="po.packageType != null">
+				and package_type = #{po.packageType}
+			</if>
+			<if test="po.deliveryCode != null">
+				and delivery_code = #{po.deliveryCode}
+			</if>
+			<if test="po.deliveryStatus != null">
+				and delivery_status = #{po.deliveryStatus}
+			</if>
+			<if test="po.deliveryMode != null">
+				and delivery_mode = #{po.deliveryMode}
+			</if>
+			<if test="po.deliveryCompanyId != null">
+				and delivery_company_id = #{po.deliveryCompanyId}
+			</if>
+			<if test="po.deliveryCompanyName != null">
+				and delivery_company_name = #{po.deliveryCompanyName}
+			</if>
+			<if test="po.deliveryMessage != null">
+				and delivery_message = #{po.deliveryMessage}
+			</if>
+			<if test="po.orderDeliveryMethodId != null">
+				and order_delivery_method_id = #{po.orderDeliveryMethodId}
+			</if>
+			<if test="po.goodReceiverName != null">
+				and good_receiver_name = #{po.goodReceiverName}
+			</if>
+			<if test="po.goodReceiverMobile != null">
+				and good_receiver_mobile = #{po.goodReceiverMobile}
+			</if>
+			<if test="po.proCityArea != null">
+				and pro_city_area = #{po.proCityArea}
+			</if>
+			<if test="po.deliveryDate != null">
+				and delivery_date = #{po.deliveryDate}
+			</if>
+			<if test="po.goodReceiverAddress != null">
+				and good_receiver_address = #{po.goodReceiverAddress}
+			</if>
+			<if test="po.deliveryName != null">
+				and delivery_name = #{po.deliveryName}
+			</if>
+			<if test="po.deliveryNameMobile != null">
+				and delivery_name_mobile = #{po.deliveryNameMobile}
+			</if>
+			<if test="po.signName != null">
+				and sign_name = #{po.signName}
+			</if>
+			<if test="po.signDate != null">
+				and sign_date = #{po.signDate}
+			</if>
+			<if test="po.signRemark != null">
+				and sign_remark = #{po.signRemark}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY id desc
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM so_package
+		<where>
+			<if test="po.userId != null">
+				and user_id = #{po.userId}
+			</if>
+			<if test="po.soId != null">
+				and so_id = #{po.soId}
+			</if>
+			<if test="po.soChildId != null">
+				and so_child_id = #{po.soChildId}
+			</if>
+			<if test="po.receiverAddressId != null">
+				and receiver_address_id = #{po.receiverAddressId}
+			</if>
+			<if test="po.orderCode != null">
+				and order_code = #{po.orderCode}
+			</if>
+			<if test="po.merchantId != null">
+				and merchant_id = #{po.merchantId}
+			</if>
+			<if test="po.soChildDeliveryFee != null">
+				and so_child_delivery_fee = #{po.soChildDeliveryFee}
+			</if>
+			<if test="po.packageType != null">
+				and package_type = #{po.packageType}
+			</if>
+			<if test="po.deliveryCode != null">
+				and delivery_code = #{po.deliveryCode}
+			</if>
+			<if test="po.deliveryStatus != null">
+				and delivery_status = #{po.deliveryStatus}
+			</if>
+			<if test="po.deliveryMode != null">
+				and delivery_mode = #{po.deliveryMode}
+			</if>
+			<if test="po.deliveryCompanyId != null">
+				and delivery_company_id = #{po.deliveryCompanyId}
+			</if>
+			<if test="po.deliveryCompanyName != null">
+				and delivery_company_name = #{po.deliveryCompanyName}
+			</if>
+			<if test="po.deliveryMessage != null">
+				and delivery_message = #{po.deliveryMessage}
+			</if>
+			<if test="po.orderDeliveryMethodId != null">
+				and order_delivery_method_id = #{po.orderDeliveryMethodId}
+			</if>
+			<if test="po.goodReceiverName != null">
+				and good_receiver_name = #{po.goodReceiverName}
+			</if>
+			<if test="po.goodReceiverMobile != null">
+				and good_receiver_mobile = #{po.goodReceiverMobile}
+			</if>
+			<if test="po.proCityArea != null">
+				and pro_city_area = #{po.proCityArea}
+			</if>
+			<if test="po.deliveryDate != null">
+				and delivery_date = #{po.deliveryDate}
+			</if>
+			<if test="po.goodReceiverAddress != null">
+				and good_receiver_address = #{po.goodReceiverAddress}
+			</if>
+			<if test="po.deliveryName != null">
+				and delivery_name = #{po.deliveryName}
+			</if>
+			<if test="po.deliveryNameMobile != null">
+				and delivery_name_mobile = #{po.deliveryNameMobile}
+			</if>
+			<if test="po.signName != null">
+				and sign_name = #{po.signName}
+			</if>
+			<if test="po.signDate != null">
+				and sign_date = #{po.signDate}
+			</if>
+			<if test="po.signRemark != null">
+				and sign_remark = #{po.signRemark}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+	</select>
+
+	<select id="findAll" resultMap="soPackageMap">
+		SELECT
+		<include refid="soPackageColumns" />
+		FROM so_package
+		<where>
+			<if test="po.userId != null">
+				and user_id = #{po.userId}
+			</if>
+			<if test="po.soId != null">
+				and so_id = #{po.soId}
+			</if>
+			<if test="po.soChildId != null">
+				and so_child_id = #{po.soChildId}
+			</if>
+			<if test="po.receiverAddressId != null">
+				and receiver_address_id = #{po.receiverAddressId}
+			</if>
+			<if test="po.orderCode != null">
+				and order_code = #{po.orderCode}
+			</if>
+			<if test="po.merchantId != null">
+				and merchant_id = #{po.merchantId}
+			</if>
+			<if test="po.soChildDeliveryFee != null">
+				and so_child_delivery_fee = #{po.soChildDeliveryFee}
+			</if>
+			<if test="po.packageType != null">
+				and package_type = #{po.packageType}
+			</if>
+			<if test="po.deliveryCode != null">
+				and delivery_code = #{po.deliveryCode}
+			</if>
+			<if test="po.deliveryStatus != null">
+				and delivery_status = #{po.deliveryStatus}
+			</if>
+			<if test="po.deliveryMode != null">
+				and delivery_mode = #{po.deliveryMode}
+			</if>
+			<if test="po.deliveryCompanyId != null">
+				and delivery_company_id = #{po.deliveryCompanyId}
+			</if>
+			<if test="po.deliveryCompanyName != null">
+				and delivery_company_name = #{po.deliveryCompanyName}
+			</if>
+			<if test="po.deliveryMessage != null">
+				and delivery_message = #{po.deliveryMessage}
+			</if>
+			<if test="po.orderDeliveryMethodId != null">
+				and order_delivery_method_id = #{po.orderDeliveryMethodId}
+			</if>
+			<if test="po.goodReceiverName != null">
+				and good_receiver_name = #{po.goodReceiverName}
+			</if>
+			<if test="po.goodReceiverMobile != null">
+				and good_receiver_mobile = #{po.goodReceiverMobile}
+			</if>
+			<if test="po.proCityArea != null">
+				and pro_city_area = #{po.proCityArea}
+			</if>
+			<if test="po.deliveryDate != null">
+				and delivery_date = #{po.deliveryDate}
+			</if>
+			<if test="po.goodReceiverAddress != null">
+				and good_receiver_address = #{po.goodReceiverAddress}
+			</if>
+			<if test="po.deliveryName != null">
+				and delivery_name = #{po.deliveryName}
+			</if>
+			<if test="po.deliveryNameMobile != null">
+				and delivery_name_mobile = #{po.deliveryNameMobile}
+			</if>
+			<if test="po.signName != null">
+				and sign_name = #{po.signName}
+			</if>
+			<if test="po.signDate != null">
+				and sign_date = #{po.signDate}
+			</if>
+			<if test="po.signRemark != null">
+				and sign_remark = #{po.signRemark}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY id desc
+			</otherwise>
+		</choose>
+	</select>
+
+	<select id="findUnReceive" resultMap="soPackageMap">
+		SELECT
+		<include refid="soPackageColumns" />
+		FROM so_package
+		<where>
+			delivery_status &lt;  3 and delivery_code is not null  and create_time &lt; #{po.createTime}
+
+			<if test="po.userId != null">
+				and user_id = #{po.userId}
+			</if>
+			<if test="po.soId != null">
+				and so_id = #{po.soId}
+			</if>
+			<if test="po.soChildId != null">
+				and so_child_id = #{po.soChildId}
+			</if>
+			<if test="po.receiverAddressId != null">
+				and receiver_address_id = #{po.receiverAddressId}
+			</if>
+			<if test="po.orderCode != null">
+				and order_code = #{po.orderCode}
+			</if>
+			<if test="po.merchantId != null">
+				and merchant_id = #{po.merchantId}
+			</if>
+			<if test="po.soChildDeliveryFee != null">
+				and so_child_delivery_fee = #{po.soChildDeliveryFee}
+			</if>
+			<if test="po.packageType != null">
+				and package_type = #{po.packageType}
+			</if>
+			<if test="po.deliveryMode != null">
+				and delivery_mode = #{po.deliveryMode}
+			</if>
+			<if test="po.deliveryCompanyId != null">
+				and delivery_company_id = #{po.deliveryCompanyId}
+			</if>
+			<if test="po.deliveryCompanyName != null">
+				and delivery_company_name = #{po.deliveryCompanyName}
+			</if>
+			<if test="po.deliveryMessage != null">
+				and delivery_message = #{po.deliveryMessage}
+			</if>
+			<if test="po.orderDeliveryMethodId != null">
+				and order_delivery_method_id = #{po.orderDeliveryMethodId}
+			</if>
+			<if test="po.goodReceiverName != null">
+				and good_receiver_name = #{po.goodReceiverName}
+			</if>
+			<if test="po.goodReceiverMobile != null">
+				and good_receiver_mobile = #{po.goodReceiverMobile}
+			</if>
+			<if test="po.proCityArea != null">
+				and pro_city_area = #{po.proCityArea}
+			</if>
+			<if test="po.deliveryDate != null">
+				and delivery_date = #{po.deliveryDate}
+			</if>
+			<if test="po.goodReceiverAddress != null">
+				and good_receiver_address = #{po.goodReceiverAddress}
+			</if>
+			<if test="po.deliveryName != null">
+				and delivery_name = #{po.deliveryName}
+			</if>
+			<if test="po.deliveryNameMobile != null">
+				and delivery_name_mobile = #{po.deliveryNameMobile}
+			</if>
+			<if test="po.signName != null">
+				and sign_name = #{po.signName}
+			</if>
+			<if test="po.signDate != null">
+				and sign_date = #{po.signDate}
+			</if>
+			<if test="po.signRemark != null">
+				and sign_remark = #{po.signRemark}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+	</select>
+	<select id="packageByOrderCode" resultMap="soPackageMap">
+			SELECT *
+			FROM so_package
+			where so_id=(select id from so where order_code=#{id})
+	</select>
+
+
+	<select id="findSoPackageAndBoxOfPage" resultMap="soPackageConditionMap">
+		SELECT
+			sp.id,
+			sp.so_child_id,
+			sp.so_child_delivery_fee,
+			sp.delivery_code,
+			sp.delivery_status,
+			sp.delivery_company_name,
+			sp.update_time,
+			spb.so_box_code
+		FROM so_package sp
+		LEFT JOIN so_package_box spb
+		ON sp.so_child_id = spb.so_child_id
+		<where>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY sp.so_child_id
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+
+	<select id="findDeliveryCompanyNameBySoChildId" resultType="java.lang.String">
+		SELECT delivery_company_name
+		FROM so_package
+		where so_child_id=#{soChildId}
+			order by id limit 1
+	</select>
+</mapper>

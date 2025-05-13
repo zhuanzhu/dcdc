@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.stock.dao.write.MerchantWarehouseWriteDAO">
+	<insert id="insert" parameterType="com.egeo.components.stock.po.MerchantWarehousePO">
+		INSERT INTO merchant_warehouse(
+        <trim suffixOverrides=",">
+			<if test="merchantId != null">
+				merchant_id,
+			</if>
+			<if test="subCompanyId != null">
+				sub_company_id,
+			</if>
+			<if test="warehouseId != null">
+				warehouse_id,
+			</if>
+			<if test="isDefaultWarehouse != null">
+				is_default_warehouse,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="platformId != null">
+				platform_id,
+			</if>
+        </trim>		
+		) VALUES (
+        <trim suffixOverrides=",">
+			<if test="merchantId != null">
+				#{merchantId},
+			</if>
+			<if test="subCompanyId != null">
+				#{subCompanyId},
+			</if>
+			<if test="warehouseId != null">
+				#{warehouseId},
+			</if>
+			<if test="isDefaultWarehouse != null">
+				#{isDefaultWarehouse},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
+			</if>
+			<if test="platformId != null">
+				#{platformId},
+			</if>
+        </trim>		
+		)
+		<selectKey keyProperty="id" resultType="java.lang.Long">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+
+	
+	
+	<update id="update">
+	UPDATE merchant_warehouse 
+		<set>
+			<if test="merchantId != null">
+				merchant_id = #{merchantId},
+			</if>			
+			<if test="subCompanyId != null">
+				sub_company_id = #{subCompanyId},
+			</if>			
+			<if test="warehouseId != null">
+				warehouse_id = #{warehouseId},
+			</if>			
+			<if test="isDefaultWarehouse != null">
+				is_default_warehouse = #{isDefaultWarehouse},
+			</if>			
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>			
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>			
+			<if test="platformId != null">
+				platform_id = #{platformId},
+			</if>			
+		</set>
+			WHERE id = #{id}
+	</update>	
+	
+
+	<delete id="delete">
+		delete from merchant_warehouse where id = #{id}
+	</delete>
+
+	<delete id="deleteByPara">
+		delete from merchant_warehouse 
+		<where>
+			<if test="merchantId != null">
+				and merchant_id = #{merchantId}
+			</if>
+			<if test="subCompanyId != null">
+				and sub_company_id = #{subCompanyId}
+			</if>
+			<if test="warehouseId != null">
+				and warehouse_id = #{warehouseId}
+			</if>
+			<if test="isDefaultWarehouse != null">
+				and is_default_warehouse = #{isDefaultWarehouse}
+			</if>
+			<if test="createTime != null">
+				and create_time = #{createTime}
+			</if>
+			<if test="updateTime != null">
+				and update_time = #{updateTime}
+			</if>
+			<if test="platformId != null">
+				and platform_id = #{platformId}
+			</if>
+		</where>
+	</delete>
+
+
+</mapper>
+	

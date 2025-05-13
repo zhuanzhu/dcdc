@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.promotion.dao.read.ExchangeBatchReadDAO">
+	<resultMap type="com.egeo.components.promotion.po.ExchangeBatchPO" id="exchangeBatchMap">
+		<result property="id" column="id" />
+		<result property="exchangeId" column="exchange_id" />
+		<result property="batchId" column="batch_id" />
+		<result property="type" column="type" />
+		<result property="addPrice" column="add_price" />
+		<result property="sort" column="sort" />
+		<result property="platformId" column="platform_id" />
+	</resultMap>
+
+	<sql id="exchangeBatchColumns">
+		id,
+		exchange_id,
+		batch_id,
+		type,
+		add_price,
+		sort,
+		platform_id
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.promotion.po.ExchangeBatchPO" resultMap="exchangeBatchMap">
+		SELECT
+		<include refid="exchangeBatchColumns" />
+		FROM exchange_batch
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="exchangeBatchMap">
+		SELECT
+		<include refid="exchangeBatchColumns" />
+		FROM exchange_batch
+		<where>
+			<if test="po.exchangeId != null">
+				and exchange_id = #{po.exchangeId}
+			</if>
+			<if test="po.batchId != null">
+				and batch_id = #{po.batchId}
+			</if>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+			<if test="po.addPrice != null">
+				and add_price = #{po.addPrice}
+			</if>
+			<if test="po.sort != null">
+				and sort = #{po.sort}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM exchange_batch
+		<where>
+			<if test="po.exchangeId != null">
+				and exchange_id = #{po.exchangeId}
+			</if>
+			<if test="po.batchId != null">
+				and batch_id = #{po.batchId}
+			</if>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+			<if test="po.addPrice != null">
+				and add_price = #{po.addPrice}
+			</if>
+			<if test="po.sort != null">
+				and sort = #{po.sort}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="exchangeBatchMap">
+		SELECT
+		<include refid="exchangeBatchColumns" />
+		FROM exchange_batch
+		<where>
+			<if test="po.exchangeId != null">
+				and exchange_id = #{po.exchangeId}
+			</if>
+			<if test="po.batchId != null">
+				and batch_id = #{po.batchId}
+			</if>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+			<if test="po.addPrice != null">
+				and add_price = #{po.addPrice}
+			</if>
+			<if test="po.sort != null">
+				and sort = #{po.sort}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+
+
+	<select id="checkIsShowExchange" resultType="java.lang.Long">
+		SELECT
+		DISTINCT eb.exchange_id
+		FROM (exchange_activity ea LEFT JOIN exchange_batch eb ON ea.id=eb.exchange_id)LEFT JOIN exchange_coupon_unit_status ecus
+		ON ea.id=ecus.exchange_id
+		<where>
+			ea.status=1
+			and eb.type=0
+			<![CDATA[ AND #{time}<=ea.end_time ]]>
+			<if test="batchId!=null">
+				AND  eb.batch_id=#{batchId}
+			</if>
+			<if test="unitStatus!=null">
+				AND ecus.allow_exchange_unit_status=#{unitStatus}
+			</if>
+		</where>
+	</select>
+
+	<select id="findExchangeIdsByBatch" resultType="java.lang.Long">
+		SELECT
+		DISTINCT eb.exchange_id
+		FROM exchange_activity ea LEFT JOIN exchange_batch eb ON ea.id=eb.exchange_id
+
+		<where>
+			ea.status=1
+			and eb.type=1
+			<![CDATA[ AND now()<=end_time ]]>
+			<if test="po.batchId!=null">
+				AND  eb.batch_id=#{po.batchId}
+			</if>
+
+		</where>
+	</select>
+
+
+	<select id="findExchangeActivityByOldCouponUnitId" resultType="java.lang.Long">
+		SELECT
+		DISTINCT eb.exchange_id
+		FROM exchange_activity ea LEFT JOIN exchange_batch eb ON ea.id=eb.exchange_id
+				LEFT JOIN exchange_coupon_unit_status ecus ON ecus.exchange_id=ea.id
+
+		<where>
+			ea.status=1
+			and eb.type=0
+			<![CDATA[ AND now()<=end_time ]]>
+			<if test="batchId!=null">
+				AND  eb.batch_id=#{batchId}
+			</if>
+			<if test="couponUnitStatus!=null">
+				AND ecus.allow_exchange_unit_status=#{couponUnitStatus}
+			</if>
+
+		</where>
+	</select>
+</mapper>
+	

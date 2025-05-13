@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.stock.dao.read.CommodityProductUnitWarehouseStockReadDAO">
+	<resultMap type="com.egeo.components.stock.po.CommodityProductUnitWarehouseStockPO" id="commodityProductUnitWarehouseStockMap">
+		<result property="id" column="id" />
+		<result property="commodityProductUnitId" column="commodity_product_unit_id" />
+		<result property="standardUnitId" column="standard_unit_id" />
+		<result property="merchantId" column="merchant_id" />
+		<result property="warehouseId" column="warehouse_id" />
+		<result property="merchantProductId" column="merchant_product_id" />
+		<result property="realStockNum" column="real_stock_num" />
+		<result property="realFrozenStockNum" column="real_frozen_stock_num" />
+		<result property="pmWarehousePriority" column="pm_warehouse_priority" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="platformId" column="platform_id" />
+	</resultMap>
+
+	<resultMap type="com.egeo.components.stock.po.ResidueStockNumCondition" id="residueStockNumConditionMap">
+		<result property="standardUnitId" column="standard_unit_id" />
+		<result property="realStockNum" column="real_stock_num" />
+	</resultMap>
+
+	<sql id="commodityProductUnitWarehouseStockColumns">
+		id,
+		commodity_product_unit_id,
+		standard_unit_id,
+		merchant_id,
+		warehouse_id,
+		merchant_product_id,
+		real_stock_num,
+		real_frozen_stock_num,
+		pm_warehouse_priority,
+		create_time,
+		update_time,
+		platform_id
+	</sql>
+	
+	<sql id="inClause">
+		in
+		<foreach collection="ids" item="id" open="(" separator=","
+			close=")">
+			#{id}
+		</foreach>
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.stock.po.CommodityProductUnitWarehouseStockPO" resultMap="commodityProductUnitWarehouseStockMap">
+		SELECT
+		<include refid="commodityProductUnitWarehouseStockColumns" />
+		FROM commodity_product_unit_warehouse_stock
+		WHERE id = #{po.id}
+	</select>
+	
+	<select id="findCommodityProductUnitWarehouseStockByPuId" 
+	parameterType="com.egeo.components.stock.po.CommodityProductUnitWarehouseStockPO" 
+	resultMap="commodityProductUnitWarehouseStockMap">
+		SELECT
+		<include refid="commodityProductUnitWarehouseStockColumns" />
+		FROM commodity_product_unit_warehouse_stock
+		WHERE commodity_product_unit_id = #{puId}
+	</select>
+
+	<select id="findOfPage" resultMap="commodityProductUnitWarehouseStockMap">
+		SELECT
+		<include refid="commodityProductUnitWarehouseStockColumns" />
+		FROM commodity_product_unit_warehouse_stock
+		<where>
+			<if test="po.commodityProductUnitId != null">
+				and commodity_product_unit_id = #{po.commodityProductUnitId}
+			</if>
+			<if test="po.standardUnitId != null">
+				and standard_unit_id = #{po.standardUnitId}
+			</if>
+			<if test="po.merchantId != null">
+				and merchant_id = #{po.merchantId}
+			</if>
+			<if test="po.warehouseId != null">
+				and warehouse_id = #{po.warehouseId}
+			</if>
+			<if test="po.merchantProductId != null">
+				and merchant_product_id = #{po.merchantProductId}
+			</if>
+			<if test="po.realStockNum != null">
+				and real_stock_num = #{po.realStockNum}
+			</if>
+			<if test="po.realFrozenStockNum != null">
+				and real_frozen_stock_num = #{po.realFrozenStockNum}
+			</if>
+			<if test="po.pmWarehousePriority != null">
+				and pm_warehouse_priority = #{po.pmWarehousePriority}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM commodity_product_unit_warehouse_stock
+		<where>
+			<if test="po.commodityProductUnitId != null">
+				and commodity_product_unit_id = #{po.commodityProductUnitId}
+			</if>
+			<if test="po.standardUnitId != null">
+				and standard_unit_id = #{po.standardUnitId}
+			</if>
+			<if test="po.merchantId != null">
+				and merchant_id = #{po.merchantId}
+			</if>
+			<if test="po.warehouseId != null">
+				and warehouse_id = #{po.warehouseId}
+			</if>
+			<if test="po.merchantProductId != null">
+				and merchant_product_id = #{po.merchantProductId}
+			</if>
+			<if test="po.realStockNum != null">
+				and real_stock_num = #{po.realStockNum}
+			</if>
+			<if test="po.realFrozenStockNum != null">
+				and real_frozen_stock_num = #{po.realFrozenStockNum}
+			</if>
+			<if test="po.pmWarehousePriority != null">
+				and pm_warehouse_priority = #{po.pmWarehousePriority}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="commodityProductUnitWarehouseStockMap">
+		SELECT
+		<include refid="commodityProductUnitWarehouseStockColumns" />
+		FROM commodity_product_unit_warehouse_stock
+		<where>
+			<if test="po.commodityProductUnitId != null">
+				and commodity_product_unit_id = #{po.commodityProductUnitId}
+			</if>
+			<if test="po.standardUnitId != null">
+				and standard_unit_id = #{po.standardUnitId}
+			</if>
+			<if test="po.merchantId != null">
+				and merchant_id = #{po.merchantId}
+			</if>
+			<if test="po.warehouseId != null">
+				and warehouse_id = #{po.warehouseId}
+			</if>
+			<if test="po.merchantProductId != null">
+				and merchant_product_id = #{po.merchantProductId}
+			</if>
+			<if test="po.realStockNum != null">
+				and real_stock_num = #{po.realStockNum}
+			</if>
+			<if test="po.realFrozenStockNum != null">
+				and real_frozen_stock_num = #{po.realFrozenStockNum}
+			</if>
+			<if test="po.pmWarehousePriority != null">
+				and pm_warehouse_priority = #{po.pmWarehousePriority}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findByPUId" resultMap="commodityProductUnitWarehouseStockMap">
+		SELECT
+		<include refid="commodityProductUnitWarehouseStockColumns" />
+		FROM commodity_product_unit_warehouse_stock
+		where commodity_product_unit_id 
+		<include refid="inClause" />
+	</select>
+	
+	<select id="realStockNumByCommodityProductUnitId" resultType="java.lang.Long">
+		SELECT real_stock_num - real_frozen_stock_num real_stock_num FROM commodity_product_unit_warehouse_stock
+		WHERE commodity_product_unit_id = #{commodityProductUnitId}
+	</select>
+	
+	<select id="findByCommodityProductUnitId" resultType="java.lang.Long">
+		SELECT real_stock_num FROM commodity_product_unit_warehouse_stock
+		WHERE commodity_product_unit_id = #{commodityProductUnitId}
+	</select>
+	
+	<select id="residueStockNumByStandardUnitId" resultType="java.lang.Long">
+		SELECT sum(real_stock_num) - sum(real_frozen_stock_num) real_stock_num FROM commodity_product_unit_warehouse_stock
+		WHERE merchant_product_id = #{standardUnitId}
+	</select>
+
+	<select id="residueStockNumByStandardUnitIds" resultMap="residueStockNumConditionMap">
+		SELECT merchant_product_id as standard_unit_id, sum(real_stock_num) - sum(real_frozen_stock_num) real_stock_num FROM commodity_product_unit_warehouse_stock
+		WHERE merchant_product_id  <include refid="inClause" />
+		group by merchant_product_id
+	</select>
+	
+	<select id="residueStockNumByPuId" resultType="java.lang.Long">
+		SELECT sum(real_stock_num) real_stock_num FROM commodity_product_unit_warehouse_stock
+		WHERE commodity_product_unit_id <include refid="inClause" />
+	</select>
+	
+	<select id="findIsSkuIdsBySkuIds" resultType="java.lang.Long">
+		SELECT sku_id from merchant_product_virtual_stock WHERE sku_id <include refid="inClause" />
+	</select>
+	
+	<select id="findPuSellOutSumByPuIds" resultType="java.lang.Integer">
+		SELECT 
+		count(1) cnt 
+		from commodity_product_unit_warehouse_stock 
+		WHERE 
+		real_stock_num = 0 
+		and commodity_product_unit_id <include refid="inClause" />
+	</select>
+</mapper>
+	

@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.egeo.components.cms.dao.write.TemplateWriteDAO">
+
+	<update id="useTemplate">
+		update template
+		set status=0
+		where id=#{id}
+	</update>
+
+	<update id="disableTmplsByClientTypeAndType">
+		update template
+		set status=1
+		where client_type=#{clientType}
+		and platform_id=#{platformId}
+		and type=#{type}
+		and company_type=#{companyType}
+	</update>
+
+	<insert id="insert"
+		parameterType="com.egeo.components.cms.po.TemplatePO">
+		INSERT INTO template(
+		<trim suffixOverrides=",">
+			<if test="name != null">
+				name,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="clientType != null">
+				client_type,
+			</if>
+			<if test="clientVersionA != null">
+				client_version_a,
+			</if>
+			<if test="clientVersionI != null">
+				client_version_i,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+			<if test="type != null">
+				type,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="showFgj != null">
+				show_fgj,
+			</if>
+			<if test="companyType != null">
+				company_type,
+			</if>
+			<if test="platformId != null">
+				platform_id,
+			</if>
+		</trim>
+		) VALUES (
+		<trim suffixOverrides=",">
+			<if test="name != null">
+				#{name},
+			</if>
+			<if test="status != null">
+				#{status},
+			</if>
+			<if test="clientType != null">
+				#{clientType},
+			</if>
+			<if test="clientVersionA != null">
+				#{clientVersionA},
+			</if>
+			<if test="clientVersionI != null">
+				#{clientVersionI},
+			</if>
+			<if test="remark != null">
+				#{remark},
+			</if>
+			<if test="type != null">
+				#{type},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
+			</if>
+			<if test="showFgj != null">
+				#{showFgj},
+			</if>
+			<if test="companyType != null">
+				#{companyType},
+			</if>
+			<if test="platformId != null">
+				#{platformId},
+			</if>
+		</trim>
+		)
+		<selectKey keyProperty="id" resultType="java.lang.Long">
+			select
+			LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+
+
+
+	<update id="update">
+		UPDATE template
+		<set>
+			<if test="name != null">
+				name = #{name},
+			</if>
+			<if test="status != null">
+				status = #{status},
+			</if>
+			<if test="clientType != null">
+				client_type = #{clientType},
+			</if>
+			<if test="clientVersionA != null">
+				client_version_a = #{clientVersionA},
+			</if>
+			<if test="clientVersionI != null">
+				client_version_i = #{clientVersionI},
+			</if>
+			<if test="remark != null">
+				remark = #{remark},
+			</if>
+			<if test="type != null">
+				type = #{type},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>
+			<if test="showFgj != null">
+				show_fgj=#{showFgj},
+			</if>
+			<if test="companyType != null">
+				company_type=#{companyType},
+			</if>
+			<if test="platformId != null">
+				platform_id = #{platformId},
+			</if>	
+		</set>
+		WHERE id = #{id}
+	</update>
+
+
+	<delete id="delete">
+		delete from template where id = #{id}
+	</delete>
+
+	<delete id="deleteByPara">
+		delete from template
+		<where>
+			<if test="name != null">
+				and name = #{name}
+			</if>
+			<if test="status != null">
+				and status = #{status}
+			</if>
+			<if test="clientType != null">
+				and client_type = #{clientType}
+			</if>
+			<if test="clientVersionA != null">
+				and client_version_a = #{clientVersionA}
+			</if>
+			<if test="clientVersionI != null">
+				and client_version_i = #{clientVersionI}
+			</if>
+			<if test="remark != null">
+				and remark = #{remark}
+			</if>
+			<if test="type != null">
+				and type = #{type}
+			</if>
+			<if test="createTime != null">
+				and create_time = #{createTime}
+			</if>
+			<if test="updateTime != null">
+				and update_time = #{updateTime}
+			</if>
+			<if test="showFgj != null">
+				and show_fgj=#{showFgj}
+			</if>
+		</where>
+	</delete>
+
+
+</mapper>
+	

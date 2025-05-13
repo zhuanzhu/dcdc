@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.product.dao.read.StoreMenuTreeReadDAO">
+	<resultMap type="com.egeo.components.product.po.StoreMenuTreePO" id="storeMenuTreeMap">
+		<result property="id" column="id" />
+		<result property="storeId" column="store_id" />
+		<result property="type" column="type" />
+		<result property="name" column="name" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="platformId" column="platform_id" />
+	</resultMap>
+
+	<sql id="storeMenuTreeColumns">
+		id,
+		store_id,
+		type,
+		name,
+		create_time,
+		update_time,
+		platform_id
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.product.po.StoreMenuTreePO" resultMap="storeMenuTreeMap">
+		SELECT
+		<include refid="storeMenuTreeColumns" />
+		FROM store_menu_tree
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="storeMenuTreeMap">
+		SELECT
+		<include refid="storeMenuTreeColumns" />
+		FROM store_menu_tree
+		<where>
+			<if test="po.storeId != null">
+				and store_id = #{po.storeId}
+			</if>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+			<if test="po.name != null">
+				and name = #{po.name}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM store_menu_tree
+		<where>
+			<if test="po.storeId != null">
+				and store_id = #{po.storeId}
+			</if>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+			<if test="po.name != null">
+				and name = #{po.name}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="storeMenuTreeMap">
+		SELECT
+		<include refid="storeMenuTreeColumns" />
+		FROM store_menu_tree
+		<where>
+			<if test="po.storeId != null">
+				and store_id = #{po.storeId}
+			</if>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+			<if test="po.name != null">
+				and name = #{po.name}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+</mapper>
+	

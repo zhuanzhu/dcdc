@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.cms.dao.read.CmsPageCfgReadDAO">
+	<resultMap type="com.egeo.components.cms.po.CmsPageCfgPO" id="cmsPageCfgMap">
+		<result property="id" column="id" />
+		<result property="cmsPageId" column="cms_page_id" />
+		<result property="cmsCfgValueCode" column="cms_cfg_value_code" />
+		<result property="textValue" column="text_value" />
+		<result property="cmsCfgKeyId" column="cms_cfg_key_id" />
+		<result property="bannerId" column="banner_id" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="parentId" column="parent_id" />
+	</resultMap>
+	
+	<resultMap type="com.egeo.components.cms.condition.CmsPageCfgCondition" id="cmsPageCfgConditionMap" extends="cmsPageCfgMap">
+		<result property="ckgKeyCode" column="ckg_key_code" />
+		<result property="ckgKeyType" column="ckg_key_type" />
+		<result property="ckgKeyDescription" column="ckg_key_description" />
+	</resultMap>
+
+	<sql id="cmsPageCfgColumns">
+		id,
+		cms_page_id,
+		cms_cfg_value_code,
+		text_value,
+		cms_cfg_key_id,
+		banner_id,
+		create_time,
+		update_time,
+		parent_id
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.cms.po.CmsPageCfgPO" resultMap="cmsPageCfgMap">
+		SELECT
+		<include refid="cmsPageCfgColumns" />
+		FROM cms_page_cfg
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="cmsPageCfgMap">
+		SELECT
+		<include refid="cmsPageCfgColumns" />
+		FROM cms_page_cfg
+		<where>
+			<if test="po.cmsPageId != null">
+				and cms_page_id = #{po.cmsPageId}
+			</if>
+			<if test="po.cmsCfgValueCode != null">
+				and cms_cfg_value_code = #{po.cmsCfgValueCode}
+			</if>
+			<if test="po.textValue != null">
+				and text_value = #{po.textValue}
+			</if>
+			<if test="po.cmsCfgKeyId != null">
+				and cms_cfg_key_id = #{po.cmsCfgKeyId}
+			</if>
+			<if test="po.bannerId != null">
+				and banner_id = #{po.bannerId}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.parentId != null">
+				and parent_id = #{po.parentId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM cms_page_cfg
+		<where>
+			<if test="po.cmsPageId != null">
+				and cms_page_id = #{po.cmsPageId}
+			</if>
+			<if test="po.cmsCfgValueCode != null">
+				and cms_cfg_value_code = #{po.cmsCfgValueCode}
+			</if>
+			<if test="po.textValue != null">
+				and text_value = #{po.textValue}
+			</if>
+			<if test="po.cmsCfgKeyId != null">
+				and cms_cfg_key_id = #{po.cmsCfgKeyId}
+			</if>
+			<if test="po.bannerId != null">
+				and banner_id = #{po.bannerId}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.parentId != null">
+				and parent_id = #{po.parentId}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="cmsPageCfgMap">
+		SELECT
+		<include refid="cmsPageCfgColumns" />
+		FROM cms_page_cfg
+		<where>
+			<if test="po.cmsPageId != null">
+				and cms_page_id = #{po.cmsPageId}
+			</if>
+			<if test="po.cmsCfgValueCode != null">
+				and cms_cfg_value_code = #{po.cmsCfgValueCode}
+			</if>
+			<if test="po.textValue != null">
+				and text_value = #{po.textValue}
+			</if>
+			<if test="po.cmsCfgKeyId != null">
+				and cms_cfg_key_id = #{po.cmsCfgKeyId}
+			</if>
+			<if test="po.bannerId != null">
+				and banner_id = #{po.bannerId}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.parentId != null">
+				and parent_id = #{po.parentId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+	<select id="findPageCfgByPageId" resultMap="cmsPageCfgConditionMap">
+		SELECT 
+		cp.id,
+		cp.cms_page_id,
+		cp.cms_cfg_value_code,
+		cp.text_value,
+		cp.cms_cfg_key_id,
+		cp.banner_id,
+		cp.create_time,
+		cp.update_time,
+		ck.code ckg_key_code,
+		ck.type ckg_key_type,
+		ck.description ckg_key_description
+		FROM cms_page_cfg cp,cms_cfg_key ck 
+		WHERE cp.cms_cfg_key_id=ck.id 
+		AND cp.cms_page_id=#{pageId} ORDER BY ck.sort,ck.id 
+	</select>
+	
+</mapper>
+	

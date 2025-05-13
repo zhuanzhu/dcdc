@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.order.dao.read.SoReminderReadDAO">
+	<resultMap type="com.egeo.components.order.po.SoReminderPO" id="soReminderMap">
+		<result property="id" column="id" />
+		<result property="orderCode" column="order_code" />
+		<result property="userId" column="user_id" />
+		<result property="reminderDesc" column="reminder_desc" />
+		<result property="platformId" column="platform_id" />
+		<result property="merchantId" column="merchant_id" />
+		<result property="userPhone" column="user_phone" />
+		<result property="phoneRecord" column="phone_record" />
+		<result property="reminderType" column="reminder_type" />
+		<result property="askCategoryId" column="ask_category_id" />
+		<result property="askCategoryDesc" column="ask_category_desc" />
+		<result property="reminderObject" column="reminder_object" />
+		<result property="askCategoryTwoId" column="ask_category_two_id" />
+		<result property="status" column="status" />
+		<result property="updateTime" column="update_time" />
+		<result property="createTime" column="create_time" />
+	</resultMap>
+
+	<sql id="soReminderColumns">
+		id,
+		order_code,
+		user_id,
+		reminder_desc,
+		platform_id,
+		merchant_id,
+		user_phone,
+		phone_record,
+		reminder_type,
+		ask_category_id,
+		ask_category_desc,
+		reminder_object,
+		ask_category_two_id,
+		status,
+		update_time,
+		create_time
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.order.po.SoReminderPO" resultMap="soReminderMap">
+		SELECT
+		<include refid="soReminderColumns" />
+		FROM so_reminder
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="soReminderMap">
+		SELECT
+		<include refid="soReminderColumns" />
+		FROM so_reminder
+		<where>
+			<if test="po.orderCode != null">
+				and order_code = #{po.orderCode}
+			</if>
+			<if test="po.userId != null">
+				and user_id = #{po.userId}
+			</if>
+			<if test="po.reminderDesc != null">
+				and reminder_desc = #{po.reminderDesc}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.merchantId != null">
+				and merchant_id = #{po.merchantId}
+			</if>
+			<if test="po.userPhone != null">
+				and user_phone = #{po.userPhone}
+			</if>
+			<if test="po.phoneRecord != null">
+				and phone_record = #{po.phoneRecord}
+			</if>
+			<if test="po.reminderType != null">
+				and reminder_type = #{po.reminderType}
+			</if>
+			<if test="po.askCategoryId != null">
+				and ask_category_id = #{po.askCategoryId}
+			</if>
+			<if test="po.askCategoryDesc != null">
+				and ask_category_desc = #{po.askCategoryDesc}
+			</if>
+			<if test="po.reminderObject != null">
+				and reminder_object = #{po.reminderObject}
+			</if>
+			<if test="po.askCategoryTwoId != null">
+				and ask_category_two_id = #{po.askCategoryTwoId}
+			</if>
+			<if test="po.status != null">
+				and status = #{po.status}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM so_reminder
+		<where>
+			<if test="po.orderCode != null">
+				and order_code = #{po.orderCode}
+			</if>
+			<if test="po.userId != null">
+				and user_id = #{po.userId}
+			</if>
+			<if test="po.reminderDesc != null">
+				and reminder_desc = #{po.reminderDesc}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.merchantId != null">
+				and merchant_id = #{po.merchantId}
+			</if>
+			<if test="po.userPhone != null">
+				and user_phone = #{po.userPhone}
+			</if>
+			<if test="po.phoneRecord != null">
+				and phone_record = #{po.phoneRecord}
+			</if>
+			<if test="po.reminderType != null">
+				and reminder_type = #{po.reminderType}
+			</if>
+			<if test="po.askCategoryId != null">
+				and ask_category_id = #{po.askCategoryId}
+			</if>
+			<if test="po.askCategoryDesc != null">
+				and ask_category_desc = #{po.askCategoryDesc}
+			</if>
+			<if test="po.reminderObject != null">
+				and reminder_object = #{po.reminderObject}
+			</if>
+			<if test="po.askCategoryTwoId != null">
+				and ask_category_two_id = #{po.askCategoryTwoId}
+			</if>
+			<if test="po.status != null">
+				and status = #{po.status}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="soReminderMap">
+		SELECT
+		<include refid="soReminderColumns" />
+		FROM so_reminder
+		<where>
+			<if test="po.orderCode != null">
+				and order_code = #{po.orderCode}
+			</if>
+			<if test="po.userId != null">
+				and user_id = #{po.userId}
+			</if>
+			<if test="po.reminderDesc != null">
+				and reminder_desc = #{po.reminderDesc}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.merchantId != null">
+				and merchant_id = #{po.merchantId}
+			</if>
+			<if test="po.userPhone != null">
+				and user_phone = #{po.userPhone}
+			</if>
+			<if test="po.phoneRecord != null">
+				and phone_record = #{po.phoneRecord}
+			</if>
+			<if test="po.reminderType != null">
+				and reminder_type = #{po.reminderType}
+			</if>
+			<if test="po.askCategoryId != null">
+				and ask_category_id = #{po.askCategoryId}
+			</if>
+			<if test="po.askCategoryDesc != null">
+				and ask_category_desc = #{po.askCategoryDesc}
+			</if>
+			<if test="po.reminderObject != null">
+				and reminder_object = #{po.reminderObject}
+			</if>
+			<if test="po.askCategoryTwoId != null">
+				and ask_category_two_id = #{po.askCategoryTwoId}
+			</if>
+			<if test="po.status != null">
+				and status = #{po.status}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+</mapper>
+	

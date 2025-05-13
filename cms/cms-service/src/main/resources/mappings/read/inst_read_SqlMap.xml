@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.cms.dao.read.InstReadDAO">
+
+	<select id="queryInstByElementId" resultMap="instMap">
+		select * from inst
+		where element_id=#{elementId}
+	</select>
+
+	<resultMap type="com.egeo.components.cms.po.InstPO" id="instMap">
+		<result property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="instMargin" column="inst_margin" />
+		<result property="elementId" column="element_id" />
+		<result property="configType" column="config_type" />
+		<result property="pageTabId" column="page_tab_id" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+	</resultMap>
+
+	<sql id="instColumns">
+		id,
+		name,
+		inst_margin,
+		element_id,
+		config_type,
+		page_tab_id,
+		create_time,
+		update_time
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.cms.po.InstPO" resultMap="instMap">
+		SELECT
+		<include refid="instColumns" />
+		FROM inst
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="instMap">
+		SELECT
+		<include refid="instColumns" />
+		FROM inst
+		<where>
+			<if test="po.name != null">
+				and name = #{po.name}
+			</if>
+			<if test="po.instMargin != null">
+				and inst_margin = #{po.instMargin}
+			</if>
+			<if test="po.elementId != null">
+				and element_id = #{po.elementId}
+			</if>
+			<if test="po.configType != null">
+				and config_type = #{po.configType}
+			</if>
+			<if test="po.pageTabId != null">
+				and page_tab_id = #{po.pageTabId}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM inst
+		<where>
+			<if test="po.name != null">
+				and name = #{po.name}
+			</if>
+			<if test="po.instMargin != null">
+				and inst_margin = #{po.instMargin}
+			</if>
+			<if test="po.elementId != null">
+				and element_id = #{po.elementId}
+			</if>
+			<if test="po.configType != null">
+				and config_type = #{po.configType}
+			</if>
+			<if test="po.pageTabId != null">
+				and page_tab_id = #{po.pageTabId}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="instMap">
+		SELECT
+		<include refid="instColumns" />
+		FROM inst
+		<where>
+			<if test="po.name != null">
+				and name = #{po.name}
+			</if>
+			<if test="po.instMargin != null">
+				and inst_margin = #{po.instMargin}
+			</if>
+			<if test="po.elementId != null">
+				and element_id = #{po.elementId}
+			</if>
+			<if test="po.configType != null">
+				and config_type = #{po.configType}
+			</if>
+			<if test="po.pageTabId != null">
+				and page_tab_id = #{po.pageTabId}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+</mapper>
+	

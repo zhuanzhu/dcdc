@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.finance.dao.read.UserAccountReadDAO">
+
+	<select id="queryUserAccountById" resultMap="userAccountMap">
+		select * from user_account
+		where id=#{id}
+	</select>
+
+	<select id="queryUserAccountByUserIdAndType" resultMap="userAccountMap">
+		select * from user_account
+		where user_id=#{id} and type=#{type}
+	</select>
+	<select id="queryPrdUserAccountAll" resultMap="userAccountMap">
+		select * from user_account_prd
+	</select>
+	<select id="queryNowUserAccountAll" resultMap="userAccountMap">
+		select * from user_account
+	</select>
+
+	<select id="queryUserAccountByUserId" resultMap="userAccountMap">
+		select * from user_account
+		where user_id=#{userId}
+	</select>
+	<select id="queryUserAccountByUserIds" resultMap="userAccountMap">
+		select * from user_account
+		where
+		user_id IN
+		<foreach collection="userIdList" item="userId" open="(" close=")" separator=",">
+			#{userId}
+		</foreach>
+	</select>
+
+	<resultMap type="com.egeo.components.finance.po.UserAccountPO" id="userAccountMap">
+		<result property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="type" column="type" />
+		<result property="balance" column="balance" />
+		<result property="disabled" column="disabled" />
+		<result property="lastRechargeTime" column="last_recharge_time" />
+		<result property="uuid" column="uuid" />
+		<result property="ciphertext" column="ciphertext" />
+		<result property="userId" column="user_id" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="platformId" column="platform_id" />
+		<result property="beforeDisableBalance" column="before_disabled_balance" />
+	</resultMap>
+
+	<sql id="userAccountColumns">
+		id,
+		name,
+		type,
+		balance,
+		disabled,
+		last_recharge_time,
+		uuid,
+		ciphertext,
+		user_id,
+		create_time,
+		update_time,
+		platform_id,
+		before_disabled_balance
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.finance.po.UserAccountPO" resultMap="userAccountMap">
+		SELECT
+		<include refid="userAccountColumns" />
+		FROM user_account
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="userAccountMap">
+		SELECT
+		<include refid="userAccountColumns" />
+		FROM user_account
+		<where>
+			<if test="po.name != null">
+				and name = #{po.name}
+			</if>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+			<if test="po.balance != null">
+				and balance = #{po.balance}
+			</if>
+			<if test="po.disabled != null">
+				and disabled = #{po.disabled}
+			</if>
+			<if test="po.lastRechargeTime != null">
+				and last_recharge_time = #{po.lastRechargeTime}
+			</if>
+			<if test="po.uuid != null">
+				and uuid = #{po.uuid}
+			</if>
+			<if test="po.ciphertext != null">
+				and ciphertext = #{po.ciphertext}
+			</if>
+			<if test="po.userId != null">
+				and user_id = #{po.userId}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.beforeDisableBalance != null">
+				and before_disabled_balance = #{po.beforeDisableBalance}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM user_account
+		<where>
+			<if test="po.name != null">
+				and name = #{po.name}
+			</if>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+			<if test="po.balance != null">
+				and balance = #{po.balance}
+			</if>
+			<if test="po.disabled != null">
+				and disabled = #{po.disabled}
+			</if>
+			<if test="po.lastRechargeTime != null">
+				and last_recharge_time = #{po.lastRechargeTime}
+			</if>
+			<if test="po.uuid != null">
+				and uuid = #{po.uuid}
+			</if>
+			<if test="po.ciphertext != null">
+				and ciphertext = #{po.ciphertext}
+			</if>
+			<if test="po.userId != null">
+				and user_id = #{po.userId}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.beforeDisableBalance != null">
+				and before_disabled_balance = #{po.beforeDisableBalance}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="userAccountMap">
+		SELECT
+		<include refid="userAccountColumns" />
+		FROM user_account
+		<where>
+			<if test="po.name != null">
+				and name = #{po.name}
+			</if>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+			<if test="po.balance != null">
+				and balance = #{po.balance}
+			</if>
+			<if test="po.disabled != null">
+				and disabled = #{po.disabled}
+			</if>
+			<if test="po.lastRechargeTime != null">
+				and last_recharge_time = #{po.lastRechargeTime}
+			</if>
+			<if test="po.uuid != null">
+				and uuid = #{po.uuid}
+			</if>
+			<if test="po.ciphertext != null">
+				and ciphertext = #{po.ciphertext}
+			</if>
+			<if test="po.userId != null">
+				and user_id = #{po.userId}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.beforeDisableBalance != null">
+				and before_disabled_balance = #{po.beforeDisableBalance}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+
+	<select id="queryUserAccountByParam" resultMap="userAccountMap">
+		SELECT
+		<include refid="userAccountColumns" />
+		FROM user_account
+		<where>
+			<if test="po.name != null">
+				and name = #{po.name}
+			</if>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+			<if test="po.balance != null">
+				and balance = #{po.balance}
+			</if>
+			<if test="po.disabled != null">
+				and disabled = #{po.disabled}
+			</if>
+			<if test="po.lastRechargeTime != null">
+				and last_recharge_time = #{po.lastRechargeTime}
+			</if>
+			<if test="po.uuid != null">
+				and uuid = #{po.uuid}
+			</if>
+			<if test="po.ciphertext != null">
+				and ciphertext = #{po.ciphertext}
+			</if>
+			<if test="po.userId != null">
+				and user_id = #{po.userId}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.beforeDisableBalance != null">
+				and before_disabled_balance = #{po.beforeDisableBalance}
+			</if>
+		</where>
+	</select>
+
+	<select id="findBeforeDisabledBalance" resultType="java.math.BigDecimal">
+		select sum(before_disabled_balance)
+		from user_account
+		where user_id = #{userId} and type in (0,1)
+	</select>
+</mapper>
+	

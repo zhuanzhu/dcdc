@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.product.dao.read.SellPlatformMerchantProdReadDAO">
+	<resultMap type="com.egeo.components.product.po.SellPlatformMerchantProdPO" id="sellPlatformMerchantProdMap">
+		<result property="id" column="id" />
+		<result property="sellPlatformId" column="sell_platform_id" />
+		<result property="merchantProductId" column="merchant_product_id" />
+		<result property="salePrice" column="sale_price" />
+		<result property="path" column="path" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="platformId" column="platform_id" />
+	</resultMap>
+	
+	<resultMap type="com.egeo.components.product.condition.SellPlatformMerchantProdCondition" id="sellPlatformMerchantProdCondition" extends="sellPlatformMerchantProdMap">
+		<result property="name" column="name" />
+	</resultMap>
+
+	<sql id="sellPlatformMerchantProdColumns">
+		id,
+		sell_platform_id,
+		merchant_product_id,
+		sale_price,
+		path,
+		create_time,
+		update_time,
+		platform_id
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.product.po.SellPlatformMerchantProdPO" resultMap="sellPlatformMerchantProdMap">
+		SELECT
+		<include refid="sellPlatformMerchantProdColumns" />
+		FROM sell_platform_merchant_prod
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="sellPlatformMerchantProdMap">
+		SELECT
+		<include refid="sellPlatformMerchantProdColumns" />
+		FROM sell_platform_merchant_prod
+		<where>
+			<if test="po.sellPlatformId != null">
+				and sell_platform_id = #{po.sellPlatformId}
+			</if>
+			<if test="po.merchantProductId != null">
+				and merchant_product_id = #{po.merchantProductId}
+			</if>
+			<if test="po.salePrice != null">
+				and sale_price = #{po.salePrice}
+			</if>
+			<if test="po.path != null">
+				and path = #{po.path}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM sell_platform_merchant_prod
+		<where>
+			<if test="po.sellPlatformId != null">
+				and sell_platform_id = #{po.sellPlatformId}
+			</if>
+			<if test="po.merchantProductId != null">
+				and merchant_product_id = #{po.merchantProductId}
+			</if>
+			<if test="po.salePrice != null">
+				and sale_price = #{po.salePrice}
+			</if>
+			<if test="po.path != null">
+				and path = #{po.path}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="sellPlatformMerchantProdMap">
+		SELECT
+		<include refid="sellPlatformMerchantProdColumns" />
+		FROM sell_platform_merchant_prod
+		<where>
+			<if test="po.sellPlatformId != null">
+				and sell_platform_id = #{po.sellPlatformId}
+			</if>
+			<if test="po.merchantProductId != null">
+				and merchant_product_id = #{po.merchantProductId}
+			</if>
+			<if test="po.salePrice != null">
+				and sale_price = #{po.salePrice}
+			</if>
+			<if test="po.path != null">
+				and path = #{po.path}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findByMerchantProdId" resultMap="sellPlatformMerchantProdCondition">
+		SELECT
+		spmp.id,
+		spmp.sell_platform_id,
+		spmp.merchant_product_id,
+		spmp.sale_price,
+		spmp.path,
+		spmp.create_time,
+		spmp.update_time,
+		spmp.platform_id,
+		sp.`name`
+		FROM sell_platform_merchant_prod spmp
+		LEFT JOIN sell_platform sp on sp.id = spmp.sell_platform_id
+		<where>
+			<if test="po.sellPlatformId != null">
+				and spmp.sell_platform_id = #{po.sellPlatformId}
+			</if>
+			<if test="po.merchantProductId != null">
+				and spmp.merchant_product_id = #{po.merchantProductId}
+			</if>
+			<if test="po.salePrice != null">
+				and spmp.sale_price = #{po.salePrice}
+			</if>
+			<if test="po.path != null">
+				and spmp.path = #{po.path}
+			</if>
+			<if test="po.createTime != null">
+				and spmp.create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and spmp.update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and spmp.platform_id = #{po.platformId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY spmp.id
+			</otherwise>
+		</choose>
+	</select>
+</mapper>
+	

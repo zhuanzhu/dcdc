@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.cms.dao.read.CmsElementReadDAO">
+	<resultMap type="com.egeo.components.cms.po.CmsElementPO" id="cmsElementMap">
+		<result property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="code" column="code" />
+		<result property="groupType" column="group_type" />
+		<result property="clientVersionAId" column="client_version_a_id" />
+		<result property="clientVersionIId" column="client_version_i_id" />
+		<result property="clientVersionARemark" column="client_version_a_remark" />
+		<result property="clientVersionIRemark" column="client_version_i_remark" />
+		<result property="clientVersionACode" column="client_version_a_code" />
+		<result property="clientVersionICode" column="client_version_i_code" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="sort" column="sort" />
+		<result property="sampleImgUrl" column="sample_img_url" />
+	</resultMap>
+
+	<sql id="cmsElementColumns">
+		id,
+		name,
+		code,
+		group_type,
+		client_version_a_id,
+		client_version_i_id,
+		client_version_a_remark,
+		client_version_i_remark,
+		client_version_a_code,
+		client_version_i_code,
+		create_time,
+		update_time,
+		sort,
+		sample_img_url
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.cms.po.CmsElementPO" resultMap="cmsElementMap">
+		SELECT
+		<include refid="cmsElementColumns" />
+		FROM cms_element
+		WHERE id = #{po.id}
+	</select>
+	
+	<select id="findCmsElementByTemplateId"  resultMap="cmsElementMap">
+		SELECT
+		ce.id,
+		ce.name,
+		ce.code,
+		ce.group_type,
+		ce.client_version_a_id,
+		ce.client_version_i_id,
+		ce.client_version_a_remark,
+		ce.client_version_i_remark,
+		ce.client_version_a_code,
+		ce.client_version_i_code,
+		ce.create_time,
+		ce.update_time,
+		cte.sort sort,
+		ce.sample_img_url
+		FROM cms_element ce 
+		left join cms_template_element cte on ce.id = cte.element_id
+		WHERE cte.template_id = #{templateId}
+	</select>
+	
+
+	<select id="findOfPage" resultMap="cmsElementMap">
+		SELECT
+		<include refid="cmsElementColumns" />
+		FROM cms_element
+		<where>
+			<if test="po.name != null">
+				and name = #{po.name}
+			</if>
+			<if test="po.code != null">
+				and code = #{po.code}
+			</if>
+			<if test="po.groupType != null">
+				and group_type = #{po.groupType}
+			</if>
+			<if test="po.clientVersionAId != null">
+				and client_version_a_id = #{po.clientVersionAId}
+			</if>
+			<if test="po.clientVersionIId != null">
+				and client_version_i_id = #{po.clientVersionIId}
+			</if>
+			<if test="po.clientVersionARemark != null">
+				and client_version_a_remark = #{po.clientVersionARemark}
+			</if>
+			<if test="po.clientVersionIRemark != null">
+				and client_version_i_remark = #{po.clientVersionIRemark}
+			</if>
+			<if test="po.clientVersionACode != null">
+				and client_version_a_code = #{po.clientVersionACode}
+			</if>
+			<if test="po.clientVersionICode != null">
+				and client_version_i_code = #{po.clientVersionICode}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.sort != null">
+				and sort = #{po.sort}
+			</if>
+			<if test="po.sampleImgUrl != null">
+				and sample_img_url = #{po.sampleImgUrl}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM cms_element
+		<where>
+			<if test="po.name != null">
+				and name = #{po.name}
+			</if>
+			<if test="po.code != null">
+				and code = #{po.code}
+			</if>
+			<if test="po.groupType != null">
+				and group_type = #{po.groupType}
+			</if>
+			<if test="po.clientVersionAId != null">
+				and client_version_a_id = #{po.clientVersionAId}
+			</if>
+			<if test="po.clientVersionIId != null">
+				and client_version_i_id = #{po.clientVersionIId}
+			</if>
+			<if test="po.clientVersionARemark != null">
+				and client_version_a_remark = #{po.clientVersionARemark}
+			</if>
+			<if test="po.clientVersionIRemark != null">
+				and client_version_i_remark = #{po.clientVersionIRemark}
+			</if>
+			<if test="po.clientVersionACode != null">
+				and client_version_a_code = #{po.clientVersionACode}
+			</if>
+			<if test="po.clientVersionICode != null">
+				and client_version_i_code = #{po.clientVersionICode}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.sort != null">
+				and sort = #{po.sort}
+			</if>
+			<if test="po.sampleImgUrl != null">
+				and sample_img_url = #{po.sampleImgUrl}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="cmsElementMap">
+		SELECT
+		<include refid="cmsElementColumns" />
+		FROM cms_element
+		<where>
+			<if test="po.name != null">
+				and name = #{po.name}
+			</if>
+			<if test="po.code != null">
+				and code = #{po.code}
+			</if>
+			<if test="po.groupType != null">
+				and group_type = #{po.groupType}
+			</if>
+			<if test="po.clientVersionAId != null">
+				and client_version_a_id = #{po.clientVersionAId}
+			</if>
+			<if test="po.clientVersionIId != null">
+				and client_version_i_id = #{po.clientVersionIId}
+			</if>
+			<if test="po.clientVersionARemark != null">
+				and client_version_a_remark = #{po.clientVersionARemark}
+			</if>
+			<if test="po.clientVersionIRemark != null">
+				and client_version_i_remark = #{po.clientVersionIRemark}
+			</if>
+			<if test="po.clientVersionACode != null">
+				and client_version_a_code = #{po.clientVersionACode}
+			</if>
+			<if test="po.clientVersionICode != null">
+				and client_version_i_code = #{po.clientVersionICode}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.sort != null">
+				and sort = #{po.sort}
+			</if>
+			<if test="po.sampleImgUrl != null">
+				and sample_img_url = #{po.sampleImgUrl}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findCmsElementByIdList"  resultMap="cmsElementMap">
+		SELECT
+		<include refid="cmsElementColumns" />
+		FROM cms_element
+		WHERE id in 
+		<foreach collection="ids" item="id" separator="," open="(" close=")">
+			#{id}
+		</foreach>
+	</select>
+	
+</mapper>
+	

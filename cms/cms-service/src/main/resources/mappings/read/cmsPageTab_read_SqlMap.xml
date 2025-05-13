@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.cms.dao.read.CmsPageTabReadDAO">
+	<resultMap type="com.egeo.components.cms.po.CmsPageTabPO" id="cmsPageTabMap">
+		<result property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="value" column="value" />
+		<result property="defaultValue" column="default_value" />
+		<result property="iconUrl" column="icon_url" />
+		<result property="iconDefaultUrl" column="icon_default_url" />
+		<result property="iconOnclickUrl" column="icon_onclick_url" />
+		<result property="iconOnclickDefaultUrl" column="icon_onclick_default_url" />
+		<result property="pageTabUrl" column="page_tab_url"/>
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="type" column="type" />
+		<result property="sort" column="sort" />
+	</resultMap>
+	
+	<resultMap type="com.egeo.components.cms.condition.CmsPageTabCondition" id="cmsPageTabConditionMap">
+		<result property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="value" column="value" />
+		<result property="defaultValue" column="default_value" />
+		<result property="iconUrl" column="icon_url" />
+		<result property="iconDefaultUrl" column="icon_default_url" />
+		<result property="iconOnclickUrl" column="icon_onclick_url" />
+		<result property="iconOnclickDefaultUrl" column="icon_onclick_default_url" />
+		<result property="pageTabUrl" column="page_tab_url"/>
+		<result property="status" column="status" />
+		<result property="showPlatformLogo" column="show_platform_logo" />
+		<result property="showClientLogo" column="show_client_logo" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="clientType" column="client_type" />
+		<result property="platformId" column="platform_id" />
+		<result property="type" column="type" />
+		<result property="sort" column="sort" />
+		<result property="companyId" column="company_id" />
+		<result property="pageTabCompanyId" column="pageTabCompanyId" />
+		
+	</resultMap>
+
+	<sql id="cmsPageTabColumns">
+		id,
+		name,
+		value,
+		default_value,
+		icon_url,
+		icon_default_url,
+		icon_onclick_url,
+		icon_onclick_default_url,
+		page_tab_url,
+		create_time,
+		update_time,
+		type,
+		sort
+	</sql>
+	
+	<select id="findById" parameterType="com.egeo.components.cms.po.CmsPageTabPO" resultMap="cmsPageTabMap">
+		SELECT
+		<include refid="cmsPageTabColumns" />
+		FROM cms_page_tab
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="cmsPageTabMap">
+		SELECT
+		<include refid="cmsPageTabColumns" />
+		FROM cms_page_tab
+		<where>
+			<if test="po.name != null">
+				and name = #{po.name}
+			</if>
+			<if test="po.value != null">
+				and value = #{po.value}
+			</if>
+			<if test="po.defaultValue != null">
+				and default_value = #{po.defaultValue}
+			</if>
+			<if test="po.iconUrl != null">
+				and icon_url = #{po.iconUrl}
+			</if>
+			<if test="po.iconDefaultUrl != null">
+				and icon_default_url = #{po.iconDefaultUrl}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM cms_page_tab
+		<where>
+			<if test="po.name != null">
+				and name = #{po.name}
+			</if>
+			<if test="po.value != null">
+				and value = #{po.value}
+			</if>
+			<if test="po.defaultValue != null">
+				and default_value = #{po.defaultValue}
+			</if>
+			<if test="po.iconUrl != null">
+				and icon_url = #{po.iconUrl}
+			</if>
+			<if test="po.iconDefaultUrl != null">
+				and icon_default_url = #{po.iconDefaultUrl}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="cmsPageTabMap">
+		SELECT
+		<include refid="cmsPageTabColumns" />
+		FROM cms_page_tab
+		<where>
+			<if test="po.name != null">
+				and name = #{po.name}
+			</if>
+			<if test="po.value != null">
+				and value = #{po.value}
+			</if>
+			<if test="po.defaultValue != null">
+				and default_value = #{po.defaultValue}
+			</if>
+			<if test="po.iconUrl != null">
+				and icon_url = #{po.iconUrl}
+			</if>
+			<if test="po.iconDefaultUrl != null">
+				and icon_default_url = #{po.iconDefaultUrl}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id 		
+			</otherwise>
+		</choose>
+	</select>
+	
+	
+	<select id="findCmsPageTabCondition" resultMap="cmsPageTabConditionMap">
+		SELECT
+			cpt.id,
+			cpt.name,
+			cpt.value,
+			cpt.default_value,
+			cpt.icon_url,
+			cpt.icon_default_url,
+			cpt.icon_onclick_url,
+			cpt.icon_onclick_default_url,
+			cpt.page_tab_url,
+			cptc.status,
+			cptc.show_platform_logo,
+			cptc.show_client_logo,
+			cpt.create_time,
+			cpt.update_time,
+			cptc.client_type,
+			cptc.platform_id,
+			cpt.type,
+			cpt.sort,
+			cptc.company_id,
+			cptc.id pageTabCompanyId
+		FROM cms_page_tab cpt
+		left join cms_page_tab_company cptc
+		ON cpt.id=cptc.page_tab_id
+		<where>
+			<if test="po.name != null">
+				and cpt.name = #{po.name}
+			</if>
+			<if test="po.value != null">
+				and cpt.value = #{po.value}
+			</if>
+			<if test="po.defaultValue != null">
+				and cpt.default_value = #{po.defaultValue}
+			</if>
+			<if test="po.iconUrl != null">
+				and cpt.icon_url = #{po.iconUrl}
+			</if>
+			<if test="po.iconDefaultUrl != null">
+				and cpt.icon_default_url = #{po.iconDefaultUrl}
+			</if>
+			<if test="po.status != null">
+				and cptc.status = #{po.status}
+			</if>
+			<if test="po.showPlatformLogo != null">
+				and cptc.show_platform_logo = #{po.showPlatformLogo}
+			</if>
+			<if test="po.showClientLogo != null">
+				and cptc.show_client_logo = #{po.showClientLogo}
+			</if>
+			<if test="po.createTime != null">
+				and cpt.create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and cpt.update_time = #{po.updateTime}
+			</if>
+			<if test="po.clientType != null">
+				and cptc.client_type = #{po.clientType}
+			</if>
+			<if test="po.platformId != null">
+				and cptc.platform_id = #{po.platformId}
+			</if>
+			<if test="po.type != null">
+				and cpt.type = #{po.type}
+			</if>
+			<if test="po.companyId != null">
+				and cptc.company_id = #{po.companyId}
+			</if>
+		</where>
+
+
+				ORDER BY cpt.id 		
+
+	</select>
+
+
+	<select id="findDefaultCmsPageTabFront" resultMap="cmsPageTabConditionMap">
+		SELECT
+			cpt.id,
+			cpt.name,
+			cpt.value,
+			cpt.default_value,
+			cpt.icon_url,
+			cpt.icon_default_url,
+			cpt.icon_onclick_url,
+			cpt.icon_onclick_default_url,
+			cpt.page_tab_url,
+			cpt.create_time,
+			cpt.update_time,			
+			cpt.type,
+			cpt.sort
+		FROM cms_page_tab cpt
+		
+		<where>
+			cpt.type IN (1,3,4)
+			AND cpt.platform_id=#{platformId}
+		</where>
+
+				ORDER BY cpt.id
+
+	</select>
+</mapper>
+	

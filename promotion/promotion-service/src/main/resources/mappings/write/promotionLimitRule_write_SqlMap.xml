@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.promotion.dao.write.PromotionLimitRuleWriteDAO">
+	<insert id="insert" parameterType="com.egeo.components.promotion.po.PromotionLimitRulePO">
+		INSERT INTO promotion_limit_rule(
+        <trim suffixOverrides=",">
+			<if test="promotionId != null">
+				promotion_id,
+			</if>
+			<if test="limitType != null">
+				limit_type,
+			</if>
+			<if test="limitRef != null">
+				limit_ref,
+			</if>
+			<if test="totalLimit != null">
+				total_limit,
+			</if>
+			<if test="individualLimit != null">
+				individual_limit,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="platformId != null">
+				platform_id,
+			</if>
+			<if test="ruleType != null">
+				rule_type,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+        </trim>		
+		) VALUES (
+        <trim suffixOverrides=",">
+			<if test="promotionId != null">
+				#{promotionId},
+			</if>
+			<if test="limitType != null">
+				#{limitType},
+			</if>
+			<if test="limitRef != null">
+				#{limitRef},
+			</if>
+			<if test="totalLimit != null">
+				#{totalLimit},
+			</if>
+			<if test="individualLimit != null">
+				#{individualLimit},
+			</if>
+			<if test="status != null">
+				#{status},
+			</if>
+			<if test="platformId != null">
+				#{platformId},
+			</if>
+			<if test="ruleType != null">
+				#{ruleType},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
+			</if>
+        </trim>		
+		)
+		<selectKey keyProperty="id" resultType="java.lang.Long">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+
+	
+	
+	<update id="update">
+	UPDATE promotion_limit_rule 
+		<set>
+			<if test="promotionId != null">
+				promotion_id = #{promotionId},
+			</if>			
+			<if test="limitType != null">
+				limit_type = #{limitType},
+			</if>			
+			<if test="limitRef != null">
+				limit_ref = #{limitRef},
+			</if>			
+			<if test="totalLimit != null">
+				total_limit = #{totalLimit},
+			</if>			
+			<if test="individualLimit != null">
+				individual_limit = #{individualLimit},
+			</if>			
+			<if test="status != null">
+				status = #{status},
+			</if>			
+			<if test="platformId != null">
+				platform_id = #{platformId},
+			</if>			
+			<if test="ruleType != null">
+				rule_type = #{ruleType},
+			</if>			
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>			
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>			
+		</set>
+			WHERE id = #{id}
+	</update>	
+	
+
+	<delete id="delete">
+		delete from promotion_limit_rule where id = #{id}
+	</delete>
+
+	<delete id="deleteByPara">
+		delete from promotion_limit_rule 
+		<where>
+			<if test="promotionId != null">
+				and promotion_id = #{promotionId}
+			</if>
+			<if test="limitType != null">
+				and limit_type = #{limitType}
+			</if>
+			<if test="limitRef != null">
+				and limit_ref = #{limitRef}
+			</if>
+			<if test="totalLimit != null">
+				and total_limit = #{totalLimit}
+			</if>
+			<if test="individualLimit != null">
+				and individual_limit = #{individualLimit}
+			</if>
+			<if test="status != null">
+				and status = #{status}
+			</if>
+			<if test="platformId != null">
+				and platform_id = #{platformId}
+			</if>
+			<if test="ruleType != null">
+				and rule_type = #{ruleType}
+			</if>
+			<if test="createTime != null">
+				and create_time = #{createTime}
+			</if>
+			<if test="updateTime != null">
+				and update_time = #{updateTime}
+			</if>
+		</where>
+	</delete>
+
+
+</mapper>
+	

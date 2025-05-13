@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.product.dao.write.StandardUnitCombinationSuWriteDAO">
+	<insert id="insert" parameterType="com.egeo.components.product.po.StandardUnitCombinationSuPO">
+		INSERT INTO standard_unit_combination_su(
+        <trim suffixOverrides=",">
+			<if test="standardUnitCombinationId != null">
+				standard_unit_combination_id,
+			</if>
+			<if test="standardUnitId != null">
+				standard_unit_id,
+			</if>
+			<if test="sortValue != null">
+				sort_value,
+			</if>
+			<if test="source != null">
+				source,
+			</if>
+			<if test="snapshot != null">
+				snapshot,
+			</if>
+			<if test="thirdSkuId != null">
+				third_sku_Id,
+			</if>
+        </trim>
+		) VALUES (
+        <trim suffixOverrides=",">
+			<if test="standardUnitCombinationId != null">
+				#{standardUnitCombinationId},
+			</if>
+			<if test="standardUnitId != null">
+				#{standardUnitId},
+			</if>
+			<if test="sortValue != null">
+				#{sortValue},
+			</if>
+			<if test="source != null">
+				#{source},
+			</if>
+			<if test="snapshot != null">
+				#{snapshot},
+			</if>
+			<if test="thirdSkuId != null">
+				#{thirdSkuId},
+			</if>
+        </trim>
+		)
+		<selectKey keyProperty="id" resultType="java.lang.Long">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+
+
+
+	<update id="update">
+	UPDATE standard_unit_combination_su
+		<set>
+			<if test="standardUnitCombinationId != null">
+				standard_unit_combination_id = #{standardUnitCombinationId},
+			</if>
+			<if test="standardUnitId != null">
+				standard_unit_id = #{standardUnitId},
+			</if>
+			<if test="sortValue != null">
+				sort_value = #{sortValue},
+			</if>
+			<if test="snapshot != null">
+				snapshot = #{snapshot},
+			</if>
+			<if test="sellState != null">
+				sell_state = #{sellState},
+			</if>
+			<if test="checkTime != null">
+				check_time = #{checkTime},
+			</if>
+			<if test="sortPrice != null">
+				sort_price = #{sortPrice},
+			</if>
+			<if test="sortSalesNum != null">
+				sort_sales_num = #{sortSalesNum},
+			</if>
+			<if test="thirdSkuName != null">
+				third_sku_name = #{thirdSkuName},
+			</if>
+		</set>
+			WHERE id = #{id}
+	</update>
+
+
+	<delete id="delete">
+		delete from standard_unit_combination_su where id = #{id}
+	</delete>
+
+	<delete id="deleteByPara">
+		delete from standard_unit_combination_su
+		<where>
+			<if test="standardUnitCombinationId != null">
+				and standard_unit_combination_id = #{standardUnitCombinationId}
+			</if>
+			<if test="standardUnitId != null">
+				and standard_unit_id = #{standardUnitId}
+			</if>
+			<if test="sortValue != null">
+				and sort_value = #{sortValue}
+			</if>
+			<if test="thirdSkuId != null">
+				and third_sku_id = #{thirdSkuId}
+			</if>
+
+		</where>
+	</delete>
+
+
+</mapper>

@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.user.dao.read.DownloadReadDAO">
+	<resultMap type="com.egeo.components.user.po.DownloadPO" id="downloadMap">
+		<result property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="session" column="session" />
+		<result property="url" column="url" />
+		<result property="dailyDownloads" column="daily_downloads" />
+		<result property="downloads" column="downloads" />
+		<result property="createTime" column="create_time" />
+		<result property="uodateTime" column="uodate_time" />
+		<result property="platformId" column="platform_id" />
+	</resultMap>
+
+	<sql id="downloadColumns">
+		id,
+		name,
+		session,
+		url,
+		daily_downloads,
+		downloads,
+		create_time,
+		uodate_time,
+		platform_id
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.user.po.DownloadPO" resultMap="downloadMap">
+		SELECT
+		<include refid="downloadColumns" />
+		FROM download
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="downloadMap">
+		SELECT
+		<include refid="downloadColumns" />
+		FROM download
+		<where>
+			<if test="po.name != null">
+				and name = #{po.name}
+			</if>
+			<if test="po.session != null">
+				and session = #{po.session}
+			</if>
+			<if test="po.url != null">
+				and url = #{po.url}
+			</if>
+			<if test="po.dailyDownloads != null">
+				and daily_downloads = #{po.dailyDownloads}
+			</if>
+			<if test="po.downloads != null">
+				and downloads = #{po.downloads}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.uodateTime != null">
+				and uodate_time = #{po.uodateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>			
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="findOfPageByBlurry" resultMap="downloadMap">
+		SELECT
+		<include refid="downloadColumns" />
+		FROM download
+		<where>
+			<if test="po.name != null">
+				and name like concat('%',#{po.name},'%') 
+			</if>
+			<if test="po.session != null">
+				and session like concat('%',#{po.session},'%')
+			</if>
+			<if test="po.url != null">
+				and url = #{po.url}
+			</if>
+			<if test="po.dailyDownloads != null">
+				and daily_downloads = #{po.dailyDownloads}
+			</if>
+			<if test="po.downloads != null">
+				and downloads = #{po.downloads}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.uodateTime != null">
+				and uodate_time = #{po.uodateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>	
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM download
+		<where>
+			<if test="po.name != null">
+				and name = #{po.name}
+			</if>
+			<if test="po.session != null">
+				and session = #{po.session}
+			</if>
+			<if test="po.url != null">
+				and url = #{po.url}
+			</if>
+			<if test="po.dailyDownloads != null">
+				and daily_downloads = #{po.dailyDownloads}
+			</if>
+			<if test="po.downloads != null">
+				and downloads = #{po.downloads}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.uodateTime != null">
+				and uodate_time = #{po.uodateTime}
+			</if>
+		</where>
+	</select>
+	
+	<select id="countOfPageByBlurry" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM download
+		<where>
+			<if test="po.name != null">
+				and name like concat('%',#{po.name},'%') 
+			</if>
+			<if test="po.session != null">
+				and session like concat('%',#{po.session},'%') 
+			</if>
+			<if test="po.url != null">
+				and url = #{po.url}
+			</if>
+			<if test="po.dailyDownloads != null">
+				and daily_downloads = #{po.dailyDownloads}
+			</if>
+			<if test="po.downloads != null">
+				and downloads = #{po.downloads}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.uodateTime != null">
+				and uodate_time = #{po.uodateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>	
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="downloadMap">
+		SELECT
+		<include refid="downloadColumns" />
+		FROM download
+		<where>
+			<if test="po.name != null">
+				and name = #{po.name}
+			</if>
+			<if test="po.session != null">
+				and session = #{po.session}
+			</if>
+			<if test="po.url != null">
+				and url = #{po.url}
+			</if>
+			<if test="po.dailyDownloads != null">
+				and daily_downloads = #{po.dailyDownloads}
+			</if>
+			<if test="po.downloads != null">
+				and downloads = #{po.downloads}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.uodateTime != null">
+				and uodate_time = #{po.uodateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+</mapper>
+	

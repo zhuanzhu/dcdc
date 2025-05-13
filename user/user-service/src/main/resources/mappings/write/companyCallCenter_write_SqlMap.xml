@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.user.dao.write.CompanyCallCenterWriteDAO">
+	<insert id="insert" parameterType="com.egeo.components.user.po.CompanyCallCenterPO">
+		INSERT INTO u_company_call_center(
+        <trim suffixOverrides=",">
+			<if test="companyId != null">
+				company_id,
+			</if>
+			<if test="callCenterPhone != null">
+				call_center_phone,
+			</if>
+			<if test="companyQq != null">
+				company_qq,
+			</if>
+			<if test="companyWeixin != null">
+				company_weixin,
+			</if>
+        </trim>		
+		) VALUES (
+        <trim suffixOverrides=",">
+			<if test="companyId != null">
+				#{companyId},
+			</if>
+			<if test="callCenterPhone != null">
+				#{callCenterPhone},
+			</if>
+			<if test="companyQq != null">
+				#{companyQq},
+			</if>
+			<if test="companyWeixin != null">
+				#{companyWeixin},
+			</if>
+        </trim>		
+		)
+		<selectKey keyProperty="id" resultType="java.lang.Long">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+
+	
+	
+	<update id="update">
+	UPDATE u_company_call_center 
+		<set>
+			<if test="companyId != null">
+				company_id = #{companyId},
+			</if>			
+			<if test="callCenterPhone != null">
+				call_center_phone = #{callCenterPhone},
+			</if>			
+			<if test="companyQq != null">
+				company_qq = #{companyQq},
+			</if>			
+			<if test="companyWeixin != null">
+				company_weixin = #{companyWeixin},
+			</if>			
+		</set>
+			WHERE id = #{id}
+	</update>	
+	
+
+	<delete id="delete">
+		delete from u_company_call_center where id = #{id}
+	</delete>
+
+	<delete id="deleteByPara">
+		delete from u_company_call_center 
+		<where>
+			<if test="companyId != null">
+				and company_id = #{companyId}
+			</if>
+			<if test="callCenterPhone != null">
+				and call_center_phone = #{callCenterPhone}
+			</if>
+			<if test="companyQq != null">
+				and company_qq = #{companyQq}
+			</if>
+			<if test="companyWeixin != null">
+				and company_weixin = #{companyWeixin}
+			</if>
+		</where>
+	</delete>
+
+
+</mapper>
+	

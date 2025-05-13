@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.product.dao.read.AttributeValueReadDAO">
+	<resultMap type="com.egeo.components.product.po.AttributeValuePO" id="attributeValueMap">
+		<result property="id" column="id" />
+		<result property="productAttValueId" column="product_att_valueId" />
+		<result property="parentId" column="parent_id" />
+		<result property="attributeNameId" column="attribute_name_id" />
+		<result property="value" column="value" />
+		<result property="sortValue" column="sort_value" />
+		<result property="specificationCode" column="specification_code" />
+		<result property="platformId" column="platform_id" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="pictureUrl" column="picture_url" />
+	</resultMap>
+
+	<sql id="attributeValueColumns">
+		id,
+		parent_id,
+		attribute_name_id,
+		value,
+		sort_value,
+		specification_code,
+		platform_id,
+		create_time,
+		update_time
+	</sql>
+	
+	<sql id="inClause">
+		NOT in
+		<foreach collection="ids" item="id" open="(" separator=","
+			close=")">
+			#{id}
+		</foreach>
+	</sql>
+	
+	<sql id="inGather">
+		in
+		<foreach collection="ids" item="id" open="(" separator=","
+			close=")">
+			#{id}
+		</foreach>
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.product.po.AttributeValuePO" resultMap="attributeValueMap">
+		SELECT
+		<include refid="attributeValueColumns" />
+		FROM attribute_value
+		WHERE id = #{po.id}
+	</select>
+	<select id="findLastId" resultType="java.lang.Long">
+		SELECT
+		MAX(id)
+		FROM attribute_value
+	</select>
+	<select id="findOfPage" resultMap="attributeValueMap">
+		SELECT
+		<include refid="attributeValueColumns" />
+		FROM attribute_value
+		<where>
+			<if test="po.parentId != null">
+				and parent_id = #{po.parentId}
+			</if>
+			<if test="po.attributeNameId != null">
+				and attribute_name_id = #{po.attributeNameId}
+			</if>
+			<if test="po.value != null">
+				and value = #{po.value}
+			</if>
+			<if test="po.sortValue != null">
+				and sort_value = #{po.sortValue}
+			</if>
+			<if test="po.specificationCode != null">
+				and specification_code = #{po.specificationCode}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY sort_value
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM attribute_value
+		<where>
+			<if test="po.parentId != null">
+				and parent_id = #{po.parentId}
+			</if>
+			<if test="po.attributeNameId != null">
+				and attribute_name_id = #{po.attributeNameId}
+			</if>
+			<if test="po.value != null">
+				and value = #{po.value}
+			</if>
+			<if test="po.sortValue != null">
+				and sort_value = #{po.sortValue}
+			</if>
+			<if test="po.specificationCode != null">
+				and specification_code = #{po.specificationCode}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="attributeValueMap">
+		SELECT
+		<include refid="attributeValueColumns" />
+		FROM attribute_value
+		<where>
+			<if test="po.parentId != null">
+				and parent_id = #{po.parentId}
+			</if>
+			<if test="po.attributeNameId != null">
+				and attribute_name_id = #{po.attributeNameId}
+			</if>
+			<if test="po.value != null">
+				and value = #{po.value}
+			</if>
+			<if test="po.sortValue != null">
+				and sort_value = #{po.sortValue}
+			</if>
+			<if test="po.specificationCode != null">
+				and specification_code = #{po.specificationCode}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY sort_value
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="maxSortValue" resultType="java.lang.Integer">
+		SELECT max(sort_value) from attribute_value WHERE attribute_name_id = #{attributeNameId}
+	</select>
+	
+	<select id="findByProductIdAndAttNameId" resultMap="attributeValueMap">
+		SELECT
+		<include refid="attributeValueColumns" />
+		FROM attribute_value
+		<where>
+			<if test="attNameId != null">
+				and attribute_name_id = #{attNameId}
+			</if>
+			<if test="ids != null">
+				and id <include refid="inClause" /> 
+			</if>
+		</where>
+	</select>
+	
+	<select id="attributeValueByProductIdAndAttNameId" resultMap="attributeValueMap">
+		SELECT
+		av.id,
+		pav.id product_att_valueId,
+		pav.picture_url,
+		av.parent_id,
+		av.attribute_name_id,
+		av.value,
+		av.sort_value,
+		av.specification_code,
+		av.platform_id,
+		av.create_time,
+		av.update_time
+		FROM attribute_value av
+		LEFT JOIN product_att_value pav on pav.att_value_id = av.id
+		LEFT JOIN product_att_name pan on pan.id = pav.product_att_name_id
+		<where>
+			<if test="productId != null">
+				and pan.product_id = #{productId}
+			</if>
+			<if test="attNameId != null">
+				and pan.att_name_id = #{attNameId}
+			</if>
+		</where>
+	</select>
+	
+	<select id="spuAttributeValueByProductIdAndAttNameId" resultMap="attributeValueMap">
+		SELECT
+		av.id,
+		av.parent_id,
+		av.attribute_name_id,
+		av.value,
+		av.sort_value,
+		av.specification_code,
+		av.platform_id,
+		av.create_time,
+		av.update_time
+		FROM attribute_value av
+		LEFT JOIN standard_product_unit_att_value spav on spav.att_value_id = av.id
+		LEFT JOIN standard_product_unit_att_name span on span.id = spav.standard_product_unit_att_name_id
+		<where>
+			<if test="productId != null">
+				and span.standard_product_unit_id = #{productId}
+			</if>
+			<if test="attNameId != null">
+				and span.att_name_id = #{attNameId}
+			</if>
+		</where>
+	</select>
+	<select id="findByAttributeValueIds" resultMap="attributeValueMap">
+		SELECT
+		<include refid="attributeValueColumns" />
+		FROM attribute_value
+		<where>
+			<if test="ids != null">
+				and id <include refid="inGather" /> 
+			</if>
+		</where>
+	</select>
+</mapper>
+	

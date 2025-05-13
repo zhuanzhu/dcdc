@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.order.dao.read.ConditionPoolReadDAO">
+	<resultMap type="com.egeo.components.order.po.ConditionPoolPO" id="conditionPoolMap">
+		<result property="id" column="id" />
+		<result property="menuCode" column="menu_code" />
+		<result property="menuName" column="menu_name" />
+		<result property="pageName" column="page_name" />
+		<result property="conditionName" column="condition_name" />
+		<result property="conditionValue" column="condition_value" />
+		<result property="conditionType" column="condition_type" />
+		<result property="rule" column="rule" />
+		<result property="platformId" column="platform_id" />
+		<result property="tbodyValue" column="tbody_value" />
+		<result property="isDft" column="is_dft" />
+		<result property="updateTime" column="update_time" />
+		<result property="createTime" column="create_time" />
+	</resultMap>
+
+	<sql id="conditionPoolColumns">
+		id,
+		menu_code,
+		menu_name,
+		page_name,
+		condition_name,
+		condition_value,
+		condition_type,
+		rule,
+		platform_id,
+		tbody_value,
+		is_dft,
+		update_time,
+		create_time
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.order.po.ConditionPoolPO" resultMap="conditionPoolMap">
+		SELECT
+		<include refid="conditionPoolColumns" />
+		FROM condition_pool
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="conditionPoolMap">
+		SELECT
+		<include refid="conditionPoolColumns" />
+		FROM condition_pool
+		<where>
+			<if test="po.menuCode != null">
+				and menu_code = #{po.menuCode}
+			</if>
+			<if test="po.menuName != null">
+				and menu_name = #{po.menuName}
+			</if>
+			<if test="po.pageName != null">
+				and page_name = #{po.pageName}
+			</if>
+			<if test="po.conditionName != null">
+				and condition_name = #{po.conditionName}
+			</if>
+			<if test="po.conditionValue != null">
+				and condition_value = #{po.conditionValue}
+			</if>
+			<if test="po.conditionType != null">
+				and condition_type = #{po.conditionType}
+			</if>
+			<if test="po.rule != null">
+				and rule = #{po.rule}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.tbodyValue != null">
+				and tbody_value = #{po.tbodyValue}
+			</if>
+			<if test="po.isDft != null">
+				and is_dft = #{po.isDft}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM condition_pool
+		<where>
+			<if test="po.menuCode != null">
+				and menu_code = #{po.menuCode}
+			</if>
+			<if test="po.menuName != null">
+				and menu_name = #{po.menuName}
+			</if>
+			<if test="po.pageName != null">
+				and page_name = #{po.pageName}
+			</if>
+			<if test="po.conditionName != null">
+				and condition_name = #{po.conditionName}
+			</if>
+			<if test="po.conditionValue != null">
+				and condition_value = #{po.conditionValue}
+			</if>
+			<if test="po.conditionType != null">
+				and condition_type = #{po.conditionType}
+			</if>
+			<if test="po.rule != null">
+				and rule = #{po.rule}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.tbodyValue != null">
+				and tbody_value = #{po.tbodyValue}
+			</if>
+			<if test="po.isDft != null">
+				and is_dft = #{po.isDft}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="conditionPoolMap">
+		SELECT
+		<include refid="conditionPoolColumns" />
+		FROM condition_pool
+		<where>
+			<if test="po.menuCode != null">
+				and menu_code = #{po.menuCode}
+			</if>
+			<if test="po.menuName != null">
+				and menu_name = #{po.menuName}
+			</if>
+			<if test="po.pageName != null">
+				and page_name = #{po.pageName}
+			</if>
+			<if test="po.conditionName != null">
+				and condition_name = #{po.conditionName}
+			</if>
+			<if test="po.conditionValue != null">
+				and condition_value = #{po.conditionValue}
+			</if>
+			<if test="po.conditionType != null">
+				and condition_type = #{po.conditionType}
+			</if>
+			<if test="po.rule != null">
+				and rule = #{po.rule}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.tbodyValue != null">
+				and tbody_value = #{po.tbodyValue}
+			</if>
+			<if test="po.isDft != null">
+				and is_dft = #{po.isDft}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+</mapper>
+	

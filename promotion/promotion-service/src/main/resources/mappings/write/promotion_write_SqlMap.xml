@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.promotion.dao.write.PromotionWriteDAO">
+	<insert id="insert" parameterType="com.egeo.components.promotion.po.PromotionPO">
+		INSERT INTO promotion(
+        <trim suffixOverrides=",">
+			<if test="themeId != null">
+				theme_id,
+			</if>
+			<if test="startTime != null">
+				start_time,
+			</if>
+			<if test="endTime != null">
+				end_time,
+			</if>
+			<if test="promTitle != null">
+				prom_title,
+			</if>
+			<if test="promPlatform != null">
+				prom_platform,
+			</if>
+			<if test="promType != null">
+				prom_type,
+			</if>
+			<if test="userScope != null">
+				user_scope,
+			</if>
+			<if test="joinType != null">
+				join_type,
+			</if>
+			<if test="joinTimesLimit != null">
+				join_times_limit,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="platformId != null">
+				platform_id,
+			</if>
+			<if test="payType != null">
+				pay_type,
+			</if>
+			<if test="limitType != null">
+				limit_type,
+			</if>
+			<if test="contentType != null">
+				content_type,
+			</if>
+			<if test="giftRule != null">
+				gift_rule,
+			</if>
+			<if test="payTypeRule != null">
+				pay_type_rule,
+			</if>
+			<if test="giftLimit4Multy != null">
+				gift_limit_4_multy,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+        </trim>		
+		) VALUES (
+        <trim suffixOverrides=",">
+			<if test="themeId != null">
+				#{themeId},
+			</if>
+			<if test="startTime != null">
+				#{startTime},
+			</if>
+			<if test="endTime != null">
+				#{endTime},
+			</if>
+			<if test="promTitle != null">
+				#{promTitle},
+			</if>
+			<if test="promPlatform != null">
+				#{promPlatform},
+			</if>
+			<if test="promType != null">
+				#{promType},
+			</if>
+			<if test="userScope != null">
+				#{userScope},
+			</if>
+			<if test="joinType != null">
+				#{joinType},
+			</if>
+			<if test="joinTimesLimit != null">
+				#{joinTimesLimit},
+			</if>
+			<if test="status != null">
+				#{status},
+			</if>
+			<if test="platformId != null">
+				#{platformId},
+			</if>
+			<if test="payType != null">
+				#{payType},
+			</if>
+			<if test="limitType != null">
+				#{limitType},
+			</if>
+			<if test="contentType != null">
+				#{contentType},
+			</if>
+			<if test="giftRule != null">
+				#{giftRule},
+			</if>
+			<if test="payTypeRule != null">
+				#{payTypeRule},
+			</if>
+			<if test="giftLimit4Multy != null">
+				#{giftLimit4Multy},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
+			</if>
+        </trim>		
+		)
+		<selectKey keyProperty="id" resultType="java.lang.Long">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+
+	
+	
+	<update id="update">
+	UPDATE promotion 
+		<set>
+			<if test="themeId != null">
+				theme_id = #{themeId},
+			</if>			
+			<if test="startTime != null">
+				start_time = #{startTime},
+			</if>			
+			<if test="endTime != null">
+				end_time = #{endTime},
+			</if>			
+			<if test="promTitle != null">
+				prom_title = #{promTitle},
+			</if>			
+			<if test="promPlatform != null">
+				prom_platform = #{promPlatform},
+			</if>			
+			<if test="promType != null">
+				prom_type = #{promType},
+			</if>			
+			<if test="userScope != null">
+				user_scope = #{userScope},
+			</if>			
+			<if test="joinType != null">
+				join_type = #{joinType},
+			</if>			
+			<if test="joinTimesLimit != null">
+				join_times_limit = #{joinTimesLimit},
+			</if>			
+			<if test="status != null">
+				status = #{status},
+			</if>			
+			<if test="platformId != null">
+				platform_id = #{platformId},
+			</if>			
+			<if test="payType != null">
+				pay_type = #{payType},
+			</if>			
+			<if test="limitType != null">
+				limit_type = #{limitType},
+			</if>			
+			<if test="contentType != null">
+				content_type = #{contentType},
+			</if>			
+			<if test="giftRule != null">
+				gift_rule = #{giftRule},
+			</if>			
+			<if test="payTypeRule != null">
+				pay_type_rule = #{payTypeRule},
+			</if>			
+			<if test="giftLimit4Multy != null">
+				gift_limit_4_multy = #{giftLimit4Multy},
+			</if>			
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>			
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>			
+		</set>
+			WHERE id = #{id}
+	</update>	
+	
+
+	<delete id="delete">
+		delete from promotion where id = #{id}
+	</delete>
+
+	<delete id="deleteByPara">
+		delete from promotion 
+		<where>
+			<if test="themeId != null">
+				and theme_id = #{themeId}
+			</if>
+			<if test="startTime != null">
+				and start_time = #{startTime}
+			</if>
+			<if test="endTime != null">
+				and end_time = #{endTime}
+			</if>
+			<if test="promTitle != null">
+				and prom_title = #{promTitle}
+			</if>
+			<if test="promPlatform != null">
+				and prom_platform = #{promPlatform}
+			</if>
+			<if test="promType != null">
+				and prom_type = #{promType}
+			</if>
+			<if test="userScope != null">
+				and user_scope = #{userScope}
+			</if>
+			<if test="joinType != null">
+				and join_type = #{joinType}
+			</if>
+			<if test="joinTimesLimit != null">
+				and join_times_limit = #{joinTimesLimit}
+			</if>
+			<if test="status != null">
+				and status = #{status}
+			</if>
+			<if test="platformId != null">
+				and platform_id = #{platformId}
+			</if>
+			<if test="payType != null">
+				and pay_type = #{payType}
+			</if>
+			<if test="limitType != null">
+				and limit_type = #{limitType}
+			</if>
+			<if test="contentType != null">
+				and content_type = #{contentType}
+			</if>
+			<if test="giftRule != null">
+				and gift_rule = #{giftRule}
+			</if>
+			<if test="payTypeRule != null">
+				and pay_type_rule = #{payTypeRule}
+			</if>
+			<if test="giftLimit4Multy != null">
+				and gift_limit_4_multy = #{giftLimit4Multy}
+			</if>
+			<if test="createTime != null">
+				and create_time = #{createTime}
+			</if>
+			<if test="updateTime != null">
+				and update_time = #{updateTime}
+			</if>
+		</where>
+	</delete>
+
+
+</mapper>
+	

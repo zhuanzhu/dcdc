@@ -1,0 +1,1627 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.product.dao.read.MerchantProductReadDAO">
+	<resultMap type="com.egeo.components.product.po.MerchantProductPO" id="merchantProductMap">
+		<result property="id" column="id" />
+		<result property="merchantProductSerialNumber" column="merchant_product_serial_number" />
+		<result property="merchantId" column="merchant_id" />
+		<result property="standardProductUnitId" column="standard_product_unit_id" />
+		<result property="merchantCateTreeNodeId" column="merchant_cate_tree_node_id" />
+		<result property="productCategory" column="product_category" />
+		<result property="merchantSeriesId" column="merchant_series_id" />
+		<result property="name" column="name" />
+		<result property="alias" column="alias" />
+		<result property="isVisible" column="is_visible" />
+		<result property="subtitle" column="subtitle" />
+		<result property="supplierId" column="supplier_id" />
+		<result property="type" column="type" />
+		<result property="remark" column="remark" />
+		<result property="salePrice" column="sale_price" />
+		<result property="saleTaxRate" column="sale_tax_rate" />
+		<result property="returnDays" column="return_days" />
+		<result property="replacementDays" column="replacement_days" />
+		<result property="guaranteeDays" column="guarantee_days" />
+		<result property="isVatInvoice" column="is_vat_invoice" />
+		<result property="isVipCard" column="is_vip_card" />
+		<result property="isEnableShelflife" column="is_enable_shelfLife" />
+		<result property="shelflifeDays" column="shelfLife_days" />
+		<result property="isVendible" column="is_vendible" />
+		<result property="grossWeight" column="gross_weight" />
+		<result property="netWeight" column="net_weight" />
+		<result property="code" column="code" />
+		<result property="merchantBrandId" column="merchant_brand_id" />
+		<result property="marketPrice" column="market_price" />
+		<result property="promotionPrice" column="promotion_price" />
+		<result property="status" column="status" />
+		<result property="saleWay" column="sale_way" />
+		<result property="soldBase" column="sold_base" />
+		<result property="freightExplain" column="freight_explain" />
+		<result property="shipmentsExplain" column="shipments_explain" />
+		<result property="freightTemplateId" column="freight_template_id" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="platformId" column="platform_id" />
+		<result property="enterpriseId" column="enterprise_id" />
+		<result property="supplierId" column="supplier_id" />
+		<result property="stockWarning" column="stock_warning" />
+		<result property="createUserid" column="create_userid" />
+		<result property="createUsername" column="create_username" />
+		<result property="createUserip" column="create_userip" />
+		<result property="createUsermac" column="create_usermac" />
+		<result property="updateUserid" column="update_userid" />
+		<result property="updateUsername" column="update_username" />
+		<result property="updateUserip" column="update_userip" />
+		<result property="updateUsermac" column="update_usermac" />
+		<result property="isSpuKeyword" column="is_spu_keyword" />
+		<result property="demoSalePrice" column="demo_sale_price" />
+		<result property="competingSalePrice" column="competing_sale_price" />
+		<result property="storeId" column="store_id" />
+		<result property="presellPeriod" column="presell_period" />
+		<result property="relevanceSuId" column="relevance_su_id" />
+		<result property="buyType" column="buy_type" />
+		<result property="frontSerialNumber" column="front_serial_number" />
+		<result property="jdProfit" column="jd_profit" />
+	</resultMap>
+	
+	<resultMap type="com.egeo.components.product.condition.MerchantProductCondition" id="merchantProductCondition" extends="merchantProductMap">
+		<result property="merchantName" column="merchant_name" />
+		<result property="content" column="content" />
+		<result property="relevanceSuName" column="relevance_su_name" />
+	</resultMap>
+
+	<resultMap type="com.egeo.components.product.condition.MerchantProductUnitCondition" id="merchantProductUnitCondition">
+		<result property="merchantProductSerialNumber" column="merchant_product_serial_number" />
+		<result property="merchantProductName" column="mpName" />
+		<result property="merchantProductCategory" column="product_category" />
+		<result property="supplierId" column="supplier_id" />
+		<result property="saleVolume" column="sales_volume" />
+		<result property="productUnitSerialNumber" column="product_unit_serial_number" />
+		<result property="productUnitName" column="puName" />
+		<result property="salePrice" column="sale_price" />
+		<result property="skuMarketPrice" column="sku_market_price" />
+		<result property="skuCostingPrice" column="sku_costing_price" />
+		<result property="standardUnitId" column="standardUnitId"/>
+		<result property="isVisible" column="is_visible"/>
+		<result property="taxRate" column="tax_rate"/>
+	</resultMap>
+
+	<sql id="merchantProductColumns">
+		id,
+		merchant_product_serial_number,
+		merchant_id,
+		standard_product_unit_id,
+		merchant_cate_tree_node_id,
+		product_category,
+		merchant_series_id,
+		name,
+		alias,
+		is_visible,
+		subtitle,
+		supplier_id,
+		type,
+		remark,
+		sale_price,
+		sale_tax_rate,
+		return_days,
+		replacement_days,
+		guarantee_days,
+		is_vat_invoice,
+		is_vip_card,
+		is_enable_shelfLife,
+		shelfLife_days,
+		is_vendible,
+		gross_weight,
+		net_weight,
+		code,
+		merchant_brand_id,
+		market_price,
+		promotion_price,
+		status,
+		sale_way,
+		sold_base,
+		freight_explain,
+		shipments_explain,
+		freight_template_id,
+		create_time,
+		update_time,
+		platform_id,
+		enterprise_id,
+		supplier_id,
+		stock_warning,
+		is_spu_keyword,
+		demo_sale_price,
+		competing_sale_price,
+		store_id,
+		presell_period,
+		relevance_su_id,
+		buy_type,
+		front_serial_number
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.product.po.MerchantProductPO" resultMap="merchantProductMap">
+		SELECT
+		<include refid="merchantProductColumns" />
+		FROM merchant_product
+		WHERE id = #{po.id}
+	</select>
+	<select id="findLastId" resultType="java.lang.Long">
+		SELECT
+		MAX(id)
+		FROM merchant_product
+	</select>
+	<select id="findMaxfrontSerialNumber" resultType="java.lang.Long">
+		SELECT
+		MAX(front_serial_number)
+		FROM merchant_product
+	</select>
+
+	<select id="findMerchantProductById" parameterType="com.egeo.components.product.po.MerchantProductPO" resultMap="merchantProductCondition">
+		SELECT
+		mp.id,
+		mp.merchant_product_serial_number,
+		mp.merchant_id,
+		mp.standard_product_unit_id,
+		mp.merchant_cate_tree_node_id,
+		mp.product_category,
+		mp.merchant_series_id,
+		mp.name,
+		mp.alias,
+		mp.is_visible,
+		mp.subtitle,
+		mp.supplier_id,
+		mp.type,
+		mp.remark,
+		mp.sale_price,
+		mp.sale_tax_rate,
+		mp.return_days,
+		mp.replacement_days,
+		mp.guarantee_days,
+		mp.is_vat_invoice,
+		mp.is_vip_card,
+		mp.is_enable_shelfLife,
+		mp.shelfLife_days,
+		mp.is_vendible,
+		mp.gross_weight,
+		mp.net_weight,
+		mp.code,
+		mp.merchant_brand_id,
+		mp.market_price,
+		mp.promotion_price,
+		mp.status,
+		mp.sale_way,
+		mp.sold_base,
+		mp.freight_explain,
+		mp.shipments_explain,
+		mp.freight_template_id,
+		mp.create_time,
+		mp.update_time,
+		mp.platform_id,
+		mp.enterprise_id,
+		mp.supplier_id,
+		mp.stock_warning,
+		mp.create_userid,
+		mp.create_username,
+		mp.create_userip,
+		mp.create_usermac,
+		mp.update_userid,
+		mp.update_username,
+		mp.update_userip,
+		mp.update_usermac,
+		mp.is_spu_keyword,
+		mp.demo_sale_price,
+		mp.competing_sale_price,
+		mp.store_id,
+		mp.presell_period,
+		mp.relevance_su_id,
+		mp.buy_type,
+		mp.front_serial_number,
+		(SELECT name from standard_unit WHERE id = mp.relevance_su_id) relevance_su_name,
+		mpd.content
+		FROM merchant_product mp 
+		LEFT JOIN merchant_prod_describe mpd on mpd.merchant_product_id = mp.id 
+		WHERE mp.id = #{po.id}
+	</select>
+
+	<select id="findMerchantProductConditionOfPage" resultMap="merchantProductCondition">
+		SELECT
+    	mp.id,
+		mp.merchant_product_serial_number,mp.merchant_id,
+		(SELECT name FROM merchant WHERE id = mp.merchant_id) merchant_name,
+		mp.standard_product_unit_id,
+		mp.merchant_cate_tree_node_id,
+		mp.product_category,
+		mp.merchant_series_id,
+		mp.name,
+		mp.alias,
+		mp.is_visible,
+		mp.subtitle,
+		mp.supplier_id,
+		mp.type,
+		mp.remark,
+		mp.sale_price,
+		mp.sale_tax_rate,
+		mp.return_days,
+		mp.replacement_days,
+		mp.guarantee_days,
+		mp.is_vat_invoice,
+		mp.is_vip_card,
+		mp.is_enable_shelfLife,
+		mp.shelfLife_days,
+		mp.is_vendible,
+		mp.gross_weight,
+		mp.net_weight,
+		mp.code,
+		mp.merchant_brand_id,
+		mp.market_price,
+		mp.promotion_price,
+		mp.status,
+		mp.sale_way,
+		mp.sold_base,
+		mp.freight_explain,
+		mp.shipments_explain,
+		mp.freight_template_id,
+		mp.create_time,
+		mp.update_time,
+		mp.platform_id,
+		mp.enterprise_id,
+		mp.supplier_id,
+		mp.store_id,
+		mp.presell_period,
+		mp.relevance_su_id,
+		mp.front_serial_number,
+		mp.buy_type,
+		mp.jd_profit
+		FROM merchant_product mp LEFT JOIN product p ON mp.`standard_product_unit_id` = p.`id` 
+		<where>
+			<if test="storeIds!=null and storeIds.size>0">
+				AND store_id IN
+				<foreach  collection="storeIds"  item="id"  open="("  separator=","   close=")">
+					#{id}
+				</foreach>
+			</if>
+			<if test="po.merchantProductSerialNumber != null">
+				and mp.merchant_product_serial_number like concat('%',#{po.merchantProductSerialNumber},'%')
+			</if>
+			<if test="po.merchantId != null">
+				and mp.merchant_id = #{po.merchantId}
+			</if>
+			<if test="po.standardProductUnitId != null">
+				and mp.standard_product_unit_id = #{po.standardProductUnitId}
+			</if>
+			<if test="po.merchantCateTreeNodeId != null">
+				and mp.merchant_cate_tree_node_id = #{po.merchantCateTreeNodeId}
+			</if>
+			<if test="po.merchantSeriesId != null">
+				and mp.merchant_series_id = #{po.merchantSeriesId}
+			</if>
+			<if test="nameList != null">
+				<foreach collection="nameList" item="name">
+				and mp.name like concat('%',#{name},'%')
+				</foreach>
+			</if>
+			<if test="po.alias != null">
+				and mp.alias = #{po.alias}
+			</if>
+			<if test="po.isVisible != null">
+				and mp.is_visible = #{po.isVisible}
+			</if>
+			<if test="po.subtitle != null">
+				and mp.subtitle = #{po.subtitle}
+			</if>
+			<if test="po.supplierId != null">
+				and mp.supplier_id = #{po.supplierId}
+			</if>
+			<if test="po.type != null">
+				and mp.type = #{po.type}
+			</if>
+			<if test="po.remark != null">
+				and mp.remark = #{po.remark}
+			</if>
+			<if test="po.salePrice != null">
+				and mp.sale_price = #{po.salePrice}
+			</if>
+			<if test="po.saleTaxRate != null">
+				and mp.sale_tax_rate = #{po.saleTaxRate}
+			</if>
+			<if test="po.returnDays != null">
+				and mp.return_days = #{po.returnDays}
+			</if>
+			<if test="po.replacementDays != null">
+				and mp.replacement_days = #{po.replacementDays}
+			</if>
+			<if test="po.guaranteeDays != null">
+				and mp.guarantee_days = #{po.guaranteeDays}
+			</if>
+			<if test="po.isVatInvoice != null">
+				and mp.is_vat_invoice = #{po.isVatInvoice}
+			</if>
+			<if test="po.isVipCard != null">
+				and mp.is_vip_card = #{po.isVipCard}
+			</if>
+			<if test="po.isEnableShelflife != null">
+				and mp.is_enable_shelfLife = #{po.isEnableShelflife}
+			</if>
+			<if test="po.shelflifeDays != null">
+				and mp.shelfLife_days = #{po.shelflifeDays}
+			</if>
+			<if test="po.isVendible != null">
+				and mp.is_vendible = #{po.isVendible}
+			</if>
+			<if test="po.grossWeight != null">
+				and mp.gross_weight = #{po.grossWeight}
+			</if>
+			<if test="po.netWeight != null">
+				and mp.net_weight = #{po.netWeight}
+			</if>
+			<if test="po.code != null">
+				and mp.code = #{po.code}
+			</if>
+			<if test="po.merchantBrandId != null">
+				and mp.merchant_brand_id = #{po.merchantBrandId}
+			</if>
+			<if test="po.marketPrice != null">
+				and mp.market_price = #{po.marketPrice}
+			</if>
+			<if test="po.promotionPrice != null">
+				and mp.promotion_price = #{po.promotionPrice}
+			</if>
+			<if test="po.status != null">
+				and mp.status = #{po.status}
+			</if>
+			<if test="po.saleWay != null">
+				and mp.sale_way = #{po.saleWay}
+			</if>
+			<if test="po.soldBase != null">
+				and mp.sold_base = #{po.soldBase}
+			</if>
+			<if test="po.freightExplain != null">
+				and mp.freight_explain = #{po.freightExplain}
+			</if>
+			<if test="po.shipmentsExplain != null">
+				and mp.shipments_explain = #{po.shipmentsExplain}
+			</if>
+			<if test="po.freightTemplateId != null">
+				and mp.freight_template_id = #{po.freightTemplateId}
+			</if>
+			<if test="startTime != null">
+				and mp.create_time  <![CDATA[>=]]> #{startTime}
+			</if>
+			<if test="endTime != null">
+				and mp.create_time <![CDATA[<=]]> #{endTime}
+			</if>
+			<if test="po.updateTime != null">
+				and mp.update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and mp.platform_id = #{po.platformId}
+			</if>
+			<if test="po.enterpriseId != null">
+				and mp.enterprise_id = #{po.enterpriseId}
+			</if>
+			<if test="po.supplierId != null">
+				and mp.supplier_id = #{po.supplierId}
+			</if>
+			<if test="po.buyType != null">
+				and mp.buy_type = #{po.buyType}
+			</if>
+			<if test="po.frontSerialNumber != null">
+				and mp.front_serial_number = #{po.frontSerialNumber}
+			</if>
+			<if test="startProfit != null">
+				and mp.jd_profit <![CDATA[>=]]> #{startProfit}
+			</if>
+			<if test="endProfit != null">
+				and mp.jd_profit <![CDATA[<=]]> #{endProfit}
+			</if>
+			<if test="priceStart != null">
+				and mp.sale_price <![CDATA[>=]]> #{priceStart}
+			</if>
+			<if test="priceEnd != null">
+				and mp.sale_price <![CDATA[<=]]> #{priceEnd}
+			</if>
+			<if test="enterpriseId != null">
+				and p.enterprise_id = #{enterpriseId}
+			</if>
+			<if test="supplierId != null">
+				and p.supplier_id = #{supplierId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+
+	<select id="exportMerchantProductConditionOfPage" resultMap="merchantProductUnitCondition">
+		SELECT
+		mp.merchant_product_serial_number,mp.`name` as mpName,mp.product_category,
+		mp.supplier_id,
+		IFNULL((SELECT sum(sales_volume) from merchant_prod_sales_record WHERE standard_unit_id = mp.id),0) as sales_volume,
+		pu.product_unit_serial_number,pu.`name` as puName,
+		pu.sale_price,mp.market_price as sku_market_price,s.sku_costing_price,
+		((pu.sale_price-s.sku_costing_price)/pu.sale_price) as pr1,
+		su.id as standardUnitId,su.is_visible,su.status,s.tax_rate
+		from product_unit pu,sku s,merchant_product mp,standard_unit su
+		<where>
+			<if test="true">
+				pu.merchant_product_id=mp.id and pu.sku_id=s.id and mp.standard_product_unit_id=su.standard_product_unit_id
+				and mp.merchant_product_serial_number=su.merchant_product_serial_number
+			</if>
+			<if test="storeIds!=null and storeIds.size>0">
+				AND mp.store_id IN
+				<foreach  collection="storeIds"  item="id"  open="("  separator=","   close=")">
+					#{id}
+				</foreach>
+			</if>
+			<if test="po.merchantProductSerialNumber != null">
+				and mp.merchant_product_serial_number like concat('%',#{po.merchantProductSerialNumber},'%')
+			</if>
+			<if test="po.merchantId != null">
+				and mp.merchant_id = #{po.merchantId}
+			</if>
+			<if test="po.standardProductUnitId != null">
+				and mp.standard_product_unit_id = #{po.standardProductUnitId}
+			</if>
+			<if test="po.merchantCateTreeNodeId != null">
+				and mp.merchant_cate_tree_node_id = #{po.merchantCateTreeNodeId}
+			</if>
+			<if test="po.merchantSeriesId != null">
+				and mp.merchant_series_id = #{po.merchantSeriesId}
+			</if>
+			<if test="nameList != null">
+				<foreach collection="nameList" item="name">
+					and mp.name like concat('%',#{name},'%')
+				</foreach>
+			</if>
+			<if test="po.alias != null">
+				and mp.alias = #{po.alias}
+			</if>
+			<if test="po.isVisible != null">
+				and mp.is_visible = #{po.isVisible}
+			</if>
+			<if test="po.subtitle != null">
+				and mp.subtitle = #{po.subtitle}
+			</if>
+			<if test="po.supplierId != null">
+				and mp.supplier_id = #{po.supplierId}
+			</if>
+			<if test="po.type != null">
+				and mp.type = #{po.type}
+			</if>
+			<if test="po.remark != null">
+				and mp.remark = #{po.remark}
+			</if>
+			<if test="po.salePrice != null">
+				and mp.sale_price = #{po.salePrice}
+			</if>
+			<if test="po.saleTaxRate != null">
+				and mp.sale_tax_rate = #{po.saleTaxRate}
+			</if>
+			<if test="po.returnDays != null">
+				and mp.return_days = #{po.returnDays}
+			</if>
+			<if test="po.replacementDays != null">
+				and mp.replacement_days = #{po.replacementDays}
+			</if>
+			<if test="po.guaranteeDays != null">
+				and mp.guarantee_days = #{po.guaranteeDays}
+			</if>
+			<if test="po.isVatInvoice != null">
+				and mp.is_vat_invoice = #{po.isVatInvoice}
+			</if>
+			<if test="po.isVipCard != null">
+				and mp.is_vip_card = #{po.isVipCard}
+			</if>
+			<if test="po.isEnableShelflife != null">
+				and mp.is_enable_shelfLife = #{po.isEnableShelflife}
+			</if>
+			<if test="po.shelflifeDays != null">
+				and mp.shelfLife_days = #{po.shelflifeDays}
+			</if>
+			<if test="po.isVendible != null">
+				and mp.is_vendible = #{po.isVendible}
+				and pu.is_vendible = #{po.isVendible}
+				and su.is_visible = #{po.isVendible}
+			</if>
+			<if test="po.grossWeight != null">
+				and mp.gross_weight = #{po.grossWeight}
+			</if>
+			<if test="po.netWeight != null">
+				and mp.net_weight = #{po.netWeight}
+			</if>
+			<if test="po.code != null">
+				and mp.code = #{po.code}
+			</if>
+			<if test="po.merchantBrandId != null">
+				and mp.merchant_brand_id = #{po.merchantBrandId}
+			</if>
+			<if test="po.marketPrice != null">
+				and mp.market_price = #{po.marketPrice}
+			</if>
+			<if test="po.promotionPrice != null">
+				and mp.promotion_price = #{po.promotionPrice}
+			</if>
+			<if test="po.status != null">
+				and mp.status = #{po.status}
+				and pu.status = #{po.status}
+				and su.status = #{po.status}
+			</if>
+			<if test="po.saleWay != null">
+				and mp.sale_way = #{po.saleWay}
+			</if>
+			<if test="po.soldBase != null">
+				and mp.sold_base = #{po.soldBase}
+			</if>
+			<if test="po.freightExplain != null">
+				and mp.freight_explain = #{po.freightExplain}
+			</if>
+			<if test="po.shipmentsExplain != null">
+				and mp.shipments_explain = #{po.shipmentsExplain}
+			</if>
+			<if test="po.freightTemplateId != null">
+				and mp.freight_template_id = #{po.freightTemplateId}
+			</if>
+			<if test="startTime != null">
+				and mp.create_time  <![CDATA[>=]]> #{startTime}
+			</if>
+			<if test="endTime != null">
+				and mp.create_time <![CDATA[<=]]> #{endTime}
+			</if>
+			<if test="po.updateTime != null">
+				and mp.update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and mp.platform_id = #{po.platformId}
+			</if>
+			<if test="po.enterpriseId != null">
+				and mp.enterprise_id = #{po.enterpriseId}
+			</if>
+			<if test="po.supplierId != null">
+				and mp.supplier_id = #{po.supplierId}
+			</if>
+			<if test="po.buyType != null">
+				and mp.buy_type = #{po.buyType}
+			</if>
+			<if test="po.frontSerialNumber != null">
+				and mp.front_serial_number = #{po.frontSerialNumber}
+			</if>
+			<if test="startProfit != null">
+				and mp.jd_profit <![CDATA[>=]]> #{startProfit}
+			</if>
+			<if test="endProfit != null">
+				and mp.jd_profit <![CDATA[<=]]> #{endProfit}
+			</if>
+			<if test="priceStart != null">
+				and mp.sale_price <![CDATA[>=]]> #{priceStart}
+			</if>
+			<if test="priceEnd != null">
+				and mp.sale_price <![CDATA[<=]]> #{priceEnd}
+			</if>
+			<if test="supplierId != null">
+				and mp.supplier_id = #{supplierId}
+			</if>
+		</where>
+		order by pr1,mp.merchant_product_serial_number,pu.product_unit_serial_number
+		<if test="page != null">
+			limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+
+	<select id="findPlatformMerchantProductConditionOfPage" resultMap="merchantProductCondition">
+		SELECT
+    	mp.id,
+		mp.merchant_product_serial_number,mp.merchant_id,
+		(SELECT name FROM merchant WHERE id = mp.merchant_id) merchant_name,
+		mp.standard_product_unit_id,
+		mp.merchant_cate_tree_node_id,
+		mp.product_category,
+		mp.merchant_series_id,
+		mp.name,
+		mp.alias,
+		mp.is_visible,
+		mp.subtitle,
+		mp.supplier_id,
+		mp.type,
+		mp.remark,
+		mp.sale_price,
+		mp.sale_tax_rate,
+		mp.return_days,
+		mp.replacement_days,
+		mp.guarantee_days,
+		mp.is_vat_invoice,
+		mp.is_vip_card,
+		mp.is_enable_shelfLife,
+		mp.shelfLife_days,
+		mp.is_vendible,
+		mp.gross_weight,
+		mp.net_weight,
+		mp.code,
+		mp.merchant_brand_id,
+		mp.market_price,
+		mp.promotion_price,
+		mp.status,
+		mp.sale_way,
+		mp.sold_base,
+		mp.freight_explain,
+		mp.shipments_explain,
+		mp.freight_template_id,
+		mp.create_time,
+		mp.update_time,
+		mp.platform_id,
+		mp.enterprise_id,
+		mp.supplier_id,
+		mp.store_id,
+		mp.presell_period,
+		mp.relevance_su_id,
+		mp.front_serial_number,
+		mp.buy_type,
+		mp.jd_profit
+		FROM merchant_product mp LEFT JOIN product p ON mp.`standard_product_unit_id` = p.`id` 
+		<where>
+		    p.enterprise_id is null 
+			<if test="storeIds!=null">
+				AND store_id IN
+				<foreach  collection="storeIds"  item="id"  open="("  separator=","   close=")">
+					#{id}
+				</foreach>
+			</if>
+			<if test="po.merchantProductSerialNumber != null">
+				and mp.merchant_product_serial_number like concat('%',#{po.merchantProductSerialNumber},'%')
+			</if>
+			<if test="po.merchantId != null">
+				and mp.merchant_id = #{po.merchantId}
+			</if>
+			<if test="po.standardProductUnitId != null">
+				and mp.standard_product_unit_id = #{po.standardProductUnitId}
+			</if>
+			<if test="po.merchantCateTreeNodeId != null">
+				and mp.merchant_cate_tree_node_id = #{po.merchantCateTreeNodeId}
+			</if>
+			<if test="po.merchantSeriesId != null">
+				and mp.merchant_series_id = #{po.merchantSeriesId}
+			</if>
+			<if test="nameList != null">
+				<foreach collection="nameList" item="name">
+				and mp.name like concat('%',#{name},'%')
+				</foreach>
+			</if>
+			<if test="po.alias != null">
+				and mp.alias = #{po.alias}
+			</if>
+			<if test="po.isVisible != null">
+				and mp.is_visible = #{po.isVisible}
+			</if>
+			<if test="po.subtitle != null">
+				and mp.subtitle = #{po.subtitle}
+			</if>
+			<if test="po.supplierId != null">
+				and mp.supplier_id = #{po.supplierId}
+			</if>
+			<if test="po.type != null">
+				and mp.type = #{po.type}
+			</if>
+			<if test="po.remark != null">
+				and mp.remark = #{po.remark}
+			</if>
+			<if test="po.salePrice != null">
+				and mp.sale_price = #{po.salePrice}
+			</if>
+			<if test="po.saleTaxRate != null">
+				and mp.sale_tax_rate = #{po.saleTaxRate}
+			</if>
+			<if test="po.returnDays != null">
+				and mp.return_days = #{po.returnDays}
+			</if>
+			<if test="po.replacementDays != null">
+				and mp.replacement_days = #{po.replacementDays}
+			</if>
+			<if test="po.guaranteeDays != null">
+				and mp.guarantee_days = #{po.guaranteeDays}
+			</if>
+			<if test="po.isVatInvoice != null">
+				and mp.is_vat_invoice = #{po.isVatInvoice}
+			</if>
+			<if test="po.isVipCard != null">
+				and mp.is_vip_card = #{po.isVipCard}
+			</if>
+			<if test="po.isEnableShelflife != null">
+				and mp.is_enable_shelfLife = #{po.isEnableShelflife}
+			</if>
+			<if test="po.shelflifeDays != null">
+				and mp.shelfLife_days = #{po.shelflifeDays}
+			</if>
+			<if test="po.isVendible != null">
+				and mp.is_vendible = #{po.isVendible}
+			</if>
+			<if test="po.grossWeight != null">
+				and mp.gross_weight = #{po.grossWeight}
+			</if>
+			<if test="po.netWeight != null">
+				and mp.net_weight = #{po.netWeight}
+			</if>
+			<if test="po.code != null">
+				and mp.code = #{po.code}
+			</if>
+			<if test="po.merchantBrandId != null">
+				and mp.merchant_brand_id = #{po.merchantBrandId}
+			</if>
+			<if test="po.marketPrice != null">
+				and mp.market_price = #{po.marketPrice}
+			</if>
+			<if test="po.promotionPrice != null">
+				and mp.promotion_price = #{po.promotionPrice}
+			</if>
+			<if test="po.status != null">
+				and mp.status = #{po.status}
+			</if>
+			<if test="po.saleWay != null">
+				and mp.sale_way = #{po.saleWay}
+			</if>
+			<if test="po.soldBase != null">
+				and mp.sold_base = #{po.soldBase}
+			</if>
+			<if test="po.freightExplain != null">
+				and mp.freight_explain = #{po.freightExplain}
+			</if>
+			<if test="po.shipmentsExplain != null">
+				and mp.shipments_explain = #{po.shipmentsExplain}
+			</if>
+			<if test="po.freightTemplateId != null">
+				and mp.freight_template_id = #{po.freightTemplateId}
+			</if>
+			<if test="startTime != null">
+				and mp.create_time  <![CDATA[>=]]> #{startTime}
+			</if>
+			<if test="endTime != null">
+				and mp.create_time <![CDATA[<=]]> #{endTime}
+			</if>
+			<if test="po.updateTime != null">
+				and mp.update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and mp.platform_id = #{po.platformId}
+			</if>
+			<if test="po.enterpriseId != null">
+				and mp.enterprise_id = #{po.enterpriseId}
+			</if>
+			<if test="po.supplierId != null">
+				and mp.supplier_id = #{po.supplierId}
+			</if>
+			<if test="po.buyType != null">
+				and mp.buy_type = #{po.buyType}
+			</if>
+			<if test="po.frontSerialNumber != null">
+				and mp.front_serial_number = #{po.frontSerialNumber}
+			</if>
+			<if test="startProfit != null">
+				and mp.jd_profit <![CDATA[>=]]> #{startProfit}
+			</if>
+			<if test="endProfit != null">
+				and mp.jd_profit <![CDATA[<=]]> #{endProfit}
+			</if>
+			<if test="priceStart != null">
+				and mp.sale_price <![CDATA[>=]]> #{priceStart}
+			</if>
+			<if test="priceEnd != null">
+				and mp.sale_price <![CDATA[<=]]> #{priceEnd}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM merchant_product
+		<where>
+			<if test="po.merchantProductSerialNumber != null">
+				and merchant_product_serial_number like concat('%',#{po.merchantProductSerialNumber},'%')
+			</if>
+			<if test="po.merchantId != null">
+				and merchant_id = #{po.merchantId}
+			</if>
+			<if test="po.standardProductUnitId != null">
+				and standard_product_unit_id = #{po.standardProductUnitId}
+			</if>
+			<if test="po.merchantCateTreeNodeId != null">
+				and merchant_cate_tree_node_id = #{po.merchantCateTreeNodeId}
+			</if>
+			<if test="po.merchantSeriesId != null">
+				and merchant_series_id = #{po.merchantSeriesId}
+			</if>
+			<if test="po.name != null">
+				and name like concat('%',#{po.name},'%')
+			</if>
+			<if test="po.alias != null">
+				and alias = #{po.alias}
+			</if>
+			<if test="po.isVisible != null">
+				and is_visible = #{po.isVisible}
+			</if>
+			<if test="po.subtitle != null">
+				and subtitle = #{po.subtitle}
+			</if>
+			<if test="po.supplierId != null">
+				and supplier_id = #{po.supplierId}
+			</if>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+			<if test="po.remark != null">
+				and remark = #{po.remark}
+			</if>
+			<if test="po.salePrice != null">
+				and sale_price = #{po.salePrice}
+			</if>
+			<if test="po.saleTaxRate != null">
+				and sale_tax_rate = #{po.saleTaxRate}
+			</if>
+			<if test="po.returnDays != null">
+				and return_days = #{po.returnDays}
+			</if>
+			<if test="po.replacementDays != null">
+				and replacement_days = #{po.replacementDays}
+			</if>
+			<if test="po.guaranteeDays != null">
+				and guarantee_days = #{po.guaranteeDays}
+			</if>
+			<if test="po.isVatInvoice != null">
+				and is_vat_invoice = #{po.isVatInvoice}
+			</if>
+			<if test="po.isVipCard != null">
+				and is_vip_card = #{po.isVipCard}
+			</if>
+			<if test="po.isEnableShelflife != null">
+				and is_enable_shelfLife = #{po.isEnableShelflife}
+			</if>
+			<if test="po.shelflifeDays != null">
+				and shelfLife_days = #{po.shelflifeDays}
+			</if>
+			<if test="po.isVendible != null">
+				and is_vendible = #{po.isVendible}
+			</if>
+			<if test="po.grossWeight != null">
+				and gross_weight = #{po.grossWeight}
+			</if>
+			<if test="po.netWeight != null">
+				and net_weight = #{po.netWeight}
+			</if>
+			<if test="po.code != null">
+				and code = #{po.code}
+			</if>
+			<if test="po.merchantBrandId != null">
+				and merchant_brand_id = #{po.merchantBrandId}
+			</if>
+			<if test="po.marketPrice != null">
+				and market_price = #{po.marketPrice}
+			</if>
+			<if test="po.promotionPrice != null">
+				and promotion_price = #{po.promotionPrice}
+			</if>
+			<if test="po.status != null">
+				and status = #{po.status}
+			</if>
+			<if test="po.saleWay != null">
+				and sale_way = #{po.saleWay}
+			</if>
+			<if test="po.soldBase != null">
+				and sold_base = #{po.soldBase}
+			</if>
+			<if test="po.freightExplain != null">
+				and freight_explain = #{po.freightExplain}
+			</if>
+			<if test="po.shipmentsExplain != null">
+				and shipments_explain = #{po.shipmentsExplain}
+			</if>
+			<if test="po.freightTemplateId != null">
+				and freight_template_id = #{po.freightTemplateId}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.enterpriseId != null">
+				and enterprise_id = #{po.enterpriseId}
+			</if>
+			<if test="po.supplierId != null">
+				and supplier_id = #{po.supplierId}
+			</if>
+			<if test="po.buyType != null">
+				and buy_type = #{po.buyType}
+			</if>
+			<if test="po.frontSerialNumber != null">
+				and front_serial_number = #{po.frontSerialNumber}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="merchantProductMap">
+		SELECT
+		<include refid="merchantProductColumns" />
+		FROM merchant_product
+		<where>
+			<if test="po.merchantProductSerialNumber != null">
+				and merchant_product_serial_number = #{po.merchantProductSerialNumber}
+			</if>
+			<if test="po.merchantId != null">
+				and merchant_id = #{po.merchantId}
+			</if>
+			<if test="po.standardProductUnitId != null">
+				and standard_product_unit_id = #{po.standardProductUnitId}
+			</if>
+			<if test="po.merchantCateTreeNodeId != null">
+				and merchant_cate_tree_node_id = #{po.merchantCateTreeNodeId}
+			</if>
+			<if test="po.merchantSeriesId != null">
+				and merchant_series_id = #{po.merchantSeriesId}
+			</if>
+			<if test="po.name != null">
+				and name = #{po.name}
+			</if>
+			<if test="po.alias != null">
+				and alias = #{po.alias}
+			</if>
+			<if test="po.isVisible != null">
+				and is_visible = #{po.isVisible}
+			</if>
+			<if test="po.subtitle != null">
+				and subtitle = #{po.subtitle}
+			</if>
+			<if test="po.supplierId != null">
+				and supplier_id = #{po.supplierId}
+			</if>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+			<if test="po.remark != null">
+				and remark = #{po.remark}
+			</if>
+			<if test="po.salePrice != null">
+				and sale_price = #{po.salePrice}
+			</if>
+			<if test="po.saleTaxRate != null">
+				and sale_tax_rate = #{po.saleTaxRate}
+			</if>
+			<if test="po.returnDays != null">
+				and return_days = #{po.returnDays}
+			</if>
+			<if test="po.replacementDays != null">
+				and replacement_days = #{po.replacementDays}
+			</if>
+			<if test="po.guaranteeDays != null">
+				and guarantee_days = #{po.guaranteeDays}
+			</if>
+			<if test="po.isVatInvoice != null">
+				and is_vat_invoice = #{po.isVatInvoice}
+			</if>
+			<if test="po.isVipCard != null">
+				and is_vip_card = #{po.isVipCard}
+			</if>
+			<if test="po.isEnableShelflife != null">
+				and is_enable_shelfLife = #{po.isEnableShelflife}
+			</if>
+			<if test="po.shelflifeDays != null">
+				and shelfLife_days = #{po.shelflifeDays}
+			</if>
+			<if test="po.isVendible != null">
+				and is_vendible = #{po.isVendible}
+			</if>
+			<if test="po.grossWeight != null">
+				and gross_weight = #{po.grossWeight}
+			</if>
+			<if test="po.netWeight != null">
+				and net_weight = #{po.netWeight}
+			</if>
+			<if test="po.code != null">
+				and code = #{po.code}
+			</if>
+			<if test="po.merchantBrandId != null">
+				and merchant_brand_id = #{po.merchantBrandId}
+			</if>
+			<if test="po.marketPrice != null">
+				and market_price = #{po.marketPrice}
+			</if>
+			<if test="po.promotionPrice != null">
+				and promotion_price = #{po.promotionPrice}
+			</if>
+			<if test="po.status != null">
+				and status = #{po.status}
+			</if>
+			<if test="po.saleWay != null">
+				and sale_way = #{po.saleWay}
+			</if>
+			<if test="po.soldBase != null">
+				and sold_base = #{po.soldBase}
+			</if>
+			<if test="po.freightExplain != null">
+				and freight_explain = #{po.freightExplain}
+			</if>
+			<if test="po.shipmentsExplain != null">
+				and shipments_explain = #{po.shipmentsExplain}
+			</if>
+			<if test="po.freightTemplateId != null">
+				and freight_template_id = #{po.freightTemplateId}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.enterpriseId != null">
+				and enterprise_id = #{po.enterpriseId}
+			</if>
+			<if test="po.supplierId != null">
+				and supplier_id = #{po.supplierId}
+			</if>
+			<if test="po.buyType != null">
+				and buy_type = #{po.buyType}
+			</if>
+			<if test="po.frontSerialNumber != null">
+				and front_serial_number = #{po.frontSerialNumber}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findMerchantProductAppById" resultMap="merchantProductCondition">
+		SELECT
+		mp.id,
+		mp.merchant_product_serial_number,
+		mp.merchant_id,
+		mp.standard_product_unit_id,
+		mp.merchant_cate_tree_node_id,
+		mp.product_category,
+		mp.merchant_series_id,
+		mp.name,
+		mp.alias,
+		mp.is_visible,
+		mp.subtitle,
+		mp.supplier_id,
+		mp.type,
+		mp.remark,
+		mp.sale_price,
+		mp.sale_tax_rate,
+		mp.return_days,
+		mp.replacement_days,
+		mp.guarantee_days,
+		mp.is_vat_invoice,
+		mp.is_vip_card,
+		mp.is_enable_shelfLife,
+		shelfLife_days,
+		mp.is_vendible,
+		mp.gross_weight,
+		mp.net_weight,
+		mp.code,
+		mp.merchant_brand_id,
+		mp.market_price,
+		mp.promotion_price,
+		mp.status,
+		mp.sale_way,
+		mp.sold_base,
+		mp.freight_explain,
+		mp.shipments_explain,
+		mp.freight_template_id,
+		mp.create_time,
+		mp.update_time,
+		mp.platform_id,
+		mp.enterprise_id,
+		mp.supplier_id,
+		mp.stock_warning,
+		mp.store_id,
+		mp.presell_period,
+		mp.relevance_su_id,
+		mp.buy_type,
+		mp.front_serial_number,
+		(select content from merchant_prod_describe where merchant_product_id = mp.id) content
+		FROM merchant_product mp
+		WHERE id = #{merchantProductId}
+	</select>
+
+	<select id="countCdOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM merchant_product
+		<where>
+			<if test="po.ids !=null and po.ids.size() > 0 ">
+				AND id IN
+				<foreach  collection="po.ids"  item="id"  open="("  separator=","   close=")">
+					#{id}
+				</foreach>
+			</if>
+			<if test="po.merchantProductSerialNumber != null">
+				and merchant_product_serial_number like concat('%',#{po.merchantProductSerialNumber},'%')
+			</if>
+			<if test="po.name != null">
+				and name like concat('%',#{po.name},'%')
+			</if>
+			<if test="po.beginSalePrice != null">
+				and sale_price &gt;= #{po.beginSalePrice}
+			</if>
+			<if test="po.endSalePrice != null">
+				and sale_price &lt; #{po.endSalePrice}
+			</if>
+			<if test="po.beginPromotionPrice != null">
+				and promotion_price &gt;= #{po.beginPromotionPrice}
+			</if>
+			<if test="po.endPromotionPrice != null">
+				and promotion_price &lt; #{po.endPromotionPrice}
+			</if>
+			<if test="po.status != null">
+				and status = #{po.status}
+			</if>
+			<if test="po.saleWay != null">
+				and sale_way = #{po.saleWay}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.enterpriseId != null">
+				and enterprise_id = #{po.enterpriseId}
+			</if>
+			<if test="po.supplierId != null">
+				and supplier_id = #{po.supplierId}
+			</if>
+			<if test="po.buyType != null">
+				and buy_type = #{po.buyType}
+			</if>
+			<if test="po.frontSerialNumber != null">
+				and front_serial_number = #{po.frontSerialNumber}
+			</if>
+		</where>
+	</select>
+
+	<select id="findCommodityDetailsConditionOfPage" resultMap="merchantProductCondition">
+		SELECT
+		mp.id,
+		mp.merchant_product_serial_number,
+		(SELECT name FROM merchant WHERE id = mp.merchant_id) merchant_name,
+		mp.standard_product_unit_id,
+		mp.merchant_cate_tree_node_id,
+		mp.product_category,
+		mp.merchant_series_id,
+		mp.name,
+		mp.alias,
+		mp.is_visible,
+		mp.subtitle,
+		mp.supplier_id,
+		mp.type,
+		mp.remark,
+		mp.sale_price,
+		mp.sale_tax_rate,
+		mp.return_days,
+		mp.replacement_days,
+		mp.guarantee_days,
+		mp.is_vat_invoice,
+		mp.is_vip_card,
+		mp.is_enable_shelfLife,
+		mp.shelfLife_days,
+		mp.is_vendible,
+		mp.gross_weight,
+		mp.net_weight,
+		mp.code,
+		mp.merchant_brand_id,
+		mp.market_price,
+		mp.promotion_price,
+		mp.status,
+		mp.sale_way,
+		mp.sold_base,
+		mp.freight_explain,
+		mp.shipments_explain,
+		mp.freight_template_id,
+		mp.create_time,
+		mp.update_time,
+		mp.store_id,
+		mp.presell_period,
+		mp.relevance_su_id,
+		mp.platform_id,
+		mp.enterprise_id,
+		mp.supplier_id,
+		mp.buy_type,
+		mp.front_serial_number
+		FROM merchant_product mp
+		<where>
+			<if test="po.ids !=null and po.ids.size() > 0 ">
+				AND id IN
+				<foreach  collection="po.ids"  item="id"  open="("  separator=","   close=")">
+					#{id}
+				</foreach>
+			</if>
+			<if test="po.merchantProductSerialNumber != null">
+				and merchant_product_serial_number like concat('%',#{po.merchantProductSerialNumber},'%')
+			</if>
+			<if test="po.name != null">
+				and name like concat('%',#{po.name},'%')
+			</if>
+			<if test="po.beginSalePrice != null">
+				and sale_price &gt;= #{po.beginSalePrice}
+			</if>
+			<if test="po.endSalePrice != null">
+				and sale_price &lt; #{po.endSalePrice}
+			</if>
+			<if test="po.beginPromotionPrice != null">
+				and promotion_price &gt;= #{po.beginPromotionPrice}
+			</if>
+			<if test="po.endPromotionPrice != null">
+				and promotion_price &lt; #{po.endPromotionPrice}
+			</if>
+			<if test="po.status != null">
+				and status = #{po.status}
+			</if>
+			<if test="po.saleWay != null">
+				and sale_way = #{po.saleWay}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.enterpriseId != null">
+				and enterprise_id = #{po.enterpriseId}
+			</if>
+			<if test="po.supplierId != null">
+				and supplier_id = #{po.supplierId}
+			</if>
+			<if test="po.buyType != null">
+				and buy_type = #{po.buyType}
+			</if>
+			<if test="po.frontSerialNumber != null">
+				and front_serial_number = #{po.frontSerialNumber}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY id desc
+			</otherwise>
+		</choose>
+		<if test="page != null">
+			limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+
+	<select id="countOfPages" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM merchant_product mp LEFT JOIN product p ON mp.`standard_product_unit_id` = p.`id`
+		<where>
+			<if test="storeIds!=null">
+				AND mp.store_id IN
+				<foreach  collection="storeIds"  item="id"  open="("  separator=","   close=")">
+					#{id}
+				</foreach>
+			</if>
+			<if test="po.merchantProductSerialNumber != null">
+				and mp.merchant_product_serial_number like concat('%',#{po.merchantProductSerialNumber},'%')
+			</if>
+			<if test="po.merchantId != null">
+				and mp.merchant_id = #{po.merchantId}
+			</if>
+			<if test="po.standardProductUnitId != null">
+				and mp.standard_product_unit_id = #{po.standardProductUnitId}
+			</if>
+			<if test="po.merchantCateTreeNodeId != null">
+				and mp.merchant_cate_tree_node_id = #{po.merchantCateTreeNodeId}
+			</if>
+			<if test="po.merchantSeriesId != null">
+				and mp.merchant_series_id = #{po.merchantSeriesId}
+			</if>
+			<if test="nameList != null">
+				<foreach collection="nameList" item="name">
+				and mp.name like concat('%',#{name},'%')
+				</foreach>
+			</if>
+			<if test="po.alias != null">
+				and mp.alias = #{po.alias}
+			</if>
+			<if test="po.isVisible != null">
+				and mp.is_visible = #{po.isVisible}
+			</if>
+			<if test="po.subtitle != null">
+				and mp.subtitle = #{po.subtitle}
+			</if>
+			<if test="po.supplierId != null">
+				and mp.supplier_id = #{po.supplierId}
+			</if>
+			<if test="po.type != null">
+				and mp.type = #{po.type}
+			</if>
+			<if test="po.remark != null">
+				and mp.remark = #{po.remark}
+			</if>
+			<if test="po.salePrice != null">
+				and mp.sale_price = #{po.salePrice}
+			</if>
+			<if test="po.saleTaxRate != null">
+				and mp.sale_tax_rate = #{po.saleTaxRate}
+			</if>
+			<if test="po.returnDays != null">
+				and mp.return_days = #{po.returnDays}
+			</if>
+			<if test="po.replacementDays != null">
+				and mp.replacement_days = #{po.replacementDays}
+			</if>
+			<if test="po.guaranteeDays != null">
+				and mp.guarantee_days = #{po.guaranteeDays}
+			</if>
+			<if test="po.isVatInvoice != null">
+				and mp.is_vat_invoice = #{po.isVatInvoice}
+			</if>
+			<if test="po.isVipCard != null">
+				and mp.is_vip_card = #{po.isVipCard}
+			</if>
+			<if test="po.isEnableShelflife != null">
+				and mp.is_enable_shelfLife = #{po.isEnableShelflife}
+			</if>
+			<if test="po.shelflifeDays != null">
+				and mp.shelfLife_days = #{po.shelflifeDays}
+			</if>
+			<if test="po.isVendible != null">
+				and mp.is_vendible = #{po.isVendible}
+			</if>
+			<if test="po.grossWeight != null">
+				and mp.gross_weight = #{po.grossWeight}
+			</if>
+			<if test="po.netWeight != null">
+				and mp.net_weight = #{po.netWeight}
+			</if>
+			<if test="po.code != null">
+				and mp.code = #{po.code}
+			</if>
+			<if test="po.merchantBrandId != null">
+				and mp.merchant_brand_id = #{po.merchantBrandId}
+			</if>
+			<if test="po.marketPrice != null">
+				and mp.market_price = #{po.marketPrice}
+			</if>
+			<if test="po.promotionPrice != null">
+				and mp.promotion_price = #{po.promotionPrice}
+			</if>
+			<if test="po.status != null">
+				and mp.status = #{po.status}
+			</if>
+			<if test="po.saleWay != null">
+				and mp.sale_way = #{po.saleWay}
+			</if>
+			<if test="po.soldBase != null">
+				and mp.sold_base = #{po.soldBase}
+			</if>
+			<if test="po.freightExplain != null">
+				and mp.freight_explain = #{po.freightExplain}
+			</if>
+			<if test="po.shipmentsExplain != null">
+				and mp.shipments_explain = #{po.shipmentsExplain}
+			</if>
+			<if test="po.freightTemplateId != null">
+				and mp.freight_template_id = #{po.freightTemplateId}
+			</if>
+			<if test="startTime != null">
+				and mp.create_time  <![CDATA[>=]]> #{startTime}
+			</if>
+			<if test="endTime != null">
+				and mp.create_time <![CDATA[<=]]> #{endTime}
+			</if>
+			<if test="po.platformId != null">
+				and mp.platform_id = #{po.platformId}
+			</if>
+			<if test="po.enterpriseId != null">
+				and mp.enterprise_id = #{po.enterpriseId}
+			</if>
+			<if test="po.supplierId != null">
+				and mp.supplier_id = #{po.supplierId}
+			</if>
+			<if test="po.buyType != null">
+				and mp.buy_type = #{po.buyType}
+			</if>
+			<if test="po.frontSerialNumber != null">
+				and mp.front_serial_number = #{po.frontSerialNumber}
+			</if>
+			<if test="startProfit != null">
+				and mp.jd_profit <![CDATA[>=]]> #{startProfit}
+			</if>
+			<if test="endProfit != null">
+				and mp.jd_profit <![CDATA[<=]]> #{endProfit}
+			</if>
+			<if test="priceStart != null">
+				and mp.sale_price <![CDATA[>=]]> #{priceStart}
+			</if>
+			<if test="priceEnd != null">
+				and mp.sale_price <![CDATA[<=]]> #{priceEnd}
+			</if>
+			<if test="enterpriseId != null">
+				and p.enterprise_id = #{enterpriseId}
+			</if>
+			<if test="supplierId != null">
+				and p.supplier_id = #{supplierId}
+			</if>
+
+		</where>
+	</select>
+
+	<select id="countOfPlatformPages" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM merchant_product mp LEFT JOIN product p ON mp.`standard_product_unit_id` = p.`id`
+		<where>
+		
+			p.enterprise_id is null
+			
+			<if test="storeIds!=null">
+				AND mp.store_id IN
+				<foreach  collection="storeIds"  item="id"  open="("  separator=","   close=")">
+					#{id}
+				</foreach>
+			</if>
+			<if test="po.merchantProductSerialNumber != null">
+				and mp.merchant_product_serial_number like concat('%',#{po.merchantProductSerialNumber},'%')
+			</if>
+			<if test="po.merchantId != null">
+				and mp.merchant_id = #{po.merchantId}
+			</if>
+			<if test="po.standardProductUnitId != null">
+				and mp.standard_product_unit_id = #{po.standardProductUnitId}
+			</if>
+			<if test="po.merchantCateTreeNodeId != null">
+				and mp.merchant_cate_tree_node_id = #{po.merchantCateTreeNodeId}
+			</if>
+			<if test="po.merchantSeriesId != null">
+				and mp.merchant_series_id = #{po.merchantSeriesId}
+			</if>
+			<if test="nameList != null">
+				<foreach collection="nameList" item="name">
+				and mp.name like concat('%',#{name},'%')
+				</foreach>
+			</if>
+			<if test="po.alias != null">
+				and mp.alias = #{po.alias}
+			</if>
+			<if test="po.isVisible != null">
+				and mp.is_visible = #{po.isVisible}
+			</if>
+			<if test="po.subtitle != null">
+				and mp.subtitle = #{po.subtitle}
+			</if>
+			<if test="po.supplierId != null">
+				and mp.supplier_id = #{po.supplierId}
+			</if>
+			<if test="po.type != null">
+				and mp.type = #{po.type}
+			</if>
+			<if test="po.remark != null">
+				and mp.remark = #{po.remark}
+			</if>
+			<if test="po.salePrice != null">
+				and mp.sale_price = #{po.salePrice}
+			</if>
+			<if test="po.saleTaxRate != null">
+				and mp.sale_tax_rate = #{po.saleTaxRate}
+			</if>
+			<if test="po.returnDays != null">
+				and mp.return_days = #{po.returnDays}
+			</if>
+			<if test="po.replacementDays != null">
+				and mp.replacement_days = #{po.replacementDays}
+			</if>
+			<if test="po.guaranteeDays != null">
+				and mp.guarantee_days = #{po.guaranteeDays}
+			</if>
+			<if test="po.isVatInvoice != null">
+				and mp.is_vat_invoice = #{po.isVatInvoice}
+			</if>
+			<if test="po.isVipCard != null">
+				and mp.is_vip_card = #{po.isVipCard}
+			</if>
+			<if test="po.isEnableShelflife != null">
+				and mp.is_enable_shelfLife = #{po.isEnableShelflife}
+			</if>
+			<if test="po.shelflifeDays != null">
+				and mp.shelfLife_days = #{po.shelflifeDays}
+			</if>
+			<if test="po.isVendible != null">
+				and mp.is_vendible = #{po.isVendible}
+			</if>
+			<if test="po.grossWeight != null">
+				and mp.gross_weight = #{po.grossWeight}
+			</if>
+			<if test="po.netWeight != null">
+				and mp.net_weight = #{po.netWeight}
+			</if>
+			<if test="po.code != null">
+				and mp.code = #{po.code}
+			</if>
+			<if test="po.merchantBrandId != null">
+				and mp.merchant_brand_id = #{po.merchantBrandId}
+			</if>
+			<if test="po.marketPrice != null">
+				and mp.market_price = #{po.marketPrice}
+			</if>
+			<if test="po.promotionPrice != null">
+				and mp.promotion_price = #{po.promotionPrice}
+			</if>
+			<if test="po.status != null">
+				and mp.status = #{po.status}
+			</if>
+			<if test="po.saleWay != null">
+				and mp.sale_way = #{po.saleWay}
+			</if>
+			<if test="po.soldBase != null">
+				and mp.sold_base = #{po.soldBase}
+			</if>
+			<if test="po.freightExplain != null">
+				and mp.freight_explain = #{po.freightExplain}
+			</if>
+			<if test="po.shipmentsExplain != null">
+				and mp.shipments_explain = #{po.shipmentsExplain}
+			</if>
+			<if test="po.freightTemplateId != null">
+				and mp.freight_template_id = #{po.freightTemplateId}
+			</if>
+			<if test="startTime != null">
+				and mp.create_time  <![CDATA[>=]]> #{startTime}
+			</if>
+			<if test="endTime != null">
+				and mp.create_time <![CDATA[<=]]> #{endTime}
+			</if>
+			<if test="po.platformId != null">
+				and mp.platform_id = #{po.platformId}
+			</if>
+			<if test="po.enterpriseId != null">
+				and mp.enterprise_id = #{po.enterpriseId}
+			</if>
+			<if test="po.supplierId != null">
+				and mp.supplier_id = #{po.supplierId}
+			</if>
+			<if test="po.buyType != null">
+				and mp.buy_type = #{po.buyType}
+			</if>
+			<if test="po.frontSerialNumber != null">
+				and mp.front_serial_number = #{po.frontSerialNumber}
+			</if>
+			<if test="startProfit != null">
+				and mp.jd_profit <![CDATA[>=]]> #{startProfit}
+			</if>
+			<if test="endProfit != null">
+				and mp.jd_profit <![CDATA[<=]]> #{endProfit}
+			</if>
+			<if test="priceStart != null">
+				and mp.sale_price <![CDATA[>=]]> #{priceStart}
+			</if>
+			<if test="priceEnd != null">
+				and mp.sale_price <![CDATA[<=]]> #{priceEnd}
+			</if>
+
+		</where>
+	</select>
+</mapper>
+	

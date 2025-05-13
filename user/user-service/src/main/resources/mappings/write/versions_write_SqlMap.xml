@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.user.dao.write.VersionsWriteDAO">
+	<insert id="insert" parameterType="com.egeo.components.user.po.VersionsPO">
+		INSERT INTO versions(
+        <trim suffixOverrides=",">
+			<if test="versionsMark != null">
+				versions_mark,
+			</if>
+			<if test="type != null">
+				type,
+			</if>
+			<if test="releaseDate != null">
+				release_date,
+			</if>
+			<if test="isConstraint != null">
+				is_constraint,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="url != null">
+				url,
+			</if>
+			<if test="description != null">
+				description,
+			</if>
+			<if test="versionCode != null">
+				version_code,
+			</if>
+			<if test="installName != null">
+				install_name,
+			</if>
+			<if test="resume != null">
+				resume,
+			</if>
+			<if test="isOfficial != null">
+				is_official,
+			</if>
+			<if test="versionStatus != null">
+				version_status,
+			</if>
+			<if test="platformId != null">
+				platform_id,
+			</if>
+			<if test="user != null">
+				user,
+			</if>
+        </trim>		
+		) VALUES (
+        <trim suffixOverrides=",">
+			<if test="versionsMark != null">
+				#{versionsMark},
+			</if>
+			<if test="type != null">
+				#{type},
+			</if>
+			<if test="releaseDate != null">
+				#{releaseDate},
+			</if>
+			<if test="isConstraint != null">
+				#{isConstraint},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
+			</if>
+			<if test="url != null">
+				#{url},
+			</if>
+			<if test="description != null">
+				#{description},
+			</if>
+			<if test="versionCode != null">
+				#{versionCode},
+			</if>
+			<if test="installName != null">
+				#{installName},
+			</if>
+			<if test="resume != null">
+				#{resume},
+			</if>
+			<if test="isOfficial != null">
+				#{isOfficial},
+			</if>
+			<if test="versionStatus != null">
+				#{versionStatus},
+			</if>
+			<if test="platformId != null">
+				#{platformId},
+			</if>
+			<if test="user != null">
+				#{user},
+			</if>
+        </trim>		
+		)
+		<selectKey keyProperty="id" resultType="java.lang.Long">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+
+	
+	
+	<update id="update">
+	UPDATE versions 
+		<set>
+			<if test="versionsMark != null">
+				versions_mark = #{versionsMark},
+			</if>			
+			<if test="type != null">
+				type = #{type},
+			</if>			
+			<if test="releaseDate != null">
+				release_date = #{releaseDate},
+			</if>			
+			<if test="isConstraint != null">
+				is_constraint = #{isConstraint},
+			</if>			
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>			
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>
+			<if test="url != null">
+				url=#{url},
+			</if>
+			<if test="description != null">
+				description=#{description},
+			</if>
+			<if test="versionCode != null">
+				version_code=#{versionCode},
+			</if>
+			<if test="installName != null">
+				install_name = #{installName},
+			</if>
+			<if test="resume != null">
+				resume = #{resume},
+			</if>
+			<if test="isOfficial != null">
+				is_official = #{isOfficial},
+			</if>		
+			<if test="versionStatus != null">
+				version_status = #{versionStatus},
+			</if>			
+			<if test="platformId != null">
+				platform_id = #{platformId},
+			</if>	
+			<if test="user != null">
+				user = #{user},
+			</if>		
+		</set>
+			WHERE id = #{id}
+	</update>	
+	
+
+	<delete id="delete">
+		delete from versions where id = #{id}
+	</delete>
+
+	<delete id="deleteByPara">
+		delete from versions 
+		<where>
+			<if test="versionsMark != null">
+				and versions_mark = #{versionsMark}
+			</if>
+			<if test="type != null">
+				and type = #{type}
+			</if>
+			<if test="releaseDate != null">
+				and release_date = #{releaseDate}
+			</if>
+			<if test="isConstraint != null">
+				and is_constraint = #{isConstraint}
+			</if>
+			<if test="createTime != null">
+				and create_time = #{createTime}
+			</if>
+			<if test="updateTime != null">
+				and update_time = #{updateTime}
+			</if>
+			<if test="url != null">
+				and url=#{url}
+			</if>
+			<if test="description != null">
+				and description=#{description}
+			</if>
+			<if test="versionCode != null">
+				and version_code=#{versionCode}
+			</if>
+			<if test="installName != null">
+				and install_name = #{installName},
+			</if>
+			<if test="resume != null">
+				and resume = #{resume},
+			</if>
+			<if test="isOfficial != null">
+				and is_official = #{isOfficial},
+			</if>
+			<if test="versionStatus != null">
+				and version_status = #{versionStatus},
+			</if>
+			<if test="platformId != null">
+				and platform_id = #{platformId}
+			</if>
+		</where>
+	</delete>
+	
+	<update id="updateVersionsOfficialByTypeWithTx">
+		 UPDATE versions SET is_official = 0 WHERE type = 0 and user = #{user}
+	</update>
+
+
+</mapper>
+	

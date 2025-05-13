@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.promotion.dao.read.BuyCardBaseReadDAO">
+
+	<resultMap type="com.egeo.components.promotion.po.BuyCardBasePO" id="resultPoMap">
+		<result property="id" column="id" />
+		<result property="cardName" column="card_name" />
+		<result property="cardPrefix" column="card_prefix" />
+		<result property="cardType" column="card_type" />
+		<result property="settleMethod" column="settle_method" />
+		<result property="cardAmount" column="card_amount" />
+		<result property="cardState" column="card_state" />
+		<result property="expirationDate" column="expiration_date" />
+		<result property="expirationDateUnit" column="expiration_date_unit" />
+		<result property="delFlag" column="del_flag" />
+		<result property="operator" column="operator" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="ruleDescribe" column="rule_describe" />
+		<result property="describe" column="describe" />
+		<result property="combinationId" column="combination_id" />
+		<result property="sortValue" column="sort_value" />
+	</resultMap>
+
+	<sql id="columnsSql">
+		id,
+		card_name,
+		card_prefix,
+		card_type,
+		settle_method,
+		card_amount,
+		card_state,
+		expiration_date,
+		expiration_date_unit,
+		del_flag,
+		operator,
+		rule_describe,
+		`describe`,
+		combination_id,
+		sort_value,
+		create_time,
+		update_time
+	</sql>
+
+
+	<sql id="whereSql">
+		<where>
+			<if test="po.id != null">
+				and id =  #{po.id}
+			</if>
+			<if test="po.cardName != null">
+				and card_name = #{po.cardName}
+			</if>
+			<if test="po.cardPrefix != null">
+				and card_prefix = #{po.cardPrefix}
+			</if>
+			<if test="po.cardType != null">
+				and card_type = #{po.cardType}
+			</if>
+			<if test="po.settleMethod != null">
+				and settle_method = #{po.settleMethod}
+			</if>
+			<if test="po.cardState != null">
+				and card_state = #{po.cardState}
+			</if>
+			<if test="po.delFlag != null">
+				and del_flag = #{po.delFlag}
+			</if>
+			<if test="po.combinationId != null">
+				and combination_id = #{po.combinationId}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.cardNameLike != null">
+				AND card_name LIKE CONCAT('%',#{po.cardNameLike},'%')
+			</if>
+			<if test="po.ids != null">
+				id in
+				<foreach collection="po.ids" item="id" open="(" separator=","
+						 close=")">
+					#{id}
+				</foreach>
+			</if>
+		</where>
+	</sql>
+
+	<sql id="tableNameId">
+		buy_card_base
+	</sql>
+
+	<sql id="inClause">
+		in
+		<foreach collection="ids" item="id" open="(" separator=","
+				 close=")">
+			#{id}
+		</foreach>
+	</sql>
+
+<!--		<select id="findByIds" resultMap="enterpriseBizConfigMap">-->
+<!--			select -->
+<!--			       * -->
+<!--			from -->
+<!--				<include refid="tableNameId" />-->
+<!--			where id -->
+<!--			<include refid="inClause" />-->
+<!--		</select>-->
+
+	<select id="findById" parameterType="com.egeo.components.promotion.po.BuyCardBasePO" resultMap="resultPoMap">
+		SELECT
+		<include refid="columnsSql" />
+		FROM
+		<include refid="tableNameId" />
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="resultPoMap">
+		SELECT
+			<include refid="columnsSql" />
+		FROM
+			<include refid="tableNameId" />
+			<include refid="whereSql"/>
+			<choose>
+				<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+					ORDER BY ${page.orderBy}
+				</when>
+				<otherwise>
+					ORDER BY id desc
+				</otherwise>
+			</choose>
+			<if test="page != null">
+			limit #{page.limitStart},#{page.pageSize}
+			</if>
+	</select>
+
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+			count(1) cnt
+		FROM
+			<include refid="tableNameId" />
+			<include refid="whereSql"/>
+	</select>
+
+	<select id="findAll" resultMap="resultPoMap">
+		SELECT
+		<include refid="columnsSql" />
+		FROM
+		<include refid="tableNameId" />
+		<include refid="whereSql"/>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY id desc
+			</otherwise>
+		</choose>
+	</select>
+
+	<select id="findMaxSortValue" resultType="java.lang.Integer">
+		SELECT
+		IFNULL(max(sort_value),0) max
+		FROM
+		<include refid="tableNameId" />
+		where del_flag = 0
+	</select>
+</mapper>

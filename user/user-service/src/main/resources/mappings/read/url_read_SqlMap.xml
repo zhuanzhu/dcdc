@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.user.dao.read.UrlReadDAO">
+	<resultMap type="com.egeo.components.user.po.UrlPO" id="urlMap">
+		<result property="id" column="id" />
+		<result property="url" column="url" />
+		<result property="name" column="name" />
+		<result property="description" column="description" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="codeModuleId" column="code_module_id" />
+		<result property="updateUserId" column="update_user_id" />
+		<result property="updateUserName" column="update_user_name" />
+	</resultMap>
+	<resultMap type="com.egeo.components.user.condition.UrlCondition" id="urlConditionMap" extends="urlMap">
+		<result property="codeModuleName" column="code_module_name" />
+	</resultMap>
+
+	<sql id="urlColumns">
+		id,
+		url,
+		name,
+		description,
+		create_time,
+		update_time,
+		code_module_id,
+		update_user_id,
+		update_user_name
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.user.po.UrlPO"
+		resultMap="urlMap">
+		SELECT
+		<include refid="urlColumns" />
+		FROM u_url
+		WHERE id = #{po.id}
+	</select>
+	
+	<select id="findUrlConditionOfPage" resultMap="urlConditionMap">
+		SELECT
+		u.id,
+		u.url,
+		u.name,
+		u.description,
+		u.create_time,
+		u.update_time,
+		u.code_module_id,
+		u.update_user_id,
+		u.update_user_name,
+		uc.code_module_name
+		FROM u_url u 
+		LEFT JOIN u_code_module uc on u.code_module_id = uc.id
+		<where>
+			<if test="po.id != null">
+				and u.id = #{po.id}
+			</if>
+			<if test="po.url != null">
+				and u.url = #{po.url}
+			</if>
+			<if test="po.name != null">
+				and u.name = #{po.name}
+			</if>
+			<if test="po.description != null">
+				and u.description = #{po.description}
+			</if>
+			<if test="po.createTime != null">
+				and u.create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and u.update_time = #{po.updateTime}
+			</if>
+			<if test="po.codeModuleId != null">
+				and u.code_module_id = #{po.codeModuleId}
+			</if>
+		</where>
+		group by u.id
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY u.id desc
+			</otherwise>
+		</choose>
+		<if test="page != null">
+			limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(distinct u.id) cnt
+		FROM u_url u 
+		LEFT JOIN u_url_type ut on ut.url_id = u.id
+		<where>
+			<if test="po.id != null">
+				and u.id = #{po.id}
+			</if>
+			<if test="po.url != null">
+				and u.url = #{po.url}
+			</if>
+			<if test="po.name != null">
+				and u.name = #{po.name}
+			</if>
+			<if test="po.description != null">
+				and u.description = #{po.description}
+			</if>
+			<if test="po.createTime != null">
+				and u.create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and u.update_time = #{po.updateTime}
+			</if>
+			<if test="po.codeModuleId != null">
+				and u.code_module_id = #{po.codeModuleId}
+			</if>
+		</where>
+	</select>
+
+	<select id="findAll" resultMap="urlMap">
+		SELECT
+		<include refid="urlColumns" />
+		FROM u_url
+		<where>
+			<if test="po.id != null">
+				and id = #{po.id}
+			</if>
+			<if test="po.url != null">
+				and url = #{po.url}
+			</if>
+			<if test="po.name != null">
+				and name = #{po.name}
+			</if>
+			<if test="po.description != null">
+				and description = #{po.description}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY id desc
+			</otherwise>
+		</choose>
+	</select>
+
+	<select id="getUrlListByUserId" resultType="java.lang.String">
+		SELECT DISTINCT url from u_url where id in(
+			SELECT url_id from u_role_url where role_id in(
+				SELECT id from u_role where id in (
+					SELECT role_id from u_user_role where user_id = #{userId}) and platform_id = #{platformId}))
+	</select>
+	
+	<select id="getFunctionUrlListByUserId" resultType="java.lang.String">
+		SELECT DISTINCT url from u_url where id in (
+			SELECT url_id from u_function_tree_node_url where function_tree_node_id in (
+				  SELECT function_tree_node_id from u_role_function_tree_node where role_id in(
+				 	 SELECT id from u_role where id in (
+				 		 SELECT role_id from u_user_role where user_id = #{userId}) and platform_id = #{platformId})))
+	</select>
+
+	<select id="getUrlByRoleId" parameterType="java.lang.Long"
+		resultMap="urlMap">
+		SELECT DISTINCT u.id,u.url,u.name FROM u_url u
+		LEFT JOIN
+		u_role_url ru ON ru.url_id = u.id
+		where ru.role_id= #{roleId}
+	</select>
+
+	<select id="findByType" resultMap="urlMap">
+		SELECT
+		u.id,
+		u.url,
+		u.name,
+		u.description
+		from u_url u, u_url_type ut WHERE u.id = ut.url_id AND ut.type = #{type}
+	</select>
+</mapper>
+	

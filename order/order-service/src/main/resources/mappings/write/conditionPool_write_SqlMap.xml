@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.order.dao.write.ConditionPoolWriteDAO">
+	<insert id="insert" parameterType="com.egeo.components.order.po.ConditionPoolPO">
+		INSERT INTO condition_pool(
+        <trim suffixOverrides=",">
+			<if test="menuCode != null">
+				menu_code,
+			</if>
+			<if test="menuName != null">
+				menu_name,
+			</if>
+			<if test="pageName != null">
+				page_name,
+			</if>
+			<if test="conditionName != null">
+				condition_name,
+			</if>
+			<if test="conditionValue != null">
+				condition_value,
+			</if>
+			<if test="conditionType != null">
+				condition_type,
+			</if>
+			<if test="rule != null">
+				rule,
+			</if>
+			<if test="platformId != null">
+				platform_id,
+			</if>
+			<if test="tbodyValue != null">
+				tbody_value,
+			</if>
+			<if test="isDft != null">
+				is_dft,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+        </trim>		
+		) VALUES (
+        <trim suffixOverrides=",">
+			<if test="menuCode != null">
+				#{menuCode},
+			</if>
+			<if test="menuName != null">
+				#{menuName},
+			</if>
+			<if test="pageName != null">
+				#{pageName},
+			</if>
+			<if test="conditionName != null">
+				#{conditionName},
+			</if>
+			<if test="conditionValue != null">
+				#{conditionValue},
+			</if>
+			<if test="conditionType != null">
+				#{conditionType},
+			</if>
+			<if test="rule != null">
+				#{rule},
+			</if>
+			<if test="platformId != null">
+				#{platformId},
+			</if>
+			<if test="tbodyValue != null">
+				#{tbodyValue},
+			</if>
+			<if test="isDft != null">
+				#{isDft},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+        </trim>		
+		)
+		<selectKey keyProperty="id" resultType="java.lang.Long">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+
+	
+	
+	<update id="update">
+	UPDATE condition_pool 
+		<set>
+			<if test="menuCode != null">
+				menu_code = #{menuCode},
+			</if>			
+			<if test="menuName != null">
+				menu_name = #{menuName},
+			</if>			
+			<if test="pageName != null">
+				page_name = #{pageName},
+			</if>			
+			<if test="conditionName != null">
+				condition_name = #{conditionName},
+			</if>			
+			<if test="conditionValue != null">
+				condition_value = #{conditionValue},
+			</if>			
+			<if test="conditionType != null">
+				condition_type = #{conditionType},
+			</if>			
+			<if test="rule != null">
+				rule = #{rule},
+			</if>			
+			<if test="platformId != null">
+				platform_id = #{platformId},
+			</if>			
+			<if test="tbodyValue != null">
+				tbody_value = #{tbodyValue},
+			</if>			
+			<if test="isDft != null">
+				is_dft = #{isDft},
+			</if>			
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>			
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>			
+		</set>
+			WHERE id = #{id}
+	</update>	
+	
+
+	<delete id="delete">
+		delete from condition_pool where id = #{id}
+	</delete>
+
+	<delete id="deleteByPara">
+		delete from condition_pool 
+		<where>
+			<if test="menuCode != null">
+				and menu_code = #{menuCode}
+			</if>
+			<if test="menuName != null">
+				and menu_name = #{menuName}
+			</if>
+			<if test="pageName != null">
+				and page_name = #{pageName}
+			</if>
+			<if test="conditionName != null">
+				and condition_name = #{conditionName}
+			</if>
+			<if test="conditionValue != null">
+				and condition_value = #{conditionValue}
+			</if>
+			<if test="conditionType != null">
+				and condition_type = #{conditionType}
+			</if>
+			<if test="rule != null">
+				and rule = #{rule}
+			</if>
+			<if test="platformId != null">
+				and platform_id = #{platformId}
+			</if>
+			<if test="tbodyValue != null">
+				and tbody_value = #{tbodyValue}
+			</if>
+			<if test="isDft != null">
+				and is_dft = #{isDft}
+			</if>
+			<if test="updateTime != null">
+				and update_time = #{updateTime}
+			</if>
+			<if test="createTime != null">
+				and create_time = #{createTime}
+			</if>
+		</where>
+	</delete>
+
+
+</mapper>
+	

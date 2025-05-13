@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.product.dao.read.StandardUnitPictureRecordReadDAO">
+	<resultMap type="com.egeo.components.product.po.StandardUnitPictureRecordPO" id="standardUnitPictureRecordMap">
+		<result property="id" column="id" />
+		<result property="merchantPictureId" column="merchant_picture_id" />
+		<result property="type" column="type" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="platformId" column="platform_id" />
+		<result property="standardUnitRecordId" column="standard_unit_record_id" />
+	</resultMap>
+
+	<sql id="standardUnitPictureRecordColumns">
+		id,
+		merchant_picture_id,
+		type,
+		create_time,
+		update_time,
+		platform_id,
+		standard_unit_record_id
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.product.po.StandardUnitPictureRecordPO" resultMap="standardUnitPictureRecordMap">
+		SELECT
+		<include refid="standardUnitPictureRecordColumns" />
+		FROM standard_unit_picture_record
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="standardUnitPictureRecordMap">
+		SELECT
+		<include refid="standardUnitPictureRecordColumns" />
+		FROM standard_unit_picture_record
+		<where>
+			<if test="po.merchantPictureId != null">
+				and merchant_picture_id = #{po.merchantPictureId}
+			</if>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.standardUnitRecordId != null">
+				and standard_unit_record_id = #{po.standardUnitRecordId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM standard_unit_picture_record
+		<where>
+			<if test="po.merchantPictureId != null">
+				and merchant_picture_id = #{po.merchantPictureId}
+			</if>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.standardUnitRecordId != null">
+				and standard_unit_record_id = #{po.standardUnitRecordId}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="standardUnitPictureRecordMap">
+		SELECT
+		<include refid="standardUnitPictureRecordColumns" />
+		FROM standard_unit_picture_record
+		<where>
+			<if test="po.merchantPictureId != null">
+				and merchant_picture_id = #{po.merchantPictureId}
+			</if>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.standardUnitRecordId != null">
+				and standard_unit_record_id = #{po.standardUnitRecordId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+</mapper>
+	

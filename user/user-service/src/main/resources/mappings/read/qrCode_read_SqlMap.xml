@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.user.dao.read.QrCodeReadDAO">
+	<resultMap type="com.egeo.components.user.po.QrCodePO" id="qrCodeMap">
+		<result property="id" column="id" />
+		<result property="branchId" column="branch_id" />
+		<result property="clientId" column="client_id" />
+		<result property="channelId" column="channel_id" />
+		<result property="campaignId" column="campaign_id" />
+		<result property="typeId" column="type_id" />
+		<result property="rdid" column="rdid" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+	</resultMap>
+	<resultMap type="com.egeo.components.user.condition.QrCodeCondition" extends="qrCodeMap" id="qrCodeConditionMap">
+		<result property="shortCode" column="short_code" />
+		<result property="channelName" column="channel_name" />
+		<result property="activityName" column="activity_name" />
+
+	</resultMap>
+
+	<sql id="qrCodeColumns">
+		id,
+		branch_id,
+		client_id,
+		channel_id,
+		campaign_id,
+		type_id,
+		rdid,
+		create_time,
+		update_time
+	</sql>
+
+	<select id="findQrCodeListByCouponUnitIds" resultMap="qrCodeConditionMap">
+		SELECT
+		qc.id,
+		qc.branch_id,
+		qc.client_id,
+		qc.channel_id,
+		qc.campaign_id,
+		qc.type_id,
+		qc.rdid,
+		qc.create_time,
+		qc.update_time,
+		c.name as  channel_name,
+		ca.name as activity_name,
+		ca.short_code
+		FROM u_qr_code qc , channel c ,channel_activity ca
+
+		<where>
+			qc.channel_id=c.id AND  qc.campaign_id=ca.id
+			AND
+			qc.type_id IN
+			<foreach collection="couponUnitIds" item="id" open="(" separator="," close=")">
+				#{id}
+			</foreach>
+
+		</where>
+
+	</select>
+	<select id="findQrCodeByCouponUnitId" resultMap="qrCodeConditionMap">
+		SELECT
+		qc.id,
+		qc.branch_id,
+		qc.client_id,
+		qc.channel_id,
+		qc.campaign_id,
+		qc.type_id,
+		qc.rdid,
+		qc.create_time,
+		qc.update_time,
+		c.name as  channel_name,
+		ca.name as activity_name,
+		ca.short_code
+		FROM u_qr_code qc , channel c ,channel_activity ca
+
+		<where>
+			qc.channel_id=c.id
+			AND  qc.campaign_id=ca.id
+			AND qc.type_id =#{id}
+		</where>
+
+	</select>
+
+	<select id="findById" parameterType="com.egeo.components.user.po.QrCodePO" resultMap="qrCodeMap">
+		SELECT
+		<include refid="qrCodeColumns" />
+		FROM u_qr_code
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="qrCodeMap">
+		SELECT
+		<include refid="qrCodeColumns" />
+		FROM u_qr_code
+		<where>
+			<if test="po.branchId != null">
+				and branch_id = #{po.branchId}
+			</if>
+			<if test="po.clientId != null">
+				and client_id = #{po.clientId}
+			</if>
+			<if test="po.channelId != null">
+				and channel_id = #{po.channelId}
+			</if>
+			<if test="po.campaignId != null">
+				and campaign_id = #{po.campaignId}
+			</if>
+			<if test="po.typeId != null">
+				and type_id = #{po.typeId}
+			</if>
+			<if test="po.rdid != null">
+				and rdid = #{po.rdid}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM u_qr_code
+		<where>
+			<if test="po.branchId != null">
+				and branch_id = #{po.branchId}
+			</if>
+			<if test="po.clientId != null">
+				and client_id = #{po.clientId}
+			</if>
+			<if test="po.channelId != null">
+				and channel_id = #{po.channelId}
+			</if>
+			<if test="po.campaignId != null">
+				and campaign_id = #{po.campaignId}
+			</if>
+			<if test="po.typeId != null">
+				and type_id = #{po.typeId}
+			</if>
+			<if test="po.rdid != null">
+				and rdid = #{po.rdid}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="qrCodeMap">
+		SELECT
+		<include refid="qrCodeColumns" />
+		FROM u_qr_code
+		<where>
+			<if test="po.branchId != null">
+				and branch_id = #{po.branchId}
+			</if>
+			<if test="po.clientId != null">
+				and client_id = #{po.clientId}
+			</if>
+			<if test="po.channelId != null">
+				and channel_id = #{po.channelId}
+			</if>
+			<if test="po.campaignId != null">
+				and campaign_id = #{po.campaignId}
+			</if>
+			<if test="po.typeId != null">
+				and type_id = #{po.typeId}
+			</if>
+			<if test="po.rdid != null">
+				and rdid = #{po.rdid}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+</mapper>
+	

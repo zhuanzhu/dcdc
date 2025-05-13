@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.product.dao.read.SellPlatformStandardUnitReadDAO">
+	<resultMap type="com.egeo.components.product.po.SellPlatformStandardUnitPO" id="sellPlatformStandardUnitMap">
+		<result property="id" column="id" />
+		<result property="sellPlatformId" column="sell_platform_id" />
+		<result property="standardUnitId" column="standard_unit_id" />
+		<result property="salePrice" column="sale_price" />
+		<result property="path" column="path" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="platformId" column="platform_id" />
+	</resultMap>
+
+	<sql id="sellPlatformStandardUnitColumns">
+		id,
+		sell_platform_id,
+		standard_unit_id,
+		sale_price,
+		path,
+		create_time,
+		update_time,
+		platform_id
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.product.po.SellPlatformStandardUnitPO" resultMap="sellPlatformStandardUnitMap">
+		SELECT
+		<include refid="sellPlatformStandardUnitColumns" />
+		FROM sell_platform_standard_unit
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="sellPlatformStandardUnitMap">
+		SELECT
+		<include refid="sellPlatformStandardUnitColumns" />
+		FROM sell_platform_standard_unit
+		<where>
+			<if test="po.sellPlatformId != null">
+				and sell_platform_id = #{po.sellPlatformId}
+			</if>
+			<if test="po.standardUnitId != null">
+				and standard_unit_id = #{po.standardUnitId}
+			</if>
+			<if test="po.salePrice != null">
+				and sale_price = #{po.salePrice}
+			</if>
+			<if test="po.path != null">
+				and path = #{po.path}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM sell_platform_standard_unit
+		<where>
+			<if test="po.sellPlatformId != null">
+				and sell_platform_id = #{po.sellPlatformId}
+			</if>
+			<if test="po.standardUnitId != null">
+				and standard_unit_id = #{po.standardUnitId}
+			</if>
+			<if test="po.salePrice != null">
+				and sale_price = #{po.salePrice}
+			</if>
+			<if test="po.path != null">
+				and path = #{po.path}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="sellPlatformStandardUnitMap">
+		SELECT
+		<include refid="sellPlatformStandardUnitColumns" />
+		FROM sell_platform_standard_unit
+		<where>
+			<if test="po.sellPlatformId != null">
+				and sell_platform_id = #{po.sellPlatformId}
+			</if>
+			<if test="po.standardUnitId != null">
+				and standard_unit_id = #{po.standardUnitId}
+			</if>
+			<if test="po.salePrice != null">
+				and sale_price = #{po.salePrice}
+			</if>
+			<if test="po.path != null">
+				and path = #{po.path}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+</mapper>
+	

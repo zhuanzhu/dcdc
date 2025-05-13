@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.egeo.components.finance.dao.read.AccountBatchTmpReadDAO">
+
+	<select id="queryAccountBatchTmpPageTotalSize"
+		resultType="java.lang.Integer">
+		select count(0)
+		<include refid="queryAccountBatchTmpPage_MainCond" />
+	</select>
+
+	<sql id="queryAccountBatchTmpPage_MainCond">
+		from account_batch_tmp
+		<where>
+			status in (0,2)
+			<if test="keyWord!=null">
+				and (
+				outflow_accountid in
+				(select id from company_account
+				where name like concat('%',#{keyWord},'%'))
+				or
+				inflow_accountid in
+				(select id from company_account
+				where name like concat('%',#{keyWord},'%'))
+				)
+			</if>
+			<if test="companyId!=null">
+				and company_id=#{companyId}
+			</if>
+			<if test="status!=null">
+				and status=#{status}
+			</if>
+			<if test="type!=null">
+				and type=#{type}
+			</if>
+			<if test="platformId!=null">
+				and platform_id=#{platformId}
+			</if>
+		</where>
+	</sql>
+
+	<select id="queryAccountBatchTmpPage"
+		resultMap="accountBatchTmpMap">
+		select *
+		<include refid="queryAccountBatchTmpPage_MainCond" />
+		order by status,create_time desc
+		limit
+		#{page.limitStart},#{page.pageSize}
+	</select>
+
+	<select id="queryAccountBatchTmpByFinBatch"
+		resultMap="accountBatchTmpMap">
+		select * from account_batch_tmp
+		where fin_batch=#{finBatch}
+	</select>
+
+	<resultMap
+		type="com.egeo.components.finance.po.AccountBatchTmpPO"
+		id="accountBatchTmpMap">
+		<result property="id" column="id" />
+		<result property="outflowAccountid" column="outflow_accountid" />
+		<result property="inflowAccountid" column="inflow_accountid" />
+		<result property="finBatch" column="fin_batch" />
+		<result property="sum" column="sum" />
+		<result property="reasonId" column="reason_id" />
+		<result property="remark" column="remark" />
+		<result property="status" column="status" />
+		<result property="operatorId" column="operator_id" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="platformId" column="platform_id" />
+		<result property="type" column="type" />
+		<result property="companyId" column="company_id" />
+		<result property="examReason" column="exam_reason" />
+	</resultMap>
+
+	<sql id="accountBatchTmpColumns">
+		id,
+		outflow_accountid,
+		inflow_accountid,
+		fin_batch,
+		sum,
+		reason_id,
+		remark,
+		status,
+		operator_id,
+		create_time,
+		update_time,
+		platform_id,
+		type,
+		company_id,
+		exam_reason
+	</sql>
+
+	<select id="findById"
+		parameterType="com.egeo.components.finance.po.AccountBatchTmpPO"
+		resultMap="accountBatchTmpMap">
+		SELECT
+		<include refid="accountBatchTmpColumns" />
+		FROM account_batch_tmp
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="accountBatchTmpMap">
+		SELECT
+		<include refid="accountBatchTmpColumns" />
+		FROM account_batch_tmp
+		<where>
+			<if test="po.outflowAccountid != null">
+				and outflow_accountid = #{po.outflowAccountid}
+			</if>
+			<if test="po.inflowAccountid != null">
+				and inflow_accountid = #{po.inflowAccountid}
+			</if>
+			<if test="po.finBatch != null">
+				and fin_batch = #{po.finBatch}
+			</if>
+			<if test="po.sum != null">
+				and sum = #{po.sum}
+			</if>
+			<if test="po.reasonId != null">
+				and reason_id = #{po.reasonId}
+			</if>
+			<if test="po.remark != null">
+				and remark = #{po.remark}
+			</if>
+			<if test="po.status != null">
+				and status = #{po.status}
+			</if>
+			<if test="po.operatorId != null">
+				and operator_id = #{po.operatorId}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+			<if test="po.companyId != null">
+				and company_id = #{po.companyId}
+			</if>
+			<if test="po.examReason != null">
+				and exam_reason = #{po.examReason}
+			</if>
+		</where>
+		<choose>
+			<when
+				test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY id desc
+			</otherwise>
+		</choose>
+		<if test="page != null">
+			limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM account_batch_tmp
+		<where>
+			<if test="po.outflowAccountid != null">
+				and outflow_accountid = #{po.outflowAccountid}
+			</if>
+			<if test="po.inflowAccountid != null">
+				and inflow_accountid = #{po.inflowAccountid}
+			</if>
+			<if test="po.finBatch != null">
+				and fin_batch = #{po.finBatch}
+			</if>
+			<if test="po.sum != null">
+				and sum = #{po.sum}
+			</if>
+			<if test="po.reasonId != null">
+				and reason_id = #{po.reasonId}
+			</if>
+			<if test="po.remark != null">
+				and remark = #{po.remark}
+			</if>
+			<if test="po.status != null">
+				and status = #{po.status}
+			</if>
+			<if test="po.operatorId != null">
+				and operator_id = #{po.operatorId}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+			<if test="po.companyId != null">
+				and company_id = #{po.companyId}
+			</if>
+			<if test="po.examReason != null">
+				and exam_reason = #{po.examReason}
+			</if>
+		</where>
+	</select>
+
+	<select id="findAll" resultMap="accountBatchTmpMap">
+		SELECT
+		<include refid="accountBatchTmpColumns" />
+		FROM account_batch_tmp
+		<where>
+			<if test="po.outflowAccountid != null">
+				and outflow_accountid = #{po.outflowAccountid}
+			</if>
+			<if test="po.inflowAccountid != null">
+				and inflow_accountid = #{po.inflowAccountid}
+			</if>
+			<if test="po.finBatch != null">
+				and fin_batch = #{po.finBatch}
+			</if>
+			<if test="po.sum != null">
+				and sum = #{po.sum}
+			</if>
+			<if test="po.reasonId != null">
+				and reason_id = #{po.reasonId}
+			</if>
+			<if test="po.remark != null">
+				and remark = #{po.remark}
+			</if>
+			<if test="po.status != null">
+				and status = #{po.status}
+			</if>
+			<if test="po.operatorId != null">
+				and operator_id = #{po.operatorId}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+			<if test="po.companyId != null">
+				and company_id = #{po.companyId}
+			</if>
+			<if test="po.examReason != null">
+				and exam_reason = #{po.examReason}
+			</if>
+		</where>
+		<choose>
+			<when
+				test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY id desc
+			</otherwise>
+		</choose>
+	</select>
+</mapper>
+	

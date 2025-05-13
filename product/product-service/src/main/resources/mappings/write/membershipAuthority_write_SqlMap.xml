@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.product.dao.write.MembershipAuthorityWriteDAO">
+	<insert id="insert" parameterType="com.egeo.components.product.po.MembershipAuthorityPO">
+		INSERT INTO membership_authority(
+        <trim suffixOverrides=",">
+			<if test="membershipId != null">
+				membership_id,
+			</if>
+			<if test="authorityId != null">
+				authority_id,
+			</if>
+			<if test="isStop != null">
+				is_stop,
+			</if>
+			<if test="platformId != null">
+				platform_id,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+        </trim>		
+		) VALUES (
+        <trim suffixOverrides=",">
+			<if test="membershipId != null">
+				#{membershipId},
+			</if>
+			<if test="authorityId != null">
+				#{authorityId},
+			</if>
+			<if test="isStop != null">
+				#{isStop},
+			</if>
+			<if test="platformId != null">
+				#{platformId},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
+			</if>
+        </trim>		
+		)
+		<selectKey keyProperty="id" resultType="java.lang.Long">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+
+	
+	
+	<update id="update">
+	UPDATE membership_authority 
+		<set>
+			<if test="membershipId != null">
+				membership_id = #{membershipId},
+			</if>			
+			<if test="authorityId != null">
+				authority_id = #{authorityId},
+			</if>			
+			<if test="isStop != null">
+				is_stop = #{isStop},
+			</if>			
+			<if test="platformId != null">
+				platform_id = #{platformId},
+			</if>			
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>			
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>			
+		</set>
+			WHERE id = #{id}
+	</update>	
+	
+
+	<delete id="delete">
+		delete from membership_authority where id = #{id}
+	</delete>
+
+	<delete id="deleteByPara">
+		delete from membership_authority 
+		<where>
+			<if test="membershipId != null">
+				and membership_id = #{membershipId}
+			</if>
+			<if test="authorityId != null">
+				and authority_id = #{authorityId}
+			</if>
+			<if test="isStop != null">
+				and is_stop = #{isStop}
+			</if>
+			<if test="platformId != null">
+				and platform_id = #{platformId}
+			</if>
+			<if test="createTime != null">
+				and create_time = #{createTime}
+			</if>
+			<if test="updateTime != null">
+				and update_time = #{updateTime}
+			</if>
+		</where>
+	</delete>
+
+
+</mapper>
+	

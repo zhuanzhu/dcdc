@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.user.dao.write.QrCodeWriteDAO">
+	<insert id="insert" parameterType="com.egeo.components.user.po.QrCodePO">
+		INSERT INTO u_qr_code(
+        <trim suffixOverrides=",">
+			<if test="branchId != null">
+				branch_id,
+			</if>
+			<if test="clientId != null">
+				client_id,
+			</if>
+			<if test="channelId != null">
+				channel_id,
+			</if>
+			<if test="campaignId != null">
+				campaign_id,
+			</if>
+			<if test="typeId != null">
+				type_id,
+			</if>
+			<if test="rdid != null">
+				rdid,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+        </trim>		
+		) VALUES (
+        <trim suffixOverrides=",">
+			<if test="branchId != null">
+				#{branchId},
+			</if>
+			<if test="clientId != null">
+				#{clientId},
+			</if>
+			<if test="channelId != null">
+				#{channelId},
+			</if>
+			<if test="campaignId != null">
+				#{campaignId},
+			</if>
+			<if test="typeId != null">
+				#{typeId},
+			</if>
+			<if test="rdid != null">
+				#{rdid},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
+			</if>
+        </trim>		
+		)
+		<selectKey keyProperty="id" resultType="java.lang.Long">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+
+	
+	
+	<update id="update">
+	UPDATE u_qr_code 
+		<set>
+			<if test="branchId != null">
+				branch_id = #{branchId},
+			</if>			
+			<if test="clientId != null">
+				client_id = #{clientId},
+			</if>			
+			<if test="channelId != null">
+				channel_id = #{channelId},
+			</if>			
+			<if test="campaignId != null">
+				campaign_id = #{campaignId},
+			</if>			
+			<if test="typeId != null">
+				type_id = #{typeId},
+			</if>			
+			<if test="rdid != null">
+				rdid = #{rdid},
+			</if>			
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>			
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>			
+		</set>
+			WHERE id = #{id}
+	</update>	
+	
+
+	<delete id="delete">
+		delete from u_qr_code where id = #{id}
+	</delete>
+
+	<delete id="deleteByPara">
+		delete from u_qr_code 
+		<where>
+			<if test="branchId != null">
+				and branch_id = #{branchId}
+			</if>
+			<if test="clientId != null">
+				and client_id = #{clientId}
+			</if>
+			<if test="channelId != null">
+				and channel_id = #{channelId}
+			</if>
+			<if test="campaignId != null">
+				and campaign_id = #{campaignId}
+			</if>
+			<if test="typeId != null">
+				and type_id = #{typeId}
+			</if>
+			<if test="rdid != null">
+				and rdid = #{rdid}
+			</if>
+			<if test="createTime != null">
+				and create_time = #{createTime}
+			</if>
+			<if test="updateTime != null">
+				and update_time = #{updateTime}
+			</if>
+		</where>
+	</delete>
+
+	<update id="updateByccId">
+	UPDATE u_qr_code 
+		<set>		
+			<if test="po.rdid != null">
+				rdid = #{po.rdid},
+			</if>			
+		</set>
+		<where>
+			<if test="po.channelId != null">
+				and channel_id = #{po.channelId}
+			</if>
+			<if test="po.campaignId != null">
+				and campaign_id = #{po.campaignId}
+			</if>
+		</where>
+	</update>
+<update id="updateQrCodeByCouponUnitIds">
+	UPDATE u_qr_code
+		<set>
+			<if test="channelActivityId != null">
+				campaign_id = #{channelActivityId},
+			</if>
+			<if test="channelId != null">
+				channel_id = #{channelId},
+			</if>
+		</set>
+		<where>
+			type_id IN
+			<foreach collection="couponUnitIds" item="id" open="(" close=")" separator=",">
+				#{id}
+			</foreach>
+		</where>
+	</update>
+
+
+	<insert id="insertList">
+		INSERT INTO u_qr_code(
+				branch_id,
+				channel_id,
+				campaign_id,
+
+				type_id,
+				rdid
+		) VALUES
+		<foreach collection="poList" item="po" separator=",">
+			(
+			<trim suffixOverrides=",">
+				<if test="po.branchId != null">
+					#{po.branchId},
+				</if>
+				<if test="po.channelId != null">
+					#{po.channelId},
+				</if>
+				<if test="po.campaignId != null">
+					#{po.campaignId},
+				</if>
+
+				<if test="po.typeId != null">
+					#{po.typeId},
+				</if>
+				<if test="po.rdid != null">
+					#{po.rdid},
+				</if>
+
+			</trim>
+			)
+
+		</foreach>
+
+	</insert>
+
+
+</mapper>
+	

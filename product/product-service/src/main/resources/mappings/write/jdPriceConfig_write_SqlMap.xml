@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.product.dao.write.JdPriceConfigWriteDAO">
+	<insert id="insert" parameterType="com.egeo.components.product.po.JdPriceConfigPO">
+		INSERT INTO jd_price_config(
+        <trim suffixOverrides=",">
+			<if test="standardCompanyRate != null">
+				standard_company_rate,
+			</if>
+			<if test="democompanysCompanyRate != null">
+				demoCompanys_company_rate,
+			</if>
+			<if test="competingCompanyRate != null">
+				competing_company_rate,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+        </trim>		
+		) VALUES (
+        <trim suffixOverrides=",">
+			<if test="standardCompanyRate != null">
+				#{standardCompanyRate},
+			</if>
+			<if test="democompanysCompanyRate != null">
+				#{democompanysCompanyRate},
+			</if>
+			<if test="competingCompanyRate != null">
+				#{competingCompanyRate},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
+			</if>
+        </trim>		
+		)
+		<selectKey keyProperty="id" resultType="java.lang.Long">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+
+	
+	
+	<update id="update">
+	UPDATE jd_price_config 
+		<set>
+			<if test="standardCompanyRate != null">
+				standard_company_rate = #{standardCompanyRate},
+			</if>			
+			<if test="democompanysCompanyRate != null">
+				demoCompanys_company_rate = #{democompanysCompanyRate},
+			</if>			
+			<if test="competingCompanyRate != null">
+				competing_company_rate = #{competingCompanyRate},
+			</if>			
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>			
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>			
+		</set>
+			WHERE id = #{id}
+	</update>	
+	
+
+	<delete id="delete">
+		delete from jd_price_config where id = #{id}
+	</delete>
+
+	<delete id="deleteByPara">
+		delete from jd_price_config 
+		<where>
+			<if test="standardCompanyRate != null">
+				and standard_company_rate = #{standardCompanyRate}
+			</if>
+			<if test="democompanysCompanyRate != null">
+				and demoCompanys_company_rate = #{democompanysCompanyRate}
+			</if>
+			<if test="competingCompanyRate != null">
+				and competing_company_rate = #{competingCompanyRate}
+			</if>
+			<if test="createTime != null">
+				and create_time = #{createTime}
+			</if>
+			<if test="updateTime != null">
+				and update_time = #{updateTime}
+			</if>
+		</where>
+	</delete>
+
+
+</mapper>
+	

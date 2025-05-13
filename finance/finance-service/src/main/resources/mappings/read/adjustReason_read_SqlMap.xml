@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.egeo.components.finance.dao.read.AdjustReasonReadDAO">
+
+	<select id="queryAdjustReasonsByTypes"
+		resultMap="adjustReasonMap">
+		select * from adjust_reason
+		where type in (
+		<foreach collection="typeList" item="type" separator=",">
+			#{type}
+		</foreach>
+		) 
+		<if test="accountId != null">
+			AND id in 
+			(select reason_id from reason_company where company_id = -1 
+			or company_id in (select company_id from company_account where id = #{accountId}))
+		</if>
+		<if test="companyId!=null">
+			and id in
+			(select reason_id from reason_company where company_id = -1
+			or company_id = #{companyId})
+		</if>
+		<if test="platformId!=null">
+			and platform_id =#{platformId}
+
+		</if>
+	</select>
+
+	<select id="queryAdjustReasonPageTotalSize"
+		resultType="java.lang.Integer">
+		select count(0)
+		<include refid="queryAdjustReasonPage_MainCond" />
+	</select>
+
+	<select id="queryAdjustReasonPage" resultMap="adjustReasonMap">
+		select a.* 
+		<include refid="queryAdjustReasonPage_MainCond" />
+		order by a.create_time desc
+		limit #{page.limitStart},#{page.pageSize}
+	</select>
+	
+	<sql id="queryAdjustReasonPage_MainCond">
+		from adjust_reason a
+		<if test="companyId!=null">
+			left join reason_company b on a.id=b.reason_id		
+		</if>
+		<where>
+			<if test="type!=null">
+				a.type=#{type}
+			</if>
+			<if test="companyId!=null">
+				and (b.company_id=#{companyId} or b.company_id=-1)
+			</if>
+			<if test="disabled!=null">
+				and a.disabled=#{disabled}
+			</if>
+			<if test="platformId!=null">
+				and a.platform_id=#{platformId}
+			</if>
+		</where>
+	</sql>
+
+	<select id="queryAdjustReasons" resultMap="adjustReasonMap">
+		select * from
+		adjust_reason 
+		<where>
+			<if test="companyId != null">
+				and id in 
+				(select reason_id from reason_company where company_id = -1 or company_id = #{companyId})				
+			</if>
+		</where>
+		order by create_time desc
+	</select>
+
+	<resultMap type="com.egeo.components.finance.po.AdjustReasonPO"
+		id="adjustReasonMap">
+		<result property="id" column="id" />
+		<result property="type" column="type" />
+		<result property="name" column="name" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="platformId" column="platform_id" />
+		<result property="disabled" column="disabled" />
+	</resultMap>
+
+	<sql id="adjustReasonColumns">
+		id,
+		type,
+		name,
+		create_time,
+		update_time,
+		disabled,
+		platform_id
+	</sql>
+
+	<select id="findById"
+		parameterType="com.egeo.components.finance.po.AdjustReasonPO"
+		resultMap="adjustReasonMap">
+		SELECT
+		<include refid="adjustReasonColumns" />
+		FROM adjust_reason
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="adjustReasonMap">
+		SELECT
+		<include refid="adjustReasonColumns" />
+		FROM adjust_reason
+		<where>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+			<if test="po.name != null">
+				and name = #{po.name}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+		<choose>
+			<when
+				test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY id desc
+			</otherwise>
+		</choose>
+		<if test="page != null">
+			limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM adjust_reason
+		<where>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+			<if test="po.name != null">
+				and name = #{po.name}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+	</select>
+
+	<select id="findAll" resultMap="adjustReasonMap">
+		SELECT
+		<include refid="adjustReasonColumns" />
+		FROM adjust_reason
+		<where>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+			<if test="po.name != null">
+				and name = #{po.name}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+		<choose>
+			<when
+				test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY id desc
+			</otherwise>
+		</choose>
+	</select>
+</mapper>
+	

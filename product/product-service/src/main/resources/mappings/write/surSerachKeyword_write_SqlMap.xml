@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.product.dao.write.SurSerachKeywordWriteDAO">
+	
+	<sql id="insertAllClause">
+		<foreach collection="poList" item="po" separator=",">
+				(#{po.standardUnitRecordId},
+				#{po.keyword},
+				#{po.platformId})
+		</foreach>
+	</sql>
+	
+	<insert id="insert" parameterType="com.egeo.components.product.po.SurSerachKeywordPO">
+		INSERT INTO sur_serach_keyword(
+        <trim suffixOverrides=",">
+			<if test="standardUnitRecordId != null">
+				standard_unit_record_id,
+			</if>
+			<if test="keyword != null">
+				keyword,
+			</if>
+			<if test="platformId != null">
+				platform_id,
+			</if>
+        </trim>		
+		) VALUES (
+        <trim suffixOverrides=",">
+			<if test="standardUnitRecordId != null">
+				#{standardUnitRecordId},
+			</if>
+			<if test="keyword != null">
+				#{keyword},
+			</if>
+			<if test="platformId != null">
+				#{platformId},
+			</if>
+        </trim>		
+		)
+		<selectKey keyProperty="id" resultType="java.lang.Long">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	
+	<insert id="insertAll">
+		INSERT INTO sur_serach_keyword(
+				standard_unit_record_id,
+				keyword,
+				platform_id
+		) VALUES <include refid="insertAllClause" /> 
+	</insert>
+
+
+	
+	
+	<update id="update">
+	UPDATE sur_serach_keyword 
+		<set>
+			<if test="standardUnitRecordId != null">
+				standard_unit_record_id = #{standardUnitRecordId},
+			</if>			
+			<if test="keyword != null">
+				keyword = #{keyword},
+			</if>			
+			<if test="platformId != null">
+				platform_id = #{platformId},
+			</if>			
+		</set>
+			WHERE id = #{id}
+	</update>	
+	
+
+	<delete id="delete">
+		delete from sur_serach_keyword where id = #{id}
+	</delete>
+
+	<delete id="deleteByPara">
+		delete from sur_serach_keyword 
+		<where>
+			<if test="standardUnitRecordId != null">
+				and standard_unit_record_id = #{standardUnitRecordId}
+			</if>
+			<if test="keyword != null">
+				and keyword = #{keyword}
+			</if>
+			<if test="platformId != null">
+				and platform_id = #{platformId}
+			</if>
+		</where>
+	</delete>
+
+
+</mapper>
+	

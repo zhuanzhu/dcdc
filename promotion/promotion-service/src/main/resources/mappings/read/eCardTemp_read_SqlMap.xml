@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.promotion.dao.read.ECardTempReadDAO">
+	<resultMap type="com.egeo.components.promotion.po.ECardTempPO" id="eCardTempMap">
+		<result property="id" column="id" />
+		<result property="cardNumber" column="card_number" />
+		<result property="cardThick" column="card_thick" />
+		<result property="userId" column="user_id" />
+		<result property="skuId" column="sku_id" />
+		<result property="endTime" column="end_time" />
+		<result property="shortUrl" column="short_url" />
+		<result property="type" column="type" />
+		<result property="skuName" column="sku_name" />
+		<result property="skuSerialNumber" column="sku_serial_number" />
+		<result property="orderCode" column="order_code" />
+	</resultMap>
+
+	<sql id="eCardTempColumns">
+		id,
+		card_number,
+		card_thick,
+		user_id,
+		sku_id,
+		end_time,
+		short_url,
+		type,
+		sku_name,
+		sku_serial_number,
+		order_code
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.promotion.po.ECardTempPO" resultMap="eCardTempMap">
+		SELECT
+		<include refid="eCardTempColumns" />
+		FROM e_card_temp
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="eCardTempMap">
+		SELECT
+		<include refid="eCardTempColumns" />
+		FROM e_card_temp
+		<where>
+			<if test="po.cardNumber != null">
+				and card_number = #{po.cardNumber}
+			</if>
+			<if test="po.cardThick != null">
+				and card_thick = #{po.cardThick}
+			</if>
+			<if test="po.userId != null">
+				and user_id = #{po.userId}
+			</if>
+			<if test="po.skuId != null">
+				and sku_id = #{po.skuId}
+			</if>
+			<if test="po.endTime != null">
+				and end_time = #{po.endTime}
+			</if>
+			<if test="po.shortUrl != null">
+				and short_url = #{po.shortUrl}
+			</if>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+			<if test="po.skuName != null">
+				and sku_name = #{po.skuName}
+			</if>
+			<if test="po.skuSerialNumber != null">
+				and sku_serial_number = #{po.skuSerialNumber}
+			</if>
+			<if test="po.orderCode != null">
+				and order_code = #{po.orderCode}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM e_card_temp
+		<where>
+			<if test="po.cardNumber != null">
+				and card_number = #{po.cardNumber}
+			</if>
+			<if test="po.cardThick != null">
+				and card_thick = #{po.cardThick}
+			</if>
+			<if test="po.userId != null">
+				and user_id = #{po.userId}
+			</if>
+			<if test="po.skuId != null">
+				and sku_id = #{po.skuId}
+			</if>
+			<if test="po.endTime != null">
+				and end_time = #{po.endTime}
+			</if>
+			<if test="po.shortUrl != null">
+				and short_url = #{po.shortUrl}
+			</if>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+			<if test="po.skuName != null">
+				and sku_name = #{po.skuName}
+			</if>
+			<if test="po.skuSerialNumber != null">
+				and sku_serial_number = #{po.skuSerialNumber}
+			</if>
+			<if test="po.orderCode != null">
+				and order_code = #{po.orderCode}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="eCardTempMap">
+		SELECT
+		<include refid="eCardTempColumns" />
+		FROM e_card_temp
+		<where>
+			<if test="po.cardNumber != null">
+				and card_number = #{po.cardNumber}
+			</if>
+			<if test="po.cardThick != null">
+				and card_thick = #{po.cardThick}
+			</if>
+			<if test="po.userId != null">
+				and user_id = #{po.userId}
+			</if>
+			<if test="po.skuId != null">
+				and sku_id = #{po.skuId}
+			</if>
+			<if test="po.endTime != null">
+				and end_time = #{po.endTime}
+			</if>
+			<if test="po.shortUrl != null">
+				and short_url = #{po.shortUrl}
+			</if>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+			<if test="po.skuName != null">
+				and sku_name = #{po.skuName}
+			</if>
+			<if test="po.skuSerialNumber != null">
+				and sku_serial_number = #{po.skuSerialNumber}
+			</if>
+			<if test="po.orderCode != null">
+				and order_code = #{po.orderCode}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+</mapper>
+	

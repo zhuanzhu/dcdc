@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.product.dao.read.MerchantProductTagReadDAO">
+	<resultMap type="com.egeo.components.product.po.MerchantProductTagPO" id="merchantProductTagMap">
+		<result property="id" column="id" />
+		<result property="merchantProductId" column="merchant_product_id" />
+		<result property="tagId" column="tag_id" />
+	</resultMap>
+	
+	<resultMap type="com.egeo.components.product.condition.MerchantProductTagCondition" id="merchantProductTagCondition" extends="merchantProductTagMap">
+		<result property="tagName" column="tag_name" />
+	</resultMap>
+
+	<sql id="merchantProductTagColumns">
+		id,
+		merchant_product_id,
+		tag_id
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.product.po.MerchantProductTagPO" resultMap="merchantProductTagMap">
+		SELECT
+		<include refid="merchantProductTagColumns" />
+		FROM merchant_product_tag
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="merchantProductTagMap">
+		SELECT
+		<include refid="merchantProductTagColumns" />
+		FROM merchant_product_tag
+		<where>
+			<if test="po.merchantProductId != null">
+				and merchant_product_id = #{po.merchantProductId}
+			</if>
+			<if test="po.tagId != null">
+				and tag_id = #{po.tagId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM merchant_product_tag
+		<where>
+			<if test="po.merchantProductId != null">
+				and merchant_product_id = #{po.merchantProductId}
+			</if>
+			<if test="po.tagId != null">
+				and tag_id = #{po.tagId}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="merchantProductTagMap">
+		SELECT
+		<include refid="merchantProductTagColumns" />
+		FROM merchant_product_tag
+		<where>
+			<if test="po.merchantProductId != null">
+				and merchant_product_id = #{po.merchantProductId}
+			</if>
+			<if test="po.tagId != null">
+				and tag_id = #{po.tagId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findTagAllByMerchantProductId" resultMap="merchantProductTagCondition">
+		SELECT
+		id,
+		merchant_product_id,
+		tag_id,
+		(select name from tag where id = tag_id) tag_name
+		FROM merchant_product_tag where merchant_product_id = #{merchantProductId}
+	</select>
+</mapper>
+	

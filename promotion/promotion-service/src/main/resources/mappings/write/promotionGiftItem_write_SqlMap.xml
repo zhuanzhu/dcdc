@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.promotion.dao.write.PromotionGiftItemWriteDAO">
+	<insert id="insert" parameterType="com.egeo.components.promotion.po.PromotionGiftItemPO">
+		INSERT INTO promotion_gift_item(
+        <trim suffixOverrides=",">
+			<if test="promotionId != null">
+				promotion_id,
+			</if>
+			<if test="giftRef != null">
+				gift_ref,
+			</if>
+			<if test="giftType != null">
+				gift_type,
+			</if>
+			<if test="giftLevel != null">
+				gift_level,
+			</if>
+			<if test="levelRef != null">
+				level_ref,
+			</if>
+			<if test="upgradeAmount != null">
+				upgrade_amount,
+			</if>
+			<if test="extendRef != null">
+				extend_ref,
+			</if>
+			<if test="platformId != null">
+				platform_id,
+			</if>
+			<if test="merchantId != null">
+				merchant_id,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+        </trim>		
+		) VALUES (
+        <trim suffixOverrides=",">
+			<if test="promotionId != null">
+				#{promotionId},
+			</if>
+			<if test="giftRef != null">
+				#{giftRef},
+			</if>
+			<if test="giftType != null">
+				#{giftType},
+			</if>
+			<if test="giftLevel != null">
+				#{giftLevel},
+			</if>
+			<if test="levelRef != null">
+				#{levelRef},
+			</if>
+			<if test="upgradeAmount != null">
+				#{upgradeAmount},
+			</if>
+			<if test="extendRef != null">
+				#{extendRef},
+			</if>
+			<if test="platformId != null">
+				#{platformId},
+			</if>
+			<if test="merchantId != null">
+				#{merchantId},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
+			</if>
+        </trim>		
+		)
+		<selectKey keyProperty="id" resultType="java.lang.Long">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+
+	
+	
+	<update id="update">
+	UPDATE promotion_gift_item 
+		<set>
+			<if test="promotionId != null">
+				promotion_id = #{promotionId},
+			</if>			
+			<if test="giftRef != null">
+				gift_ref = #{giftRef},
+			</if>			
+			<if test="giftType != null">
+				gift_type = #{giftType},
+			</if>			
+			<if test="giftLevel != null">
+				gift_level = #{giftLevel},
+			</if>			
+			<if test="levelRef != null">
+				level_ref = #{levelRef},
+			</if>			
+			<if test="upgradeAmount != null">
+				upgrade_amount = #{upgradeAmount},
+			</if>			
+			<if test="extendRef != null">
+				extend_ref = #{extendRef},
+			</if>			
+			<if test="platformId != null">
+				platform_id = #{platformId},
+			</if>			
+			<if test="merchantId != null">
+				merchant_id = #{merchantId},
+			</if>			
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>			
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>			
+		</set>
+			WHERE id = #{id}
+	</update>	
+	
+
+	<delete id="delete">
+		delete from promotion_gift_item where id = #{id}
+	</delete>
+
+	<delete id="deleteByPara">
+		delete from promotion_gift_item 
+		<where>
+			<if test="promotionId != null">
+				and promotion_id = #{promotionId}
+			</if>
+			<if test="giftRef != null">
+				and gift_ref = #{giftRef}
+			</if>
+			<if test="giftType != null">
+				and gift_type = #{giftType}
+			</if>
+			<if test="giftLevel != null">
+				and gift_level = #{giftLevel}
+			</if>
+			<if test="levelRef != null">
+				and level_ref = #{levelRef}
+			</if>
+			<if test="upgradeAmount != null">
+				and upgrade_amount = #{upgradeAmount}
+			</if>
+			<if test="extendRef != null">
+				and extend_ref = #{extendRef}
+			</if>
+			<if test="platformId != null">
+				and platform_id = #{platformId}
+			</if>
+			<if test="merchantId != null">
+				and merchant_id = #{merchantId}
+			</if>
+			<if test="createTime != null">
+				and create_time = #{createTime}
+			</if>
+			<if test="updateTime != null">
+				and update_time = #{updateTime}
+			</if>
+		</where>
+	</delete>
+
+
+</mapper>
+	

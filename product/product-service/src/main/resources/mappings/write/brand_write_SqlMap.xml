@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.product.dao.write.BrandWriteDAO">
+	<insert id="insert" parameterType="com.egeo.components.product.po.BrandPO">
+		INSERT INTO brand(
+        <trim suffixOverrides=",">
+			<if test="name != null">
+				name,
+			</if>
+			<if test="chineseName != null">
+				chinese_name,
+			</if>
+			<if test="englishName != null">
+				english_name,
+			</if>
+			<if test="alias != null">
+				alias,
+			</if>
+			<if test="logUrl != null">
+				log_url,
+			</if>
+			<if test="ownedcompanyChineseName != null">
+				ownedcompany_chinese_name,
+			</if>
+			<if test="ownedcompanyEnglishName != null">
+				ownedcompany_english_name,
+			</if>
+			<if test="introduction != null">
+				introduction,
+			</if>
+			<if test="platformId != null">
+				platform_id,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+        </trim>		
+		) VALUES (
+        <trim suffixOverrides=",">
+			<if test="name != null">
+				#{name},
+			</if>
+			<if test="chineseName != null">
+				#{chineseName},
+			</if>
+			<if test="englishName != null">
+				#{englishName},
+			</if>
+			<if test="alias != null">
+				#{alias},
+			</if>
+			<if test="logUrl != null">
+				#{logUrl},
+			</if>
+			<if test="ownedcompanyChineseName != null">
+				#{ownedcompanyChineseName},
+			</if>
+			<if test="ownedcompanyEnglishName != null">
+				#{ownedcompanyEnglishName},
+			</if>
+			<if test="introduction != null">
+				#{introduction},
+			</if>
+			<if test="platformId != null">
+				#{platformId},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
+			</if>
+        </trim>		
+		)
+		<selectKey keyProperty="id" resultType="java.lang.Long">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+
+	
+	
+	<update id="update">
+	UPDATE brand 
+		<set>
+			<if test="name != null">
+				name = #{name},
+			</if>			
+			<if test="chineseName != null">
+				chinese_name = #{chineseName},
+			</if>			
+			<if test="englishName != null">
+				english_name = #{englishName},
+			</if>			
+			<if test="alias != null">
+				alias = #{alias},
+			</if>			
+			<if test="logUrl != null">
+				log_url = #{logUrl},
+			</if>			
+			<if test="ownedcompanyChineseName != null">
+				ownedcompany_chinese_name = #{ownedcompanyChineseName},
+			</if>			
+			<if test="ownedcompanyEnglishName != null">
+				ownedcompany_english_name = #{ownedcompanyEnglishName},
+			</if>			
+			<if test="introduction != null">
+				introduction = #{introduction},
+			</if>			
+			<if test="platformId != null">
+				platform_id = #{platformId},
+			</if>			
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>			
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>			
+		</set>
+			WHERE id = #{id}
+	</update>	
+	
+
+	<delete id="delete">
+		delete from brand where id = #{id}
+	</delete>
+
+	<delete id="deleteByPara">
+		delete from brand 
+		<where>
+			<if test="name != null">
+				and name = #{name}
+			</if>
+			<if test="chineseName != null">
+				and chinese_name = #{chineseName}
+			</if>
+			<if test="englishName != null">
+				and english_name = #{englishName}
+			</if>
+			<if test="alias != null">
+				and alias = #{alias}
+			</if>
+			<if test="logUrl != null">
+				and log_url = #{logUrl}
+			</if>
+			<if test="ownedcompanyChineseName != null">
+				and ownedcompany_chinese_name = #{ownedcompanyChineseName}
+			</if>
+			<if test="ownedcompanyEnglishName != null">
+				and ownedcompany_english_name = #{ownedcompanyEnglishName}
+			</if>
+			<if test="introduction != null">
+				and introduction = #{introduction}
+			</if>
+			<if test="platformId != null">
+				and platform_id = #{platformId}
+			</if>
+			<if test="createTime != null">
+				and create_time = #{createTime}
+			</if>
+			<if test="updateTime != null">
+				and update_time = #{updateTime}
+			</if>
+		</where>
+	</delete>
+
+
+</mapper>
+	

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.product.dao.read.CategoryTreeNodeCategoryReadDAO">
+	<resultMap type="com.egeo.components.product.po.CategoryTreeNodeCategoryPO" id="categoryTreeNodeCategoryMap">
+		<result property="id" column="id" />
+		<result property="frontCategoryTreeNodeId" column="front_category_tree_node_id" />
+		<result property="queenCategoryTreeNodeId" column="queen_category_tree_node_id" />
+	</resultMap>
+
+	<sql id="categoryTreeNodeCategoryColumns">
+		id,
+		front_category_tree_node_id,
+		queen_category_tree_node_id
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.product.po.CategoryTreeNodeCategoryPO" resultMap="categoryTreeNodeCategoryMap">
+		SELECT
+		<include refid="categoryTreeNodeCategoryColumns" />
+		FROM category_tree_node_category
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="categoryTreeNodeCategoryMap">
+		SELECT
+		<include refid="categoryTreeNodeCategoryColumns" />
+		FROM category_tree_node_category
+		<where>
+			<if test="po.frontCategoryTreeNodeId != null">
+				and front_category_tree_node_id = #{po.frontCategoryTreeNodeId}
+			</if>
+			<if test="po.queenCategoryTreeNodeId != null">
+				and queen_category_tree_node_id = #{po.queenCategoryTreeNodeId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM category_tree_node_category
+		<where>
+			<if test="po.frontCategoryTreeNodeId != null">
+				and front_category_tree_node_id = #{po.frontCategoryTreeNodeId}
+			</if>
+			<if test="po.queenCategoryTreeNodeId != null">
+				and queen_category_tree_node_id = #{po.queenCategoryTreeNodeId}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="categoryTreeNodeCategoryMap">
+		SELECT
+		<include refid="categoryTreeNodeCategoryColumns" />
+		FROM category_tree_node_category
+		<where>
+			<if test="po.frontCategoryTreeNodeId != null">
+				and front_category_tree_node_id = #{po.frontCategoryTreeNodeId}
+			</if>
+			<if test="po.queenCategoryTreeNodeId != null">
+				and queen_category_tree_node_id = #{po.queenCategoryTreeNodeId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findCategoryIdsByCategoryTreeNodeId" resultType="java.lang.Long">
+		SELECT
+		queen_category_tree_node_id
+		FROM category_tree_node_category
+		WHERE front_category_tree_node_id = #{categoryTreeNodeId}
+	</select>
+
+	<select id="findCategoryIdsByCategoryTreeNodeIds" resultType="java.lang.Long">
+		SELECT
+		queen_category_tree_node_id
+		FROM category_tree_node_category
+		<where>
+			<if test="categoryTreeNodeIds != null">
+			front_category_tree_node_id in
+				<foreach collection="categoryTreeNodeIds" item="id" open="(" separator=","
+						 close=")">
+					#{id}
+				</foreach>
+			</if>
+		</where>
+	</select>
+
+</mapper>
+	

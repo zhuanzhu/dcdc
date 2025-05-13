@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.stock.dao.write.MerchantProductAreaWriteDAO">
+	<insert id="insert" parameterType="com.egeo.components.stock.po.MerchantProductAreaPO">
+		INSERT INTO merchant_product_area(
+        <trim suffixOverrides=",">
+			<if test="provinceId != null">
+				province_id,
+			</if>
+			<if test="cityId != null">
+				city_id,
+			</if>
+			<if test="countyId != null">
+				county_id,
+			</if>
+			<if test="areaId != null">
+				area_id,
+			</if>
+			<if test="coverLevel != null">
+				cover_level,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="platformId != null">
+				platform_id,
+			</if>
+			<if test="skuId != null">
+				sku_id,
+			</if>
+        </trim>		
+		) VALUES (
+        <trim suffixOverrides=",">
+			<if test="provinceId != null">
+				#{provinceId},
+			</if>
+			<if test="cityId != null">
+				#{cityId},
+			</if>
+			<if test="countyId != null">
+				#{countyId},
+			</if>
+			<if test="areaId != null">
+				#{areaId},
+			</if>
+			<if test="coverLevel != null">
+				#{coverLevel},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
+			</if>
+			<if test="platformId != null">
+				#{platformId},
+			</if>
+			<if test="skuId != null">
+				#{skuId},
+			</if>
+        </trim>		
+		)
+		<selectKey keyProperty="id" resultType="java.lang.Long">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+
+	
+	
+	<update id="update">
+	UPDATE merchant_product_area 
+		<set>
+			<if test="provinceId != null">
+				province_id = #{provinceId},
+			</if>			
+			<if test="cityId != null">
+				city_id = #{cityId},
+			</if>			
+			<if test="countyId != null">
+				county_id = #{countyId},
+			</if>			
+			<if test="areaId != null">
+				area_id = #{areaId},
+			</if>			
+			<if test="coverLevel != null">
+				cover_level = #{coverLevel},
+			</if>			
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>			
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>			
+			<if test="platformId != null">
+				platform_id = #{platformId},
+			</if>			
+			<if test="skuId != null">
+				sku_id = #{skuId},
+			</if>			
+		</set>
+			WHERE id = #{id}
+	</update>	
+	
+
+	<delete id="delete">
+		delete from merchant_product_area where id = #{id}
+	</delete>
+
+	<delete id="deleteByPara">
+		delete from merchant_product_area 
+		<where>
+			<if test="provinceId != null">
+				and province_id = #{provinceId}
+			</if>
+			<if test="cityId != null">
+				and city_id = #{cityId}
+			</if>
+			<if test="countyId != null">
+				and county_id = #{countyId}
+			</if>
+			<if test="areaId != null">
+				and area_id = #{areaId}
+			</if>
+			<if test="coverLevel != null">
+				and cover_level = #{coverLevel}
+			</if>
+			<if test="createTime != null">
+				and create_time = #{createTime}
+			</if>
+			<if test="updateTime != null">
+				and update_time = #{updateTime}
+			</if>
+			<if test="platformId != null">
+				and platform_id = #{platformId}
+			</if>
+			<if test="skuId != null">
+				and sku_id = #{skuId}
+			</if>
+		</where>
+	</delete>
+
+
+</mapper>
+	

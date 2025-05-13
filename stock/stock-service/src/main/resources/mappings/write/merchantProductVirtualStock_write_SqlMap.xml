@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.stock.dao.write.MerchantProductVirtualStockWriteDAO">
+
+	<update id="freezeStock">
+		update merchant_product_virtual_stock
+		set real_frozen_stock_num=real_frozen_stock_num+#{count}
+		where sku_id=#{skuId}
+		and real_frozen_stock_num+#{count} &lt;= real_stock_num
+	</update>
+	
+	<update id="unfreezeStockWithTx">
+		update merchant_product_virtual_stock
+		set real_frozen_stock_num=real_frozen_stock_num-#{count}
+		where sku_id=#{skuId}
+	</update>
+	
+	<update id="unfreezeAndDeductStockWithTx">
+		update merchant_product_virtual_stock
+		set real_frozen_stock_num=real_frozen_stock_num-#{count},real_stock_num = real_stock_num-#{count}
+		where sku_id=#{skuId}
+	</update>
+	
+	<update id="deductStockBySkuId">
+		update merchant_product_virtual_stock
+		set real_stock_num = real_stock_num-#{count}
+		where sku_id=#{skuId}
+	</update>
+
+	<insert id="insert" parameterType="com.egeo.components.stock.po.MerchantProductVirtualStockPO">
+		INSERT INTO merchant_product_virtual_stock(
+        <trim suffixOverrides=",">
+			<if test="standardProductUnitId != null">
+				standard_product_unit_id,
+			</if>
+			<if test="merchantId != null">
+				merchant_id,
+			</if>
+			<if test="isSupportVirtualstock != null">
+				is_support_virtualstock,
+			</if>
+			<if test="isSupportUnlimitedstock != null">
+				is_support_unlimitedstock,
+			</if>
+			<if test="realStockNum != null">
+				real_stock_num,
+			</if>
+			<if test="realFrozenStockNum != null">
+				real_frozen_stock_num,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="platformId != null">
+				platform_id,
+			</if>
+			<if test="skuId != null">
+				sku_id,
+			</if>
+        </trim>		
+		) VALUES (
+        <trim suffixOverrides=",">
+			<if test="standardProductUnitId != null">
+				#{standardProductUnitId},
+			</if>
+			<if test="merchantId != null">
+				#{merchantId},
+			</if>
+			<if test="isSupportVirtualstock != null">
+				#{isSupportVirtualstock},
+			</if>
+			<if test="isSupportUnlimitedstock != null">
+				#{isSupportUnlimitedstock},
+			</if>
+			<if test="realStockNum != null">
+				#{realStockNum},
+			</if>
+			<if test="realFrozenStockNum != null">
+				#{realFrozenStockNum},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
+			</if>
+			<if test="platformId != null">
+				#{platformId},
+			</if>
+			<if test="skuId != null">
+				#{skuId},
+			</if>
+        </trim>		
+		)
+		<selectKey keyProperty="id" resultType="java.lang.Long">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+
+	
+	
+	<update id="update">
+	UPDATE merchant_product_virtual_stock 
+		<set>
+			<if test="standardProductUnitId != null">
+				standard_product_unit_id = #{standardProductUnitId},
+			</if>			
+			<if test="merchantId != null">
+				merchant_id = #{merchantId},
+			</if>			
+			<if test="isSupportVirtualstock != null">
+				is_support_virtualstock = #{isSupportVirtualstock},
+			</if>			
+			<if test="isSupportUnlimitedstock != null">
+				is_support_unlimitedstock = #{isSupportUnlimitedstock},
+			</if>			
+			<if test="realStockNum != null">
+				real_stock_num = #{realStockNum},
+			</if>			
+			<if test="realFrozenStockNum != null">
+				real_frozen_stock_num = #{realFrozenStockNum},
+			</if>			
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>			
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>			
+			<if test="platformId != null">
+				platform_id = #{platformId},
+			</if>			
+			<if test="skuId != null">
+				sku_id = #{skuId},
+			</if>			
+		</set>
+			WHERE id = #{id}
+	</update>	
+	
+
+	<delete id="delete">
+		delete from merchant_product_virtual_stock where id = #{id}
+	</delete>
+
+	<delete id="deleteByPara">
+		delete from merchant_product_virtual_stock 
+		<where>
+			<if test="standardProductUnitId != null">
+				standard_product_unit_id = #{standardProductUnitId},
+			</if>
+			<if test="merchantId != null">
+				and merchant_id = #{merchantId}
+			</if>
+			<if test="isSupportVirtualstock != null">
+				and is_support_virtualstock = #{isSupportVirtualstock}
+			</if>
+			<if test="isSupportUnlimitedstock != null">
+				and is_support_unlimitedstock = #{isSupportUnlimitedstock}
+			</if>
+			<if test="realStockNum != null">
+				and real_stock_num = #{realStockNum}
+			</if>
+			<if test="realFrozenStockNum != null">
+				and real_frozen_stock_num = #{realFrozenStockNum}
+			</if>
+			<if test="createTime != null">
+				and create_time = #{createTime}
+			</if>
+			<if test="updateTime != null">
+				and update_time = #{updateTime}
+			</if>
+			<if test="platformId != null">
+				and platform_id = #{platformId}
+			</if>
+			<if test="skuId != null">
+				and sku_id = #{skuId}
+			</if>
+		</where>
+	</delete>
+	
+	<update id="addStock">
+		update merchant_product_virtual_stock
+		set real_stock_num=real_stock_num+#{realStockNum}
+		where sku_id=#{skuId}
+	</update>
+	
+	<update id="subtractStock">
+		update merchant_product_virtual_stock
+		set real_stock_num=real_stock_num-#{realStockNum},real_frozen_stock_num=real_frozen_stock_num-#{realStockNum}
+		where sku_id=#{skuId} and real_stock_num-#{realStockNum} > 0
+	</update>
+
+
+</mapper>
+	

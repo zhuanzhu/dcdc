@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.product.dao.read.CardThirdpartyAttValueReadDAO">
+	<resultMap type="com.egeo.components.product.po.CardThirdpartyAttValuePO" id="cardThirdpartyAttValueMap">
+		<result property="id" column="id" />
+		<result property="cardType" column="card_type" />
+		<result property="thirdpartyAttValueId" column="thirdparty_att_value_id" />
+		<result property="remark" column="remark" />
+		<result property="platformId" column="platform_id" />
+	</resultMap>
+
+	<sql id="cardThirdpartyAttValueColumns">
+		id,
+		card_type,
+		thirdparty_att_value_id,
+		remark,
+		platform_id
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.product.po.CardThirdpartyAttValuePO" resultMap="cardThirdpartyAttValueMap">
+		SELECT
+		<include refid="cardThirdpartyAttValueColumns" />
+		FROM card_thirdparty_att_value
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="cardThirdpartyAttValueMap">
+		SELECT
+		<include refid="cardThirdpartyAttValueColumns" />
+		FROM card_thirdparty_att_value
+		<where>
+			<if test="po.cardType != null">
+				and card_type = #{po.cardType}
+			</if>
+			<if test="po.thirdpartyAttValueId != null">
+				and thirdparty_att_value_id = #{po.thirdpartyAttValueId}
+			</if>
+			<if test="po.remark != null">
+				and remark = #{po.remark}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM card_thirdparty_att_value
+		<where>
+			<if test="po.cardType != null">
+				and card_type = #{po.cardType}
+			</if>
+			<if test="po.thirdpartyAttValueId != null">
+				and thirdparty_att_value_id = #{po.thirdpartyAttValueId}
+			</if>
+			<if test="po.remark != null">
+				and remark = #{po.remark}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="cardThirdpartyAttValueMap">
+		SELECT
+		<include refid="cardThirdpartyAttValueColumns" />
+		FROM card_thirdparty_att_value
+		<where>
+			<if test="po.cardType != null">
+				and card_type = #{po.cardType}
+			</if>
+			<if test="po.thirdpartyAttValueId != null">
+				and thirdparty_att_value_id = #{po.thirdpartyAttValueId}
+			</if>
+			<if test="po.remark != null">
+				and remark = #{po.remark}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findCardTypeByStandardProductUnitId" resultType="java.lang.Integer">
+		SELECT card_type from card_thirdparty_att_value WHERE thirdparty_att_value_id = 
+		(SELECT att_value_id from standard_product_unit_att_value WHERE standard_product_unit_att_name_id = 
+		(SELECT id FROM standard_product_unit_att_name WHERE standard_product_unit_id = #{standardProductUnitId} and att_name_id = 4))
+	</select>
+</mapper>
+	

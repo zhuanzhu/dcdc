@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.config.dao.read.LogDictReadDAO">
+	<resultMap type="com.egeo.components.config.po.LogDictPO" id="logDictMap">
+		<result property="id" column="id" />
+		<result property="parentId" column="parent_id" />
+		<result property="name" column="name" />
+		<result property="shortCode" column="short_code" />
+		<result property="operatortype" column="operatorType" />
+		<result property="arealevel" column="arealevel" />
+		<result property="operCodeId" column="oper_code_id" />
+		<result property="description" column="description" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="platformId" column="platform_id" />
+	</resultMap>
+
+	<sql id="logDictColumns">
+		id,
+		parent_id,
+		name,
+		short_code,
+		operatorType,
+		arealevel,
+		oper_code_id,
+		description,
+		create_time,
+		update_time,
+		platform_id
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.config.po.LogDictPO" resultMap="logDictMap">
+		SELECT
+		<include refid="logDictColumns" />
+		FROM log_dict
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="logDictMap">
+		SELECT
+		<include refid="logDictColumns" />
+		FROM log_dict
+		<where>
+			<if test="po.parentId != null">
+				and parent_id = #{po.parentId}
+			</if>
+			<if test="po.name != null">
+				and name = #{po.name}
+			</if>
+			<if test="po.shortCode != null">
+				and short_code = #{po.shortCode}
+			</if>
+			<if test="po.operatortype != null">
+				and operatorType = #{po.operatortype}
+			</if>
+			<if test="po.arealevel != null">
+				and arealevel = #{po.arealevel}
+			</if>
+			<if test="po.operCodeId != null">
+				and oper_code_id = #{po.operCodeId}
+			</if>
+			<if test="po.description != null">
+				and description = #{po.description}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM log_dict
+		<where>
+			<if test="po.parentId != null">
+				and parent_id = #{po.parentId}
+			</if>
+			<if test="po.name != null">
+				and name = #{po.name}
+			</if>
+			<if test="po.shortCode != null">
+				and short_code = #{po.shortCode}
+			</if>
+			<if test="po.operatortype != null">
+				and operatorType = #{po.operatortype}
+			</if>
+			<if test="po.arealevel != null">
+				and arealevel = #{po.arealevel}
+			</if>
+			<if test="po.operCodeId != null">
+				and oper_code_id = #{po.operCodeId}
+			</if>
+			<if test="po.description != null">
+				and description = #{po.description}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="logDictMap">
+		SELECT
+		<include refid="logDictColumns" />
+		FROM log_dict
+		<where>
+			<if test="po.parentId != null">
+				and parent_id = #{po.parentId}
+			</if>
+			<if test="po.name != null">
+				and name = #{po.name}
+			</if>
+			<if test="po.shortCode != null">
+				and short_code = #{po.shortCode}
+			</if>
+			<if test="po.operatortype != null">
+				and operatorType = #{po.operatortype}
+			</if>
+			<if test="po.arealevel != null">
+				and arealevel = #{po.arealevel}
+			</if>
+			<if test="po.operCodeId != null">
+				and oper_code_id = #{po.operCodeId}
+			</if>
+			<if test="po.description != null">
+				and description = #{po.description}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findLogDictAllById" resultMap="logDictMap">
+		select 
+		ld1.*
+		from 
+		log_dict ld1 
+		LEFT JOIN log_dict ld2 on ld2.id = ld1.parent_id 
+		LEFT JOIN log_dict ld3 on ld3.id = ld2.parent_id 
+		where ld1.arealevel = 3 
+		and ld3.id = (
+			select ld3.id from log_dict ld1 
+			LEFT JOIN log_dict ld2 on ld2.id = ld1.parent_id 
+			LEFT JOIN log_dict ld3 on ld3.id = ld2.parent_id 
+			where ld1.id= #{id})
+	</select>
+</mapper>
+	

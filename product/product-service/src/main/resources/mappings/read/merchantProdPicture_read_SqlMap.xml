@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.product.dao.read.MerchantProdPictureReadDAO">
+	<resultMap type="com.egeo.components.product.po.MerchantProdPicturePO" id="merchantProdPictureMap">
+		<result property="id" column="id" />
+		<result property="merchantPictureId" column="merchant_picture_id" />
+		<result property="type" column="type" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="platformId" column="platform_id" />
+		<result property="merchantProdId" column="merchant_prod_id" />
+	</resultMap>
+	
+	<resultMap type="com.egeo.components.product.condition.MerchantProdPictureCondition" id="merchantProdPictureCondition" extends="merchantProdPictureMap">
+		<result property="pictureUrl" column="picture_url" />
+	</resultMap>
+
+	<sql id="merchantProdPictureColumns">
+		id,
+		merchant_picture_id,
+		type,
+		create_time,
+		update_time,
+		platform_id,
+		merchant_prod_id
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.product.po.MerchantProdPicturePO" resultMap="merchantProdPictureMap">
+		SELECT
+		<include refid="merchantProdPictureColumns" />
+		FROM merchant_prod_picture
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="merchantProdPictureMap">
+		SELECT
+		<include refid="merchantProdPictureColumns" />
+		FROM merchant_prod_picture
+		<where>
+			<if test="po.merchantPictureId != null">
+				and merchant_picture_id = #{po.merchantPictureId}
+			</if>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.merchantProdId != null">
+				and merchant_prod_id = #{po.merchantProdId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM merchant_prod_picture
+		<where>
+			<if test="po.merchantPictureId != null">
+				and merchant_picture_id = #{po.merchantPictureId}
+			</if>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.merchantProdId != null">
+				and merchant_prod_id = #{po.merchantProdId}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="merchantProdPictureMap">
+		SELECT
+		<include refid="merchantProdPictureColumns" />
+		FROM merchant_prod_picture
+		<where>
+			<if test="po.merchantPictureId != null">
+				and merchant_picture_id = #{po.merchantPictureId}
+			</if>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.merchantProdId != null">
+				and merchant_prod_id = #{po.merchantProdId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY merchant_picture_id
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findByMerchantProductId" resultMap="merchantProdPictureCondition">
+		SELECT
+		<include refid="merchantProdPictureColumns" />,
+		(select url from picture where id = (select picture_id from merchant_picture where id = merchant_picture_id)) picture_url
+		FROM merchant_prod_picture
+		where merchant_prod_id = #{merchantProductId}
+	</select>
+</mapper>
+	

@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.order.dao.read.SoInvoiceReadDAO">
+	<select id="querySoInvoiceBySoChildId" resultMap="soInvoiceMap">
+		select * from so_invoice
+		where so_child_id=#{id}
+	</select>
+
+	<select id="queryMainSoInvoiceByOrderId" resultMap="soInvoiceMap">
+		select * from so_invoice
+		where so_id=#{orderId} and so_child_id != -1 order by id desc
+		limit 0,1
+	</select>
+
+	<select id="queryDistinctInvoiceByUserId" resultMap="soInvoiceMap">
+		select invoice_title_content,taxpayer_identification_code
+		from so_invoice
+		where user_id=#{userId}
+		and platform_id=#{platformId}
+		and invoice_title_type=1
+		group by invoice_title_content,taxpayer_identification_code
+		order by create_time desc
+	</select>
+
+	<select id="querySoInvoiceByOrderCode" resultMap="soInvoiceMap">
+		select * from so_invoice
+		where order_code =#{orderCode}
+	</select>
+	
+	<resultMap type="com.egeo.components.order.po.SoInvoicePO" id="soInvoiceMap">
+		<result property="id" column="id" />
+		<result property="userId" column="user_id" />
+		<result property="soId" column="so_id" />
+		<result property="soChildId" column="so_child_id" />
+		<result property="invoiceValue" column="invoice_value" />
+		<result property="invoiceCode" column="invoice_code" />
+		<result property="invoiceTaxType" column="invoice_tax_type" />
+		<result property="invoiceFinType" column="invoice_fin_type" />
+		<result property="invoiceForm" column="invoice_form" />
+		<result property="invoiceStatus" column="invoice_status" />
+		<result property="invoiceTitleType" column="invoice_title_type" />
+		<result property="invoiceTitleContent" column="invoice_title_content" />
+		<result property="isNeedDetails" column="is_need_details" />
+		<result property="invoiceContentType" column="invoice_content_type" />
+		<result property="invoiceContent" column="invoice_content" />
+		<result property="invoiceRemark" column="invoice_remark" />
+		<result property="taxpayerIdentificationCode" column="taxpayer_identification_code" />
+		<result property="receiverMail" column="receiver_mail" />
+		<result property="updateTime" column="update_time" />
+		<result property="createTime" column="create_time" />
+		<result property="platformId" column="platform_id" />
+		<result property="registerAddr" column="register_addr" />
+		<result property="registerTel" column="register_tel" />
+		<result property="depositBank" column="deposit_bank" />
+		<result property="bankAccount" column="bank_account" />
+		<result property="businessLicenceUrl" column="business_licence_url" />
+		<result property="invoiceAttcUrl" column="invoice_attc_url" />
+		<result property="invoiceId" column="invoice_id" />
+	</resultMap>
+
+	<sql id="soInvoiceColumns">
+		id,
+		user_id,
+		so_id,
+		so_child_id,
+		invoice_value,
+		invoice_code,
+		invoice_tax_type,
+		invoice_fin_type,
+		invoice_form,
+		invoice_status,
+		invoice_title_type,
+		invoice_title_content,
+		is_need_details,
+		invoice_content_type,
+		invoice_content,
+		invoice_remark,
+		taxpayer_identification_code,
+		receiver_mail,
+		update_time,
+		create_time,
+		platform_id,
+		register_addr,
+		register_tel,
+		deposit_bank,
+		bank_account,
+		business_licence_url,
+		invoice_attc_url,
+		invoice_id
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.order.po.SoInvoicePO" resultMap="soInvoiceMap">
+		SELECT
+		<include refid="soInvoiceColumns" />
+		FROM so_invoice
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="soInvoiceMap">
+		SELECT
+		<include refid="soInvoiceColumns" />
+		FROM so_invoice
+		<where>
+			<if test="po.userId != null">
+				and user_id = #{po.userId}
+			</if>
+			<if test="po.soId != null">
+				and so_id = #{po.soId}
+			</if>
+			<if test="po.soChildId != null">
+				and so_child_id = #{po.soChildId}
+			</if>
+			<if test="po.invoiceValue != null">
+				and invoice_value = #{po.invoiceValue}
+			</if>
+			<if test="po.invoiceCode != null">
+				and invoice_code = #{po.invoiceCode}
+			</if>
+			<if test="po.invoiceTaxType != null">
+				and invoice_tax_type = #{po.invoiceTaxType}
+			</if>
+			<if test="po.invoiceFinType != null">
+				and invoice_fin_type = #{po.invoiceFinType}
+			</if>
+			<if test="po.invoiceForm != null">
+				and invoice_form = #{po.invoiceForm}
+			</if>
+			<if test="po.invoiceStatus != null">
+				and invoice_status = #{po.invoiceStatus}
+			</if>
+			<if test="po.invoiceTitleType != null">
+				and invoice_title_type = #{po.invoiceTitleType}
+			</if>
+			<if test="po.invoiceTitleContent != null">
+				and invoice_title_content = #{po.invoiceTitleContent}
+			</if>
+			<if test="po.isNeedDetails != null">
+				and is_need_details = #{po.isNeedDetails}
+			</if>
+			<if test="po.invoiceContentType != null">
+				and invoice_content_type = #{po.invoiceContentType}
+			</if>
+			<if test="po.invoiceContent != null">
+				and invoice_content = #{po.invoiceContent}
+			</if>
+			<if test="po.invoiceRemark != null">
+				and invoice_remark = #{po.invoiceRemark}
+			</if>
+			<if test="po.taxpayerIdentificationCode != null">
+				and taxpayer_identification_code = #{po.taxpayerIdentificationCode}
+			</if>
+			<if test="po.receiverMail != null">
+				and receiver_mail = #{po.receiverMail}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM so_invoice
+		<where>
+			<if test="po.userId != null">
+				and user_id = #{po.userId}
+			</if>
+			<if test="po.soId != null">
+				and so_id = #{po.soId}
+			</if>
+			<if test="po.soChildId != null">
+				and so_child_id = #{po.soChildId}
+			</if>
+			<if test="po.invoiceValue != null">
+				and invoice_value = #{po.invoiceValue}
+			</if>
+			<if test="po.invoiceCode != null">
+				and invoice_code = #{po.invoiceCode}
+			</if>
+			<if test="po.invoiceTaxType != null">
+				and invoice_tax_type = #{po.invoiceTaxType}
+			</if>
+			<if test="po.invoiceFinType != null">
+				and invoice_fin_type = #{po.invoiceFinType}
+			</if>
+			<if test="po.invoiceForm != null">
+				and invoice_form = #{po.invoiceForm}
+			</if>
+			<if test="po.invoiceStatus != null">
+				and invoice_status = #{po.invoiceStatus}
+			</if>
+			<if test="po.invoiceTitleType != null">
+				and invoice_title_type = #{po.invoiceTitleType}
+			</if>
+			<if test="po.invoiceTitleContent != null">
+				and invoice_title_content = #{po.invoiceTitleContent}
+			</if>
+			<if test="po.isNeedDetails != null">
+				and is_need_details = #{po.isNeedDetails}
+			</if>
+			<if test="po.invoiceContentType != null">
+				and invoice_content_type = #{po.invoiceContentType}
+			</if>
+			<if test="po.invoiceContent != null">
+				and invoice_content = #{po.invoiceContent}
+			</if>
+			<if test="po.invoiceRemark != null">
+				and invoice_remark = #{po.invoiceRemark}
+			</if>
+			<if test="po.taxpayerIdentificationCode != null">
+				and taxpayer_identification_code = #{po.taxpayerIdentificationCode}
+			</if>
+			<if test="po.receiverMail != null">
+				and receiver_mail = #{po.receiverMail}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="soInvoiceMap">
+		SELECT
+		<include refid="soInvoiceColumns" />
+		FROM so_invoice
+		<where>
+			<if test="po.userId != null">
+				and user_id = #{po.userId}
+			</if>
+			<if test="po.soId != null">
+				and so_id = #{po.soId}
+			</if>
+			<if test="po.soChildId != null">
+				and so_child_id = #{po.soChildId}
+			</if>
+			<if test="po.invoiceValue != null">
+				and invoice_value = #{po.invoiceValue}
+			</if>
+			<if test="po.invoiceCode != null">
+				and invoice_code = #{po.invoiceCode}
+			</if>
+			<if test="po.invoiceTaxType != null">
+				and invoice_tax_type = #{po.invoiceTaxType}
+			</if>
+			<if test="po.invoiceFinType != null">
+				and invoice_fin_type = #{po.invoiceFinType}
+			</if>
+			<if test="po.invoiceForm != null">
+				and invoice_form = #{po.invoiceForm}
+			</if>
+			<if test="po.invoiceStatus != null">
+				and invoice_status = #{po.invoiceStatus}
+			</if>
+			<if test="po.invoiceTitleType != null">
+				and invoice_title_type = #{po.invoiceTitleType}
+			</if>
+			<if test="po.invoiceTitleContent != null">
+				and invoice_title_content = #{po.invoiceTitleContent}
+			</if>
+			<if test="po.isNeedDetails != null">
+				and is_need_details = #{po.isNeedDetails}
+			</if>
+			<if test="po.invoiceContentType != null">
+				and invoice_content_type = #{po.invoiceContentType}
+			</if>
+			<if test="po.invoiceContent != null">
+				and invoice_content = #{po.invoiceContent}
+			</if>
+			<if test="po.invoiceRemark != null">
+				and invoice_remark = #{po.invoiceRemark}
+			</if>
+			<if test="po.taxpayerIdentificationCode != null">
+				and taxpayer_identification_code = #{po.taxpayerIdentificationCode}
+			</if>
+			<if test="po.receiverMail != null">
+				and receiver_mail = #{po.receiverMail}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+</mapper>
+	

@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.user.dao.read.InfoTemplateReadDAO">
+	<resultMap type="com.egeo.components.user.po.InfoTemplatePO" id="infoTemplateMap">
+		<result property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="triggers" column="triggers" />
+		<result property="isStart" column="is_start" />
+		<result property="systemInfo" column="system_info" />
+		<result property="moblieInfo" column="moblie_info" />
+		<result property="weChatOfficialInfo" column="we_chat_official_info" />
+		<result property="mailInfoTitle" column="mail_info_title" />
+		<result property="mailInfo" column="mail_info" />
+		<result property="mailRemark" column="mail_remark" />
+		<result property="infoTemplateRemark" column="info_template_remark" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="platformId" column="platform_id" />
+		<result property="infoInform" column="info_inform" />
+	</resultMap>
+
+	<sql id="infoTemplateColumns">
+		id,
+		name,
+		triggers,
+		is_start,
+		system_info,
+		moblie_info,
+		we_chat_official_info,
+		mail_info_title,
+		mail_info,
+		mail_remark,
+		info_template_remark,
+		create_time,
+		update_time,
+		platform_id,
+		info_inform
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.user.po.InfoTemplatePO" resultMap="infoTemplateMap">
+		SELECT
+		<include refid="infoTemplateColumns" />
+		FROM u_info_template
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="infoTemplateMap">
+		SELECT
+		<include refid="infoTemplateColumns" />
+		FROM u_info_template
+		<where>
+			<if test="po.name != null">
+				and name = #{po.name}
+			</if>
+			<if test="po.triggers != null">
+				and triggers = #{po.triggers}
+			</if>
+			<if test="po.isStart != null">
+				and is_start = #{po.isStart}
+			</if>
+			<if test="po.systemInfo != null">
+				and system_info = #{po.systemInfo}
+			</if>
+			<if test="po.moblieInfo != null">
+				and moblie_info = #{po.moblieInfo}
+			</if>
+			<if test="po.weChatOfficialInfo != null">
+				and we_chat_official_info = #{po.weChatOfficialInfo}
+			</if>
+			<if test="po.mailInfoTitle != null">
+				and mail_info_title = #{po.mailInfoTitle}
+			</if>
+			<if test="po.mailInfo != null">
+				and mail_info = #{po.mailInfo}
+			</if>
+			<if test="po.mailRemark != null">
+				and mail_remark = #{po.mailRemark}
+			</if>
+			<if test="po.infoTemplateRemark != null">
+				and info_template_remark = #{po.infoTemplateRemark}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.sendWayId != null">
+				and id in (SELECT info_template_id from u_info_template_send_way WHERE send_way_id = #{po.sendWayId}) 
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM u_info_template
+		<where>
+			<if test="po.name != null">
+				and name = #{po.name}
+			</if>
+			<if test="po.triggers != null">
+				and triggers = #{po.triggers}
+			</if>
+			<if test="po.isStart != null">
+				and is_start = #{po.isStart}
+			</if>
+			<if test="po.systemInfo != null">
+				and system_info = #{po.systemInfo}
+			</if>
+			<if test="po.moblieInfo != null">
+				and moblie_info = #{po.moblieInfo}
+			</if>
+			<if test="po.weChatOfficialInfo != null">
+				and we_chat_official_info = #{po.weChatOfficialInfo}
+			</if>
+			<if test="po.mailInfoTitle != null">
+				and mail_info_title = #{po.mailInfoTitle}
+			</if>
+			<if test="po.mailInfo != null">
+				and mail_info = #{po.mailInfo}
+			</if>
+			<if test="po.mailRemark != null">
+				and mail_remark = #{po.mailRemark}
+			</if>
+			<if test="po.infoTemplateRemark != null">
+				and info_template_remark = #{po.infoTemplateRemark}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.sendWayId != null">
+				and id in (SELECT info_template_id from u_info_template_send_way WHERE send_way_id = #{po.sendWayId}) 
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="infoTemplateMap">
+		SELECT
+		<include refid="infoTemplateColumns" />
+		FROM u_info_template
+		<where>
+			<if test="po.name != null">
+				and name = #{po.name}
+			</if>
+			<if test="po.triggers != null">
+				and triggers = #{po.triggers}
+			</if>
+			<if test="po.isStart != null">
+				and is_start = #{po.isStart}
+			</if>
+			<if test="po.systemInfo != null">
+				and system_info = #{po.systemInfo}
+			</if>
+			<if test="po.moblieInfo != null">
+				and moblie_info = #{po.moblieInfo}
+			</if>
+			<if test="po.weChatOfficialInfo != null">
+				and we_chat_official_info = #{po.weChatOfficialInfo}
+			</if>
+			<if test="po.mailInfoTitle != null">
+				and mail_info_title = #{po.mailInfoTitle}
+			</if>
+			<if test="po.mailInfo != null">
+				and mail_info = #{po.mailInfo}
+			</if>
+			<if test="po.mailRemark != null">
+				and mail_remark = #{po.mailRemark}
+			</if>
+			<if test="po.infoTemplateRemark != null">
+				and info_template_remark = #{po.infoTemplateRemark}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+</mapper>
+	

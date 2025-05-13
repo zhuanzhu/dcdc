@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.promotion.dao.write.UserCardRecordWriteDAO">
+	<insert id="insert" parameterType="com.egeo.components.promotion.po.UserCardRecordPO">
+		INSERT INTO user_card_record(
+        <trim suffixOverrides=",">
+			<if test="cardNo != null">
+				card_no,
+			</if>
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="cardName != null">
+				card_name,
+			</if>
+			<if test="cardType != null">
+				card_type,
+			</if>
+			<if test="settleMethod != null">
+				settle_method,
+			</if>
+			<if test="cardAmount != null">
+				card_amount,
+			</if>
+			<if test="cardCash != null">
+				card_cash,
+			</if>
+			<if test="expireDateStart != null">
+				expire_date_start,
+			</if>
+			<if test="expireDateEnd != null">
+				expire_date_end,
+			</if>
+			<if test="cardState != null">
+				card_state,
+			</if>
+			<if test="useState != null">
+				use_state,
+			</if>
+			<if test="companyId != null">
+				company_id,
+			</if>
+			<if test="sourceCardId != null">
+				source_card_id,
+			</if>
+			<if test="operator != null">
+				operator,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+        </trim>
+		) VALUES (
+        <trim suffixOverrides=",">
+			<if test="cardNo != null">
+				#{cardNo},
+			</if>
+			<if test="userId != null">
+				#{userId},
+			</if>
+			<if test="cardName != null">
+				#{cardName},
+			</if>
+			<if test="cardType != null">
+				#{cardType},
+			</if>
+			<if test="settleMethod != null">
+				#{settleMethod},
+			</if>
+			<if test="cardAmount != null">
+				#{cardAmount},
+			</if>
+			<if test="cardCash != null">
+				#{cardCash},
+			</if>
+			<if test="expireDateStart != null">
+				#{expireDateStart},
+			</if>
+			<if test="expireDateEnd != null">
+				#{expireDateEnd},
+			</if>
+			<if test="cardState != null">
+				#{cardState},
+			</if>
+			<if test="useState != null">
+				#{useState},
+			</if>
+			<if test="companyId != null">
+				#{companyId},
+			</if>
+			<if test="sourceCardId != null">
+				#{sourceCardId},
+			</if>
+			<if test="operator != null">
+				#{operator},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
+			</if>
+        </trim>
+		)
+		<selectKey keyProperty="id" resultType="java.lang.Long">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+
+
+
+	<update id="update">
+	UPDATE user_card_record
+		<set>
+			<if test="cardNo != null">
+				card_no = #{cardNo},
+			</if>
+			<if test="userId != null">
+				user_id = #{userId},
+			</if>
+			<if test="cardName != null">
+				card_name = #{cardName},
+			</if>
+
+			<if test="cardType != null">
+				card_type = #{cardType},
+			</if>
+			<if test="settleMethod != null">
+				settle_method = #{settleMethod},
+			</if>
+			<if test="cardAmount != null">
+				card_amount = #{cardAmount},
+			</if>
+			<if test="cardCash != null">
+				card_cash = #{cardCash},
+			</if>
+			<if test="expireDateStart != null">
+				expire_date_start = #{expireDateStart},
+			</if>
+			<if test="expireDateEnd != null">
+				expire_date_end = #{expireDateEnd},
+			</if>
+			<if test="cardState != null">
+				card_state = #{cardState},
+			</if>
+			<if test="useState != null">
+				use_state = #{useState},
+			</if>
+			<if test="companyId != null">
+				company_id = #{companyId},
+			</if>
+			<if test="sourceCardId != null">
+				source_card_id = #{sourceCardId},
+			</if>
+			<if test="operator != null">
+				operator = #{operator},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>
+		</set>
+			WHERE id = #{id}
+	</update>
+
+
+	<delete id="delete">
+		delete from user_card_record where id = #{id}
+	</delete>
+
+	<delete id="deleteByPara">
+		delete from user_card_record
+		<where>
+			<if test="cardName != null">
+				and card_name = #{cardName}
+			</if>
+			<if test="cardType != null">
+				and card_type = #{cardType}
+			</if>
+			<if test="settleMethod != null">
+				and settle_method = #{settleMethod}
+			</if>
+			<if test="cardState != null">
+				and card_state = #{cardState}
+			</if>
+			<if test="useState != null">
+				and use_state = #{useState}
+			</if>
+			<if test="sourceCardId != null">
+				and source_card_id = #{sourceCardId}
+			</if>
+			<if test="createTime != null">
+				and create_time = #{createTime}
+			</if>
+			<if test="updateTime != null">
+				and update_time = #{updateTime}
+			</if>
+		</where>
+	</delete>
+
+	<update id="useCardWithTx">
+		UPDATE user_card_record
+		<set>
+			<if test="useAmount != null">
+				card_cash = card_cash - #{useAmount},
+			</if>
+			<if test="useState != null">
+				use_state = #{useState},
+			</if>
+		</set>
+		WHERE id = #{id}
+  		and card_cash - #{useAmount} <![CDATA[>=]]> 0
+	</update>
+
+	<update id="refundCardWithTx">
+		UPDATE user_card_record
+		<set>
+			<if test="useAmount != null">
+				card_cash = card_cash + #{useAmount},
+			</if>
+			<if test="useState != null">
+				use_state = #{useState},
+			</if>
+		</set>
+		WHERE id = #{id}
+		and card_cash + #{useAmount} <![CDATA[<=]]> card_amount
+	</update>
+</mapper>

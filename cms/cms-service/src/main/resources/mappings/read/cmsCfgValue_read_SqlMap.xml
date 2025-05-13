@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.cms.dao.read.CmsCfgValueReadDAO">
+	<resultMap type="com.egeo.components.cms.po.CmsCfgValuePO" id="cmsCfgValueMap">
+		<result property="id" column="id" />
+		<result property="code" column="code" />
+		<result property="name" column="name" />
+		<result property="cfgKeyId" column="cfg_key_id" />
+		<result property="sort" column="sort" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+	</resultMap>
+
+	<sql id="cmsCfgValueColumns">
+		id,
+		code,
+		name,
+		cfg_key_id,
+		sort,
+		create_time,
+		update_time
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.cms.po.CmsCfgValuePO" resultMap="cmsCfgValueMap">
+		SELECT
+		<include refid="cmsCfgValueColumns" />
+		FROM cms_cfg_value
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="cmsCfgValueMap">
+		SELECT
+		<include refid="cmsCfgValueColumns" />
+		FROM cms_cfg_value
+		<where>
+			<if test="po.code != null">
+				and code = #{po.code}
+			</if>
+			<if test="po.name != null">
+				and name = #{po.name}
+			</if>
+			<if test="po.cfgKeyId != null">
+				and cfg_key_id = #{po.cfgKeyId}
+			</if>
+			<if test="po.sort != null">
+				and sort = #{po.sort}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM cms_cfg_value
+		<where>
+			<if test="po.code != null">
+				and code = #{po.code}
+			</if>
+			<if test="po.name != null">
+				and name = #{po.name}
+			</if>
+			<if test="po.cfgKeyId != null">
+				and cfg_key_id = #{po.cfgKeyId}
+			</if>
+			<if test="po.sort != null">
+				and sort = #{po.sort}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="cmsCfgValueMap">
+		SELECT
+		<include refid="cmsCfgValueColumns" />
+		FROM cms_cfg_value
+		<where>
+			<if test="po.code != null">
+				and code = #{po.code}
+			</if>
+			<if test="po.name != null">
+				and name = #{po.name}
+			</if>
+			<if test="po.cfgKeyId != null">
+				and cfg_key_id = #{po.cfgKeyId}
+			</if>
+			<if test="po.sort != null">
+				and sort = #{po.sort}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+</mapper>
+	

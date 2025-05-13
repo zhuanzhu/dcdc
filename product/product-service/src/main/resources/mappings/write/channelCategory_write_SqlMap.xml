@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.product.dao.write.ChannelCategoryWriteDAO">
+	<insert id="insert" parameterType="com.egeo.components.product.po.ChannelCategoryPO">
+		INSERT INTO channel_category(
+        <trim suffixOverrides=",">
+			<if test="channelId != null">
+				channel_id,
+			</if>
+			<if test="channelCode != null">
+				channel_code,
+			</if>
+			<if test="channelCategoryName != null">
+				channel_category_name,
+			</if>
+			<if test="parentId != null">
+				parent_id,
+			</if>
+			<if test="innerCategoryId != null">
+				inner_category_id,
+			</if>
+			<if test="channelCategoryLevel != null">
+				channel_category_level,
+			</if>
+			<if test="channelCategoryType != null">
+				channel_category_type,
+			</if>
+			<if test="channelCategoryId != null">
+				channel_category_id,
+			</if>
+			<if test="channelCategoryPId != null">
+				channel_category_p_id,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+        </trim>
+		) VALUES (
+        <trim suffixOverrides=",">
+			<if test="channelId != null">
+				#{channelId},
+			</if>
+			<if test="channelCode != null">
+				#{channelCode},
+			</if>
+			<if test="channelCategoryName != null">
+				#{channelCategoryName},
+			</if>
+			<if test="parentId != null">
+				#{parentId},
+			</if>
+			<if test="innerCategoryId != null">
+				#{innerCategoryId},
+			</if>
+			<if test="channelCategoryLevel != null">
+				#{channelCategoryLevel},
+			</if>
+			<if test="channelCategoryType != null">
+				#{channelCategoryType},
+			</if>
+			<if test="channelCategoryId != null">
+				#{channelCategoryId},
+			</if>
+			<if test="channelCategoryPId != null">
+				#{channelCategoryPId},
+			</if>
+			<if test="remark != null">
+				#{remark},
+			</if>
+        </trim>
+		)
+		<selectKey keyProperty="id" resultType="java.lang.Long">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+	<update id="update">
+	UPDATE channel_category
+		<set>
+			<if test="channelCode != null">
+				channel_code = #{channelCode},
+			</if>
+			<if test="channel_category_name != null">
+				channel_category_name = #{channelCategoryName},
+			</if>
+			<if test="parentId != null">
+				parent_id = #{parentId},
+			</if>
+			<if test="innerCategoryId != null">
+				inner_category_id = #{innerCategoryId},
+			</if>
+			<if test="channelCategoryLevel != null">
+				channel_category_level = #{channelCategoryLevel},
+			</if>
+			<if test="channelCategoryType != null">
+				channel_category_type = #{channelCategoryType},
+			</if>
+			<if test="channelCategoryId != null">
+				channel_category_id = #{channelCategoryId},
+			</if>
+			<if test="channelCategoryPId != null">
+				channel_category_p_id = #{channelCategoryPId},
+			</if>
+			<if test="remark != null">
+				remark = #{remark},
+			</if>
+		</set>
+			WHERE id = #{id}
+	</update>
+
+	<delete id="delete">
+		delete from channel_category where id = #{id}
+	</delete>
+
+	<delete id="deleteByPara">
+		delete from channel_category
+		<where>
+			<if test="channelCode != null">
+				and channel_code = #{channelCode}
+			</if>
+			<if test="channel_category_name != null">
+				and channel_category_name = #{channelCategoryName}
+			</if>
+			<if test="parentId != null">
+				and parent_id = #{parentId}
+			</if>
+			<if test="innerCategoryId != null">
+				and inner_category_id = #{innerCategoryId}
+			</if>
+			<if test="channelCategoryLevel != null">
+				and channel_category_level = #{channelCategoryLevel}
+			</if>
+			<if test="channelCategoryType != null">
+				and channel_category_type = #{channelCategoryType}
+			</if>
+			<if test="channelCategoryId != null">
+				and channel_category_id = #{channelCategoryId}
+			</if>
+			<if test="channelCategoryPId != null">
+				and channel_category_p_id = #{channelCategoryPId}
+			</if>
+			<if test="remark != null">
+				and remark = #{remark}
+			</if>
+		</where>
+	</delete>
+
+
+</mapper>

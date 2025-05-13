@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.product.dao.read.ChannelPriceLimitUploadReadDAO">
+	<resultMap type="com.egeo.components.product.po.ChannelPriceLimitUploadPO" id="channelPriceLimitUploadMap">
+		<result property="id" column="id" />
+		<result property="jdPriceLimitStart" column="jd_price_limit_start" />
+		<result property="jdPriceLimitEnd" column="jd_price_limit_end" />
+		<result property="channelCode" column="channel_code" />
+	</resultMap>
+
+	<sql id="channelPriceLimitUploadColumns">
+		id,
+		jd_price_limit_start,
+		jd_price_limit_end,
+		channel_code
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.product.po.JdPriceLimitUploadPO" resultMap="channelPriceLimitUploadMap">
+		SELECT
+		<include refid="channelPriceLimitUploadColumns" />
+		FROM channel_price_limit_upload
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="channelPriceLimitUploadMap">
+		SELECT
+		<include refid="channelPriceLimitUploadColumns" />
+		FROM channel_price_limit_upload
+		<where>
+			<if test="po.jdPriceLimitStart != null">
+				and jd_price_limit_start = #{po.jdPriceLimitStart}
+			</if>
+			<if test="po.jdPriceLimitEnd != null">
+				and jd_price_limit_end = #{po.jdPriceLimitEnd}
+			</if>
+			<if test="po.channelCode != null">
+				and channel_code = #{po.channelCode}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY id desc
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM channel_price_limit_upload
+		<where>
+			<if test="po.jdPriceLimitStart != null">
+				and jd_price_limit_start = #{po.jdPriceLimitStart}
+			</if>
+			<if test="po.jdPriceLimitEnd != null">
+				and jd_price_limit_end = #{po.jdPriceLimitEnd}
+			</if>
+			<if test="po.channelCode != null">
+				and channel_code = #{po.channelCode}
+			</if>
+		</where>
+	</select>
+
+	<select id="findAll" resultMap="channelPriceLimitUploadMap">
+		SELECT
+		<include refid="channelPriceLimitUploadColumns" />
+		FROM channel_price_limit_upload
+		<where>
+			<if test="po.jdPriceLimitStart != null">
+				and jd_price_limit_start = #{po.jdPriceLimitStart}
+			</if>
+			<if test="po.jdPriceLimitEnd != null">
+				and jd_price_limit_end = #{po.jdPriceLimitEnd}
+			</if>
+			<if test="po.channelCode != null">
+				and channel_code = #{po.channelCode}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY id desc
+			</otherwise>
+		</choose>
+	</select>
+</mapper>

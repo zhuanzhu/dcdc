@@ -1,0 +1,508 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.order.dao.write.SoReturnWriteDAO">
+	<insert id="insert" parameterType="com.egeo.components.order.po.SoReturnPO">
+		INSERT INTO so_return(
+        <trim suffixOverrides=",">
+			<if test="parentOrderCode != null">
+				parent_order_code,
+			</if>
+			<if test="orderCode != null">
+				order_code,
+			</if>
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="merchantId != null">
+				merchant_id,
+			</if>
+			<if test="returnStatus != null">
+				return_status,
+			</if>
+			<if test="refundStatus != null">
+				refund_status,
+			</if>
+			<if test="actualReturnAmount != null">
+				actual_return_amount,
+			</if>
+			<if test="applyReturnAmount != null">
+				apply_return_amount,
+			</if>
+			<if test="returnType != null">
+				return_type,
+			</if>
+			<if test="returnRemark != null">
+				return_remark,
+			</if>
+			<if test="serviceUserId != null">
+				service_user_id,
+			</if>
+			<if test="serviceDesc != null">
+				service_desc,
+			</if>
+			<if test="serviceReturnReason != null">
+				service_return_reason,
+			</if>
+			<if test="applyTime != null">
+				apply_time,
+			</if>
+			<if test="returnReason != null">
+				return_reason,
+			</if>
+			<if test="refundTime != null">
+				refund_time,
+			</if>
+			<if test="consigneeAddress != null">
+				consignee_address,
+			</if>
+			<if test="consigneeName != null">
+				consignee_name,
+			</if>
+			<if test="consigneeMobile != null">
+				consignee_mobile,
+			</if>
+			<if test="courierNumber != null">
+				courier_number,
+			</if>
+			<if test="logisticsCompany != null">
+				logistics_company,
+			</if>
+			<if test="refundConfirmUserId != null">
+				refund_confirm_user_id,
+			</if>
+			<if test="refundNo != null">
+				refund_no,
+			</if>
+			<if test="auditReason != null">
+				audit_reason,
+			</if>
+			<if test="auditUserId != null">
+				audit_user_id,
+			</if>
+			<if test="auditUserName != null">
+				audit_user_name,
+			</if>
+			<if test="freight != null">
+				freight,
+			</if>
+			<if test="cancelStatus != null">
+				cancel_status,
+			</if>
+			<if test="auditTime != null">
+				audit_time,
+			</if>
+			<if test="type != null">
+				type,
+			</if>
+			<if test="orderCreateTime != null">
+				order_create_time,
+			</if>
+			<if test="returnReasonId != null">
+				return_reason_id,
+			</if>
+			<if test="returnCode != null">
+				return_code,
+			</if>
+			<if test="isPickUp != null">
+				is_pick_up,
+			</if>
+			<if test="userCourierNumber != null">
+				user_courier_number,
+			</if>
+			<if test="userLogisticsCompanyId != null">
+				user_logistics_company_id,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="platformId != null">
+				platform_id,
+			</if>
+        </trim>		
+		) VALUES (
+        <trim suffixOverrides=",">
+			<if test="parentOrderCode != null">
+				#{parentOrderCode},
+			</if>
+			<if test="orderCode != null">
+				#{orderCode},
+			</if>
+			<if test="userId != null">
+				#{userId},
+			</if>
+			<if test="merchantId != null">
+				#{merchantId},
+			</if>
+			<if test="returnStatus != null">
+				#{returnStatus},
+			</if>
+			<if test="refundStatus != null">
+				#{refundStatus},
+			</if>
+			<if test="actualReturnAmount != null">
+				#{actualReturnAmount},
+			</if>
+			<if test="applyReturnAmount != null">
+				#{applyReturnAmount},
+			</if>
+			<if test="returnType != null">
+				#{returnType},
+			</if>
+			<if test="returnRemark != null">
+				#{returnRemark},
+			</if>
+			<if test="serviceUserId != null">
+				#{serviceUserId},
+			</if>
+			<if test="serviceDesc != null">
+				#{serviceDesc},
+			</if>
+			<if test="serviceReturnReason != null">
+				#{serviceReturnReason},
+			</if>
+			<if test="applyTime != null">
+				#{applyTime},
+			</if>
+			<if test="returnReason != null">
+				#{returnReason},
+			</if>
+			<if test="refundTime != null">
+				#{refundTime},
+			</if>
+			<if test="consigneeAddress != null">
+				#{consigneeAddress},
+			</if>
+			<if test="consigneeName != null">
+				#{consigneeName},
+			</if>
+			<if test="consigneeMobile != null">
+				#{consigneeMobile},
+			</if>
+			<if test="courierNumber != null">
+				#{courierNumber},
+			</if>
+			<if test="logisticsCompany != null">
+				#{logisticsCompany},
+			</if>
+			<if test="refundConfirmUserId != null">
+				#{refundConfirmUserId},
+			</if>
+			<if test="refundNo != null">
+				#{refundNo},
+			</if>
+			<if test="auditReason != null">
+				#{auditReason},
+			</if>
+			<if test="auditUserId != null">
+				#{auditUserId},
+			</if>
+			<if test="auditUserName != null">
+				#{auditUserName},
+			</if>
+			<if test="freight != null">
+				#{freight},
+			</if>
+			<if test="cancelStatus != null">
+				#{cancelStatus},
+			</if>
+			<if test="auditTime != null">
+				#{auditTime},
+			</if>
+			<if test="type != null">
+				#{type},
+			</if>
+			<if test="orderCreateTime != null">
+				#{orderCreateTime},
+			</if>
+			<if test="returnReasonId != null">
+				#{returnReasonId},
+			</if>
+			<if test="returnCode != null">
+				#{returnCode},
+			</if>
+			<if test="isPickUp != null">
+				#{isPickUp},
+			</if>
+			<if test="userCourierNumber != null">
+				#{userCourierNumber},
+			</if>
+			<if test="userLogisticsCompanyId != null">
+				#{userLogisticsCompanyId},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="platformId != null">
+				#{platformId},
+			</if>
+        </trim>		
+		)
+		<selectKey keyProperty="id" resultType="java.lang.Long">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+
+	
+	
+	<update id="update">
+	UPDATE so_return 
+		<set>
+			<if test="parentOrderCode != null">
+				parent_order_code = #{parentOrderCode},
+			</if>			
+			<if test="orderCode != null">
+				order_code = #{orderCode},
+			</if>			
+			<if test="userId != null">
+				user_id = #{userId},
+			</if>			
+			<if test="merchantId != null">
+				merchant_id = #{merchantId},
+			</if>			
+			<if test="returnStatus != null">
+				return_status = #{returnStatus},
+			</if>			
+			<if test="refundStatus != null">
+				refund_status = #{refundStatus},
+			</if>			
+			<if test="actualReturnAmount != null">
+				actual_return_amount = #{actualReturnAmount},
+			</if>			
+			<if test="applyReturnAmount != null">
+				apply_return_amount = #{applyReturnAmount},
+			</if>			
+			<if test="returnType != null">
+				return_type = #{returnType},
+			</if>			
+			<if test="returnRemark != null">
+				return_remark = #{returnRemark},
+			</if>			
+			<if test="serviceUserId != null">
+				service_user_id = #{serviceUserId},
+			</if>			
+			<if test="serviceDesc != null">
+				service_desc = #{serviceDesc},
+			</if>			
+			<if test="serviceReturnReason != null">
+				service_return_reason = #{serviceReturnReason},
+			</if>			
+			<if test="applyTime != null">
+				apply_time = #{applyTime},
+			</if>			
+			<if test="returnReason != null">
+				return_reason = #{returnReason},
+			</if>			
+			<if test="refundTime != null">
+				refund_time = #{refundTime},
+			</if>			
+			<if test="consigneeAddress != null">
+				consignee_address = #{consigneeAddress},
+			</if>			
+			<if test="consigneeName != null">
+				consignee_name = #{consigneeName},
+			</if>			
+			<if test="consigneeMobile != null">
+				consignee_mobile = #{consigneeMobile},
+			</if>			
+			<if test="courierNumber != null">
+				courier_number = #{courierNumber},
+			</if>			
+			<if test="logisticsCompany != null">
+				logistics_company = #{logisticsCompany},
+			</if>			
+			<if test="refundConfirmUserId != null">
+				refund_confirm_user_id = #{refundConfirmUserId},
+			</if>			
+			<if test="refundNo != null">
+				refund_no = #{refundNo},
+			</if>			
+			<if test="auditReason != null">
+				audit_reason = #{auditReason},
+			</if>			
+			<if test="auditUserId != null">
+				audit_user_id = #{auditUserId},
+			</if>			
+			<if test="auditUserName != null">
+				audit_user_name = #{auditUserName},
+			</if>			
+			<if test="freight != null">
+				freight = #{freight},
+			</if>			
+			<if test="cancelStatus != null">
+				cancel_status = #{cancelStatus},
+			</if>			
+			<if test="auditTime != null">
+				audit_time = #{auditTime},
+			</if>			
+			<if test="type != null">
+				type = #{type},
+			</if>			
+			<if test="orderCreateTime != null">
+				order_create_time = #{orderCreateTime},
+			</if>			
+			<if test="returnReasonId != null">
+				return_reason_id = #{returnReasonId},
+			</if>			
+			<if test="returnCode != null">
+				return_code = #{returnCode},
+			</if>			
+			<if test="isPickUp != null">
+				is_pick_up = #{isPickUp},
+			</if>			
+			<if test="userCourierNumber != null">
+				user_courier_number = #{userCourierNumber},
+			</if>			
+			<if test="userLogisticsCompanyId != null">
+				user_logistics_company_id = #{userLogisticsCompanyId},
+			</if>			
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>			
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>			
+			<if test="platformId != null">
+				platform_id = #{platformId},
+			</if>			
+		</set>
+			WHERE id = #{id}
+	</update>	
+	
+
+	<delete id="delete">
+		delete from so_return where id = #{id}
+	</delete>
+
+	<delete id="deleteByPara">
+		delete from so_return 
+		<where>
+			<if test="parentOrderCode != null">
+				and parent_order_code = #{parentOrderCode}
+			</if>
+			<if test="orderCode != null">
+				and order_code = #{orderCode}
+			</if>
+			<if test="userId != null">
+				and user_id = #{userId}
+			</if>
+			<if test="merchantId != null">
+				and merchant_id = #{merchantId}
+			</if>
+			<if test="returnStatus != null">
+				and return_status = #{returnStatus}
+			</if>
+			<if test="refundStatus != null">
+				and refund_status = #{refundStatus}
+			</if>
+			<if test="actualReturnAmount != null">
+				and actual_return_amount = #{actualReturnAmount}
+			</if>
+			<if test="applyReturnAmount != null">
+				and apply_return_amount = #{applyReturnAmount}
+			</if>
+			<if test="returnType != null">
+				and return_type = #{returnType}
+			</if>
+			<if test="returnRemark != null">
+				and return_remark = #{returnRemark}
+			</if>
+			<if test="serviceUserId != null">
+				and service_user_id = #{serviceUserId}
+			</if>
+			<if test="serviceDesc != null">
+				and service_desc = #{serviceDesc}
+			</if>
+			<if test="serviceReturnReason != null">
+				and service_return_reason = #{serviceReturnReason}
+			</if>
+			<if test="applyTime != null">
+				and apply_time = #{applyTime}
+			</if>
+			<if test="returnReason != null">
+				and return_reason = #{returnReason}
+			</if>
+			<if test="refundTime != null">
+				and refund_time = #{refundTime}
+			</if>
+			<if test="consigneeAddress != null">
+				and consignee_address = #{consigneeAddress}
+			</if>
+			<if test="consigneeName != null">
+				and consignee_name = #{consigneeName}
+			</if>
+			<if test="consigneeMobile != null">
+				and consignee_mobile = #{consigneeMobile}
+			</if>
+			<if test="courierNumber != null">
+				and courier_number = #{courierNumber}
+			</if>
+			<if test="logisticsCompany != null">
+				and logistics_company = #{logisticsCompany}
+			</if>
+			<if test="refundConfirmUserId != null">
+				and refund_confirm_user_id = #{refundConfirmUserId}
+			</if>
+			<if test="refundNo != null">
+				and refund_no = #{refundNo}
+			</if>
+			<if test="auditReason != null">
+				and audit_reason = #{auditReason}
+			</if>
+			<if test="auditUserId != null">
+				and audit_user_id = #{auditUserId}
+			</if>
+			<if test="auditUserName != null">
+				and audit_user_name = #{auditUserName}
+			</if>
+			<if test="freight != null">
+				and freight = #{freight}
+			</if>
+			<if test="cancelStatus != null">
+				and cancel_status = #{cancelStatus}
+			</if>
+			<if test="auditTime != null">
+				and audit_time = #{auditTime}
+			</if>
+			<if test="type != null">
+				and type = #{type}
+			</if>
+			<if test="orderCreateTime != null">
+				and order_create_time = #{orderCreateTime}
+			</if>
+			<if test="returnReasonId != null">
+				and return_reason_id = #{returnReasonId}
+			</if>
+			<if test="returnCode != null">
+				and return_code = #{returnCode}
+			</if>
+			<if test="isPickUp != null">
+				and is_pick_up = #{isPickUp}
+			</if>
+			<if test="userCourierNumber != null">
+				and user_courier_number = #{userCourierNumber}
+			</if>
+			<if test="userLogisticsCompanyId != null">
+				and user_logistics_company_id = #{userLogisticsCompanyId}
+			</if>
+			<if test="updateTime != null">
+				and update_time = #{updateTime}
+			</if>
+			<if test="createTime != null">
+				and create_time = #{createTime}
+			</if>
+			<if test="platformId != null">
+				and platform_id = #{platformId}
+			</if>
+		</where>
+	</delete>
+
+
+</mapper>
+	

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.user.dao.write.UserInfoWriteDAO">
+	<insert id="insert" parameterType="com.egeo.components.user.po.UserInfoPO">
+		INSERT INTO u_user_info(
+        <trim suffixOverrides=",">
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="infoId != null">
+				info_id,
+			</if>
+			<if test="isRead != null">
+				is_read,
+			</if>
+			<if test="isDeleted != null">
+				is_deleted,
+			</if>
+			<if test="platformId != null">
+				platform_id,
+			</if>
+        </trim>		
+		) VALUES (
+        <trim suffixOverrides=",">
+			<if test="userId != null">
+				#{userId},
+			</if>
+			<if test="infoId != null">
+				#{infoId},
+			</if>
+			<if test="isRead != null">
+				#{isRead},
+			</if>
+			<if test="isDeleted != null">
+				#{isDeleted},
+			</if>
+			<if test="platformId != null">
+				#{platformId},
+			</if>
+        </trim>		
+		)
+		<selectKey keyProperty="id" resultType="java.lang.Long">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+
+	
+	
+	<update id="update">
+	UPDATE u_user_info 
+		<set>
+			<if test="userId != null">
+				user_id = #{userId},
+			</if>			
+			<if test="infoId != null">
+				info_id = #{infoId},
+			</if>			
+			<if test="isRead != null">
+				is_read = #{isRead},
+			</if>			
+			<if test="isDeleted != null">
+				is_deleted = #{isDeleted},
+			</if>			
+			<if test="platformId != null">
+				platform_id = #{platformId},
+			</if>			
+		</set>
+			WHERE id = #{id}
+	</update>	
+	
+
+	<update id="delete">
+		UPDATE u_user_info SET is_deleted = 1 WHERE id = #{id}
+	</update>
+
+	<update id="deleteByPara">
+		UPDATE u_user_info SET is_deleted = 1 
+		<where>
+			<if test="userId != null">
+				and user_id = #{userId}
+			</if>
+			<if test="infoId != null">
+				and info_id = #{infoId}
+			</if>
+			<if test="isRead != null">
+				and is_read = #{isRead}
+			</if>
+			<if test="isDeleted != null">
+				and is_deleted = #{isDeleted}
+			</if>
+			<if test="platformId != null">
+				and platform_id = #{platformId}
+			</if>
+		</where>
+	</update>
+	
+	<sql id="inClause">
+		in
+		<foreach collection="ids" item="id" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</sql>
+	
+	<update id="updateByUserInfoIds">
+		UPDATE u_user_info 
+		set is_read = 1
+		WHERE id <include refid="inClause"/>
+	</update>	
+
+
+</mapper>
+	

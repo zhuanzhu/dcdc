@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.cms.dao.read.SuListReadDAO">
+
+	<select id="querySuListByInstId" resultMap="suListMap">
+		select * from su_list
+		where inst_id=#{instId} order by create_time desc
+	</select>
+
+	<resultMap type="com.egeo.components.cms.po.SuListPO" id="suListMap">
+		<result property="id" column="id" />
+		<result property="titleName" column="title_name" />
+		<result property="titleColor" column="title_color" />
+		<result property="relationType" column="relation_type" />
+		<result property="sortType" column="sort_type" />
+		<result property="instId" column="inst_id" />
+		<result property="maxShow" column="max_show" />
+		<result property="showType" column="show_type" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="sucId" column="suc_id" />
+		<result property="linkableId" column="linkable_id" />
+		<result property="bannerUrl" column="banner_url" />
+	</resultMap>
+
+	<sql id="suListColumns">
+		id,
+		title_name,
+		title_color,
+		relation_type,
+		sort_type,
+		inst_id,
+		max_show,
+		show_type,
+		create_time,
+		update_time,
+		suc_id,
+		linkable_id,
+		banner_url
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.cms.po.SuListPO" resultMap="suListMap">
+		SELECT
+		<include refid="suListColumns" />
+		FROM su_list
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="suListMap">
+		SELECT
+		<include refid="suListColumns" />
+		FROM su_list
+		<where>
+			<if test="po.titleName != null">
+				and title_name = #{po.titleName}
+			</if>
+			<if test="po.titleColor != null">
+				and title_color = #{po.titleColor}
+			</if>
+			<if test="po.relationType != null">
+				and relation_type = #{po.relationType}
+			</if>
+			<if test="po.sortType != null">
+				and sort_type = #{po.sortType}
+			</if>
+			<if test="po.instId != null">
+				and inst_id = #{po.instId}
+			</if>
+			<if test="po.maxShow != null">
+				and max_show = #{po.maxShow}
+			</if>
+			<if test="po.showType != null">
+				and show_type = #{po.showType}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.sucId != null">
+				and suc_id = #{po.sucId}
+			</if>
+			<if test="po.linkableId != null">
+				and linkable_id = #{po.linkableId}
+			</if>
+			<if test="po.bannerUrl != null">
+				and banner_url = #{po.bannerUrl}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM su_list
+		<where>
+			<if test="po.titleName != null">
+				and title_name = #{po.titleName}
+			</if>
+			<if test="po.titleColor != null">
+				and title_color = #{po.titleColor}
+			</if>
+			<if test="po.relationType != null">
+				and relation_type = #{po.relationType}
+			</if>
+			<if test="po.sortType != null">
+				and sort_type = #{po.sortType}
+			</if>
+			<if test="po.instId != null">
+				and inst_id = #{po.instId}
+			</if>
+			<if test="po.maxShow != null">
+				and max_show = #{po.maxShow}
+			</if>
+			<if test="po.showType != null">
+				and show_type = #{po.showType}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.sucId != null">
+				and suc_id = #{po.sucId}
+			</if>
+			<if test="po.linkableId != null">
+				and linkable_id = #{po.linkableId}
+			</if>
+			<if test="po.bannerUrl != null">
+				and banner_url = #{po.bannerUrl}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="suListMap">
+		SELECT
+		<include refid="suListColumns" />
+		FROM su_list
+		<where>
+			<if test="po.titleName != null">
+				and title_name = #{po.titleName}
+			</if>
+			<if test="po.titleColor != null">
+				and title_color = #{po.titleColor}
+			</if>
+			<if test="po.relationType != null">
+				and relation_type = #{po.relationType}
+			</if>
+			<if test="po.sortType != null">
+				and sort_type = #{po.sortType}
+			</if>
+			<if test="po.instId != null">
+				and inst_id = #{po.instId}
+			</if>
+			<if test="po.maxShow != null">
+				and max_show = #{po.maxShow}
+			</if>
+			<if test="po.showType != null">
+				and show_type = #{po.showType}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.sucId != null">
+				and suc_id = #{po.sucId}
+			</if>
+			<if test="po.linkableId != null">
+				and linkable_id = #{po.linkableId}
+			</if>
+			<if test="po.bannerUrl != null">
+				and banner_url = #{po.bannerUrl}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+</mapper>
+	

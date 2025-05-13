@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.promotion.dao.read.PromotionPriceReadDAO">
+	<resultMap type="com.egeo.components.promotion.po.PromotionPricePO" id="promotionPriceMap">
+		<result property="id" column="id" />
+		<result property="promotionId" column="promotion_id" />
+		<result property="startTime" column="start_time" />
+		<result property="endTime" column="end_time" />
+		<result property="promPrice" column="prom_price" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="platformId" column="platform_id" />
+		<result property="skuId" column="sku_id" />
+	</resultMap>
+
+	<sql id="promotionPriceColumns">
+		id,
+		promotion_id,
+		start_time,
+		end_time,
+		prom_price,
+		create_time,
+		update_time,
+		platform_id,
+		sku_id
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.promotion.po.PromotionPricePO" resultMap="promotionPriceMap">
+		SELECT
+		<include refid="promotionPriceColumns" />
+		FROM promotion_price
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="promotionPriceMap">
+		SELECT
+		<include refid="promotionPriceColumns" />
+		FROM promotion_price
+		<where>
+			<if test="po.promotionId != null">
+				and promotion_id = #{po.promotionId}
+			</if>
+			<if test="po.startTime != null">
+				and start_time = #{po.startTime}
+			</if>
+			<if test="po.endTime != null">
+				and end_time = #{po.endTime}
+			</if>
+			<if test="po.promPrice != null">
+				and prom_price = #{po.promPrice}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.skuId != null">
+				and sku_id = #{po.skuId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM promotion_price
+		<where>
+			<if test="po.promotionId != null">
+				and promotion_id = #{po.promotionId}
+			</if>
+			<if test="po.startTime != null">
+				and start_time = #{po.startTime}
+			</if>
+			<if test="po.endTime != null">
+				and end_time = #{po.endTime}
+			</if>
+			<if test="po.promPrice != null">
+				and prom_price = #{po.promPrice}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.skuId != null">
+				and sku_id = #{po.skuId}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="promotionPriceMap">
+		SELECT
+		<include refid="promotionPriceColumns" />
+		FROM promotion_price
+		<where>
+			<if test="po.promotionId != null">
+				and promotion_id = #{po.promotionId}
+			</if>
+			<if test="po.startTime != null">
+				and start_time = #{po.startTime}
+			</if>
+			<if test="po.endTime != null">
+				and end_time = #{po.endTime}
+			</if>
+			<if test="po.promPrice != null">
+				and prom_price = #{po.promPrice}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.skuId != null">
+				and sku_id = #{po.skuId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+</mapper>
+	

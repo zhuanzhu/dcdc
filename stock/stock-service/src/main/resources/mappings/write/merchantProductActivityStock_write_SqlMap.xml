@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.stock.dao.write.MerchantProductActivityStockWriteDAO">
+	<insert id="insert" parameterType="com.egeo.components.stock.po.MerchantProductActivityStockPO">
+		INSERT INTO merchant_product_activity_stock(
+        <trim suffixOverrides=",">
+			<if test="activityId != null">
+				activity_id,
+			</if>
+			<if test="activityName != null">
+				activity_name,
+			</if>
+			<if test="activityType != null">
+				activity_type,
+			</if>
+			<if test="thresholdNum != null">
+				threshold_num,
+			</if>
+			<if test="alreadySaleNum != null">
+				already_sale_num,
+			</if>
+			<if test="parentId != null">
+				parent_id,
+			</if>
+			<if test="singleProductNum != null">
+				single_product_num,
+			</if>
+			<if test="warehouseId != null">
+				warehouse_id,
+			</if>
+			<if test="stockLimit != null">
+				stock_limit,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="platformId != null">
+				platform_id,
+			</if>
+			<if test="skuId != null">
+				sku_id,
+			</if>
+        </trim>		
+		) VALUES (
+        <trim suffixOverrides=",">
+			<if test="activityId != null">
+				#{activityId},
+			</if>
+			<if test="activityName != null">
+				#{activityName},
+			</if>
+			<if test="activityType != null">
+				#{activityType},
+			</if>
+			<if test="thresholdNum != null">
+				#{thresholdNum},
+			</if>
+			<if test="alreadySaleNum != null">
+				#{alreadySaleNum},
+			</if>
+			<if test="parentId != null">
+				#{parentId},
+			</if>
+			<if test="singleProductNum != null">
+				#{singleProductNum},
+			</if>
+			<if test="warehouseId != null">
+				#{warehouseId},
+			</if>
+			<if test="stockLimit != null">
+				#{stockLimit},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
+			</if>
+			<if test="platformId != null">
+				#{platformId},
+			</if>
+			<if test="skuId != null">
+				#{skuId},
+			</if>
+        </trim>		
+		)
+		<selectKey keyProperty="id" resultType="java.lang.Long">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+
+	
+	
+	<update id="update">
+	UPDATE merchant_product_activity_stock 
+		<set>
+			<if test="activityId != null">
+				activity_id = #{activityId},
+			</if>			
+			<if test="activityName != null">
+				activity_name = #{activityName},
+			</if>			
+			<if test="activityType != null">
+				activity_type = #{activityType},
+			</if>			
+			<if test="thresholdNum != null">
+				threshold_num = #{thresholdNum},
+			</if>			
+			<if test="alreadySaleNum != null">
+				already_sale_num = #{alreadySaleNum},
+			</if>			
+			<if test="parentId != null">
+				parent_id = #{parentId},
+			</if>			
+			<if test="singleProductNum != null">
+				single_product_num = #{singleProductNum},
+			</if>			
+			<if test="warehouseId != null">
+				warehouse_id = #{warehouseId},
+			</if>			
+			<if test="stockLimit != null">
+				stock_limit = #{stockLimit},
+			</if>			
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>			
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>			
+			<if test="platformId != null">
+				platform_id = #{platformId},
+			</if>			
+			<if test="skuId != null">
+				sku_id = #{skuId},
+			</if>			
+		</set>
+			WHERE id = #{id}
+	</update>	
+	
+
+	<delete id="delete">
+		delete from merchant_product_activity_stock where id = #{id}
+	</delete>
+
+	<delete id="deleteByPara">
+		delete from merchant_product_activity_stock 
+		<where>
+			<if test="activityId != null">
+				and activity_id = #{activityId}
+			</if>
+			<if test="activityName != null">
+				and activity_name = #{activityName}
+			</if>
+			<if test="activityType != null">
+				and activity_type = #{activityType}
+			</if>
+			<if test="thresholdNum != null">
+				and threshold_num = #{thresholdNum}
+			</if>
+			<if test="alreadySaleNum != null">
+				and already_sale_num = #{alreadySaleNum}
+			</if>
+			<if test="parentId != null">
+				and parent_id = #{parentId}
+			</if>
+			<if test="singleProductNum != null">
+				and single_product_num = #{singleProductNum}
+			</if>
+			<if test="warehouseId != null">
+				and warehouse_id = #{warehouseId}
+			</if>
+			<if test="stockLimit != null">
+				and stock_limit = #{stockLimit}
+			</if>
+			<if test="createTime != null">
+				and create_time = #{createTime}
+			</if>
+			<if test="updateTime != null">
+				and update_time = #{updateTime}
+			</if>
+			<if test="platformId != null">
+				and platform_id = #{platformId}
+			</if>
+			<if test="skuId != null">
+				and sku_id = #{skuId}
+			</if>
+		</where>
+	</delete>
+
+
+</mapper>
+	

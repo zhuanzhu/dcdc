@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.order.dao.read.ContractItemReadDAO">
+	<resultMap type="com.egeo.components.order.po.ContractItemPO" id="contractItemMap">
+		<result property="id" column="id" />
+		<result property="contractId" column="contract_id" />
+		<result property="orderCode" column="order_code" />
+		<result property="userId" column="user_id" />
+		<result property="merchantProductId" column="merchant_product_id" />
+		<result property="merchantProductName" column="merchant_product_name" />
+		<result property="merchantProductStandard" column="merchant_product_standard" />
+		<result property="merchantProductMaterial" column="merchant_product_material" />
+		<result property="merchantProductPlaceOfOrigin" column="merchant_product_place_of_origin" />
+		<result property="merchantProductItemAmount" column="merchant_product_item_amount" />
+		<result property="merchantProductPriceFinal" column="merchant_product_price_final" />
+		<result property="merchantProductRemark" column="merchant_product_remark" />
+		<result property="merchantProductItemNum" column="merchant_product_item_num" />
+		<result property="merchantId" column="merchant_id" />
+		<result property="contractCode" column="contract_code" />
+		<result property="updateTime" column="update_time" />
+		<result property="createTime" column="create_time" />
+		<result property="platformId" column="platform_id" />
+		<result property="skuId" column="sku_id" />
+	</resultMap>
+
+	<sql id="contractItemColumns">
+		id,
+		contract_id,
+		order_code,
+		user_id,
+		merchant_product_id,
+		merchant_product_name,
+		merchant_product_standard,
+		merchant_product_material,
+		merchant_product_place_of_origin,
+		merchant_product_item_amount,
+		merchant_product_price_final,
+		merchant_product_remark,
+		merchant_product_item_num,
+		merchant_id,
+		contract_code,
+		update_time,
+		create_time,
+		platform_id,
+		sku_id
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.order.po.ContractItemPO" resultMap="contractItemMap">
+		SELECT
+		<include refid="contractItemColumns" />
+		FROM contract_item
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="contractItemMap">
+		SELECT
+		<include refid="contractItemColumns" />
+		FROM contract_item
+		<where>
+			<if test="po.contractId != null">
+				and contract_id = #{po.contractId}
+			</if>
+			<if test="po.orderCode != null">
+				and order_code = #{po.orderCode}
+			</if>
+			<if test="po.userId != null">
+				and user_id = #{po.userId}
+			</if>
+			<if test="po.merchantProductId != null">
+				and merchant_product_id = #{po.merchantProductId}
+			</if>
+			<if test="po.merchantProductName != null">
+				and merchant_product_name = #{po.merchantProductName}
+			</if>
+			<if test="po.merchantProductStandard != null">
+				and merchant_product_standard = #{po.merchantProductStandard}
+			</if>
+			<if test="po.merchantProductMaterial != null">
+				and merchant_product_material = #{po.merchantProductMaterial}
+			</if>
+			<if test="po.merchantProductPlaceOfOrigin != null">
+				and merchant_product_place_of_origin = #{po.merchantProductPlaceOfOrigin}
+			</if>
+			<if test="po.merchantProductItemAmount != null">
+				and merchant_product_item_amount = #{po.merchantProductItemAmount}
+			</if>
+			<if test="po.merchantProductPriceFinal != null">
+				and merchant_product_price_final = #{po.merchantProductPriceFinal}
+			</if>
+			<if test="po.merchantProductRemark != null">
+				and merchant_product_remark = #{po.merchantProductRemark}
+			</if>
+			<if test="po.merchantProductItemNum != null">
+				and merchant_product_item_num = #{po.merchantProductItemNum}
+			</if>
+			<if test="po.merchantId != null">
+				and merchant_id = #{po.merchantId}
+			</if>
+			<if test="po.contractCode != null">
+				and contract_code = #{po.contractCode}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.skuId != null">
+				and sku_id = #{po.skuId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM contract_item
+		<where>
+			<if test="po.contractId != null">
+				and contract_id = #{po.contractId}
+			</if>
+			<if test="po.orderCode != null">
+				and order_code = #{po.orderCode}
+			</if>
+			<if test="po.userId != null">
+				and user_id = #{po.userId}
+			</if>
+			<if test="po.merchantProductId != null">
+				and merchant_product_id = #{po.merchantProductId}
+			</if>
+			<if test="po.merchantProductName != null">
+				and merchant_product_name = #{po.merchantProductName}
+			</if>
+			<if test="po.merchantProductStandard != null">
+				and merchant_product_standard = #{po.merchantProductStandard}
+			</if>
+			<if test="po.merchantProductMaterial != null">
+				and merchant_product_material = #{po.merchantProductMaterial}
+			</if>
+			<if test="po.merchantProductPlaceOfOrigin != null">
+				and merchant_product_place_of_origin = #{po.merchantProductPlaceOfOrigin}
+			</if>
+			<if test="po.merchantProductItemAmount != null">
+				and merchant_product_item_amount = #{po.merchantProductItemAmount}
+			</if>
+			<if test="po.merchantProductPriceFinal != null">
+				and merchant_product_price_final = #{po.merchantProductPriceFinal}
+			</if>
+			<if test="po.merchantProductRemark != null">
+				and merchant_product_remark = #{po.merchantProductRemark}
+			</if>
+			<if test="po.merchantProductItemNum != null">
+				and merchant_product_item_num = #{po.merchantProductItemNum}
+			</if>
+			<if test="po.merchantId != null">
+				and merchant_id = #{po.merchantId}
+			</if>
+			<if test="po.contractCode != null">
+				and contract_code = #{po.contractCode}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.skuId != null">
+				and sku_id = #{po.skuId}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="contractItemMap">
+		SELECT
+		<include refid="contractItemColumns" />
+		FROM contract_item
+		<where>
+			<if test="po.contractId != null">
+				and contract_id = #{po.contractId}
+			</if>
+			<if test="po.orderCode != null">
+				and order_code = #{po.orderCode}
+			</if>
+			<if test="po.userId != null">
+				and user_id = #{po.userId}
+			</if>
+			<if test="po.merchantProductId != null">
+				and merchant_product_id = #{po.merchantProductId}
+			</if>
+			<if test="po.merchantProductName != null">
+				and merchant_product_name = #{po.merchantProductName}
+			</if>
+			<if test="po.merchantProductStandard != null">
+				and merchant_product_standard = #{po.merchantProductStandard}
+			</if>
+			<if test="po.merchantProductMaterial != null">
+				and merchant_product_material = #{po.merchantProductMaterial}
+			</if>
+			<if test="po.merchantProductPlaceOfOrigin != null">
+				and merchant_product_place_of_origin = #{po.merchantProductPlaceOfOrigin}
+			</if>
+			<if test="po.merchantProductItemAmount != null">
+				and merchant_product_item_amount = #{po.merchantProductItemAmount}
+			</if>
+			<if test="po.merchantProductPriceFinal != null">
+				and merchant_product_price_final = #{po.merchantProductPriceFinal}
+			</if>
+			<if test="po.merchantProductRemark != null">
+				and merchant_product_remark = #{po.merchantProductRemark}
+			</if>
+			<if test="po.merchantProductItemNum != null">
+				and merchant_product_item_num = #{po.merchantProductItemNum}
+			</if>
+			<if test="po.merchantId != null">
+				and merchant_id = #{po.merchantId}
+			</if>
+			<if test="po.contractCode != null">
+				and contract_code = #{po.contractCode}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.skuId != null">
+				and sku_id = #{po.skuId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+</mapper>
+	

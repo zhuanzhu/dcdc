@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.product.dao.read.MerchantProdSalesRecordReadDAO">
+	<resultMap type="com.egeo.components.product.po.MerchantProdSalesRecordPO" id="merchantProdSalesRecordMap">
+		<result property="id" column="id" />
+		<result property="salesVolume" column="sales_volume" />
+		<result property="salesDate" column="sales_date" />
+		<result property="standardProductUnitId" column="standard_product_unit_id" />
+		<result property="standardUnitId" column="standard_unit_id" />
+		<result property="merchantId" column="merchant_id" />
+		<result property="chineseName" column="chinese_name" />
+		<result property="englishName" column="english_name" />
+		<result property="commodityProductUnitId" column="commodity_product_unit_id" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="platformId" column="platform_id" />
+	</resultMap>
+
+	<sql id="merchantProdSalesRecordColumns">
+		id,
+		sales_volume,
+		sales_date,
+		standard_product_unit_id,
+		standard_unit_id,
+		merchant_id,
+		chinese_name,
+		english_name,
+		commodity_product_unit_id,
+		create_time,
+		update_time,
+		platform_id
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.product.po.MerchantProdSalesRecordPO" resultMap="merchantProdSalesRecordMap">
+		SELECT
+		<include refid="merchantProdSalesRecordColumns" />
+		FROM merchant_prod_sales_record
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="merchantProdSalesRecordMap">
+		SELECT
+		<include refid="merchantProdSalesRecordColumns" />
+		FROM merchant_prod_sales_record
+		<where>
+			<if test="po.salesVolume != null">
+				and sales_volume = #{po.salesVolume}
+			</if>
+			<if test="po.salesDate != null">
+				and sales_date = #{po.salesDate}
+			</if>
+			<if test="po.standardProductUnitId != null">
+				and standard_product_unit_id = #{po.standardProductUnitId}
+			</if>
+			<if test="po.standardUnitId != null">
+				and standard_unit_id = #{po.standardUnitId}
+			</if>
+			<if test="po.merchantId != null">
+				and merchant_id = #{po.merchantId}
+			</if>
+			<if test="po.chineseName != null">
+				and chinese_name = #{po.chineseName}
+			</if>
+			<if test="po.englishName != null">
+				and english_name = #{po.englishName}
+			</if>
+			<if test="po.commodityProductUnitId != null">
+				and commodity_product_unit_id = #{po.commodityProductUnitId}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM merchant_prod_sales_record
+		<where>
+			<if test="po.salesVolume != null">
+				and sales_volume = #{po.salesVolume}
+			</if>
+			<if test="po.salesDate != null">
+				and sales_date = #{po.salesDate}
+			</if>
+			<if test="po.standardProductUnitId != null">
+				and standard_product_unit_id = #{po.standardProductUnitId}
+			</if>
+			<if test="po.standardUnitId != null">
+				and standard_unit_id = #{po.standardUnitId}
+			</if>
+			<if test="po.merchantId != null">
+				and merchant_id = #{po.merchantId}
+			</if>
+			<if test="po.chineseName != null">
+				and chinese_name = #{po.chineseName}
+			</if>
+			<if test="po.englishName != null">
+				and english_name = #{po.englishName}
+			</if>
+			<if test="po.commodityProductUnitId != null">
+				and commodity_product_unit_id = #{po.commodityProductUnitId}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="merchantProdSalesRecordMap">
+		SELECT
+		<include refid="merchantProdSalesRecordColumns" />
+		FROM merchant_prod_sales_record
+		<where>
+			<if test="po.salesVolume != null">
+				and sales_volume = #{po.salesVolume}
+			</if>
+			<if test="po.salesDate != null">
+				and sales_date = #{po.salesDate}
+			</if>
+			<if test="po.standardProductUnitId != null">
+				and standard_product_unit_id = #{po.standardProductUnitId}
+			</if>
+			<if test="po.standardUnitId != null">
+				and standard_unit_id = #{po.standardUnitId}
+			</if>
+			<if test="po.merchantId != null">
+				and merchant_id = #{po.merchantId}
+			</if>
+			<if test="po.chineseName != null">
+				and chinese_name = #{po.chineseName}
+			</if>
+			<if test="po.englishName != null">
+				and english_name = #{po.englishName}
+			</if>
+			<if test="po.commodityProductUnitId != null">
+				and commodity_product_unit_id = #{po.commodityProductUnitId}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findSalesRecordByStandardUnitId" resultType="java.lang.Long">
+		SELECT sum(sales_volume) FROM merchant_prod_sales_record
+		WHERE standard_unit_id = #{standardUnitId}
+	</select>
+	
+	<select id="findByPUId" resultMap="merchantProdSalesRecordMap">
+		SELECT
+		<include refid="merchantProdSalesRecordColumns" />
+		FROM merchant_prod_sales_record
+		WHERE commodity_product_unit_id = #{puId}
+	</select>
+</mapper>
+	

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.cms.dao.write.CmsDictWriteDAO">
+	<insert id="insert" parameterType="com.egeo.components.cms.po.CmsDictPO">
+		INSERT INTO cms_dict(
+        <trim suffixOverrides=",">
+			<if test="parentId != null">
+				parent_id,
+			</if>
+			<if test="customId != null">
+				custom_id,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="description != null">
+				description,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="platformId != null">
+				platform_id,
+			</if>
+        </trim>		
+		) VALUES (
+        <trim suffixOverrides=",">
+			<if test="parentId != null">
+				#{parentId},
+			</if>
+			<if test="customId != null">
+				#{customId},
+			</if>
+			<if test="name != null">
+				#{name},
+			</if>
+			<if test="description != null">
+				#{description},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
+			</if>
+			<if test="platformId != null">
+				#{platformId},
+			</if>
+        </trim>		
+		)
+		<selectKey keyProperty="id" resultType="java.lang.Long">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+
+	
+	
+	<update id="update">
+	UPDATE cms_dict 
+		<set>
+			<if test="parentId != null">
+				parent_id = #{parentId},
+			</if>			
+			<if test="customId != null">
+				custom_id = #{customId},
+			</if>			
+			<if test="name != null">
+				name = #{name},
+			</if>			
+			<if test="description != null">
+				description = #{description},
+			</if>			
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>			
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>			
+			<if test="platformId != null">
+				platform_id = #{platformId},
+			</if>			
+		</set>
+			WHERE id = #{id}
+	</update>	
+	
+
+	<delete id="delete">
+		delete from cms_dict where id = #{id}
+	</delete>
+
+	<delete id="deleteByPara">
+		delete from cms_dict 
+		<where>
+			<if test="parentId != null">
+				and parent_id = #{parentId}
+			</if>
+			<if test="customId != null">
+				and custom_id = #{customId}
+			</if>
+			<if test="name != null">
+				and name = #{name}
+			</if>
+			<if test="description != null">
+				and description = #{description}
+			</if>
+			<if test="createTime != null">
+				and create_time = #{createTime}
+			</if>
+			<if test="updateTime != null">
+				and update_time = #{updateTime}
+			</if>
+			<if test="platformId != null">
+				and platform_id = #{platformId}
+			</if>
+		</where>
+	</delete>
+
+
+</mapper>
+	

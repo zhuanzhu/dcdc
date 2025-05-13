@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.user.dao.read.InfoTemplateSendWayReadDAO">
+	<resultMap type="com.egeo.components.user.po.InfoTemplateSendWayPO" id="infoTemplateSendWayMap">
+		<result property="id" column="id" />
+		<result property="infoTemplateId" column="info_template_id" />
+		<result property="sendWayId" column="send_way_id" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="platformId" column="platform_id" />
+	</resultMap>
+
+	<sql id="infoTemplateSendWayColumns">
+		id,
+		info_template_id,
+		send_way_id,
+		create_time,
+		update_time,
+		platform_id
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.user.po.InfoTemplateSendWayPO" resultMap="infoTemplateSendWayMap">
+		SELECT
+		<include refid="infoTemplateSendWayColumns" />
+		FROM u_info_template_send_way
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="infoTemplateSendWayMap">
+		SELECT
+		<include refid="infoTemplateSendWayColumns" />
+		FROM u_info_template_send_way
+		<where>
+			<if test="po.infoTemplateId != null">
+				and info_template_id = #{po.infoTemplateId}
+			</if>
+			<if test="po.sendWayId != null">
+				and send_way_id = #{po.sendWayId}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM u_info_template_send_way
+		<where>
+			<if test="po.infoTemplateId != null">
+				and info_template_id = #{po.infoTemplateId}
+			</if>
+			<if test="po.sendWayId != null">
+				and send_way_id = #{po.sendWayId}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="infoTemplateSendWayMap">
+		SELECT
+		<include refid="infoTemplateSendWayColumns" />
+		FROM u_info_template_send_way
+		<where>
+			<if test="po.infoTemplateId != null">
+				and info_template_id = #{po.infoTemplateId}
+			</if>
+			<if test="po.sendWayId != null">
+				and send_way_id = #{po.sendWayId}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="sendWayNameByInfoTemplateId" resultType="java.lang.String">
+		SELECT name from 
+		u_send_way_type swt,
+		(SELECT send_way_id FROM u_info_template_send_way WHERE info_template_id = #{infoTemplateId}) itsw 
+		WHERE swt.id = itsw.send_way_id
+	</select>
+</mapper>
+	

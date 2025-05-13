@@ -1,0 +1,480 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.order.dao.read.SoLeaseReadDAO">
+	<resultMap type="com.egeo.components.order.po.SoLeasePO" id="soLeaseMap">
+		<result property="id" column="id" />
+		<result property="leaseCode" column="lease_code" />
+		<result property="leaseStatus" column="lease_status" />
+		<result property="leaseAuditStatus" column="lease_audit_status" />
+		<result property="affirmStatus" column="affirm_status" />
+		<result property="productId" column="product_id" />
+		<result property="productName" column="product_name" />
+		<result property="rentalPrice" column="rental_price" />
+		<result property="depositPrice" column="deposit_price" />
+		<result property="productPrice" column="product_price" />
+		<result property="productNum" column="product_num" />
+		<result property="code" column="code" />
+		<result property="leaseStartTime" column="lease_start_time" />
+		<result property="leaseEndTime" column="lease_end_time" />
+		<result property="leaseRemarkUser" column="lease_remark_user" />
+		<result property="leaseRemarkC" column="lease_remark_c" />
+		<result property="leaseRemarkCUser" column="lease_remark_c_user" />
+		<result property="linkPhone" column="link_phone" />
+		<result property="userId" column="user_id" />
+		<result property="userName" column="user_name" />
+		<result property="userPhone" column="user_phone" />
+		<result property="cId" column="c_id" />
+		<result property="cName" column="c_name" />
+		<result property="askTime" column="ask_time" />
+		<result property="commitUserId" column="commit_user_id" />
+		<result property="commitUserName" column="commit_user_name" />
+		<result property="commitTime" column="commit_time" />
+		<result property="auditUserId" column="audit_user_id" />
+		<result property="auditUserName" column="audit_user_name" />
+		<result property="auditTime" column="audit_time" />
+		<result property="auditReason" column="audit_reason" />
+		<result property="cancelReasonUser" column="cancel_reason_user" />
+		<result property="cancelReasonC" column="cancel_reason_c" />
+		<result property="orderCode" column="order_code" />
+		<result property="merchantId" column="merchant_id" />
+		<result property="merchantName" column="merchant_name" />
+		<result property="platformId" column="platform_id" />
+		<result property="updateTime" column="update_time" />
+		<result property="createTime" column="create_time" />
+	</resultMap>
+
+	<sql id="soLeaseColumns">
+		id,
+		lease_code,
+		lease_status,
+		lease_audit_status,
+		affirm_status,
+		product_id,
+		product_name,
+		rental_price,
+		deposit_price,
+		product_price,
+		product_num,
+		code,
+		lease_start_time,
+		lease_end_time,
+		lease_remark_user,
+		lease_remark_c,
+		lease_remark_c_user,
+		link_phone,
+		user_id,
+		user_name,
+		user_phone,
+		c_id,
+		c_name,
+		ask_time,
+		commit_user_id,
+		commit_user_name,
+		commit_time,
+		audit_user_id,
+		audit_user_name,
+		audit_time,
+		audit_reason,
+		cancel_reason_user,
+		cancel_reason_c,
+		order_code,
+		merchant_id,
+		merchant_name,
+		platform_id,
+		update_time,
+		create_time
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.order.po.SoLeasePO" resultMap="soLeaseMap">
+		SELECT
+		<include refid="soLeaseColumns" />
+		FROM so_lease
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="soLeaseMap">
+		SELECT
+		<include refid="soLeaseColumns" />
+		FROM so_lease
+		<where>
+			<if test="po.leaseCode != null">
+				and lease_code = #{po.leaseCode}
+			</if>
+			<if test="po.leaseStatus != null">
+				and lease_status = #{po.leaseStatus}
+			</if>
+			<if test="po.leaseAuditStatus != null">
+				and lease_audit_status = #{po.leaseAuditStatus}
+			</if>
+			<if test="po.affirmStatus != null">
+				and affirm_status = #{po.affirmStatus}
+			</if>
+			<if test="po.productId != null">
+				and product_id = #{po.productId}
+			</if>
+			<if test="po.productName != null">
+				and product_name = #{po.productName}
+			</if>
+			<if test="po.rentalPrice != null">
+				and rental_price = #{po.rentalPrice}
+			</if>
+			<if test="po.depositPrice != null">
+				and deposit_price = #{po.depositPrice}
+			</if>
+			<if test="po.productPrice != null">
+				and product_price = #{po.productPrice}
+			</if>
+			<if test="po.productNum != null">
+				and product_num = #{po.productNum}
+			</if>
+			<if test="po.code != null">
+				and code = #{po.code}
+			</if>
+			<if test="po.leaseStartTime != null">
+				and lease_start_time = #{po.leaseStartTime}
+			</if>
+			<if test="po.leaseEndTime != null">
+				and lease_end_time = #{po.leaseEndTime}
+			</if>
+			<if test="po.leaseRemarkUser != null">
+				and lease_remark_user = #{po.leaseRemarkUser}
+			</if>
+			<if test="po.leaseRemarkC != null">
+				and lease_remark_c = #{po.leaseRemarkC}
+			</if>
+			<if test="po.leaseRemarkCUser != null">
+				and lease_remark_c_user = #{po.leaseRemarkCUser}
+			</if>
+			<if test="po.linkPhone != null">
+				and link_phone = #{po.linkPhone}
+			</if>
+			<if test="po.userId != null">
+				and user_id = #{po.userId}
+			</if>
+			<if test="po.userName != null">
+				and user_name = #{po.userName}
+			</if>
+			<if test="po.userPhone != null">
+				and user_phone = #{po.userPhone}
+			</if>
+			<if test="po.cId != null">
+				and c_id = #{po.cId}
+			</if>
+			<if test="po.cName != null">
+				and c_name = #{po.cName}
+			</if>
+			<if test="po.askTime != null">
+				and ask_time = #{po.askTime}
+			</if>
+			<if test="po.commitUserId != null">
+				and commit_user_id = #{po.commitUserId}
+			</if>
+			<if test="po.commitUserName != null">
+				and commit_user_name = #{po.commitUserName}
+			</if>
+			<if test="po.commitTime != null">
+				and commit_time = #{po.commitTime}
+			</if>
+			<if test="po.auditUserId != null">
+				and audit_user_id = #{po.auditUserId}
+			</if>
+			<if test="po.auditUserName != null">
+				and audit_user_name = #{po.auditUserName}
+			</if>
+			<if test="po.auditTime != null">
+				and audit_time = #{po.auditTime}
+			</if>
+			<if test="po.auditReason != null">
+				and audit_reason = #{po.auditReason}
+			</if>
+			<if test="po.cancelReasonUser != null">
+				and cancel_reason_user = #{po.cancelReasonUser}
+			</if>
+			<if test="po.cancelReasonC != null">
+				and cancel_reason_c = #{po.cancelReasonC}
+			</if>
+			<if test="po.orderCode != null">
+				and order_code = #{po.orderCode}
+			</if>
+			<if test="po.merchantId != null">
+				and merchant_id = #{po.merchantId}
+			</if>
+			<if test="po.merchantName != null">
+				and merchant_name = #{po.merchantName}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM so_lease
+		<where>
+			<if test="po.leaseCode != null">
+				and lease_code = #{po.leaseCode}
+			</if>
+			<if test="po.leaseStatus != null">
+				and lease_status = #{po.leaseStatus}
+			</if>
+			<if test="po.leaseAuditStatus != null">
+				and lease_audit_status = #{po.leaseAuditStatus}
+			</if>
+			<if test="po.affirmStatus != null">
+				and affirm_status = #{po.affirmStatus}
+			</if>
+			<if test="po.productId != null">
+				and product_id = #{po.productId}
+			</if>
+			<if test="po.productName != null">
+				and product_name = #{po.productName}
+			</if>
+			<if test="po.rentalPrice != null">
+				and rental_price = #{po.rentalPrice}
+			</if>
+			<if test="po.depositPrice != null">
+				and deposit_price = #{po.depositPrice}
+			</if>
+			<if test="po.productPrice != null">
+				and product_price = #{po.productPrice}
+			</if>
+			<if test="po.productNum != null">
+				and product_num = #{po.productNum}
+			</if>
+			<if test="po.code != null">
+				and code = #{po.code}
+			</if>
+			<if test="po.leaseStartTime != null">
+				and lease_start_time = #{po.leaseStartTime}
+			</if>
+			<if test="po.leaseEndTime != null">
+				and lease_end_time = #{po.leaseEndTime}
+			</if>
+			<if test="po.leaseRemarkUser != null">
+				and lease_remark_user = #{po.leaseRemarkUser}
+			</if>
+			<if test="po.leaseRemarkC != null">
+				and lease_remark_c = #{po.leaseRemarkC}
+			</if>
+			<if test="po.leaseRemarkCUser != null">
+				and lease_remark_c_user = #{po.leaseRemarkCUser}
+			</if>
+			<if test="po.linkPhone != null">
+				and link_phone = #{po.linkPhone}
+			</if>
+			<if test="po.userId != null">
+				and user_id = #{po.userId}
+			</if>
+			<if test="po.userName != null">
+				and user_name = #{po.userName}
+			</if>
+			<if test="po.userPhone != null">
+				and user_phone = #{po.userPhone}
+			</if>
+			<if test="po.cId != null">
+				and c_id = #{po.cId}
+			</if>
+			<if test="po.cName != null">
+				and c_name = #{po.cName}
+			</if>
+			<if test="po.askTime != null">
+				and ask_time = #{po.askTime}
+			</if>
+			<if test="po.commitUserId != null">
+				and commit_user_id = #{po.commitUserId}
+			</if>
+			<if test="po.commitUserName != null">
+				and commit_user_name = #{po.commitUserName}
+			</if>
+			<if test="po.commitTime != null">
+				and commit_time = #{po.commitTime}
+			</if>
+			<if test="po.auditUserId != null">
+				and audit_user_id = #{po.auditUserId}
+			</if>
+			<if test="po.auditUserName != null">
+				and audit_user_name = #{po.auditUserName}
+			</if>
+			<if test="po.auditTime != null">
+				and audit_time = #{po.auditTime}
+			</if>
+			<if test="po.auditReason != null">
+				and audit_reason = #{po.auditReason}
+			</if>
+			<if test="po.cancelReasonUser != null">
+				and cancel_reason_user = #{po.cancelReasonUser}
+			</if>
+			<if test="po.cancelReasonC != null">
+				and cancel_reason_c = #{po.cancelReasonC}
+			</if>
+			<if test="po.orderCode != null">
+				and order_code = #{po.orderCode}
+			</if>
+			<if test="po.merchantId != null">
+				and merchant_id = #{po.merchantId}
+			</if>
+			<if test="po.merchantName != null">
+				and merchant_name = #{po.merchantName}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="soLeaseMap">
+		SELECT
+		<include refid="soLeaseColumns" />
+		FROM so_lease
+		<where>
+			<if test="po.leaseCode != null">
+				and lease_code = #{po.leaseCode}
+			</if>
+			<if test="po.leaseStatus != null">
+				and lease_status = #{po.leaseStatus}
+			</if>
+			<if test="po.leaseAuditStatus != null">
+				and lease_audit_status = #{po.leaseAuditStatus}
+			</if>
+			<if test="po.affirmStatus != null">
+				and affirm_status = #{po.affirmStatus}
+			</if>
+			<if test="po.productId != null">
+				and product_id = #{po.productId}
+			</if>
+			<if test="po.productName != null">
+				and product_name = #{po.productName}
+			</if>
+			<if test="po.rentalPrice != null">
+				and rental_price = #{po.rentalPrice}
+			</if>
+			<if test="po.depositPrice != null">
+				and deposit_price = #{po.depositPrice}
+			</if>
+			<if test="po.productPrice != null">
+				and product_price = #{po.productPrice}
+			</if>
+			<if test="po.productNum != null">
+				and product_num = #{po.productNum}
+			</if>
+			<if test="po.code != null">
+				and code = #{po.code}
+			</if>
+			<if test="po.leaseStartTime != null">
+				and lease_start_time = #{po.leaseStartTime}
+			</if>
+			<if test="po.leaseEndTime != null">
+				and lease_end_time = #{po.leaseEndTime}
+			</if>
+			<if test="po.leaseRemarkUser != null">
+				and lease_remark_user = #{po.leaseRemarkUser}
+			</if>
+			<if test="po.leaseRemarkC != null">
+				and lease_remark_c = #{po.leaseRemarkC}
+			</if>
+			<if test="po.leaseRemarkCUser != null">
+				and lease_remark_c_user = #{po.leaseRemarkCUser}
+			</if>
+			<if test="po.linkPhone != null">
+				and link_phone = #{po.linkPhone}
+			</if>
+			<if test="po.userId != null">
+				and user_id = #{po.userId}
+			</if>
+			<if test="po.userName != null">
+				and user_name = #{po.userName}
+			</if>
+			<if test="po.userPhone != null">
+				and user_phone = #{po.userPhone}
+			</if>
+			<if test="po.cId != null">
+				and c_id = #{po.cId}
+			</if>
+			<if test="po.cName != null">
+				and c_name = #{po.cName}
+			</if>
+			<if test="po.askTime != null">
+				and ask_time = #{po.askTime}
+			</if>
+			<if test="po.commitUserId != null">
+				and commit_user_id = #{po.commitUserId}
+			</if>
+			<if test="po.commitUserName != null">
+				and commit_user_name = #{po.commitUserName}
+			</if>
+			<if test="po.commitTime != null">
+				and commit_time = #{po.commitTime}
+			</if>
+			<if test="po.auditUserId != null">
+				and audit_user_id = #{po.auditUserId}
+			</if>
+			<if test="po.auditUserName != null">
+				and audit_user_name = #{po.auditUserName}
+			</if>
+			<if test="po.auditTime != null">
+				and audit_time = #{po.auditTime}
+			</if>
+			<if test="po.auditReason != null">
+				and audit_reason = #{po.auditReason}
+			</if>
+			<if test="po.cancelReasonUser != null">
+				and cancel_reason_user = #{po.cancelReasonUser}
+			</if>
+			<if test="po.cancelReasonC != null">
+				and cancel_reason_c = #{po.cancelReasonC}
+			</if>
+			<if test="po.orderCode != null">
+				and order_code = #{po.orderCode}
+			</if>
+			<if test="po.merchantId != null">
+				and merchant_id = #{po.merchantId}
+			</if>
+			<if test="po.merchantName != null">
+				and merchant_name = #{po.merchantName}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+</mapper>
+	

@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.finance.dao.write.UserAccountWriteDAO">
+	
+	<update id="clearUserAccount">
+		update user_account
+		set balance=balance-balance,
+		ciphertext=md5(concat((balance),#{salt}))
+		where id=#{id}
+	</update>
+	
+	<update id="updateUserAccountDisabled">
+		update user_account
+		set disabled=#{disabled}
+		where user_id=#{userId}
+	</update>
+	
+	<update id="batchUpdateUserAccountDisabled">
+		<foreach collection="ids" item="id" separator=";">
+			update user_account
+			set disabled=#{disabled}
+			where user_id=#{id}
+		</foreach>
+	</update>
+
+	<update id="batchIncreaseUserAccount" parameterType="com.egeo.components.finance.po.AccountUpdatePO">
+		<foreach collection="aus" item="au" separator=";" close=";">
+			update
+			user_account
+			set balance=balance+#{au.sum},
+			ciphertext=#{au.cipher}
+			<if test="isRecharge">
+				,last_recharge_time=CURRENT_TIMESTAMP()
+			</if>
+			where id=#{au.id}
+		</foreach>
+	</update>
+
+	<update id="increaseUserAccount">
+		update
+		user_account
+		set balance=balance+#{sum},
+		ciphertext=md5(concat(balance,#{salt}))
+		<if test="isRecharge">
+			,last_recharge_time=CURRENT_TIMESTAMP()
+		</if>
+		where id=#{id}
+	</update>
+
+	<insert id="insert" parameterType="com.egeo.components.finance.po.UserAccountPO">
+		INSERT INTO user_account(
+		<trim suffixOverrides=",">
+			<if test="name != null">
+				name,
+			</if>
+			<if test="type != null">
+				type,
+			</if>
+			<if test="balance != null">
+				balance,
+			</if>
+			<if test="disabled != null">
+				disabled,
+			</if>
+			<if test="lastRechargeTime != null">
+				last_recharge_time,
+			</if>
+			<if test="uuid != null">
+				uuid,
+			</if>
+			<if test="ciphertext != null">
+				ciphertext,
+			</if>
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="platformId != null">
+				platform_id,
+			</if>
+			<if test="beforeDisableBalance != null">
+				before_disabled_balance,
+			</if>
+		</trim>
+		) VALUES (
+		<trim suffixOverrides=",">
+			<if test="name != null">
+				#{name},
+			</if>
+			<if test="type != null">
+				#{type},
+			</if>
+			<if test="balance != null">
+				#{balance},
+			</if>
+			<if test="disabled != null">
+				#{disabled},
+			</if>
+			<if test="lastRechargeTime != null">
+				#{lastRechargeTime},
+			</if>
+			<if test="uuid != null">
+				#{uuid},
+			</if>
+			<if test="ciphertext != null">
+				#{ciphertext},
+			</if>
+			<if test="userId != null">
+				#{userId},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
+			</if>
+			<if test="platformId != null">
+				#{platformId},
+			</if>
+			<if test="beforeDisableBalance != null">
+				#{po.beforeDisableBalance},
+			</if>
+		</trim>
+		)
+		<selectKey keyProperty="id" resultType="java.lang.Long">
+			select
+			LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+
+
+
+	<update id="update">
+		UPDATE user_account
+		<set>
+			<if test="name != null">
+				name = #{name},
+			</if>
+			<if test="type != null">
+				type = #{type},
+			</if>
+			<if test="balance != null">
+				balance = #{balance},
+			</if>
+			<if test="disabled != null">
+				disabled = #{disabled},
+			</if>
+			<if test="lastRechargeTime != null">
+				last_recharge_time = #{lastRechargeTime},
+			</if>
+			<if test="uuid != null">
+				uuid = #{uuid},
+			</if>
+			<if test="ciphertext != null">
+				ciphertext = #{ciphertext},
+			</if>
+			<if test="userId != null">
+				user_id = #{userId},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>
+			<if test="platformId != null">
+				platform_id = #{platformId},
+			</if>
+			<if test="beforeDisableBalance != null">
+				before_disabled_balance = #{beforeDisableBalance},
+			</if>
+		</set>
+		WHERE id = #{id}
+	</update>
+
+
+	<delete id="delete">
+		delete from user_account where id = #{id}
+	</delete>
+
+	<delete id="deleteByPara">
+		delete from user_account
+		<where>
+			<if test="name != null">
+				and name = #{name}
+			</if>
+			<if test="type != null">
+				and type = #{type}
+			</if>
+			<if test="balance != null">
+				and balance = #{balance}
+			</if>
+			<if test="disabled != null">
+				and disabled = #{disabled}
+			</if>
+			<if test="lastRechargeTime != null">
+				and last_recharge_time = #{lastRechargeTime}
+			</if>
+			<if test="uuid != null">
+				and uuid = #{uuid}
+			</if>
+			<if test="ciphertext != null">
+				and ciphertext = #{ciphertext}
+			</if>
+			<if test="userId != null">
+				and user_id = #{userId}
+			</if>
+			<if test="createTime != null">
+				and create_time = #{createTime}
+			</if>
+			<if test="updateTime != null">
+				and update_time = #{updateTime}
+			</if>
+			<if test="platformId != null">
+				and platform_id = #{platformId}
+			</if>
+			<if test="beforeDisableBalance != null">
+				and before_disabled_balance = #{beforeDisableBalance}
+			</if>
+		</where>
+	</delete>
+
+	<update id="updateBeforeDisableBalanceWithTx">
+		UPDATE user_account
+		SET before_disabled_balance = 0.00
+		WHERE user_id = #{userId}
+	</update>
+
+
+	<update id="updateAccountNameByUserId">
+
+			update user_account
+			set name=#{mail}
+			where user_id=#{id}
+
+	</update>
+</mapper>
+	

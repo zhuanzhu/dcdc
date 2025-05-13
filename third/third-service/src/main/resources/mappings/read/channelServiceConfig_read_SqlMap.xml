@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.third.dao.read.ChannelServiceConfigReadDAO">
+
+	<resultMap type="com.egeo.components.third.po.ChannelServiceConfigPO" id="channelServiceConfigMap">
+		<result property="id" column="id" />
+		<result property="channelCode" column="channel_code" />
+		<result property="channelServiceName" column="channel_service_name" />
+		<result property="channelServiceType" column="channel_service_type" />
+		<result property="channelServiceMethod" column="channel_service_method" />
+		<result property="channelServiceUrl" column="channel_service_url" />
+		<result property="ifEncrypted" column="if_encrypted" />
+		<result property="ifDecrypt" column="if_decrypt" />
+		<result property="encryptType" column="encrypt_type" />
+		<result property="state" column="state" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="ifLog" column="if_log" />
+	</resultMap>
+
+	<sql id="channelServiceConfigColumns">
+		id,
+		channel_code,
+		channel_service_name,
+		channel_service_type,
+		channel_service_method,
+		channel_service_url,
+		if_encrypted,
+		if_decrypt,
+		encrypt_type,
+		state,
+		create_time,
+		update_time,
+		if_log
+	</sql>
+
+
+	<sql id="whereSql">
+		<where>
+			<if test="po.id != null">
+				and id =  #{po.id}
+			</if>
+			<if test="po.channelCode != null">
+				and channel_code = #{po.channelCode}
+			</if>
+			<if test="po.channelServiceName != null">
+				and channel_service_name = #{po.channelServiceName}
+			</if>
+			<if test="po.channelServiceType != null">
+				and channel_service_type = #{po.channelServiceType}
+			</if>
+			<if test="po.channelServiceMethod != null">
+				and channel_service_method = #{po.channelServiceMethod}
+			</if>
+			<if test="po.channelServiceUrl != null">
+				and channel_service_url = #{po.channelServiceUrl}
+			</if>
+			<if test="po.ifEncrypted != null">
+				and if_encrypted = #{po.ifEncrypted}
+			</if>
+			<if test="po.ifDecrypt != null">
+				and if_decrypt = #{po.ifDecrypt}
+			</if>
+			<if test="po.encryptType != null">
+				and encrypt_type = #{po.encryptType}
+			</if>
+			<if test="po.state != null">
+				and state = #{po.state}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+	</sql>
+
+	<sql id="inClause">
+		in
+		<foreach collection="ids" item="id" open="(" separator=","
+				 close=")">
+			#{id}
+		</foreach>
+	</sql>
+
+	<sql id="tableNameId">
+		channel_service_config
+	</sql>
+
+<!--		<select id="findByIds" resultMap="channelServiceConfigMap">-->
+<!--			select * from channel_service_config-->
+<!--			where id -->
+<!--			<include refid="inClause" />-->
+<!--		</select>-->
+
+	<select id="findById" parameterType="com.egeo.components.third.po.ChannelServiceConfigPO" resultMap="channelServiceConfigMap">
+		SELECT
+		<include refid="channelServiceConfigColumns" />
+		FROM
+		<include refid="tableNameId" />
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="channelServiceConfigMap">
+		SELECT
+			<include refid="channelServiceConfigColumns" />
+		FROM
+			<include refid="tableNameId" />
+			<include refid="whereSql"/>
+			<choose>
+				<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+					ORDER BY ${page.orderBy}
+				</when>
+				<otherwise>
+					ORDER BY id desc
+				</otherwise>
+			</choose>
+			<if test="page != null">
+			limit #{page.limitStart},#{page.pageSize}
+			</if>
+	</select>
+
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+			count(1) cnt
+		FROM
+			<include refid="tableNameId" />
+			<include refid="whereSql"/>
+	</select>
+
+	<select id="findAll" resultMap="channelServiceConfigMap">
+		SELECT
+		<include refid="channelServiceConfigColumns" />
+		FROM
+		<include refid="tableNameId" />
+		<include refid="whereSql"/>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY id desc
+			</otherwise>
+		</choose>
+	</select>
+</mapper>

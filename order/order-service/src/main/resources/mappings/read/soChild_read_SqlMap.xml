@@ -1,0 +1,870 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.order.dao.read.SoChildReadDAO">
+
+	<select id="querySoChildByChildCode" resultMap="soChildMap">
+		select * from so_child
+		where child_code=#{childCode}
+	</select>
+
+	<resultMap type="com.egeo.components.order.po.SoChildPO" id="soChildMap">
+		<result property="id" column="id" />
+		<result property="childCode" column="child_code" />
+		<result property="ordinaryId" column="ordinary_id" />
+		<result property="depotId" column="depot_id" />
+		<result property="soId" column="so_id" />
+		<result property="amount" column="amount" />
+		<result property="source" column="source" />
+		<result property="deliveryId" column="delivery_id" />
+		<result property="refundAmount" column="refund_amount" />
+		<result property="refundType" column="refund_type" />
+		<result property="modifyAddressTime" column="modify_address_time" />
+		<result property="modifiedAddress" column="modified_address" />
+		<result property="receiverAddressId" column="receiver_address_id" />
+		<result property="deliveryStatus" column="delivery_status" />
+		<result property="performingParty" column="performing_party" />
+		<result property="invoiceId" column="invoice_id" />
+		<result property="invoiceAmount" column="invoice_amount" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="lastOperatorId" column="last_operator_id" />
+		<result property="lastOperateTime" column="last_operate_time" />
+		<result property="remark" column="remark" />
+		<result property="platformId" column="platform_id" />
+		<result property="thirdpartyType" column="thirdparty_type" />
+		<result property="preSell" column="pre_sell" />
+		<result property="deliverEndTime" column="deliver_end_time" />
+		<result property="deliveryFee" column="delivery_fee" />
+		<result property="needCountDeliveryFee" column="need_count_delivery_fee" />
+		<result property="productAmount" column="product_amount" />
+		<result property="deliveryFeeDiscount" column="delivery_fee_discount" />
+		<result property="couponDiscount" column="coupon_discount" />
+		<result property="supplierId" column="supplier_id" />
+		<result property="storeDiscount" column="store_discount" />
+		<result property="couponId" column="coupon_id" />
+		<result property="deliveryCouponId" column="delivery_coupon_id" />
+		<result property="ordinaryDeliveryFee" column="ordinary_delivery_fee" />
+		<result property="thirdpartySoChildId" column="thirdparty_so_child_id" />
+		<result property="thirdpartySoChildStatus" column="thirdparty_so_child_status" />
+		<result property="thirdpartySoChildPayAmount" column="thirdparty_so_child_pay_amount" />
+		<result property="thirdpartySoChildCode" column="thirdparty_so_child_code" />
+		<result property="thirdpatyDiscountAmount" column="thirdpaty_discount_amount" />
+		<result property="refundDeliveryFee" column="refund_delivery_fee"/>
+		<result property="ext" column="ext"/>
+		<result property="cancelStatus" column="cancel_status"/>
+		<result property="childDeleteStatus" column="child_delete_status"/>
+	</resultMap>
+
+	<resultMap type="com.egeo.components.order.condition.SoChildCondition" id="soChildConditionMap" extends="soChildMap">
+		<result property="orderStatus" column="order_status" />
+		<result property="orderCode" column="order_code" />
+		<result property="orderPaymentConfirmDate" column="order_payment_confirm_date" />
+		<result property="goodReceiverName" column="good_receiver_name" />
+		<result property="goodReceiverMobile" column="good_receiver_mobile" />
+		<result property="goodReceiverPhone" column="good_receiver_phone" />
+		<result property="discount" column="discount" />
+		<result property="orderCode" column="order_code" />
+		<result property="userId" column="user_id" />
+		<result property="orderStatus" column="order_status" />
+		<result property="orderConfirmStatus" column="order_confirm_status" />
+		<result property="orderPayStatus" column="order_pay_status" />
+	</resultMap>
+
+	<sql id="soChildColumns">
+		id,
+		ordinary_id,
+		depot_id,
+		so_id,
+		amount,
+		source,
+		delivery_id,
+		refund_amount,
+		refund_type,
+		modify_address_time,
+		modified_address,
+		receiver_address_id,
+		delivery_status,
+		performing_party,
+		invoice_id,
+		invoice_amount,
+		create_time,
+		update_time,
+		last_operator_id,
+		remark,
+		platform_id,
+		child_code,
+		last_operate_time,
+		thirdparty_type,
+		pre_sell,
+		deliver_end_time,
+		delivery_fee,
+		need_count_delivery_fee,
+		product_amount,
+		delivery_fee_discount,
+		coupon_discount,
+		store_discount,
+		coupon_id,
+		delivery_coupon_id,
+		ordinary_delivery_fee,thirdparty_so_child_id,thirdparty_so_child_code,
+		thirdparty_so_child_status,
+		thirdparty_so_child_pay_amount,
+		supplier_id,
+		  thirdpaty_discount_amount,refund_delivery_fee,ext,cancel_status,
+		child_delete_status
+	</sql>
+	<select id="getSoChildAllListByPage" resultMap="soChildMap">
+		SELECT
+		a.id,
+		a.ordinary_id,
+		a.depot_id,
+		a.so_id,
+		a.amount,
+		a.source,
+		a.delivery_id,
+		a.refund_amount,
+		a.refund_type,
+		a.modify_address_time,
+		a.modified_address,
+		a.receiver_address_id,
+		a.delivery_status,
+		a.performing_party,
+		a.invoice_id,
+		a.invoice_amount,
+		a.create_time,
+		a.update_time,
+		a.last_operator_id,
+		a.remark,
+		a.platform_id,
+		a.child_code,
+		a.last_operate_time,
+		a.thirdparty_type,
+		a.pre_sell,
+		a.deliver_end_time,
+		a.delivery_fee,
+		a.need_count_delivery_fee,
+		a.product_amount,
+		a.delivery_fee_discount,
+		a.coupon_discount,
+		a.store_discount,
+		a.coupon_id,
+		a.delivery_coupon_id,
+		a.ordinary_delivery_fee,
+		a.thirdparty_so_child_id,a.thirdparty_so_child_code,
+		a.thirdparty_so_child_status,
+		a.supplier_id,a.thirdpaty_discount_amount,a.refund_delivery_fee,a.ext,a.cancel_status,
+		a.child_delete_status
+		<!--<include refid="soChildColumns" />-->
+		FROM so_child AS a LEFT JOIN so AS  b
+		ON a.so_id=b.id
+		<where>
+			<if test="merchantId!=null">
+				AND a.performing_party=#{merchantId}
+			</if>
+			<if test="storeId!=null">
+				and b.store_id=#{storeId}
+			</if>
+			<if test="soChildCode!=null">
+				and a.child_code like concat ('%',#{soChildCode},'%')
+			</if>
+			<if test="userIds!=null">
+				and b.user_id in
+				<foreach collection="userIds" item="userId" open="(" close=")" separator=",">
+					#{userId}
+				</foreach>
+			</if>
+			<if test="puIds!=null and puIds.size > 0">
+				and b.id in (select distinct(so_id) from so_item where pu_id in (
+				<foreach collection="puIds" item="puid" separator=",">
+					#{puid}
+				</foreach>
+				))
+			</if>
+			<if test="soCreateTimeStart">
+				AND b.create_time>=#{soCreateTimeStart}
+			</if>
+			<if test="soCreateTimeEnd">
+				AND  #{soCreateTimeEnd}>= b.create_time
+			</if>
+			<if test="soType!=null">
+					AND b.sale_way=#{soType}
+			</if>
+			<if test="soChildDeliveryStatus!=null">
+				AND a.delivery_status=#{soChildDeliveryStatus}
+			</if>
+			<if test="orderPayStatus!=null">
+				<choose>
+					<when test="orderPayStatus==1">
+						AND b.order_pay_status=#{orderPayStatus}
+						and a.cancel_status=0
+					</when>
+					<when test="orderPayStatus==2">
+						AND (b.order_pay_status=#{orderPayStatus}
+						or a.cancel_status=1)
+					</when>
+					<otherwise>
+						AND b.order_pay_status=#{orderPayStatus}
+					</otherwise>
+				</choose>
+			</if>
+			<if test="supplierId!=null">
+				AND a.supplier_id=#{supplierId}
+			</if>
+			<if test="soConfirmStatus!=null">
+				AND b.order_confirm_status=#{soConfirmStatus}
+			</if>
+			<if test="sendTimeStart!=null">
+				AND a.deliver_end_time <![CDATA[>=]]> #{sendTimeStart}
+			</if>
+			<if test="sendTimeEnd!=null">
+				AND a.deliver_end_time <![CDATA[<=]]> #{sendTimeEnd}
+			</if>
+			<if test="!showTest">
+				<if test="testCompanyIds!=null">
+					and b.company_id not in
+					<foreach collection="testCompanyIds" item="companyId" open="(" close=")" separator=",">
+						#{companyId}
+					</foreach>
+				</if>
+			</if>
+			<if test="platformId">
+				AND a.platform_id=#{platformId}
+			</if>
+			<if test="auditStatus !=null">
+				AND b.audit_status=#{auditStatus}
+			</if>
+		</where>
+		<choose>
+			<when
+					test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.id desc
+			</otherwise>
+		</choose>
+		<if test="page != null">
+			limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+
+	<select id="getSoChildAllListTotalCount" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM so_child AS a LEFT JOIN so AS  b
+		ON a.so_id=b.id
+		<where>
+			<if test="merchantId!=null">
+				AND a.performing_party=#{merchantId}
+			</if>
+			<if test="storeId!=null">
+				and b.store_id=#{storeId}
+			</if>
+			<if test="soChildCode!=null">
+				and a.child_code like concat ('%',#{soChildCode},'%')
+			</if>
+			<if test="userIds!=null">
+				and b.user_id in
+				<foreach collection="userIds" item="userId" open="(" close=")" separator=",">
+					#{userId}
+				</foreach>
+			</if>
+			<if test="puIds!=null and puIds.size > 0">
+				and b.id in (select distinct(so_id) from so_item where pu_id in (
+				<foreach collection="puIds" item="puid" separator=",">
+					#{puid}
+				</foreach>
+				))
+			</if>
+			<if test="soCreateTimeStart">
+				AND b.create_time>=#{soCreateTimeStart}
+			</if>
+			<if test="soCreateTimeEnd">
+				AND  #{soCreateTimeEnd}>= b.create_time
+			</if>
+			<if test="soType!=null">
+
+
+					AND b.sale_way=#{soType}
+
+			</if>
+			<if test="soChildDeliveryStatus!=null">
+				AND a.delivery_status=#{soChildDeliveryStatus}
+			</if>
+			<if test="supplierId!=null">
+				AND a.supplier_id=#{supplierId}
+			</if>
+			<if test="orderPayStatus!=null">
+		       <choose>
+				   <when test="orderPayStatus==1">
+					AND b.order_pay_status=#{orderPayStatus}
+		       		and a.cancel_status=0
+				   </when>
+				   <when test="orderPayStatus==2">
+					   AND (b.order_pay_status=#{orderPayStatus}
+					   or a.cancel_status=1)
+				   </when>
+		       		<otherwise>
+						AND b.order_pay_status=#{orderPayStatus}
+					</otherwise>
+			   </choose>
+			</if>
+			<if test="soConfirmStatus!=null">
+				AND b.order_confirm_status=#{soConfirmStatus}
+			</if>
+			<if test="sendTimeStart!=null">
+				AND a.deliver_end_time <![CDATA[>=]]> #{sendTimeStart}
+			</if>
+			<if test="sendTimeEnd!=null">
+				AND a.deliver_end_time <![CDATA[<=]]> #{sendTimeEnd}
+			</if>
+			<if test="!showTest">
+				<if test="testCompanyIds!=null">
+					and b.company_id not in
+					<foreach collection="testCompanyIds" item="companyId" open="(" close=")" separator=",">
+						#{companyId}
+					</foreach>
+				</if>
+			</if>
+			<if test="platformId">
+				AND a.platform_id=#{platformId}
+			</if>
+			<if test="auditStatus !=null">
+				AND b.audit_status=#{auditStatus}
+			</if>
+		</where>
+	</select>
+
+
+
+
+
+
+	<select id="findById" parameterType="com.egeo.components.order.po.SoChildPO"
+		resultMap="soChildMap">
+		SELECT
+		<include refid="soChildColumns" />
+		FROM so_child
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="soChildMap">
+		SELECT
+		<include refid="soChildColumns" />
+		FROM so_child
+		<where>
+			<if test="po.childCode != null">
+				and child_code = #{po.childCode}
+			</if>
+			<if test="po.ordinaryId != null">
+				and ordinary_id = #{po.ordinaryId}
+			</if>
+			<if test="po.depotId != null">
+				and depot_id = #{po.depotId}
+			</if>
+			<if test="po.soId != null">
+				and so_id = #{po.soId}
+			</if>
+			<if test="po.amount != null">
+				and amount = #{po.amount}
+			</if>
+			<if test="po.deliveryId != null">
+				and delivery_id = #{po.deliveryId}
+			</if>
+			<if test="po.refundAmount != null">
+				and refund_amount = #{po.refundAmount}
+			</if>
+			<if test="po.refundType != null">
+				and refund_type = #{po.refundType}
+			</if>
+			<if test="po.modifyAddressTime != null">
+				and modify_address_time = #{po.modifyAddressTime}
+			</if>
+			<if test="po.modifiedAddress != null">
+				and modified_address = #{po.modifiedAddress}
+			</if>
+			<if test="po.receiverAddressId != null">
+				and receiver_address_id = #{po.receiverAddressId}
+			</if>
+			<if test="po.deliveryStatus != null">
+				and delivery_status = #{po.deliveryStatus}
+			</if>
+			<if test="po.performingParty != null">
+				and performing_party = #{po.performingParty}
+			</if>
+			<if test="po.invoiceId != null">
+				and invoice_id = #{po.invoiceId}
+			</if>
+			<if test="po.invoiceAmount != null">
+				and invoice_amount = #{po.invoiceAmount}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.lastOperatorId != null">
+				and last_operator_id = #{po.lastOperatorId}
+			</if>
+			<if test="po.remark != null">
+				and remark = #{po.remark}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.lastOperateTime != null">
+				and last_operate_time = #{po.lastOperateTime}
+			</if>
+			<if test="po.thirdpartyType != null">
+				and thirdparty_type = #{po.thirdpartyType}
+			</if>
+			<if test="po.preSell != null">
+				and pre_sell = #{po.preSell}
+			</if>
+			<if test="po.cancelStatus !=null">
+				and cancel_status=#{po.cancelStatus}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY id desc
+			</otherwise>
+		</choose>
+		<if test="page != null">
+			limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM so_child
+		<where>
+			<if test="po.childCode != null">
+				and child_code = #{po.childCode}
+			</if>
+			<if test="po.ordinaryId != null">
+				and ordinary_id = #{po.ordinaryId}
+			</if>
+			<if test="po.depotId != null">
+				and depot_id = #{po.depotId}
+			</if>
+			<if test="po.soId != null">
+				and so_id = #{po.soId}
+			</if>
+			<if test="po.amount != null">
+				and amount = #{po.amount}
+			</if>
+			<if test="po.deliveryId != null">
+				and delivery_id = #{po.deliveryId}
+			</if>
+			<if test="po.refundAmount != null">
+				and refund_amount = #{po.refundAmount}
+			</if>
+			<if test="po.refundType != null">
+				and refund_type = #{po.refundType}
+			</if>
+			<if test="po.modifyAddressTime != null">
+				and modify_address_time = #{po.modifyAddressTime}
+			</if>
+			<if test="po.modifiedAddress != null">
+				and modified_address = #{po.modifiedAddress}
+			</if>
+			<if test="po.receiverAddressId != null">
+				and receiver_address_id = #{po.receiverAddressId}
+			</if>
+			<if test="po.deliveryStatus != null">
+				and delivery_status = #{po.deliveryStatus}
+			</if>
+			<if test="po.performingParty != null">
+				and performing_party = #{po.performingParty}
+			</if>
+			<if test="po.invoiceId != null">
+				and invoice_id = #{po.invoiceId}
+			</if>
+			<if test="po.invoiceAmount != null">
+				and invoice_amount = #{po.invoiceAmount}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.lastOperatorId != null">
+				and last_operator_id = #{po.lastOperatorId}
+			</if>
+			<if test="po.remark != null">
+				and remark = #{po.remark}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.lastOperateTime != null">
+				and last_operate_time = #{po.lastOperateTime}
+			</if>
+			<if test="po.thirdpartyType != null">
+				and thirdparty_type = #{po.thirdpartyType}
+			</if>
+			<if test="po.preSell != null">
+				and pre_sell = #{po.preSell}
+			</if>
+			<if test="po.cancelStatus !=null">
+				and cancel_status=#{po.cancelStatus}
+			</if>
+		</where>
+	</select>
+
+	<select id="findAll" resultMap="soChildMap">
+		SELECT
+		<include refid="soChildColumns" />
+		FROM so_child
+		<where>
+			<if test="po.childCode != null">
+				and child_code = #{po.childCode}
+			</if>
+			<if test="po.ordinaryId != null">
+				and ordinary_id = #{po.ordinaryId}
+			</if>
+			<if test="po.depotId != null">
+				and depot_id = #{po.depotId}
+			</if>
+			<if test="po.soId != null">
+				and so_id = #{po.soId}
+			</if>
+			<if test="po.amount != null">
+				and amount = #{po.amount}
+			</if>
+			<if test="po.deliveryId != null">
+				and delivery_id = #{po.deliveryId}
+			</if>
+			<if test="po.refundAmount != null">
+				and refund_amount = #{po.refundAmount}
+			</if>
+			<if test="po.refundType != null">
+				and refund_type = #{po.refundType}
+			</if>
+			<if test="po.modifyAddressTime != null">
+				and modify_address_time = #{po.modifyAddressTime}
+			</if>
+			<if test="po.modifiedAddress != null">
+				and modified_address = #{po.modifiedAddress}
+			</if>
+			<if test="po.receiverAddressId != null">
+				and receiver_address_id = #{po.receiverAddressId}
+			</if>
+			<if test="po.deliveryStatus != null">
+				and delivery_status = #{po.deliveryStatus}
+			</if>
+			<if test="po.performingParty != null">
+				and performing_party = #{po.performingParty}
+			</if>
+			<if test="po.invoiceId != null">
+				and invoice_id = #{po.invoiceId}
+			</if>
+			<if test="po.invoiceAmount != null">
+				and invoice_amount = #{po.invoiceAmount}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.lastOperatorId != null">
+				and last_operator_id = #{po.lastOperatorId}
+			</if>
+			<if test="po.remark != null">
+				and remark = #{po.remark}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.lastOperateTime != null">
+				and last_operate_time = #{po.lastOperateTime}
+			</if>
+			<if test="po.thirdpartyType != null">
+				and thirdparty_type = #{po.thirdpartyType}
+			</if>
+			<if test="po.preSell != null">
+				and pre_sell = #{po.preSell}
+			</if>
+			<if test="po.needCountDeliveryFee != null">
+				and need_count_delivery_fee = #{po.needCountDeliveryFee}
+			</if>
+			<if test="po.thirdpartySoChildId!= null">
+				and thirdparty_so_child_id = #{po.thirdpartySoChildId}
+			</if>
+			<if test="po.supplierId!= null">
+				and supplier_id = #{po.supplierId}
+			</if>
+			<if test="po.cancelStatus !=null">
+				and cancel_status=#{po.cancelStatus}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY id desc
+			</otherwise>
+		</choose>
+	</select>
+
+	<select id="findSoChildByCondition" resultMap="soChildMap">
+		SELECT
+		<include refid="soChildColumns" />
+		FROM so_child
+		<where>
+			<if test="soChildId != null">
+				and id in
+				<foreach collection="soChildId" item="id" open="("
+					separator="," close=")">
+					#{id}
+				</foreach>
+			</if>
+			<if test="platformId != null">
+				and platform_id = #{platformId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY id desc
+			</otherwise>
+		</choose>
+	</select>
+	<select id="findSoChildIdByThirdpartyCode" resultType="java.lang.Long">
+		SELECT
+		id
+		FROM so_child
+		<where>
+
+			thirdparty_so_child_code = #{thirdpartyCode}
+
+		</where>
+
+	</select>
+	<select id="findSoChildIdByThirdpartyId" resultType="java.lang.Long">
+		SELECT
+		id
+		FROM so_child
+		<where>
+
+				thirdparty_so_child_id = #{jdOrderId}
+
+		</where>
+
+	</select>
+
+	<select id="findMerchantChildOrderOfPage" resultMap="soChildConditionMap">
+		SELECT
+		sc.id,
+		sc.child_code,
+		sc.create_time,
+		sc.remark,
+		sc.invoice_id,
+		sc.receiver_address_id,
+		so.order_status,
+		sc.cancel_status,
+		sc.child_delete_status
+		FROM so_child sc, so
+		<where>
+			sc.so_id = so.id and sc.delivery_status=0
+			and sc.performing_party = #{po.performingParty}
+			<if test="po.orderStatus != null">
+				and so.order_status = #{po.orderStatus}
+			</if>
+			<if test="po.childCode != null">
+				and sc.child_code = #{po.childCode}
+			</if>
+			<if test="po.createTimeStart != null">
+				and sc.create_time &gt; #{po.createTimeStart}
+			</if>
+			<if test="po.createTimeEnd != null">
+				and sc.create_time &lt; #{po.createTimeEnd}
+			</if>
+			<if test="po.updateTimeStart != null">
+				and sc.update_time &gt; #{po.updateTimeStart}
+			</if>
+			<if test="po.updateTimeEnd != null">
+				and sc.update_time &lt; #{po.updateTimeEnd}
+			</if>
+			<if test="po.cancelStatus !=null">
+				and sc.cancel_status=#{po.cancelStatus}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY sc.id desc
+			</otherwise>
+		</choose>
+	</select>
+
+	<select id="countMerchantChildOrderOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM so_child sc ,so
+		<where>
+			sc.so_id = so.id and sc.delivery_status=0
+			and sc.performing_party = #{po.performingParty}
+			<if test="po.orderStatus != null">
+				and so.order_status = #{po.orderStatus}
+			</if>
+			<if test="po.childCode != null">
+				and sc.child_code = #{po.childCode}
+			</if>
+			<if test="po.createTimeStart != null">
+				and sc.create_time &gt; #{po.createTimeStart}
+			</if>
+			<if test="po.createTimeEnd != null">
+				and sc.create_time &lt; #{po.createTimeEnd}
+			</if>
+			<if test="po.updateTimeStart != null">
+				and sc.update_time &gt; #{po.updateTimeStart}
+			</if>
+			<if test="po.updateTimeEnd != null">
+				and sc.update_time &lt; #{po.updateTimeEnd}
+			</if>
+			<if test="po.cancelStatus !=null">
+				and sc.cancel_status=#{po.cancelStatus}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY sc.id desc
+			</otherwise>
+		</choose>
+	</select>
+
+	<select id="findWarningChildOrder" resultMap="soChildConditionMap">
+		select
+		sc.performing_party,
+		sc.platform_id,
+		so.order_code,
+		sc.child_code,
+		so.order_payment_confirm_date,
+		sc.amount,
+		r.good_receiver_name,
+		r.good_receiver_phone,
+		r.good_receiver_mobile
+		from so_child sc
+		LEFT JOIN so on sc.so_id=so.id
+		LEFT JOIN receiver_address r on sc.receiver_address_id = r.id
+		where so.order_confirm_status=1
+		and sc.delivery_status=0
+		and so.create_time &lt; #{warningDate}
+	</select>
+
+
+	<select id="findSoChildListByMerchantId" resultMap="soChildConditionMap">
+		select
+		sc.performing_party,
+		s.order_code,
+		s.user_id,
+		sc.child_code,
+		sc.thirdparty_so_child_id,
+		sc.thirdparty_so_child_status,
+		s.order_status,
+		s.order_confirm_status,
+		s.order_pay_status,
+		sc.amount,
+		sc.product_amount,
+		sc.coupon_discount,
+		(sc.coupon_discount+sc.store_discount) discount ,
+		sc.thirdparty_so_child_pay_amount,
+		s.order_payment_confirm_date,
+		sc.create_time,
+		sc.delivery_fee,
+		sc.refund_delivery_fee,
+		sc.ext,sc.cancel_status,
+		sc.child_delete_status
+		from so_child sc LEFT JOIN so s ON sc.so_id=s.id
+		where performing_party=#{merchantId}
+		AND s.id IN (
+		<foreach collection="idList" item="id" separator=",">
+		#{id}
+		</foreach>
+		)
+	</select>
+
+
+	<select id="findSoChildListBySupplierId" resultMap="soChildConditionMap">
+		select
+		sc.performing_party,
+		s.order_code,
+		s.user_id,
+		sc.id,
+		sc.so_id,
+		sc.source,
+		sc.supplier_id,
+		sc.child_code,
+		sc.thirdparty_so_child_id,
+		sc.thirdparty_so_child_status,
+		s.order_status,
+		s.order_confirm_status,
+		s.order_pay_status,
+		sc.amount,
+		sc.product_amount,
+		sc.coupon_discount,
+		(sc.coupon_discount+sc.store_discount) discount ,
+		sc.thirdparty_so_child_pay_amount,
+		s.order_payment_confirm_date,
+		sc.create_time,
+		sc.delivery_fee,
+		sc.ext,sc.cancel_status,sc.child_delete_status
+		from so_child sc LEFT JOIN so s ON sc.so_id=s.id
+		where supplier_id=#{supplierId}
+		AND sc.id IN (
+		<foreach collection="idList" item="id" separator=",">
+		#{id}
+		</foreach>
+		)
+	</select>
+
+	<select id="soDetailOrderExport" resultType="com.egeo.components.order.vo.OrderSortExportVO">
+		SELECT
+		    sc.so_id as soId,
+			sc.child_code as childCode,
+			sc.performing_party as merchantId,
+			sc.user_id as userId,
+			ra.good_receiver_name as receiverName,
+			ra.good_receiver_mobile as receiverMobile,
+			ra.good_receiver_address as receiverAddress,
+			si.pu_name as puName,
+			si.pu_count as puCount,
+			si.price as price,
+			si.delivery_fee_aver as deliveryFeeAver,
+			si.`snapshot` as `snapshot`,
+			si.tax_rate as taxRate,
+			si.source as source,
+			si.supplier_id as supplierId
+		FROM
+			so_child sc
+				LEFT JOIN so_item si ON sc.id = si.so_child_id
+				LEFT JOIN receiver_address ra ON sc.receiver_address_id = ra.id
+		WHERE
+			sc.so_id  IN (
+		<foreach collection="idList" item="id" separator=",">
+			#{id}
+		</foreach>
+		ORDER BY
+			sc.so_id,
+			sc.id,
+			si.id
+	</select>
+
+
+</mapper>

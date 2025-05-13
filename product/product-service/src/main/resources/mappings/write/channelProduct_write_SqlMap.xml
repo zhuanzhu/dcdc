@@ -1,0 +1,430 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.product.dao.write.ChannelProductWriteDAO">
+	<insert id="insert" parameterType="com.egeo.components.product.po.ChannelProductPO">
+		INSERT INTO channel_product(
+        <trim suffixOverrides=",">
+			<if test="channelCode != null">
+				channel_code,
+			</if>
+			<if test="productId != null">
+				product_id,
+			</if>
+			<if test="chineseName != null">
+				chinese_name,
+			</if>
+			<if test="categoryId != null">
+				category_id,
+			</if>
+			<if test="categoryPid != null">
+				category_pid,
+			</if>
+			<if test="categoryFPid != null">
+				category_f_pid,
+			</if>
+			<if test="brandId != null">
+				brand_id,
+			</if>
+			<if test="categoryTreeNodeId != null">
+				category_tree_node_id,
+			</if>
+			<if test="title != null">
+				title,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="goodsType != null">
+				goods_type,
+			</if>
+			<if test="brandName != null">
+				brand_name,
+			</if>
+			<if test="goodsLevel != null">
+				goods_level,
+			</if>
+			<if test="marketPrice != null">
+				market_price,
+			</if>
+			<if test="price != null">
+				price,
+			</if>
+			<if test="taxNo != null">
+				tax_no,
+			</if>
+			<if test="eanNo != null">
+				ean_no,
+			</if>
+			<if test="placeOfOrigin != null">
+				place_of_origin,
+			</if>
+			<if test="countryName != null">
+				country_name,
+			</if>
+			<if test="calculationUnit != null">
+				calculation_unit,
+			</if>
+			<if test="unitName != null">
+				unit_name,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="isAvailable != null">
+				is_available,
+			</if>
+			<if test="productDetails != null">
+				product_details,
+			</if>
+			<if test="supplierId != null">
+				supplier_id,
+			</if>
+			<if test="enterpriseId != null">
+				enterprise_id,
+			</if>
+			<if test="platformId != null">
+				platform_id,
+			</if>
+			<if test="commodityTemplateId != null">
+				commodity_template_id,
+			</if>
+			<if test="priceDetail != null">
+				price_detail,
+			</if>
+			<if test="referlink != null">
+				referlink,
+			</if>
+			<if test="extend != null">
+				extend,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+        </trim>
+		) VALUES (
+        <trim suffixOverrides=",">
+			<if test="channelCode != null">
+				#{channelCode},
+			</if>
+			<if test="productId != null">
+				#{productId},
+			</if>
+			<if test="chineseName != null">
+				#{chineseName},
+			</if>
+			<if test="categoryId != null">
+				#{categoryId},
+			</if>
+			<if test="categoryPid != null">
+				#{categoryPid},
+			</if>
+			<if test="categoryFPid != null">
+				#{categoryFPid},
+			</if>
+			<if test="brandId != null">
+				#{brandId},
+			</if>
+			<if test="categoryTreeNodeId != null">
+				#{categoryTreeNodeId},
+			</if>
+			<if test="title != null">
+				#{title},
+			</if>
+			<if test="name != null">
+				#{name},
+			</if>
+			<if test="goodsType != null">
+				#{goodsType},
+			</if>
+			<if test="brandName != null">
+				#{brandName},
+			</if>
+			<if test="goodsLevel != null">
+				#{goodsLevel},
+			</if>
+			<if test="marketPrice != null">
+				#{marketPrice},
+			</if>
+			<if test="price != null">
+				#{price},
+			</if>
+			<if test="taxNo != null">
+				#{taxNo},
+			</if>
+			<if test="eanNo != null">
+				#{eanNo},
+			</if>
+			<if test="placeOfOrigin != null">
+				#{placeOfOrigin},
+			</if>
+			<if test="countryName != null">
+				#{countryName},
+			</if>
+			<if test="calculationUnit != null">
+				#{calculationUnit},
+			</if>
+			<if test="unitName != null">
+				#{unitName},
+			</if>
+			<if test="status != null">
+				#{status},
+			</if>
+			<if test="isAvailable != null">
+				#{isAvailable},
+			</if>
+			<if test="productDetails != null">
+				#{productDetails},
+			</if>
+			<if test="supplierId != null">
+				#{supplierId},
+			</if>
+			<if test="enterpriseId != null">
+				#{enterpriseId},
+			</if>
+			<if test="platformId != null">
+				#{platformId},
+			</if>
+			<if test="commodityTemplateId != null">
+				#{commodityTemplateId},
+			</if>
+			<if test="priceDetail != null">
+				#{priceDetail},
+			</if>
+			<if test="referlink != null">
+				#{referlink},
+			</if>
+			<if test="extend != null">
+				#{extend},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
+			</if>
+        </trim>
+		)
+		<selectKey keyProperty="id" resultType="java.lang.Long">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+
+
+
+	<update id="update">
+	UPDATE channel_product
+		<set>
+			<if test="channelCode != null">
+				channel_code = #{channelCode},
+			</if>
+			<if test="productId != null">
+				product_id = #{productId},
+			</if>
+			<if test="chineseName != null">
+				chinese_name = #{chineseName},
+			</if>
+
+			<if test="categoryId != null">
+				category_id = #{categoryId},
+			</if>
+			<if test="categoryPid != null">
+				category_pid = #{categoryPid},
+			</if>
+
+			<if test="categoryFPid != null">
+				category_f_pid = #{categoryFPid},
+			</if>
+			<if test="brandId != null">
+				brand_id = #{brandId},
+			</if>
+			<if test="categoryTreeNodeId != null">
+				category_tree_node_id = #{categoryTreeNodeId},
+			</if>
+			<if test="title != null">
+				title = #{title},
+			</if>
+			<if test="name != null">
+				name = #{name},
+			</if>
+			<if test="goodsType != null">
+				goods_type = #{goodsType},
+			</if>
+			<if test="brandName != null">
+				brand_name = #{brandName},
+			</if>
+			<if test="goodsLevel != null">
+				goods_level = #{goodsLevel},
+			</if>
+			<if test="marketPrice != null">
+				market_price = #{marketPrice},
+			</if>
+			<if test="price != null">
+				price = #{price},
+			</if>
+			<if test="taxNo != null">
+				tax_no = #{taxNo},
+			</if>
+			<if test="eanNo != null">
+				ean_no = #{eanNo},
+			</if>
+			<if test="placeOfOrigin != null">
+				place_of_origin = #{placeOfOrigin},
+			</if>
+			<if test="countryName != null">
+				country_name = #{countryName},
+			</if>
+			<if test="calculationUnit != null">
+				calculation_unit = #{calculationUnit},
+			</if>
+			<if test="unitName != null">
+				unit_name = #{unitName},
+			</if>
+			<if test="status != null">
+				status = #{status},
+			</if>
+			<if test="productDetails != null">
+				product_details = #{productDetails},
+			</if>
+			<if test="supplierId != null">
+				supplier_id = #{supplierId},
+			</if>
+			<if test="enterpriseId != null">
+				enterprise_id = #{enterpriseId},
+			</if>
+			<if test="platformId != null">
+				platform_id = #{platformId},
+			</if>
+			<if test="commodityTemplateId != null">
+				commodity_template_id = #{commodityTemplateId},
+			</if>
+			<if test="priceDetail != null">
+				price_detail = #{priceDetail},
+			</if>
+			<if test="referlink != null">
+				referlink = #{referlink},
+			</if>
+			<if test="extend != null">
+				extend = #{extend},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>
+		</set>
+			WHERE id = #{id}
+	</update>
+
+	<delete id="delete">
+		delete from channel_product where id = #{id}
+	</delete>
+
+	<delete id="deleteByPara">
+		delete from channel_product
+		<where>
+			<if test="channelCode != null">
+				and channel_code = #{channelCode}
+			</if>
+			<if test="productId != null">
+				and product_id = #{productId}
+			</if>
+			<if test="chineseName != null">
+				and chinese_name = #{chineseName}
+			</if>
+			<if test="categoryId != null">
+				and category_id = #{categoryId}
+			</if>
+			<if test="categoryPid != null">
+				and category_pid = #{categoryPid}
+			</if>
+			<if test="categoryFPid != null">
+				and category_f_pid = #{categoryFPid}
+			</if>
+			<if test="brandId != null">
+				and brand_id = #{brandId}
+			</if>
+			<if test="categoryTreeNodeId != null">
+				and category_tree_node_id = #{categoryTreeNodeId}
+			</if>
+			<if test="title != null">
+				and title = #{title}
+			</if>
+			<if test="name != null">
+				and name = #{name}
+			</if>
+			<if test="goodsType != null">
+				and goods_type = #{goodsType}
+			</if>
+			<if test="brandName != null">
+				and brand_name = #{brandName}
+			</if>
+			<if test="goodsLevel != null">
+				and goods_level = #{goodsLevel}
+			</if>
+			<if test="marketPrice != null">
+				and market_price = #{marketPrice}
+			</if>
+			<if test="taxNo != null">
+				and tax_no = #{taxNo}
+			</if>
+			<if test="eanNo != null">
+				and ean_no = #{eanNo}
+			</if>
+			<if test="placeOfOrigin != null">
+				and place_of_origin = #{placeOfOrigin}
+			</if>
+			<if test="countryName != null">
+				and country_name = #{countryName}
+			</if>
+			<if test="calculationUnit != null">
+				and calculation_unit = #{calculationUnit}
+			</if>
+			<if test="unitName != null">
+				and unit_name = #{unitName}
+			</if>
+			<if test="status != null">
+				and status = #{status}
+			</if>
+			<if test="isAvailable != null">
+				and is_available = #{isAvailable}
+			</if>
+			<if test="productDetails != null">
+				and product_details = #{productDetails}
+			</if>
+			<if test="supplierId != null">
+				and supplier_id = #{supplierId}
+			</if>
+			<if test="enterpriseId != null">
+				and enterprise_id = #{enterpriseId}
+			</if>
+			<if test="platformId != null">
+				and platform_id = #{platformId}
+			</if>
+			<if test="commodityTemplateId != null">
+				and commodity_template_id = #{commodityTemplateId}
+			</if>
+			<if test="priceDetail != null">
+				and price_detail = #{priceDetail}
+			</if>
+			<if test="referlink != null">
+				and referlink = #{referlink}
+			</if>
+			<if test="extend != null">
+				and extend = #{extend}
+			</if>
+			<if test="createTime != null">
+				and create_time = #{createTime}
+			</if>
+			<if test="updateTime != null">
+				and update_time = #{updateTime}
+			</if>
+		</where>
+	</delete>
+
+
+</mapper>

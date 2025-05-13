@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.product.dao.read.MembershipReadDAO">
+	<resultMap type="com.egeo.components.product.po.MembershipPO" id="membershipMap">
+		<result property="id" column="id" />
+		<result property="membershipCode" column="membership_code" />
+		<result property="membershipName" column="membership_name" />
+		<result property="membershipLogImgUrl" column="membership_log_img_url" />
+		<result property="linkedSkuId" column="linked_sku_id" />
+		<result property="categoryId" column="category_id" />
+		<result property="categoryName" column="category_name" />
+		<result property="validPeriodVal" column="valid_period_val" />
+		<result property="validPeriodUnit" column="valid_period_unit" />
+		<result property="remarks" column="remarks" />
+		<result property="platformId" column="platform_id" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+	</resultMap>
+
+	<resultMap type="com.egeo.components.product.condition.MembershipCondition" id="membershipConditionMap" extends="membershipMap">
+		<result property="userId" column="user_id" />
+	</resultMap>
+
+	<sql id="membershipColumns">
+		id,
+		membership_code,
+		membership_name,
+		membership_log_img_url,
+		linked_sku_id,
+		category_id,
+		category_name,
+		valid_period_val,
+		valid_period_unit,
+		remarks,
+		platform_id,
+		create_time,
+		update_time
+	</sql>
+	<sql id="inClause">
+		IN
+		<foreach collection="skuIdList" item="skuId" open="(" separator="," close=")">
+			#{skuId}
+		</foreach>
+	</sql>
+
+
+	<select id="findById" parameterType="com.egeo.components.product.po.MembershipPO" resultMap="membershipMap">
+		SELECT
+		<include refid="membershipColumns" />
+		FROM membership
+		WHERE id = #{po.id}
+	</select>
+	<select id="findMembershipBySkuId" resultMap="membershipMap">
+		SELECT
+		<include refid="membershipColumns" />
+		FROM membership
+		WHERE
+		linked_sku_id=#{skuId}
+		and platform_id=#{platformId}
+	</select>
+
+
+	<select id="findOfPage" resultMap="membershipMap">
+		SELECT
+		<include refid="membershipColumns" />
+		FROM membership
+		<where>
+			<if test="po.membershipCode != null">
+				and membership_code = #{po.membershipCode}
+			</if>
+			<if test="po.membershipName != null">
+				and membership_name = #{po.membershipName}
+			</if>
+			<if test="po.membershipLogImgUrl != null">
+				and membership_log_img_url = #{po.membershipLogImgUrl}
+			</if>
+			<if test="po.linkedSkuId != null">
+				and linked_sku_id = #{po.linkedSkuId}
+			</if>
+			<if test="po.categoryId != null">
+				and category_id = #{po.categoryId}
+			</if>
+			<if test="po.categoryName != null">
+				and category_name = #{po.categoryName}
+			</if>
+			<if test="po.validPeriodVal != null">
+				and valid_period_val = #{po.validPeriodVal}
+			</if>
+			<if test="po.validPeriodUnit != null">
+				and valid_period_unit = #{po.validPeriodUnit}
+			</if>
+			<if test="po.remarks != null">
+				and remarks = #{po.remarks}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM membership
+		<where>
+			<if test="po.membershipCode != null">
+				and membership_code = #{po.membershipCode}
+			</if>
+			<if test="po.membershipName != null">
+				and membership_name = #{po.membershipName}
+			</if>
+			<if test="po.membershipLogImgUrl != null">
+				and membership_log_img_url = #{po.membershipLogImgUrl}
+			</if>
+			<if test="po.linkedSkuId != null">
+				and linked_sku_id = #{po.linkedSkuId}
+			</if>
+			<if test="po.categoryId != null">
+				and category_id = #{po.categoryId}
+			</if>
+			<if test="po.categoryName != null">
+				and category_name = #{po.categoryName}
+			</if>
+			<if test="po.validPeriodVal != null">
+				and valid_period_val = #{po.validPeriodVal}
+			</if>
+			<if test="po.validPeriodUnit != null">
+				and valid_period_unit = #{po.validPeriodUnit}
+			</if>
+			<if test="po.remarks != null">
+				and remarks = #{po.remarks}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="membershipMap">
+		SELECT
+		<include refid="membershipColumns" />
+		FROM membership
+		<where>
+			<if test="po.membershipCode != null">
+				and membership_code = #{po.membershipCode}
+			</if>
+			<if test="po.membershipName != null">
+				and membership_name = #{po.membershipName}
+			</if>
+			<if test="po.membershipLogImgUrl != null">
+				and membership_log_img_url = #{po.membershipLogImgUrl}
+			</if>
+			<if test="po.linkedSkuId != null">
+				and linked_sku_id = #{po.linkedSkuId}
+			</if>
+			<if test="po.categoryId != null">
+				and category_id = #{po.categoryId}
+			</if>
+			<if test="po.categoryName != null">
+				and category_name = #{po.categoryName}
+			</if>
+			<if test="po.validPeriodVal != null">
+				and valid_period_val = #{po.validPeriodVal}
+			</if>
+			<if test="po.validPeriodUnit != null">
+				and valid_period_unit = #{po.validPeriodUnit}
+			</if>
+			<if test="po.remarks != null">
+				and remarks = #{po.remarks}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+
+
+
+	<select id="findOfPageByParam" resultMap="membershipMap">
+		SELECT
+		<include refid="membershipColumns" />
+		FROM membership
+		<where>
+			linked_sku_id
+			<include refid="inClause" />
+
+			<if test="categoryId != null">
+				and category_id = #{categoryId}
+			</if>
+			<if test="membershipName != null">
+				and membership_name LIKE  concat('%',#{membershipName},'%')
+			</if>
+			<if test="platformId != null">
+				and platform_id = #{platformId}
+			</if>
+		</where>
+		<if test="page != null">
+			limit #{page.limitStart},#{page.pageSize}
+		</if>
+		<!--<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY id desc
+			</otherwise>
+		</choose>-->
+	</select>
+
+	<select id="findOfPageByParams" resultMap="membershipMap">
+		SELECT
+		<include refid="membershipColumns" />
+		FROM membership
+		<where>
+			<if test="categoryId != null">
+				and category_id = #{categoryId}
+			</if>
+			<if test="membershipName != null">
+				and membership_name LIKE  concat('%',#{membershipName},'%')
+			</if>
+			<if test="platformId != null">
+				and platform_id = #{platformId}
+			</if>
+		</where>
+		<if test="page != null">
+			limit #{page.limitStart},#{page.pageSize}
+		</if>
+		<!--<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY id desc
+			</otherwise>
+		</choose>-->
+
+	</select>
+
+	<select id="countOfPageByParams" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM membership
+		<where>
+			<if test="categoryId != null">
+				and category_id = #{categoryId}
+			</if>
+			<if test="membershipName != null">
+				and membership_name LIKE  concat('%',#{membershipName},'%')
+			</if>
+			<if test="platformId != null">
+				and platform_id = #{platformId}
+			</if>
+		</where>
+
+	</select>
+
+	<select id="countOfPageByParam" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM membership
+		<where>
+			linked_sku_id
+			<include refid="inClause" />
+
+			<if test="categoryId != null">
+				and category_id = #{categoryId}
+			</if>
+			<if test="membershipName != null">
+				and membership_name LIKE  concat('%',#{membershipName},'%')
+			</if>
+			<if test="platformId != null">
+				and platform_id = #{platformId}
+			</if>
+		</where>
+
+	</select>
+	
+	<select id="findNotifyMembership" resultMap="membershipConditionMap">
+		SELECT 
+		mu.user_id,
+		m.membership_name,
+		m.id,
+		m.platform_id
+		FROM membership_user mu 
+		LEFT JOIN membership m ON mu.membership_id = m.id
+		WHERE mu.status_code = 1 
+		AND mu.end_time = DATE_FORMAT(NOW() + INTERVAL #{remainDays} DAY,'%Y-%m-%d')
+	</select>
+	
+</mapper>
+	

@@ -1,0 +1,484 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.order.dao.write.LimitRuleWriteDAO">
+	<insert id="insert" parameterType="com.egeo.components.order.po.LimitRulePO">
+		INSERT INTO limit_rule(
+        <trim suffixOverrides=",">
+			<if test="serialNumber != null">
+				serial_number,
+			</if>
+			<if test="type != null">
+				type,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="isStart != null">
+				is_start,
+			</if>
+			<if test="standardUnitId != null">
+				standard_unit_id,
+			</if>
+			<if test="standardUnitSerialNumber != null">
+				standard_unit_serial_number,
+			</if>
+			<if test="isLimit != null">
+				is_limit,
+			</if>
+			<if test="suLimitNum != null">
+				su_limit_num,
+			</if>
+			<if test="limitTimeType != null">
+				limit_time_type,
+			</if>
+			<if test="limitOriginTime != null">
+				limit_origin_time,
+			</if>
+			<if test="limitStopTime != null">
+				limit_stop_time,
+			</if>
+			<if test="periodType != null">
+				period_type,
+			</if>
+			<if test="userLimitNum != null">
+				user_limit_num,
+			</if>
+			<if test="userMoneySum != null">
+				user_money_sum,
+			</if>
+			<if test="createUserid != null">
+				create_userid,
+			</if>
+			<if test="createUsername != null">
+				create_username,
+			</if>
+			<if test="createUserip != null">
+				create_userip,
+			</if>
+			<if test="createUsermac != null">
+				create_usermac,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateUserid != null">
+				update_userid,
+			</if>
+			<if test="updateUsername != null">
+				update_username,
+			</if>
+			<if test="updateUserip != null">
+				update_userip,
+			</if>
+			<if test="updateUsermac != null">
+				update_usermac,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="platformId != null">
+				platform_id,
+			</if>
+			<if test="limitTarget != null">
+				limit_target,
+			</if>
+			<if test="suCombId != null">
+				su_comb_id,
+			</if>
+			<if test="suLimitAmount != null">
+				su_limit_amount,
+			</if>
+			<if test="companyType != null">
+				company_type,
+			</if>
+			<if test="limitUnit != null">
+				limit_unit,
+			</if>
+			<if test="isUserLimit != null">
+				is_user_limit,
+			</if>
+			<if test="isCompanyLimit != null">
+				is_company_limit,
+			</if>
+			<if test="companyLimitNum != null">
+				company_limit_num,
+			</if>
+			<if test="companyMoneySum != null">
+				company_money_sum,
+			</if>
+			<if test="isStoreLimit != null">
+				is_store_limit,
+			</if>
+			<if test="storeLimitNum != null">
+				store_limit_num,
+			</if>
+			<if test="storeMoneySum != null">
+				store_money_sum,
+			</if>
+        </trim>		
+		) VALUES (
+        <trim suffixOverrides=",">
+			<if test="serialNumber != null">
+				#{serialNumber},
+			</if>
+			<if test="type != null">
+				#{type},
+			</if>
+			<if test="name != null">
+				#{name},
+			</if>
+			<if test="isStart != null">
+				#{isStart},
+			</if>
+			<if test="standardUnitId != null">
+				#{standardUnitId},
+			</if>
+			<if test="standardUnitSerialNumber != null">
+				#{standardUnitSerialNumber},
+			</if>
+			<if test="isLimit != null">
+				#{isLimit},
+			</if>
+			<if test="suLimitNum != null">
+				#{suLimitNum},
+			</if>
+			<if test="limitTimeType != null">
+				#{limitTimeType},
+			</if>
+			<if test="limitOriginTime != null">
+				#{limitOriginTime},
+			</if>
+			<if test="limitStopTime != null">
+				#{limitStopTime},
+			</if>
+			<if test="periodType != null">
+				#{periodType},
+			</if>
+			<if test="userLimitNum != null">
+				#{userLimitNum},
+			</if>
+			<if test="userMoneySum != null">
+				#{userMoneySum},
+			</if>
+			<if test="createUserid != null">
+				#{createUserid},
+			</if>
+			<if test="createUsername != null">
+				#{createUsername},
+			</if>
+			<if test="createUserip != null">
+				#{createUserip},
+			</if>
+			<if test="createUsermac != null">
+				#{createUsermac},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="updateUserid != null">
+				#{updateUserid},
+			</if>
+			<if test="updateUsername != null">
+				#{updateUsername},
+			</if>
+			<if test="updateUserip != null">
+				#{updateUserip},
+			</if>
+			<if test="updateUsermac != null">
+				#{updateUsermac},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
+			</if>
+			<if test="platformId != null">
+				#{platformId},
+			</if>
+			<if test="limitTarget != null">
+				#{limitTarget},
+			</if>
+			<if test="suCombId != null">
+				#{suCombId},
+			</if>
+			<if test="suLimitAmount != null">
+				#{suLimitAmount},
+			</if>
+			<if test="companyType != null">
+				#{companyType},
+			</if>
+			<if test="limitUnit != null">
+				#{limitUnit},
+			</if>
+			<if test="isUserLimit != null">
+				#{isUserLimit},
+			</if>
+			<if test="isCompanyLimit != null">
+				#{isCompanyLimit},
+			</if>
+			<if test="companyLimitNum != null">
+				#{companyLimitNum},
+			</if>
+			<if test="companyMoneySum != null">
+				#{companyMoneySum},
+			</if>
+			<if test="isStoreLimit != null">
+				#{isStoreLimit},
+			</if>
+			<if test="storeLimitNum != null">
+				#{storeLimitNum},
+			</if>
+			<if test="storeMoneySum != null">
+				#{storeMoneySum},
+			</if>
+        </trim>		
+		)
+		<selectKey keyProperty="id" resultType="java.lang.Long">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+
+	
+	
+	<update id="update">
+	UPDATE limit_rule 
+		<set>
+			<if test="serialNumber != null">
+				serial_number = #{serialNumber},
+			</if>			
+			<if test="type != null">
+				type = #{type},
+			</if>			
+			<if test="name != null">
+				name = #{name},
+			</if>			
+			<if test="isStart != null">
+				is_start = #{isStart},
+			</if>			
+			<if test="standardUnitId != null">
+				standard_unit_id = #{standardUnitId},
+			</if>			
+			<if test="standardUnitSerialNumber != null">
+				standard_unit_serial_number = #{standardUnitSerialNumber},
+			</if>			
+			<if test="isLimit != null">
+				is_limit = #{isLimit},
+			</if>			
+			<if test="suLimitNum != null">
+				su_limit_num = #{suLimitNum},
+			</if>			
+			<if test="limitTimeType != null">
+				limit_time_type = #{limitTimeType},
+			</if>			
+			<if test="limitOriginTime != null">
+				limit_origin_time = #{limitOriginTime},
+			</if>			
+			<if test="limitStopTime != null">
+				limit_stop_time = #{limitStopTime},
+			</if>			
+			<if test="periodType != null">
+				period_type = #{periodType},
+			</if>		
+			<if test="userLimitNum != null">
+				user_limit_num = #{userLimitNum},
+			</if>			
+			<if test="userMoneySum != null">
+				user_money_sum = #{userMoneySum},
+			</if>			
+			<if test="createUserid != null">
+				create_userid = #{createUserid},
+			</if>			
+			<if test="createUsername != null">
+				create_username = #{createUsername},
+			</if>			
+			<if test="createUserip != null">
+				create_userip = #{createUserip},
+			</if>			
+			<if test="createUsermac != null">
+				create_usermac = #{createUsermac},
+			</if>			
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>			
+			<if test="updateUserid != null">
+				update_userid = #{updateUserid},
+			</if>			
+			<if test="updateUsername != null">
+				update_username = #{updateUsername},
+			</if>			
+			<if test="updateUserip != null">
+				update_userip = #{updateUserip},
+			</if>			
+			<if test="updateUsermac != null">
+				update_usermac = #{updateUsermac},
+			</if>			
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>			
+			<if test="platformId != null">
+				platform_id = #{platformId},
+			</if>			
+			<if test="limitTarget != null">
+				limit_target = #{limitTarget},
+			</if>			
+			<if test="suCombId != null">
+				su_comb_id = #{suCombId},
+			</if>			
+			<if test="suLimitAmount != null">
+				su_limit_amount = #{suLimitAmount},
+			</if>			
+			<if test="companyType != null">
+				company_type = #{companyType},
+			</if>			
+			<if test="limitUnit != null">
+				limit_unit = #{limitUnit},
+			</if>			
+			<if test="isUserLimit != null">
+				is_user_limit = #{isUserLimit},
+			</if>			
+			<if test="isCompanyLimit != null">
+				is_company_limit = #{isCompanyLimit},
+			</if>			
+			<if test="companyLimitNum != null">
+				company_limit_num = #{companyLimitNum},
+			</if>			
+			<if test="companyMoneySum != null">
+				company_money_sum = #{companyMoneySum},
+			</if>			
+			<if test="isStoreLimit != null">
+				is_store_limit = #{isStoreLimit},
+			</if>			
+			<if test="storeLimitNum != null">
+				store_limit_num = #{storeLimitNum},
+			</if>			
+			<if test="storeMoneySum != null">
+				store_money_sum = #{storeMoneySum},
+			</if>			
+		</set>
+			WHERE id = #{id}
+	</update>	
+	
+
+	<delete id="delete">
+		delete from limit_rule where id = #{id}
+	</delete>
+
+	<delete id="deleteByPara">
+		delete from limit_rule 
+		<where>
+			<if test="serialNumber != null">
+				and serial_number = #{serialNumber}
+			</if>
+			<if test="type != null">
+				and type = #{type}
+			</if>
+			<if test="name != null">
+				and name = #{name}
+			</if>
+			<if test="isStart != null">
+				and is_start = #{isStart}
+			</if>
+			<if test="standardUnitId != null">
+				and standard_unit_id = #{standardUnitId}
+			</if>
+			<if test="standardUnitSerialNumber != null">
+				and standard_unit_serial_number = #{standardUnitSerialNumber}
+			</if>
+			<if test="isLimit != null">
+				and is_limit = #{isLimit}
+			</if>
+			<if test="suLimitNum != null">
+				and su_limit_num = #{suLimitNum}
+			</if>
+			<if test="limitTimeType != null">
+				and limit_time_type = #{limitTimeType}
+			</if>
+			<if test="limitOriginTime != null">
+				and limit_origin_time = #{limitOriginTime}
+			</if>
+			<if test="limitStopTime != null">
+				and limit_stop_time = #{limitStopTime}
+			</if>
+			<if test="periodType != null">
+				and period_type = #{periodType}
+			</if>
+			<if test="userLimitNum != null">
+				and user_limit_num = #{userLimitNum}
+			</if>
+			<if test="userMoneySum != null">
+				and user_money_sum = #{userMoneySum}
+			</if>
+			<if test="createUserid != null">
+				and create_userid = #{createUserid}
+			</if>
+			<if test="createUsername != null">
+				and create_username = #{createUsername}
+			</if>
+			<if test="createUserip != null">
+				and create_userip = #{createUserip}
+			</if>
+			<if test="createUsermac != null">
+				and create_usermac = #{createUsermac}
+			</if>
+			<if test="createTime != null">
+				and create_time = #{createTime}
+			</if>
+			<if test="updateUserid != null">
+				and update_userid = #{updateUserid}
+			</if>
+			<if test="updateUsername != null">
+				and update_username = #{updateUsername}
+			</if>
+			<if test="updateUserip != null">
+				and update_userip = #{updateUserip}
+			</if>
+			<if test="updateUsermac != null">
+				and update_usermac = #{updateUsermac}
+			</if>
+			<if test="updateTime != null">
+				and update_time = #{updateTime}
+			</if>
+			<if test="platformId != null">
+				and platform_id = #{platformId}
+			</if>
+			<if test="limitTarget != null">
+				and limit_target = #{limitTarget}
+			</if>			
+			<if test="suCombId != null">
+				and su_comb_id = #{suCombId}
+			</if>			
+			<if test="suLimitAmount != null">
+				and su_limit_amount = #{suLimitAmount}
+			</if>			
+			<if test="companyType != null">
+				and company_type = #{companyType}
+			</if>			
+			<if test="limitUnit != null">
+				and limit_unit = #{limitUnit}
+			</if>			
+			<if test="isUserLimit != null">
+				and is_user_limit = #{isUserLimit}
+			</if>			
+			<if test="isCompanyLimit != null">
+				and is_company_limit = #{isCompanyLimit}
+			</if>			
+			<if test="companyLimitNum != null">
+				and company_limit_num = #{companyLimitNum}
+			</if>			
+			<if test="companyMoneySum != null">
+				and company_money_sum = #{companyMoneySum}
+			</if>			
+			<if test="isStoreLimit != null">
+				and is_store_limit = #{isStoreLimit}
+			</if>			
+			<if test="storeLimitNum != null">
+				and store_limit_num = #{storeLimitNum}
+			</if>			
+			<if test="storeMoneySum != null">
+				and store_money_sum = #{storeMoneySum}
+			</if>
+		</where>
+	</delete>
+
+
+</mapper>
+	

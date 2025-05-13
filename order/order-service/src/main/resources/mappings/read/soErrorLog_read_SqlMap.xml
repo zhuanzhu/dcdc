@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.order.dao.read.SoErrorLogReadDAO">
+	<resultMap type="com.egeo.components.order.po.SoErrorLogPO" id="soErrorLogMap">
+		<result property="id" column="id" />
+		<result property="orderCode" column="order_code" />
+		<result property="type" column="type" />
+		<result property="operId" column="oper_id" />
+		<result property="operName" column="oper_name" />
+		<result property="description" column="description" />
+		<result property="exception" column="exception" />
+		<result property="errorCode" column="error_code" />
+		<result property="errorMessage" column="error_message" />
+		<result property="inputParameter" column="input_parameter" />
+		<result property="outputParameter" column="output_parameter" />
+		<result property="platformId" column="platform_id" />
+		<result property="updateTime" column="update_time" />
+		<result property="createTime" column="create_time" />
+	</resultMap>
+
+	<sql id="soErrorLogColumns">
+		id,
+		order_code,
+		type,
+		oper_id,
+		oper_name,
+		description,
+		exception,
+		error_code,
+		error_message,
+		input_parameter,
+		output_parameter,
+		platform_id,
+		update_time,
+		create_time
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.order.po.SoErrorLogPO" resultMap="soErrorLogMap">
+		SELECT
+		<include refid="soErrorLogColumns" />
+		FROM so_error_log
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="soErrorLogMap">
+		SELECT
+		<include refid="soErrorLogColumns" />
+		FROM so_error_log
+		<where>
+			<if test="po.orderCode != null">
+				and order_code = #{po.orderCode}
+			</if>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+			<if test="po.operId != null">
+				and oper_id = #{po.operId}
+			</if>
+			<if test="po.operName != null">
+				and oper_name = #{po.operName}
+			</if>
+			<if test="po.description != null">
+				and description = #{po.description}
+			</if>
+			<if test="po.exception != null">
+				and exception = #{po.exception}
+			</if>
+			<if test="po.errorCode != null">
+				and error_code = #{po.errorCode}
+			</if>
+			<if test="po.errorMessage != null">
+				and error_message = #{po.errorMessage}
+			</if>
+			<if test="po.inputParameter != null">
+				and input_parameter = #{po.inputParameter}
+			</if>
+			<if test="po.outputParameter != null">
+				and output_parameter = #{po.outputParameter}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM so_error_log
+		<where>
+			<if test="po.orderCode != null">
+				and order_code = #{po.orderCode}
+			</if>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+			<if test="po.operId != null">
+				and oper_id = #{po.operId}
+			</if>
+			<if test="po.operName != null">
+				and oper_name = #{po.operName}
+			</if>
+			<if test="po.description != null">
+				and description = #{po.description}
+			</if>
+			<if test="po.exception != null">
+				and exception = #{po.exception}
+			</if>
+			<if test="po.errorCode != null">
+				and error_code = #{po.errorCode}
+			</if>
+			<if test="po.errorMessage != null">
+				and error_message = #{po.errorMessage}
+			</if>
+			<if test="po.inputParameter != null">
+				and input_parameter = #{po.inputParameter}
+			</if>
+			<if test="po.outputParameter != null">
+				and output_parameter = #{po.outputParameter}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="soErrorLogMap">
+		SELECT
+		<include refid="soErrorLogColumns" />
+		FROM so_error_log
+		<where>
+			<if test="po.orderCode != null">
+				and order_code = #{po.orderCode}
+			</if>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+			<if test="po.operId != null">
+				and oper_id = #{po.operId}
+			</if>
+			<if test="po.operName != null">
+				and oper_name = #{po.operName}
+			</if>
+			<if test="po.description != null">
+				and description = #{po.description}
+			</if>
+			<if test="po.exception != null">
+				and exception = #{po.exception}
+			</if>
+			<if test="po.errorCode != null">
+				and error_code = #{po.errorCode}
+			</if>
+			<if test="po.errorMessage != null">
+				and error_message = #{po.errorMessage}
+			</if>
+			<if test="po.inputParameter != null">
+				and input_parameter = #{po.inputParameter}
+			</if>
+			<if test="po.outputParameter != null">
+				and output_parameter = #{po.outputParameter}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+</mapper>
+	

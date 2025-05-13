@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.user.dao.write.RoleFunctionTreeNodeWriteDAO">
+	<insert id="insert" parameterType="com.egeo.components.user.po.RoleFunctionTreeNodePO">
+		INSERT INTO u_role_function_tree_node(
+        <trim suffixOverrides=",">
+			<if test="roleId != null">
+				role_id,
+			</if>
+			<if test="functionTreeNodeId != null">
+				function_tree_node_id,
+			</if>
+			<if test="fullCheck != null">
+				full_check,
+			</if>
+			<if test="platformId != null">
+				platform_id,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateUserId != null">
+				update_user_id,
+			</if>
+			<if test="updateUserName != null">
+				update_user_name,
+			</if>
+			<if test="updateTime != null">
+				update_time
+			</if>
+        </trim>		
+		) VALUES (
+        <trim suffixOverrides=",">
+			<if test="roleId != null">
+				#{roleId},
+			</if>
+			<if test="functionTreeNodeId != null">
+				#{functionTreeNodeId},
+			</if>
+			<if test="fullCheck != null">
+				#{fullCheck},
+			</if>
+			<if test="platformId != null">
+				#{platformId},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="updateUserId != null">
+				#{updateUserId},
+			</if>
+			<if test="updateUserName != null">
+				#{updateUserName},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
+			</if>
+			<!--<if test="functionModuleId != null">
+				#{functionModuleId},
+			</if>-->
+        </trim>		
+		)
+		<selectKey keyProperty="id" resultType="java.lang.Long">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+
+	
+	
+	<update id="update">
+	UPDATE u_role_function_tree_node 
+		<set>
+			<if test="roleId != null">
+				role_id = #{roleId},
+			</if>			
+			<if test="functionTreeNodeId != null">
+				function_tree_node_id = #{functionTreeNodeId},
+			</if>			
+			<if test="fullCheck != null">
+				full_check = #{fullCheck},
+			</if>			
+			<if test="platformId != null">
+				platform_id = #{platformId},
+			</if>			
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>			
+			<if test="updateUserId != null">
+				update_user_id = #{updateUserId},
+			</if>			
+			<if test="updateUserName != null">
+				update_user_name = #{updateUserName},
+			</if>			
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>			
+
+		</set>
+			WHERE id = #{id}
+	</update>	
+	
+
+	<delete id="delete">
+		delete from u_role_function_tree_node where id = #{id}
+	</delete>
+
+	<delete id="deleteByPara">
+		delete from u_role_function_tree_node 
+		<where>
+			<if test="roleId != null">
+				and role_id = #{roleId}
+			</if>
+			<if test="functionTreeNodeId != null">
+				and function_tree_node_id = #{functionTreeNodeId}
+			</if>
+			<if test="fullCheck != null">
+				and full_check = #{fullCheck}
+			</if>
+			<if test="platformId != null">
+				and platform_id = #{platformId}
+			</if>
+			<if test="createTime != null">
+				and create_time = #{createTime}
+			</if>
+			<if test="updateUserId != null">
+				and update_user_id = #{updateUserId}
+			</if>
+			<if test="updateUserName != null">
+				and update_user_name = #{updateUserName}
+			</if>
+			<if test="updateTime != null">
+				and update_time = #{updateTime}
+			</if>
+
+		</where>
+	</delete>
+
+
+</mapper>
+	

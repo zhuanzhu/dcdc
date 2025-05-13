@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.order.dao.read.SoPackageTempReadDAO">
+	<resultMap type="com.egeo.components.order.po.SoPackageTempPO" id="soPackageTempMap">
+		<result property="id" column="id" />
+		<result property="soChildId" column="so_child_id" />
+		<result property="goodReceiverName" column="good_receiver_name" />
+		<result property="goodReceiverMobile" column="good_receiver_mobile" />
+		<result property="proCityArea" column="pro_city_area" />
+		<result property="goodReceiverAddress" column="good_receiver_address" />
+		<result property="deliveryDate" column="delivery_date" />
+		<result property="deliveryName" column="delivery_name" />
+		<result property="deliveryNameMobile" column="delivery_name_mobile" />
+		<result property="signName" column="sign_name" />
+		<result property="signDate" column="sign_date" />
+		<result property="signRemark" column="sign_remark" />
+		<result property="updateTime" column="update_time" />
+		<result property="platformId" column="platform_id" />
+	</resultMap>
+
+	<sql id="soPackageTempColumns">
+		id,
+		so_child_id,
+		good_receiver_name,
+		good_receiver_mobile,
+		pro_city_area,
+		good_receiver_address,
+		delivery_date,
+		delivery_name,
+		delivery_name_mobile,
+		sign_name,
+		sign_date,
+		sign_remark,
+		update_time,
+		platform_id
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.order.po.SoPackageTempPO" resultMap="soPackageTempMap">
+		SELECT
+		<include refid="soPackageTempColumns" />
+		FROM so_package_temp
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="soPackageTempMap">
+		SELECT
+		<include refid="soPackageTempColumns" />
+		FROM so_package_temp
+		<where>
+			<if test="po.soChildId != null">
+				and so_child_id = #{po.soChildId}
+			</if>
+			<if test="po.goodReceiverName != null">
+				and good_receiver_name = #{po.goodReceiverName}
+			</if>
+			<if test="po.goodReceiverMobile != null">
+				and good_receiver_mobile = #{po.goodReceiverMobile}
+			</if>
+			<if test="po.proCityArea != null">
+				and pro_city_area = #{po.proCityArea}
+			</if>
+			<if test="po.goodReceiverAddress != null">
+				and good_receiver_address = #{po.goodReceiverAddress}
+			</if>
+			<if test="po.deliveryDate != null">
+				and delivery_date = #{po.deliveryDate}
+			</if>
+			<if test="po.deliveryName != null">
+				and delivery_name = #{po.deliveryName}
+			</if>
+			<if test="po.deliveryNameMobile != null">
+				and delivery_name_mobile = #{po.deliveryNameMobile}
+			</if>
+			<if test="po.signName != null">
+				and sign_name = #{po.signName}
+			</if>
+			<if test="po.signDate != null">
+				and sign_date = #{po.signDate}
+			</if>
+			<if test="po.signRemark != null">
+				and sign_remark = #{po.signRemark}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM so_package_temp
+		<where>
+			<if test="po.soChildId != null">
+				and so_child_id = #{po.soChildId}
+			</if>
+			<if test="po.goodReceiverName != null">
+				and good_receiver_name = #{po.goodReceiverName}
+			</if>
+			<if test="po.goodReceiverMobile != null">
+				and good_receiver_mobile = #{po.goodReceiverMobile}
+			</if>
+			<if test="po.proCityArea != null">
+				and pro_city_area = #{po.proCityArea}
+			</if>
+			<if test="po.goodReceiverAddress != null">
+				and good_receiver_address = #{po.goodReceiverAddress}
+			</if>
+			<if test="po.deliveryDate != null">
+				and delivery_date = #{po.deliveryDate}
+			</if>
+			<if test="po.deliveryName != null">
+				and delivery_name = #{po.deliveryName}
+			</if>
+			<if test="po.deliveryNameMobile != null">
+				and delivery_name_mobile = #{po.deliveryNameMobile}
+			</if>
+			<if test="po.signName != null">
+				and sign_name = #{po.signName}
+			</if>
+			<if test="po.signDate != null">
+				and sign_date = #{po.signDate}
+			</if>
+			<if test="po.signRemark != null">
+				and sign_remark = #{po.signRemark}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="soPackageTempMap">
+		SELECT
+		<include refid="soPackageTempColumns" />
+		FROM so_package_temp
+		<where>
+			<if test="po.soChildId != null">
+				and so_child_id = #{po.soChildId}
+			</if>
+			<if test="po.goodReceiverName != null">
+				and good_receiver_name = #{po.goodReceiverName}
+			</if>
+			<if test="po.goodReceiverMobile != null">
+				and good_receiver_mobile = #{po.goodReceiverMobile}
+			</if>
+			<if test="po.proCityArea != null">
+				and pro_city_area = #{po.proCityArea}
+			</if>
+			<if test="po.goodReceiverAddress != null">
+				and good_receiver_address = #{po.goodReceiverAddress}
+			</if>
+			<if test="po.deliveryDate != null">
+				and delivery_date = #{po.deliveryDate}
+			</if>
+			<if test="po.deliveryName != null">
+				and delivery_name = #{po.deliveryName}
+			</if>
+			<if test="po.deliveryNameMobile != null">
+				and delivery_name_mobile = #{po.deliveryNameMobile}
+			</if>
+			<if test="po.signName != null">
+				and sign_name = #{po.signName}
+			</if>
+			<if test="po.signDate != null">
+				and sign_date = #{po.signDate}
+			</if>
+			<if test="po.signRemark != null">
+				and sign_remark = #{po.signRemark}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+</mapper>
+	

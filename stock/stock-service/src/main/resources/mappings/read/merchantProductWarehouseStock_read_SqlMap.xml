@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.stock.dao.read.MerchantProductWarehouseStockReadDAO">
+	<resultMap type="com.egeo.components.stock.po.MerchantProductWarehouseStockPO" id="merchantProductWarehouseStockMap">
+		<result property="id" column="id" />
+		<result property="skuId" column="sku_id" />
+		<result property="productId" column="product_id" />
+		<result property="merchantId" column="merchant_id" />
+		<result property="warehouseId" column="warehouse_id" />
+		<result property="standardProductUnitId" column="standard_product_unit_id" />
+		<result property="realStockNum" column="real_stock_num" />
+		<result property="realFrozenStockNum" column="real_frozen_stock_num" />
+		<result property="pmWarehousePriority" column="pm_warehouse_priority" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="platformId" column="platform_id" />
+	</resultMap>
+
+	<sql id="merchantProductWarehouseStockColumns">
+		id,
+		sku_id,
+		product_id,
+		merchant_id,
+		warehouse_id,
+		standard_product_unit_id,
+		real_stock_num,
+		real_frozen_stock_num,
+		pm_warehouse_priority,
+		create_time,
+		update_time,
+		platform_id
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.stock.po.MerchantProductWarehouseStockPO" resultMap="merchantProductWarehouseStockMap">
+		SELECT
+		<include refid="merchantProductWarehouseStockColumns" />
+		FROM merchant_product_warehouse_stock
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findByMerchantProductId" parameterType="com.egeo.components.stock.po.MerchantProductWarehouseStockPO" resultMap="merchantProductWarehouseStockMap">
+		SELECT
+		<include refid="merchantProductWarehouseStockColumns" />
+		FROM merchant_product_warehouse_stock
+		WHERE merchant_product_id = #{po.merchantProductId}
+	</select>
+
+	<select id="findOfPage" resultMap="merchantProductWarehouseStockMap">
+		SELECT
+		<include refid="merchantProductWarehouseStockColumns" />
+		FROM merchant_product_warehouse_stock
+		<where>
+			<if test="po.skuId != null">
+				and sku_id = #{po.skuId}
+			</if>
+			<if test="po.productId != null">
+				and product_id = #{po.productId}
+			</if>
+			<if test="po.merchantId != null">
+				and merchant_id = #{po.merchantId}
+			</if>
+			<if test="po.warehouseId != null">
+				and warehouse_id = #{po.warehouseId}
+			</if>
+			<if test="po.standardProductUnitId != null">
+				and standard_product_unit_id = #{po.standardProductUnitId}
+			</if>
+			<if test="po.realStockNum != null">
+				and real_stock_num = #{po.realStockNum}
+			</if>
+			<if test="po.realFrozenStockNum != null">
+				and real_frozen_stock_num = #{po.realFrozenStockNum}
+			</if>
+			<if test="po.pmWarehousePriority != null">
+				and pm_warehouse_priority = #{po.pmWarehousePriority}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM merchant_product_warehouse_stock
+		<where>
+			<if test="po.skuId != null">
+				and sku_id = #{po.skuId}
+			</if>
+			<if test="po.productId != null">
+				and product_id = #{po.productId}
+			</if>
+			<if test="po.merchantId != null">
+				and merchant_id = #{po.merchantId}
+			</if>
+			<if test="po.warehouseId != null">
+				and warehouse_id = #{po.warehouseId}
+			</if>
+			<if test="po.standardProductUnitId != null">
+				and standard_product_unit_id = #{po.standardProductUnitId}
+			</if>
+			<if test="po.realStockNum != null">
+				and real_stock_num = #{po.realStockNum}
+			</if>
+			<if test="po.realFrozenStockNum != null">
+				and real_frozen_stock_num = #{po.realFrozenStockNum}
+			</if>
+			<if test="po.pmWarehousePriority != null">
+				and pm_warehouse_priority = #{po.pmWarehousePriority}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="merchantProductWarehouseStockMap">
+		SELECT
+		<include refid="merchantProductWarehouseStockColumns" />
+		FROM merchant_product_warehouse_stock
+		<where>
+			<if test="po.skuId != null">
+				and sku_id = #{po.skuId}
+			</if>
+			<if test="po.productId != null">
+				and product_id = #{po.productId}
+			</if>
+			<if test="po.merchantId != null">
+				and merchant_id = #{po.merchantId}
+			</if>
+			<if test="po.warehouseId != null">
+				and warehouse_id = #{po.warehouseId}
+			</if>
+			<if test="po.standardProductUnitId != null">
+				and standard_product_unit_id = #{po.standardProductUnitId}
+			</if>
+			<if test="po.realStockNum != null">
+				and real_stock_num = #{po.realStockNum}
+			</if>
+			<if test="po.realFrozenStockNum != null">
+				and real_frozen_stock_num = #{po.realFrozenStockNum}
+			</if>
+			<if test="po.pmWarehousePriority != null">
+				and pm_warehouse_priority = #{po.pmWarehousePriority}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findBySkuId" resultMap="merchantProductWarehouseStockMap">
+		SELECT
+		<include refid="merchantProductWarehouseStockColumns" />
+		FROM merchant_product_warehouse_stock
+		WHERE sku_id = #{skuId}
+	</select>
+</mapper>
+	

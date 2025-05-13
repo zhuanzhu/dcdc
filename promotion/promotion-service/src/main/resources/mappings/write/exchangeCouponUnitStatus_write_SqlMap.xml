@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.promotion.dao.write.ExchangeCouponUnitStatusWriteDAO">
+	<insert id="insert" parameterType="com.egeo.components.promotion.po.ExchangeCouponUnitStatusPO">
+		INSERT INTO exchange_coupon_unit_status(
+        <trim suffixOverrides=",">
+			<if test="exchangeId != null">
+				exchange_id,
+			</if>
+			<if test="allowExchangeUnitStatus != null">
+				allow_exchange_unit_status,
+			</if>
+			<if test="platformId != null">
+				platform_id,
+			</if>
+        </trim>		
+		) VALUES (
+        <trim suffixOverrides=",">
+			<if test="exchangeId != null">
+				#{exchangeId},
+			</if>
+			<if test="allowExchangeUnitStatus != null">
+				#{allowExchangeUnitStatus},
+			</if>
+			<if test="platformId != null">
+				#{platformId},
+			</if>
+        </trim>		
+		)
+		<selectKey keyProperty="id" resultType="java.lang.Long">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+
+	
+	
+	<update id="update">
+	UPDATE exchange_coupon_unit_status 
+		<set>
+			<if test="exchangeId != null">
+				exchange_id = #{exchangeId},
+			</if>			
+			<if test="allowExchangeUnitStatus != null">
+				allow_exchange_unit_status = #{allowExchangeUnitStatus},
+			</if>
+			<if test="platformId != null">
+				platform_id = #{platformId},
+			</if>
+		</set>
+			WHERE id = #{id}
+	</update>	
+	
+
+	<delete id="delete">
+		delete from exchange_coupon_unit_status where id = #{id}
+	</delete>
+
+	<delete id="deleteByPara">
+		delete from exchange_coupon_unit_status 
+		<where>
+			<if test="exchangeId != null">
+				and exchange_id = #{exchangeId}
+			</if>
+			<if test="allowExchangeUnitStatus != null">
+				and allow_exchange_unit_status = #{allowExchangeUnitStatus}
+			</if>
+			<if test="platformId != null">
+				and platform_id = #{platformId}
+			</if>
+		</where>
+	</delete>
+
+	<insert id="insertStatusList">
+
+		INSERT INTO exchange_coupon_unit_status(
+		exchange_id,
+		allow_exchange_unit_status,
+		platform_id
+		) VALUES
+		<foreach collection="poList" item="po" separator=",">
+			(
+			#{po.exchangeId},
+			#{po.allowExchangeUnitStatus},
+			#{po.platformId}  )
+		</foreach>
+	</insert>
+</mapper>
+	

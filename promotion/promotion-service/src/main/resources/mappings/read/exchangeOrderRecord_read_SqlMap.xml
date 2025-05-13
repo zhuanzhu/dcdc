@@ -1,0 +1,532 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.promotion.dao.read.ExchangeOrderRecordReadDAO">
+	<resultMap type="com.egeo.components.promotion.po.ExchangeOrderRecordPO" id="exchangeOrderRecordMap">
+		<result property="id" column="id" />
+		<result property="exchangeId" column="exchange_id" />
+		<result property="exchangeName" column="exchange_name" />
+		<result property="oldUnitCode" column="old_unit_code" />
+		<result property="oldUnitStatus" column="old_unit_status" />
+		<result property="oldCouponName" column="old_coupon_name" />
+		<result property="oldBatchCode" column="old_batch_code" />
+		<result property="oldCouponType" column="old_coupon_type" />
+		<result property="newUnitCode" column="new_unit_code" />
+		<result property="newBatchCode" column="new_batch_code" />
+		<result property="newCouponName" column="new_coupon_name" />
+		<result property="newCouponType" column="new_coupon_type" />
+		<result property="userMail" column="user_mail" />
+		<result property="exchangeTime" column="exchange_time" />
+		<result property="orderCode" column="order_code" />
+		<result property="conversionStatus" column="conversion_status" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="platformId" column="platform_id" />
+		<result property="orderAmount" column="order_amount" />
+		<result property="oldCouponBatchName" column="old_coupon_batch_name" />
+		<result property="newCouponBatchName" column="new_coupon_batch_name" />
+
+	</resultMap>
+
+	<sql id="exchangeOrderRecordColumns">
+		id,
+		exchange_id,
+		exchange_name,
+		old_unit_code,
+		old_unit_status,
+		old_coupon_name,
+		old_batch_code,
+		old_coupon_type,
+		new_unit_code,
+		new_batch_code,
+		new_coupon_name,
+		new_coupon_type,
+		user_mail,
+		exchange_time,
+		order_code,
+		conversion_status,
+		create_time,
+		update_time,
+		platform_id,
+		order_amount,
+		old_coupon_batch_name,
+		new_coupon_batch_name
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.promotion.po.ExchangeOrderRecordPO" resultMap="exchangeOrderRecordMap">
+		SELECT
+		<include refid="exchangeOrderRecordColumns" />
+		FROM exchange_order_record
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="exchangeOrderRecordMap">
+		SELECT
+		<include refid="exchangeOrderRecordColumns" />
+		FROM exchange_order_record
+		<where>
+			<if test="po.exchangeId != null">
+				and exchange_id = #{po.exchangeId}
+			</if>
+			<if test="po.exchangeName != null">
+				and exchange_name = #{po.exchangeName}
+			</if>
+			<if test="po.oldUnitCode != null">
+				and old_unit_code = #{po.oldUnitCode}
+			</if>
+			<if test="po.oldUnitStatus != null">
+				and old_unit_status = #{po.oldUnitStatus}
+			</if>
+			<if test="po.oldCouponName != null">
+				and old_coupon_name = #{po.oldCouponName}
+			</if>
+			<if test="po.oldBatchCode != null">
+				and old_batch_code = #{po.oldBatchCode}
+			</if>
+			<if test="po.oldCouponType != null">
+				and old_coupon_type = #{po.oldCouponType}
+			</if>
+			<if test="po.newUnitCode != null">
+				and new_unit_code = #{po.newUnitCode}
+			</if>
+			<if test="po.newBatchCode != null">
+				and new_batch_code = #{po.newBatchCode}
+			</if>
+			<if test="po.newCouponName != null">
+				and new_coupon_name = #{po.newCouponName}
+			</if>
+			<if test="po.newCouponType != null">
+				and new_coupon_type = #{po.newCouponType}
+			</if>
+			<if test="po.userMail != null">
+				and user_mail = #{po.userMail}
+			</if>
+			<if test="po.exchangeTime != null">
+				and exchange_time = #{po.exchangeTime}
+			</if>
+			<if test="po.orderCode != null">
+				and order_code = #{po.orderCode}
+			</if>
+			<if test="po.conversionStatus != null">
+				and conversion_status = #{po.conversionStatus}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.orderAmount != null">
+				and order_amount = #{po.orderAmount}
+			</if>
+			<if test="po.newCouponBatchName != null">
+				and new_coupon_batch_name = #{po.newCouponBatchName}
+			</if>
+			<if test="po.oldCouponBatchName != null">
+				and old_coupon_batch_name = #{po.oldCouponBatchName}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM exchange_order_record
+		<where>
+			<if test="po.exchangeId != null">
+				and exchange_id = #{po.exchangeId}
+			</if>
+			<if test="po.exchangeName != null">
+				and exchange_name = #{po.exchangeName}
+			</if>
+			<if test="po.oldUnitCode != null">
+				and old_unit_code = #{po.oldUnitCode}
+			</if>
+			<if test="po.oldUnitStatus != null">
+				and old_unit_status = #{po.oldUnitStatus}
+			</if>
+			<if test="po.oldCouponName != null">
+				and old_coupon_name = #{po.oldCouponName}
+			</if>
+			<if test="po.oldBatchCode != null">
+				and old_batch_code = #{po.oldBatchCode}
+			</if>
+			<if test="po.oldCouponType != null">
+				and old_coupon_type = #{po.oldCouponType}
+			</if>
+			<if test="po.newUnitCode != null">
+				and new_unit_code = #{po.newUnitCode}
+			</if>
+			<if test="po.newBatchCode != null">
+				and new_batch_code = #{po.newBatchCode}
+			</if>
+			<if test="po.newCouponName != null">
+				and new_coupon_name = #{po.newCouponName}
+			</if>
+			<if test="po.newCouponType != null">
+				and new_coupon_type = #{po.newCouponType}
+			</if>
+			<if test="po.userMail != null">
+				and user_mail = #{po.userMail}
+			</if>
+			<if test="po.exchangeTime != null">
+				and exchange_time = #{po.exchangeTime}
+			</if>
+			<if test="po.orderCode != null">
+				and order_code = #{po.orderCode}
+			</if>
+			<if test="po.conversionStatus != null">
+				and conversion_status = #{po.conversionStatus}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.orderAmount != null">
+				and order_amount = #{po.orderAmount}
+			</if>
+			<if test="po.newCouponBatchName != null">
+				and new_coupon_batch_name = #{po.newCouponBatchName}
+			</if>
+			<if test="po.oldCouponBatchName != null">
+				and old_coupon_batch_name = #{po.oldCouponBatchName}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="exchangeOrderRecordMap">
+		SELECT
+		<include refid="exchangeOrderRecordColumns" />
+		FROM exchange_order_record
+		<where>
+			<if test="po.exchangeId != null">
+				and exchange_id = #{po.exchangeId}
+			</if>
+			<if test="po.exchangeName != null">
+				and exchange_name = #{po.exchangeName}
+			</if>
+			<if test="po.oldUnitCode != null">
+				and old_unit_code = #{po.oldUnitCode}
+			</if>
+			<if test="po.oldUnitStatus != null">
+				and old_unit_status = #{po.oldUnitStatus}
+			</if>
+			<if test="po.oldCouponName != null">
+				and old_coupon_name = #{po.oldCouponName}
+			</if>
+			<if test="po.oldBatchCode != null">
+				and old_batch_code = #{po.oldBatchCode}
+			</if>
+			<if test="po.oldCouponType != null">
+				and old_coupon_type = #{po.oldCouponType}
+			</if>
+			<if test="po.newUnitCode != null">
+				and new_unit_code = #{po.newUnitCode}
+			</if>
+			<if test="po.newBatchCode != null">
+				and new_batch_code = #{po.newBatchCode}
+			</if>
+			<if test="po.newCouponName != null">
+				and new_coupon_name = #{po.newCouponName}
+			</if>
+			<if test="po.newCouponType != null">
+				and new_coupon_type = #{po.newCouponType}
+			</if>
+			<if test="po.userMail != null">
+				and user_mail = #{po.userMail}
+			</if>
+			<if test="po.exchangeTime != null">
+				and exchange_time = #{po.exchangeTime}
+			</if>
+			<if test="po.orderCode != null">
+				and order_code = #{po.orderCode}
+			</if>
+			<if test="po.conversionStatus != null">
+				and conversion_status = #{po.conversionStatus}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.orderAmount != null">
+				and order_amount = #{po.orderAmount}
+			</if>
+			<if test="po.newCouponBatchName != null">
+				and new_coupon_batch_name = #{po.newCouponBatchName}
+			</if>
+			<if test="po.oldCouponBatchName != null">
+				and old_coupon_batch_name = #{po.oldCouponBatchName}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+
+	<select id="getCountOfCompletedOrderByExchangeId" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM exchange_order_record
+		<where>
+		<if test="exchangeId != null">
+			and exchange_id = #{exchangeId} and conversion_status = 1
+		</if>
+		</where>
+	</select>
+
+	<select id="countOfFuzzQueryPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM exchange_order_record
+		<where>
+			<if test="po.exchangeId != null">
+				and exchange_id like concat('%',#{po.exchangeId},'%')
+			</if>
+			<if test="po.exchangeName != null">
+				and exchange_name like concat('%',#{po.exchangeName},'%')
+			</if>
+			<if test="po.oldUnitCode != null">
+				and old_unit_code like concat('%',#{po.oldUnitCode},'%')
+			</if>
+			<if test="po.oldUnitStatus != null">
+				and old_unit_status = #{po.oldUnitStatus}
+			</if>
+			<if test="po.oldCouponName != null">
+				and old_coupon_name like concat('%',#{po.oldCouponName},'%')
+			</if>
+			<if test="po.oldBatchCode != null">
+				and old_batch_code like concat('%',#{po.oldBatchCode},'%')
+			</if>
+			<if test="po.oldCouponType != null">
+				and old_coupon_type = #{po.oldCouponType}
+			</if>
+			<if test="po.newUnitCode != null">
+				and new_unit_code like concat('%',#{po.newUnitCode},'%')
+			</if>
+			<if test="po.newBatchCode != null">
+				and new_batch_code like concat('%',#{po.newBatchCode},'%')
+			</if>
+			<if test="po.newCouponName != null">
+				and new_coupon_name like concat('%',#{po.newCouponName},'%')
+			</if>
+			<if test="po.newCouponType != null">
+				and new_coupon_type = #{po.newCouponType}
+			</if>
+			<if test="po.exchangeTime != null">
+				and exchange_time between #{startTime} and #{endTime}
+			</if>
+			<if test="po.orderCode != null">
+				and order_code like concat('%',#{po.orderCode},'%')
+			</if>
+			<if test="po.conversionStatus != null">
+				and conversion_status = #{po.conversionStatus}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.orderAmount != null">
+				and order_amount = #{po.orderAmount}
+			</if>
+			<if test="po.newCouponBatchName != null">
+				and new_coupon_batch_name like concat('%', #{po.newCouponBatchName},'%')
+			</if>
+			<if test="po.oldCouponBatchName != null">
+				and old_coupon_batch_name like concat('%', #{po.oldCouponBatchName},'%')
+			</if>
+		</where>
+	</select>
+
+	<select id="fuzzQueryExchangeOrderRecord" resultMap="exchangeOrderRecordMap">
+		SELECT
+		<include refid="exchangeOrderRecordColumns" />
+		FROM exchange_order_record
+		<where>
+			<if test="po.exchangeId != null">
+				and exchange_id like concat('%',#{po.exchangeId},'%')
+			</if>
+			<if test="po.exchangeName != null">
+				and exchange_name like concat('%',#{po.exchangeName},'%')
+			</if>
+			<if test="po.oldUnitCode != null">
+				and old_unit_code like concat('%',#{po.oldUnitCode},'%')
+			</if>
+			<if test="po.oldUnitStatus != null">
+				and old_unit_status = #{po.oldUnitStatus}
+			</if>
+			<if test="po.oldCouponName != null">
+				and old_coupon_name like concat('%',#{po.oldCouponName},'%')
+			</if>
+			<if test="po.oldBatchCode != null">
+				and old_batch_code like concat('%',#{po.oldBatchCode},'%')
+			</if>
+			<if test="po.oldCouponType != null">
+				and old_coupon_type = #{po.oldCouponType}
+			</if>
+			<if test="po.newUnitCode != null">
+				and new_unit_code like concat('%',#{po.newUnitCode},'%')
+			</if>
+			<if test="po.newBatchCode != null">
+				and new_batch_code like concat('%',#{po.newBatchCode},'%')
+			</if>
+			<if test="po.newCouponName != null">
+				and new_coupon_name like concat('%',#{po.newCouponName},'%')
+			</if>
+			<if test="po.newCouponType != null">
+				and new_coupon_type = #{po.newCouponType}
+			</if>
+			<if test="startTime != null">
+				and exchange_time >= #{startTime}
+			</if>
+			<if test="endTime != null">
+				and #{endTime} >= exchange_time
+			</if>
+			<if test="po.orderCode != null">
+				and order_code like concat('%',#{po.orderCode},'%')
+			</if>
+			<if test="po.conversionStatus != null">
+				and conversion_status = #{po.conversionStatus}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.orderAmount!= null">
+				and order_amount = #{po.orderAmount}
+			</if>
+			<if test="po.newCouponBatchName != null">
+				and new_coupon_batch_name like concat('%', #{po.newCouponBatchName},'%')
+			</if>
+			<if test="po.oldCouponBatchName != null">
+				and old_coupon_batch_name like concat('%', #{po.oldCouponBatchName},'%')
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY id desc
+			</otherwise>
+		</choose>
+		<if test="page != null">
+			limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+
+	<select id="findAllLived" resultMap="exchangeOrderRecordMap">
+		SELECT
+		<include refid="exchangeOrderRecordColumns" />
+		FROM exchange_order_record
+		<where>
+			<if test="po.exchangeId != null">
+				and exchange_id = #{po.exchangeId}
+			</if>
+			<if test="po.exchangeName != null">
+				and exchange_name = #{po.exchangeName}
+			</if>
+			<if test="po.oldUnitCode != null">
+				and old_unit_code = #{po.oldUnitCode}
+			</if>
+			<if test="po.oldUnitStatus != null">
+				and old_unit_status = #{po.oldUnitStatus}
+			</if>
+			<if test="po.oldCouponName != null">
+				and old_coupon_name = #{po.oldCouponName}
+			</if>
+			<if test="po.oldBatchCode != null">
+				and old_batch_code = #{po.oldBatchCode}
+			</if>
+			<if test="po.oldCouponType != null">
+				and old_coupon_type = #{po.oldCouponType}
+			</if>
+			<if test="po.newUnitCode != null">
+				and new_unit_code = #{po.newUnitCode}
+			</if>
+			<if test="po.newBatchCode != null">
+				and new_batch_code = #{po.newBatchCode}
+			</if>
+			<if test="po.newCouponName != null">
+				and new_coupon_name = #{po.newCouponName}
+			</if>
+			<if test="po.newCouponType != null">
+				and new_coupon_type = #{po.newCouponType}
+			</if>
+			<if test="po.userMail != null">
+				and user_mail = #{po.userMail}
+			</if>
+			<if test="po.exchangeTime != null">
+				and exchange_time = #{po.exchangeTime}
+			</if>
+			<if test="po.orderCode != null">
+				and order_code = #{po.orderCode}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.orderAmount != null">
+				and order_amount = #{po.orderAmount}
+			</if>
+			<if test="po.newCouponBatchName != null">
+				and new_coupon_batch_name = #{po.newCouponBatchName}
+			</if>
+			<if test="po.oldCouponBatchName != null">
+				and old_coupon_batch_name = #{po.oldCouponBatchName}
+			</if>
+			AND (conversion_status is null OR conversion_status !=2)
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY id desc
+			</otherwise>
+		</choose>
+	</select>
+</mapper>
+	

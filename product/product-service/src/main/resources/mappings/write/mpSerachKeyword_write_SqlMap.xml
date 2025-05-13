@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.product.dao.write.MpSerachKeywordWriteDAO">
+	
+	<sql id="inClause">
+		<foreach collection="poList" item="po" separator=",">
+				(#{po.merchantProductId},
+				#{po.keyword},
+				#{po.platformId})
+		</foreach>
+	</sql>
+	
+	<insert id="insert" parameterType="com.egeo.components.product.po.MpSerachKeywordPO">
+		INSERT INTO mp_serach_keyword(
+        <trim suffixOverrides=",">
+			<if test="merchantProductId != null">
+				merchant_product_id,
+			</if>
+			<if test="keyword != null">
+				keyword,
+			</if>
+			<if test="platformId != null">
+				platform_id,
+			</if>
+        </trim>		
+		) VALUES (
+        <trim suffixOverrides=",">
+			<if test="merchantProductId != null">
+				#{merchantProductId},
+			</if>
+			<if test="keyword != null">
+				#{keyword},
+			</if>
+			<if test="platformId != null">
+				#{platformId},
+			</if>
+        </trim>		
+		)
+		<selectKey keyProperty="id" resultType="java.lang.Long">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	
+	<insert id="insertAll">
+		INSERT INTO mp_serach_keyword(
+				merchant_product_id,
+				keyword,
+				platform_id
+		) VALUES <include refid="inClause" />
+	</insert>
+
+
+	
+	
+	<update id="update">
+	UPDATE mp_serach_keyword 
+		<set>
+			<if test="merchantProductId != null">
+				merchant_product_id = #{merchantProductId},
+			</if>			
+			<if test="keyword != null">
+				keyword = #{keyword},
+			</if>			
+			<if test="platformId != null">
+				platform_id = #{platformId},
+			</if>			
+		</set>
+			WHERE id = #{id}
+	</update>	
+	
+
+	<delete id="delete">
+		delete from mp_serach_keyword where id = #{id}
+	</delete>
+
+	<delete id="deleteByPara">
+		delete from mp_serach_keyword 
+		<where>
+			<if test="merchantProductId != null">
+				and merchant_product_id = #{merchantProductId}
+			</if>
+			<if test="keyword != null">
+				and keyword = #{keyword}
+			</if>
+			<if test="platformId != null">
+				and platform_id = #{platformId}
+			</if>
+		</where>
+	</delete>
+
+
+</mapper>
+	

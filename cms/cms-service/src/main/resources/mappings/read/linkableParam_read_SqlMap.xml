@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.cms.dao.read.LinkableParamReadDAO">
+	<resultMap type="com.egeo.components.cms.po.LinkableParamPO" id="linkableParamMap">
+		<result property="id" column="id" />
+		<result property="linkButtonId" column="link_button_id" />
+		<result property="name" column="name" />
+		<result property="value" column="value" />
+		<result property="remark" column="remark" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+	</resultMap>
+
+	<sql id="linkableParamColumns">
+		id,
+		link_button_id,
+		name,
+		value,
+		remark,
+		create_time,
+		update_time
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.cms.po.LinkableParamPO" resultMap="linkableParamMap">
+		SELECT
+		<include refid="linkableParamColumns" />
+		FROM linkable_param
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="linkableParamMap">
+		SELECT
+		<include refid="linkableParamColumns" />
+		FROM linkable_param
+		<where>
+			<if test="po.linkButtonId != null">
+				and link_button_id = #{po.linkButtonId}
+			</if>
+			<if test="po.name != null">
+				and name = #{po.name}
+			</if>
+			<if test="po.value != null">
+				and value = #{po.value}
+			</if>
+			<if test="po.remark != null">
+				and remark = #{po.remark}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM linkable_param
+		<where>
+			<if test="po.linkButtonId != null">
+				and link_button_id = #{po.linkButtonId}
+			</if>
+			<if test="po.name != null">
+				and name = #{po.name}
+			</if>
+			<if test="po.value != null">
+				and value = #{po.value}
+			</if>
+			<if test="po.remark != null">
+				and remark = #{po.remark}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="linkableParamMap">
+		SELECT
+		<include refid="linkableParamColumns" />
+		FROM linkable_param
+		<where>
+			<if test="po.linkButtonId != null">
+				and link_button_id = #{po.linkButtonId}
+			</if>
+			<if test="po.name != null">
+				and name = #{po.name}
+			</if>
+			<if test="po.value != null">
+				and value = #{po.value}
+			</if>
+			<if test="po.remark != null">
+				and remark = #{po.remark}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+</mapper>
+	

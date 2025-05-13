@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.cms.dao.read.ElementDictReadDAO">
+
+
+	<select id="queryElementDictByNotType" resultMap="elementDictMap">
+		select * from element_dict
+		<where>
+			<if test="type != null">
+				<choose>
+					<when test="type == 0 or type == 1">
+						and (type = #{type} or type = 2)
+					</when>
+					<otherwise>
+						and type = #{type}
+					</otherwise>
+				</choose>		
+			</if>
+		</where>
+	</select>
+
+	<select id="queryElementDictByConfigType" resultMap="elementDictMap">
+		select * from element_dict
+		where config_type=#{configType}
+	</select>
+
+	<resultMap type="com.egeo.components.cms.po.ElementDictPO" id="elementDictMap">
+		<result property="id" column="id" />
+		<result property="imgUrl" column="img_url" />
+		<result property="name" column="name" />
+		<result property="configType" column="config_type" />
+		<result property="clientVersionA" column="client_version_a" />
+		<result property="clientVersionI" column="client_version_i" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="type" column="type" />
+	</resultMap>
+
+	<sql id="elementDictColumns">
+		id,
+		img_url,
+		name,
+		config_type,
+		client_version_a,
+		client_version_i,
+		create_time,
+		update_time,
+		type
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.cms.po.ElementDictPO" resultMap="elementDictMap">
+		SELECT
+		<include refid="elementDictColumns" />
+		FROM element_dict
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="elementDictMap">
+		SELECT
+		<include refid="elementDictColumns" />
+		FROM element_dict
+		<where>
+			<if test="po.imgUrl != null">
+				and img_url = #{po.imgUrl}
+			</if>
+			<if test="po.name != null">
+				and name = #{po.name}
+			</if>
+			<if test="po.configType != null">
+				and config_type = #{po.configType}
+			</if>
+			<if test="po.clientVersionA != null">
+				and client_version_a = #{po.clientVersionA}
+			</if>
+			<if test="po.clientVersionI != null">
+				and client_version_i = #{po.clientVersionI}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM element_dict
+		<where>
+			<if test="po.imgUrl != null">
+				and img_url = #{po.imgUrl}
+			</if>
+			<if test="po.name != null">
+				and name = #{po.name}
+			</if>
+			<if test="po.configType != null">
+				and config_type = #{po.configType}
+			</if>
+			<if test="po.clientVersionA != null">
+				and client_version_a = #{po.clientVersionA}
+			</if>
+			<if test="po.clientVersionI != null">
+				and client_version_i = #{po.clientVersionI}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="elementDictMap">
+		SELECT
+		<include refid="elementDictColumns" />
+		FROM element_dict
+		<where>
+			<if test="po.imgUrl != null">
+				and img_url = #{po.imgUrl}
+			</if>
+			<if test="po.name != null">
+				and name = #{po.name}
+			</if>
+			<if test="po.configType != null">
+				and config_type = #{po.configType}
+			</if>
+			<if test="po.clientVersionA != null">
+				and client_version_a = #{po.clientVersionA}
+			</if>
+			<if test="po.clientVersionI != null">
+				and client_version_i = #{po.clientVersionI}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+</mapper>
+	

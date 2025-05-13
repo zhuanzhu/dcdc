@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.product.dao.read.SuSerachKeywordReadDAO">
+	<resultMap type="com.egeo.components.product.po.SuSerachKeywordPO" id="suSerachKeywordMap">
+		<result property="id" column="id" />
+		<result property="standardUnitId" column="standard_unit_id" />
+		<result property="keyword" column="keyword" />
+		<result property="platformId" column="platform_id" />
+	</resultMap>
+
+	<sql id="suSerachKeywordColumns">
+		id,
+		standard_unit_id,
+		keyword,
+		platform_id
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.product.po.SuSerachKeywordPO" resultMap="suSerachKeywordMap">
+		SELECT
+		<include refid="suSerachKeywordColumns" />
+		FROM su_serach_keyword
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="suSerachKeywordMap">
+		SELECT
+		<include refid="suSerachKeywordColumns" />
+		FROM su_serach_keyword
+		<where>
+			<if test="po.standardUnitId != null">
+				and standard_unit_id = #{po.standardUnitId}
+			</if>
+			<if test="po.keyword != null">
+				and keyword = #{po.keyword}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM su_serach_keyword
+		<where>
+			<if test="po.standardUnitId != null">
+				and standard_unit_id = #{po.standardUnitId}
+			</if>
+			<if test="po.keyword != null">
+				and keyword = #{po.keyword}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="suSerachKeywordMap">
+		SELECT
+		<include refid="suSerachKeywordColumns" />
+		FROM su_serach_keyword
+		<where>
+			<if test="po.standardUnitId != null">
+				and standard_unit_id = #{po.standardUnitId}
+			</if>
+			<if test="po.keyword != null">
+				and keyword = #{po.keyword}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="keywordByStandardUnitId" resultType="java.lang.String">
+		SELECT
+		keyword
+		FROM su_serach_keyword
+		WHERE standard_unit_id = #{suId} and platform_id = #{platformId}
+	</select>
+</mapper>
+	

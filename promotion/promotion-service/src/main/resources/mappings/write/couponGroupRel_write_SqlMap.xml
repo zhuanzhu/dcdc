@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.promotion.dao.write.CouponGroupRelWriteDAO">
+	<insert id="insert" parameterType="com.egeo.components.promotion.po.CouponGroupRelPO">
+		INSERT INTO coupon_group_rel(
+        <trim suffixOverrides=",">
+			<if test="couponGroupId != null">
+				coupon_group_id,
+			</if>
+			<if test="couponId != null">
+				coupon_id,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+        </trim>		
+		) VALUES (
+        <trim suffixOverrides=",">
+			<if test="couponGroupId != null">
+				#{couponGroupId},
+			</if>
+			<if test="couponId != null">
+				#{couponId},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
+			</if>
+        </trim>		
+		)
+		<selectKey keyProperty="id" resultType="java.lang.Long">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+
+	
+	
+	<update id="update">
+	UPDATE coupon_group_rel 
+		<set>
+			<if test="couponGroupId != null">
+				coupon_group_id = #{couponGroupId},
+			</if>			
+			<if test="couponId != null">
+				coupon_id = #{couponId},
+			</if>			
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>			
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>			
+		</set>
+			WHERE id = #{id}
+	</update>	
+	
+
+	<delete id="delete">
+		delete from coupon_group_rel where id = #{id}
+	</delete>
+
+	<delete id="deleteByPara">
+		delete from coupon_group_rel 
+		<where>
+			<if test="couponGroupId != null">
+				and coupon_group_id = #{couponGroupId}
+			</if>
+			<if test="couponId != null">
+				and coupon_id = #{couponId}
+			</if>
+			<if test="createTime != null">
+				and create_time = #{createTime}
+			</if>
+			<if test="updateTime != null">
+				and update_time = #{updateTime}
+			</if>
+		</where>
+	</delete>
+
+
+</mapper>
+	

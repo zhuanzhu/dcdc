@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.product.dao.read.BlessingCoinBannerReadDAO">
+	<resultMap type="com.egeo.components.product.po.BlessingCoinBannerPO" id="blessingCoinBannerMap">
+		<result property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="type" column="type" />
+		<result property="sortValue" column="sort_value" />
+		<result property="location" column="location" />
+		<result property="standardUnitId" column="standard_unit_id" />
+		<result property="activityId" column="activity_id" />
+		<result property="pictureUrl" column="picture_url" />
+		<result property="path" column="path" />
+		<result property="isShow" column="is_show" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="platformId" column="platform_id" />
+	</resultMap>
+
+	<sql id="blessingCoinBannerColumns">
+		id,
+		name,
+		type,
+		sort_value,
+		location,
+		standard_unit_id,
+		activity_id,
+		picture_url,
+		path,
+		is_show,
+		create_time,
+		update_time,
+		platform_id
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.product.po.BlessingCoinBannerPO" resultMap="blessingCoinBannerMap">
+		SELECT
+		<include refid="blessingCoinBannerColumns" />
+		FROM blessing_coin_banner
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="blessingCoinBannerMap">
+		SELECT
+		<include refid="blessingCoinBannerColumns" />
+		FROM blessing_coin_banner
+		<where>
+			<if test="po.name != null">
+				and name = #{po.name}
+			</if>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+			<if test="po.sortValue != null">
+				and sort_value = #{po.sortValue}
+			</if>
+			<if test="po.location != null">
+				and location = #{po.location}
+			</if>
+			<if test="po.standardUnitId != null">
+				and standard_unit_id = #{po.standardUnitId}
+			</if>
+			<if test="po.activityId != null">
+				and activity_id = #{po.activityId}
+			</if>
+			<if test="po.pictureUrl != null">
+				and picture_url = #{po.pictureUrl}
+			</if>
+			<if test="po.path != null">
+				and path = #{po.path}
+			</if>
+			<if test="po.isShow != null">
+				and is_show = #{po.isShow}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY sort_value
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM blessing_coin_banner
+		<where>
+			<if test="po.name != null">
+				and name = #{po.name}
+			</if>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+			<if test="po.sortValue != null">
+				and sort_value = #{po.sortValue}
+			</if>
+			<if test="po.location != null">
+				and location = #{po.location}
+			</if>
+			<if test="po.standardUnitId != null">
+				and standard_unit_id = #{po.standardUnitId}
+			</if>
+			<if test="po.activityId != null">
+				and activity_id = #{po.activityId}
+			</if>
+			<if test="po.pictureUrl != null">
+				and picture_url = #{po.pictureUrl}
+			</if>
+			<if test="po.path != null">
+				and path = #{po.path}
+			</if>
+			<if test="po.isShow != null">
+				and is_show = #{po.isShow}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="blessingCoinBannerMap">
+		SELECT
+		<include refid="blessingCoinBannerColumns" />
+		FROM blessing_coin_banner
+		<where>
+			<if test="po.name != null">
+				and name = #{po.name}
+			</if>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+			<if test="po.sortValue != null">
+				and sort_value = #{po.sortValue}
+			</if>
+			<if test="po.location != null">
+				and location = #{po.location}
+			</if>
+			<if test="po.standardUnitId != null">
+				and standard_unit_id = #{po.standardUnitId}
+			</if>
+			<if test="po.activityId != null">
+				and activity_id = #{po.activityId}
+			</if>
+			<if test="po.pictureUrl != null">
+				and picture_url = #{po.pictureUrl}
+			</if>
+			<if test="po.path != null">
+				and path = #{po.path}
+			</if>
+			<if test="po.isShow != null">
+				and is_show = #{po.isShow}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY sort_value
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findBlessingCoinBannerAllApp" resultMap="blessingCoinBannerMap">
+	SELECT
+		<include refid="blessingCoinBannerColumns" />
+		FROM blessing_coin_banner
+		<where>
+			<if test="po.companyId != null">
+				and id in(SELECT blessing_coin_banner_id FROM blessing_coin_banner_company WHERE company_id = #{po.companyId})
+			</if>
+			<if test="po.name != null">
+				and name = #{po.name}
+			</if>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+			<if test="po.sortValue != null">
+				and sort_value = #{po.sortValue}
+			</if>
+			<if test="po.location != null">
+				and location = #{po.location}
+			</if>
+			<if test="po.standardUnitId != null">
+				and standard_unit_id = #{po.standardUnitId}
+			</if>
+			<if test="po.activityId != null">
+				and activity_id = #{po.activityId}
+			</if>
+			<if test="po.pictureUrl != null">
+				and picture_url = #{po.pictureUrl}
+			</if>
+			<if test="po.path != null">
+				and path = #{po.path}
+			</if>
+			<if test="po.isShow != null">
+				and is_show = #{po.isShow}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY sort_value
+			</otherwise>
+		</choose>
+	</select>
+</mapper>
+	

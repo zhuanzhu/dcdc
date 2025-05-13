@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.user.dao.read.PayTypeReadDAO">
+	<resultMap type="com.egeo.components.user.po.PayTypePO" id="payTypeMap">
+		<result property="id" column="id" />
+		<result property="payTypeCode" column="pay_type_code" />
+		<result property="payTypeName" column="pay_type_name" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="logImageUrl" column="log_image_url" />
+		<result property="payTypeRemarks" column="pay_type_remarks" />
+	</resultMap>
+
+	<sql id="payTypeColumns">
+		id,
+		pay_type_code,
+		pay_type_name,
+		create_time,
+		update_time,
+		log_image_url,
+		pay_type_remarks
+	</sql>
+	<sql id="inClause">
+		in
+		<foreach collection="payTypeCodes" item="payTypeCode" open="(" separator="," close=")">
+			#{payTypeCode}
+		</foreach>
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.user.po.PayTypePO" resultMap="payTypeMap">
+	SELECT
+	<include refid="payTypeColumns" />
+	FROM pay_type
+	WHERE id = #{po.id}
+	</select>
+	<select id="findByCode" parameterType="java.lang.Integer" resultMap="payTypeMap">
+		SELECT
+		<include refid="payTypeColumns" />
+		FROM pay_type
+		WHERE pay_type_code = #{po.payTypeCode}
+	</select>
+
+
+
+
+	<select id="findByCodes"  resultMap="payTypeMap">
+		SELECT
+		<include refid="payTypeColumns" />
+		FROM pay_type
+		WHERE pay_type_code
+		<include refid="inClause" />
+		ORDER BY create_time ASC
+	</select>
+
+
+
+
+
+	<select id="findOfPage" resultMap="payTypeMap">
+		SELECT
+		<include refid="payTypeColumns" />
+		FROM pay_type
+		<where>
+			<if test="po.payTypeCode != null">
+				and pay_type_code = #{po.payTypeCode}
+			</if>
+			<if test="po.payTypeName != null">
+				and pay_type_name = #{po.payTypeName}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM pay_type
+		<where>
+			<if test="po.payTypeCode != null">
+				and pay_type_code = #{po.payTypeCode}
+			</if>
+			<if test="po.payTypeName != null">
+				and pay_type_name = #{po.payTypeName}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="payTypeMap">
+		SELECT
+		<include refid="payTypeColumns" />
+		FROM pay_type
+		<where>
+			<if test="po.payTypeCode != null">
+				and pay_type_code = #{po.payTypeCode}
+			</if>
+			<if test="po.payTypeName != null">
+				and pay_type_name = #{po.payTypeName}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+</mapper>
+	

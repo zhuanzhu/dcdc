@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.order.dao.read.SoDeliveryReadDAO">
+	<resultMap type="com.egeo.components.order.po.SoDeliveryPO" id="soDeliveryMap">
+		<result property="id" column="id" />
+		<result property="userId" column="user_id" />
+		<result property="merchantId" column="merchant_id" />
+		<result property="type" column="type" />
+		<result property="soId" column="so_id" />
+		<result property="soChildId" column="so_child_id" />
+		<result property="orderCode" column="order_code" />
+		<result property="deliveryCompanyId" column="delivery_company_id" />
+		<result property="deliveryExpressNbr" column="delivery_express_nbr" />
+		<result property="actualStorageTime" column="actual_storage_time" />
+		<result property="actualReceiptTime" column="actual_receipt_time" />
+		<result property="stockOutNo" column="stock_out_no" />
+		<result property="remark" column="remark" />
+		<result property="deliveryType" column="delivery_type" />
+		<result property="deliveryRemark" column="delivery_remark" />
+		<result property="packageCode" column="package_code" />
+		<result property="updateTime" column="update_time" />
+		<result property="createTime" column="create_time" />
+		<result property="platformId" column="platform_id" />
+	</resultMap>
+
+	<sql id="soDeliveryColumns">
+		id,
+		user_id,
+		merchant_id,
+		type,
+		so_id,
+		so_child_id,
+		order_code,
+		delivery_company_id,
+		delivery_express_nbr,
+		actual_storage_time,
+		actual_receipt_time,
+		stock_out_no,
+		remark,
+		delivery_type,
+		delivery_remark,
+		package_code,
+		update_time,
+		create_time,
+		platform_id
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.order.po.SoDeliveryPO" resultMap="soDeliveryMap">
+		SELECT
+		<include refid="soDeliveryColumns" />
+		FROM so_delivery
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="soDeliveryMap">
+		SELECT
+		<include refid="soDeliveryColumns" />
+		FROM so_delivery
+		<where>
+			<if test="po.userId != null">
+				and user_id = #{po.userId}
+			</if>
+			<if test="po.merchantId != null">
+				and merchant_id = #{po.merchantId}
+			</if>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+			<if test="po.soId != null">
+				and so_id = #{po.soId}
+			</if>
+			<if test="po.soChildId != null">
+				and so_child_id = #{po.soChildId}
+			</if>
+			<if test="po.orderCode != null">
+				and order_code = #{po.orderCode}
+			</if>
+			<if test="po.deliveryCompanyId != null">
+				and delivery_company_id = #{po.deliveryCompanyId}
+			</if>
+			<if test="po.deliveryExpressNbr != null">
+				and delivery_express_nbr = #{po.deliveryExpressNbr}
+			</if>
+			<if test="po.actualStorageTime != null">
+				and actual_storage_time = #{po.actualStorageTime}
+			</if>
+			<if test="po.actualReceiptTime != null">
+				and actual_receipt_time = #{po.actualReceiptTime}
+			</if>
+			<if test="po.stockOutNo != null">
+				and stock_out_no = #{po.stockOutNo}
+			</if>
+			<if test="po.remark != null">
+				and remark = #{po.remark}
+			</if>
+			<if test="po.deliveryType != null">
+				and delivery_type = #{po.deliveryType}
+			</if>
+			<if test="po.deliveryRemark != null">
+				and delivery_remark = #{po.deliveryRemark}
+			</if>
+			<if test="po.packageCode != null">
+				and package_code = #{po.packageCode}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM so_delivery
+		<where>
+			<if test="po.userId != null">
+				and user_id = #{po.userId}
+			</if>
+			<if test="po.merchantId != null">
+				and merchant_id = #{po.merchantId}
+			</if>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+			<if test="po.soId != null">
+				and so_id = #{po.soId}
+			</if>
+			<if test="po.soChildId != null">
+				and so_child_id = #{po.soChildId}
+			</if>
+			<if test="po.orderCode != null">
+				and order_code = #{po.orderCode}
+			</if>
+			<if test="po.deliveryCompanyId != null">
+				and delivery_company_id = #{po.deliveryCompanyId}
+			</if>
+			<if test="po.deliveryExpressNbr != null">
+				and delivery_express_nbr = #{po.deliveryExpressNbr}
+			</if>
+			<if test="po.actualStorageTime != null">
+				and actual_storage_time = #{po.actualStorageTime}
+			</if>
+			<if test="po.actualReceiptTime != null">
+				and actual_receipt_time = #{po.actualReceiptTime}
+			</if>
+			<if test="po.stockOutNo != null">
+				and stock_out_no = #{po.stockOutNo}
+			</if>
+			<if test="po.remark != null">
+				and remark = #{po.remark}
+			</if>
+			<if test="po.deliveryType != null">
+				and delivery_type = #{po.deliveryType}
+			</if>
+			<if test="po.deliveryRemark != null">
+				and delivery_remark = #{po.deliveryRemark}
+			</if>
+			<if test="po.packageCode != null">
+				and package_code = #{po.packageCode}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="soDeliveryMap">
+		SELECT
+		<include refid="soDeliveryColumns" />
+		FROM so_delivery
+		<where>
+			<if test="po.userId != null">
+				and user_id = #{po.userId}
+			</if>
+			<if test="po.merchantId != null">
+				and merchant_id = #{po.merchantId}
+			</if>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+			<if test="po.soId != null">
+				and so_id = #{po.soId}
+			</if>
+			<if test="po.soChildId != null">
+				and so_child_id = #{po.soChildId}
+			</if>
+			<if test="po.orderCode != null">
+				and order_code = #{po.orderCode}
+			</if>
+			<if test="po.deliveryCompanyId != null">
+				and delivery_company_id = #{po.deliveryCompanyId}
+			</if>
+			<if test="po.deliveryExpressNbr != null">
+				and delivery_express_nbr = #{po.deliveryExpressNbr}
+			</if>
+			<if test="po.actualStorageTime != null">
+				and actual_storage_time = #{po.actualStorageTime}
+			</if>
+			<if test="po.actualReceiptTime != null">
+				and actual_receipt_time = #{po.actualReceiptTime}
+			</if>
+			<if test="po.stockOutNo != null">
+				and stock_out_no = #{po.stockOutNo}
+			</if>
+			<if test="po.remark != null">
+				and remark = #{po.remark}
+			</if>
+			<if test="po.deliveryType != null">
+				and delivery_type = #{po.deliveryType}
+			</if>
+			<if test="po.deliveryRemark != null">
+				and delivery_remark = #{po.deliveryRemark}
+			</if>
+			<if test="po.packageCode != null">
+				and package_code = #{po.packageCode}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+</mapper>
+	

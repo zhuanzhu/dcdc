@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.product.dao.write.ProductVideoWriteDAO">
+	<insert id="insert" parameterType="com.egeo.components.product.po.ProductVideoPO">
+		INSERT INTO product_video(
+        <trim suffixOverrides=",">
+			<if test="productId != null">
+				product_id,
+			</if>
+			<if test="videoId != null">
+				video_id,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="type != null">
+				type,
+			</if>
+			<if test="thumbnailUrl != null">
+				thumbnail_url,
+			</if>
+			<if test="videoUrl != null">
+				video_url,
+			</if>
+			<if test="platformId != null">
+				platform_id,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+        </trim>		
+		) VALUES (
+        <trim suffixOverrides=",">
+			<if test="productId != null">
+				#{productId},
+			</if>
+			<if test="videoId != null">
+				#{videoId},
+			</if>
+			<if test="name != null">
+				#{name},
+			</if>
+			<if test="type != null">
+				#{type},
+			</if>
+			<if test="thumbnailUrl != null">
+				#{thumbnailUrl},
+			</if>
+			<if test="videoUrl != null">
+				#{videoUrl},
+			</if>
+			<if test="platformId != null">
+				#{platformId},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
+			</if>
+        </trim>		
+		)
+		<selectKey keyProperty="id" resultType="java.lang.Long">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+
+	
+	
+	<update id="update">
+	UPDATE product_video 
+		<set>
+			<if test="productId != null">
+				product_id = #{productId},
+			</if>			
+			<if test="videoId != null">
+				video_id = #{videoId},
+			</if>			
+			<if test="name != null">
+				name = #{name},
+			</if>			
+			<if test="type != null">
+				type = #{type},
+			</if>			
+			<if test="thumbnailUrl != null">
+				thumbnail_url = #{thumbnailUrl},
+			</if>			
+			<if test="videoUrl != null">
+				video_url = #{videoUrl},
+			</if>			
+			<if test="platformId != null">
+				platform_id = #{platformId},
+			</if>			
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>			
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>			
+		</set>
+			WHERE id = #{id}
+	</update>	
+	
+
+	<delete id="delete">
+		delete from product_video where id = #{id}
+	</delete>
+
+	<delete id="deleteByPara">
+		delete from product_video 
+		<where>
+			<if test="productId != null">
+				and product_id = #{productId}
+			</if>
+			<if test="videoId != null">
+				and video_id = #{videoId}
+			</if>
+			<if test="name != null">
+				and name = #{name}
+			</if>
+			<if test="type != null">
+				and type = #{type}
+			</if>
+			<if test="thumbnailUrl != null">
+				and thumbnail_url = #{thumbnailUrl}
+			</if>
+			<if test="videoUrl != null">
+				and video_url = #{videoUrl}
+			</if>
+			<if test="platformId != null">
+				and platform_id = #{platformId}
+			</if>
+			<if test="createTime != null">
+				and create_time = #{createTime}
+			</if>
+			<if test="updateTime != null">
+				and update_time = #{updateTime}
+			</if>
+		</where>
+	</delete>
+
+
+</mapper>
+	

@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.order.dao.read.SoThirdpartyReadDAO">
+	<resultMap type="com.egeo.components.order.po.SoThirdpartyPO" id="soThirdpartyMap">
+		<result property="id" column="id" />
+		<result property="soChildId" column="so_child_id" />
+		<result property="thirdpartyId" column="thirdparty_id" />
+		<result property="thirdpartyStatus" column="thirdparty_status" />
+		<result property="userName" column="user_name" />
+		<result property="idCardNum" column="id_card_num" />
+		<result property="phone" column="phone" />
+		<result property="oidCardNum" column="oid_card_num" />
+		<result property="comment" column="comment" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="soChildCode" column="so_child_code" />
+		<result property="thirdpartyPayTime" column="thirdparty_pay_time" />
+		<result property="thirdpartyPayAmount" column="thirdparty_pay_amount" />
+	</resultMap>
+
+	<sql id="soThirdpartyColumns">
+		id,
+		so_child_id,
+		thirdparty_id,
+		thirdparty_status,
+		user_name,
+		id_card_num,
+		phone,
+		oid_card_num,
+		comment,
+		create_time,
+		update_time,
+		so_child_code,
+		thirdparty_pay_time,
+		thirdparty_pay_amount
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.order.po.SoThirdpartyPO" resultMap="soThirdpartyMap">
+		SELECT
+		<include refid="soThirdpartyColumns" />
+		FROM so_thirdparty
+		WHERE id = #{po.id}
+	</select>
+	<select id="findSoChildIdByThirdpartyId" resultType="java.lang.Long">
+		SELECT
+		so_child_id
+		FROM so_thirdparty
+		WHERE thirdparty_id = #{jdOrderId}
+	</select>
+
+
+	<select id="getThirdpartyIdListByStatus" resultType="java.lang.Long">
+			select DISTINCT(sc.thirdparty_so_child_id)
+			from  so_child sc
+			LEFT JOIN so s  on s.id=sc.so_id
+			where sc.performing_party=6
+			and (s.order_status=1 OR s.order_status=2)
+	</select>
+
+	<select id="findOfPage" resultMap="soThirdpartyMap">
+		SELECT
+		<include refid="soThirdpartyColumns" />
+		FROM so_thirdparty
+		<where>
+			<if test="po.soChildId != null">
+				and so_child_id = #{po.soChildId}
+			</if>
+			<if test="po.thirdpartyId != null">
+				and thirdparty_id = #{po.thirdpartyId}
+			</if>
+			<if test="po.thirdpartyStatus != null">
+				and thirdparty_status = #{po.thirdpartyStatus}
+			</if>
+			<if test="po.userName != null">
+				and user_name = #{po.userName}
+			</if>
+			<if test="po.idCardNum != null">
+				and id_card_num = #{po.idCardNum}
+			</if>
+			<if test="po.phone != null">
+				and phone = #{po.phone}
+			</if>
+			<if test="po.oidCardNum != null">
+				and oid_card_num = #{po.oidCardNum}
+			</if>
+			<if test="po.comment != null">
+				and comment = #{po.comment}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY id desc
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM so_thirdparty
+		<where>
+			<if test="po.soChildId != null">
+				and so_child_id = #{po.soChildId}
+			</if>
+			<if test="po.thirdpartyId != null">
+				and thirdparty_id = #{po.thirdpartyId}
+			</if>
+			<if test="po.thirdpartyStatus != null">
+				and thirdparty_status = #{po.thirdpartyStatus}
+			</if>
+			<if test="po.userName != null">
+				and user_name = #{po.userName}
+			</if>
+			<if test="po.idCardNum != null">
+				and id_card_num = #{po.idCardNum}
+			</if>
+			<if test="po.phone != null">
+				and phone = #{po.phone}
+			</if>
+			<if test="po.oidCardNum != null">
+				and oid_card_num = #{po.oidCardNum}
+			</if>
+			<if test="po.comment != null">
+				and comment = #{po.comment}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+	</select>
+
+	<select id="findAll" resultMap="soThirdpartyMap">
+		SELECT
+		<include refid="soThirdpartyColumns" />
+		FROM so_thirdparty
+		<where>
+			<if test="po.soChildId != null">
+				and so_child_id = #{po.soChildId}
+			</if>
+			<if test="po.thirdpartyId != null">
+				and thirdparty_id = #{po.thirdpartyId}
+			</if>
+			<if test="po.thirdpartyStatus != null">
+				and thirdparty_status = #{po.thirdpartyStatus}
+			</if>
+			<if test="po.userName != null">
+				and user_name = #{po.userName}
+			</if>
+			<if test="po.idCardNum != null">
+				and id_card_num = #{po.idCardNum}
+			</if>
+			<if test="po.phone != null">
+				and phone = #{po.phone}
+			</if>
+			<if test="po.oidCardNum != null">
+				and oid_card_num = #{po.oidCardNum}
+			</if>
+			<if test="po.comment != null">
+				and comment = #{po.comment}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY id desc
+			</otherwise>
+		</choose>
+	</select>
+
+	<select id="findSoStatusByThirdpartyId"  resultType="java.lang.Integer">
+		SELECT
+		c.order_status
+		FROM so_thirdparty a LEFT JOIN so_child b  on a.so_child_id = b.id LEFT  JOIN so c ON c.id=b.so_id
+		WHERE thirdparty_id = #{jdOrderId}
+	</select>
+</mapper>

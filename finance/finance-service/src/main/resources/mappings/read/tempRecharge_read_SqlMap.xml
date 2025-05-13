@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.finance.dao.read.TempRechargeReadDAO">
+
+
+	<select id="queryTempRechargeCountBySn" resultType="java.lang.Integer">
+		select count(0) from temp_recharge
+		where sn=#{sn}
+	</select>
+
+	<select id="queryTempRechargeBySn" resultMap="tempRechargeMap">
+		select * from temp_recharge
+		where sn=#{sn}
+	
+	</select>
+
+	<select id="queryTempRechargeSummaryBySn" resultType="java.lang.Double">
+		select sum(sum) from temp_recharge
+		where sn=#{sn}
+	</select>
+
+	<resultMap type="com.egeo.components.finance.po.TempRechargePO" id="tempRechargeMap">
+		<result property="id" column="id" />
+		<result property="rownum" column="rownum" />
+		<result property="userName" column="user_name" />
+		<result property="memberCode" column="member_code" />
+		<result property="email" column="email" />
+		<result property="userId" column="user_id" />
+		<result property="sum" column="sum" />
+		<result property="companyId" column="company_id" />
+		<result property="companyName" column="company_name" />
+		<result property="impRes" column="imp_res" />
+		<result property="sn" column="sn" />
+		<result property="generatedTime" column="generated_time" />
+		<result property="tmplType" column="tmpl_type" />
+		<result property="tmplName" column="tmpl_name" />
+		<result property="accountType" column="account_type" />
+		<result property="reasonId" column="reason_id" />
+		<result property="batchReason" column="batch_reason" />
+		<result property="flowReason" column="flow_reason" />
+		<result property="remark" column="remark" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="platformId" column="platform_id" />
+		<result property="salt" column="salt" />
+		<result property="finBatch" column="fin_batch" />
+		<result property="accountId" column="account_id" />
+		<result property="status" column="status" />
+	</resultMap>
+
+	<sql id="tempRechargeColumns">
+		id,
+		rownum,
+		user_name,
+		member_code,
+		email,
+		user_id,
+		sum,
+		company_id,
+		company_name,
+		imp_res,
+		sn,
+		generated_time,
+		tmpl_type,
+		tmpl_name,
+		account_type,
+		reason_id,
+		batch_reason,
+		flow_reason,
+		remark,
+		create_time,
+		update_time,
+		platform_id,
+		salt,
+		fin_batch,
+		account_id,
+		status
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.finance.po.TempRechargePO" resultMap="tempRechargeMap">
+		SELECT
+		<include refid="tempRechargeColumns" />
+		FROM temp_recharge
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="tempRechargeMap">
+		SELECT
+		<include refid="tempRechargeColumns" />
+		FROM temp_recharge
+		<where>
+			<if test="po.rownum != null">
+				and rownum = #{po.rownum}
+			</if>
+			<if test="po.userName != null">
+				and user_name = #{po.userName}
+			</if>
+			<if test="po.memberCode != null">
+				and member_code = #{po.memberCode}
+			</if>
+			<if test="po.email != null">
+				and email = #{po.email}
+			</if>
+			<if test="po.userId != null">
+				and user_id = #{po.userId}
+			</if>
+			<if test="po.sum != null">
+				and sum = #{po.sum}
+			</if>
+			<if test="po.companyId != null">
+				and company_id = #{po.companyId}
+			</if>
+			<if test="po.companyName != null">
+				and company_name = #{po.companyName}
+			</if>
+			<if test="po.impRes != null">
+				and imp_res = #{po.impRes}
+			</if>
+			<if test="po.sn != null">
+				and sn = #{po.sn}
+			</if>
+			<if test="po.generatedTime != null">
+				and generated_time = #{po.generatedTime}
+			</if>
+			<if test="po.tmplType != null">
+				and tmpl_type = #{po.tmplType}
+			</if>
+			<if test="po.tmplName != null">
+				and tmpl_name = #{po.tmplName}
+			</if>
+			<if test="po.accountType != null">
+				and account_type = #{po.accountType}
+			</if>
+			<if test="po.reasonId != null">
+				and reason_id = #{po.reasonId}
+			</if>
+			<if test="po.batchReason != null">
+				and batch_reason = #{po.batchReason}
+			</if>
+			<if test="po.flowReason != null">
+				and flow_reason = #{po.flowReason}
+			</if>
+			<if test="po.remark != null">
+				and remark = #{po.remark}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.status != null">
+				and status = #{po.status}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM temp_recharge
+		<where>
+			<if test="po.rownum != null">
+				and rownum = #{po.rownum}
+			</if>
+			<if test="po.userName != null">
+				and user_name = #{po.userName}
+			</if>
+			<if test="po.memberCode != null">
+				and member_code = #{po.memberCode}
+			</if>
+			<if test="po.email != null">
+				and email = #{po.email}
+			</if>
+			<if test="po.userId != null">
+				and user_id = #{po.userId}
+			</if>
+			<if test="po.sum != null">
+				and sum = #{po.sum}
+			</if>
+			<if test="po.companyId != null">
+				and company_id = #{po.companyId}
+			</if>
+			<if test="po.companyName != null">
+				and company_name = #{po.companyName}
+			</if>
+			<if test="po.impRes != null">
+				and imp_res = #{po.impRes}
+			</if>
+			<if test="po.sn != null">
+				and sn = #{po.sn}
+			</if>
+			<if test="po.generatedTime != null">
+				and generated_time = #{po.generatedTime}
+			</if>
+			<if test="po.tmplType != null">
+				and tmpl_type = #{po.tmplType}
+			</if>
+			<if test="po.tmplName != null">
+				and tmpl_name = #{po.tmplName}
+			</if>
+			<if test="po.accountType != null">
+				and account_type = #{po.accountType}
+			</if>
+			<if test="po.reasonId != null">
+				and reason_id = #{po.reasonId}
+			</if>
+			<if test="po.batchReason != null">
+				and batch_reason = #{po.batchReason}
+			</if>
+			<if test="po.flowReason != null">
+				and flow_reason = #{po.flowReason}
+			</if>
+			<if test="po.remark != null">
+				and remark = #{po.remark}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.status != null">
+				and status = #{po.status}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="tempRechargeMap">
+		SELECT
+		<include refid="tempRechargeColumns" />
+		FROM temp_recharge
+		<where>
+			<if test="po.rownum != null">
+				and rownum = #{po.rownum}
+			</if>
+			<if test="po.userName != null">
+				and user_name = #{po.userName}
+			</if>
+			<if test="po.memberCode != null">
+				and member_code = #{po.memberCode}
+			</if>
+			<if test="po.email != null">
+				and email = #{po.email}
+			</if>
+			<if test="po.userId != null">
+				and user_id = #{po.userId}
+			</if>
+			<if test="po.sum != null">
+				and sum = #{po.sum}
+			</if>
+			<if test="po.companyId != null">
+				and company_id = #{po.companyId}
+			</if>
+			<if test="po.companyName != null">
+				and company_name = #{po.companyName}
+			</if>
+			<if test="po.impRes != null">
+				and imp_res = #{po.impRes}
+			</if>
+			<if test="po.sn != null">
+				and sn = #{po.sn}
+			</if>
+			<if test="po.generatedTime != null">
+				and generated_time = #{po.generatedTime}
+			</if>
+			<if test="po.tmplType != null">
+				and tmpl_type = #{po.tmplType}
+			</if>
+			<if test="po.tmplName != null">
+				and tmpl_name = #{po.tmplName}
+			</if>
+			<if test="po.accountType != null">
+				and account_type = #{po.accountType}
+			</if>
+			<if test="po.reasonId != null">
+				and reason_id = #{po.reasonId}
+			</if>
+			<if test="po.batchReason != null">
+				and batch_reason = #{po.batchReason}
+			</if>
+			<if test="po.flowReason != null">
+				and flow_reason = #{po.flowReason}
+			</if>
+			<if test="po.remark != null">
+				and remark = #{po.remark}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.status != null">
+				and status = #{po.status}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+</mapper>
+	

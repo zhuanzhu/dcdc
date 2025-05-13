@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.cms.dao.write.CmsInstCfgWriteDAO">
+	<insert id="insert" parameterType="com.egeo.components.cms.po.CmsInstCfgPO">
+		INSERT INTO cms_inst_cfg(
+        <trim suffixOverrides=",">
+			<if test="cmsInstId != null">
+				cms_inst_id,
+			</if>
+			<if test="cmsCfgValueCode != null">
+				cms_cfg_value_code,
+			</if>
+			<if test="instTextValue != null">
+				inst_text_value,
+			</if>
+			<if test="cmsCfgKeyId != null">
+				cms_cfg_key_id,
+			</if>
+			<if test="bannerId != null">
+				banner_id,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="parentId != null">
+				parent_id,
+			</if>
+        </trim>		
+		) VALUES (
+        <trim suffixOverrides=",">
+			<if test="cmsInstId != null">
+				#{cmsInstId},
+			</if>
+			<if test="cmsCfgValueCode != null">
+				#{cmsCfgValueCode},
+			</if>
+			<if test="instTextValue != null">
+				#{instTextValue},
+			</if>
+			<if test="cmsCfgKeyId != null">
+				#{cmsCfgKeyId},
+			</if>
+			<if test="bannerId != null">
+				#{bannerId},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
+			</if>
+			<if test="parentId != null">
+				#{parentId},
+			</if>
+        </trim>		
+		)
+		<selectKey keyProperty="id" resultType="java.lang.Long">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+
+	
+	
+	<update id="update">
+	UPDATE cms_inst_cfg 
+		<set>
+			<if test="cmsInstId != null">
+				cms_inst_id = #{cmsInstId},
+			</if>			
+			<if test="cmsCfgValueCode != null">
+				cms_cfg_value_code = #{cmsCfgValueCode},
+			</if>			
+			<if test="instTextValue != null">
+				inst_text_value = #{instTextValue},
+			</if>			
+			<if test="cmsCfgKeyId != null">
+				cms_cfg_key_id = #{cmsCfgKeyId},
+			</if>			
+			<if test="bannerId != null">
+				banner_id = #{bannerId},
+			</if>			
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>			
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>			
+			<if test="parentId != null">
+				parent_id = #{parentId},
+			</if>			
+		</set>
+			WHERE id = #{id}
+	</update>	
+	
+
+	<delete id="delete">
+		delete from cms_inst_cfg where id = #{id}
+	</delete>
+
+	<delete id="deleteByPara">
+		delete from cms_inst_cfg 
+		<where>
+			<if test="cmsInstId != null">
+				and cms_inst_id = #{cmsInstId}
+			</if>
+			<if test="cmsCfgValueCode != null">
+				and cms_cfg_value_code = #{cmsCfgValueCode}
+			</if>
+			<if test="instTextValue != null">
+				and inst_text_value = #{instTextValue}
+			</if>
+			<if test="cmsCfgKeyId != null">
+				and cms_cfg_key_id = #{cmsCfgKeyId}
+			</if>
+			<if test="bannerId != null">
+				and banner_id = #{bannerId}
+			</if>
+			<if test="createTime != null">
+				and create_time = #{createTime}
+			</if>
+			<if test="updateTime != null">
+				and update_time = #{updateTime}
+			</if>
+			<if test="parentId != null">
+				and parent_id = #{parentId}
+			</if>
+		</where>
+	</delete>
+
+
+</mapper>
+	

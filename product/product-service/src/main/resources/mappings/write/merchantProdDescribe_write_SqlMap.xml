@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.product.dao.write.MerchantProdDescribeWriteDAO">
+
+
+	<insert id="saveMerchantProdDescribe" parameterType="com.egeo.components.product.po.MerchantProdDescribePO" >
+		insert into merchant_prod_describe (
+		content,
+		platform_id,
+		merchant_product_id
+		)values
+		<foreach collection="poList" item="po"  separator="," >
+			(#{po.content },
+			#{po.platformId},
+			#{po.merchantProductId}
+			)
+		</foreach>
+	</insert>
+
+
+
+	<insert id="insert" parameterType="com.egeo.components.product.po.MerchantProdDescribePO">
+		INSERT INTO merchant_prod_describe(
+        <trim suffixOverrides=",">
+			<if test="content != null">
+				content,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="platformId != null">
+				platform_id,
+			</if>
+			<if test="merchantProductId != null">
+				merchant_product_id,
+			</if>
+        </trim>		
+		) VALUES (
+        <trim suffixOverrides=",">
+			<if test="content != null">
+				#{content},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
+			</if>
+			<if test="platformId != null">
+				#{platformId},
+			</if>
+			<if test="merchantProductId != null">
+				#{merchantProductId},
+			</if>
+        </trim>		
+		)
+		<selectKey keyProperty="id" resultType="java.lang.Long">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+
+	
+	
+	<update id="update">
+	UPDATE merchant_prod_describe 
+		<set>
+			<if test="content != null">
+				content = #{content},
+			</if>			
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>			
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>			
+			<if test="platformId != null">
+				platform_id = #{platformId},
+			</if>			
+			<if test="merchantProductId != null">
+				merchant_product_id = #{merchantProductId},
+			</if>			
+		</set>
+			WHERE id = #{id}
+	</update>	
+	
+
+	<delete id="delete">
+		delete from merchant_prod_describe where id = #{id}
+	</delete>
+
+	<delete id="deleteByPara">
+		delete from merchant_prod_describe 
+		<where>
+			<if test="content != null">
+				and content = #{content}
+			</if>
+			<if test="createTime != null">
+				and create_time = #{createTime}
+			</if>
+			<if test="updateTime != null">
+				and update_time = #{updateTime}
+			</if>
+			<if test="platformId != null">
+				and platform_id = #{platformId}
+			</if>
+			<if test="merchantProductId != null">
+				and merchant_product_id = #{merchantProductId}
+			</if>
+		</where>
+	</delete>
+
+	<update id="updateMerchantProdDescribeSWithTx">
+		UPDATE merchant_prod_describe
+		<set>
+			<if test="po.content != null">
+				content = #{po.content},
+			</if>
+		</set>
+		WHERE merchant_product_id = #{po.merchantProductId}
+	</update>
+
+</mapper>
+	

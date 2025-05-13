@@ -1,0 +1,410 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.cms.dao.read.CmsTemplateReadDAO">
+	<resultMap type="com.egeo.components.cms.po.CmsTemplatePO" id="cmsTemplateMap">
+		<result property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="status" column="status" />
+		<result property="clientType" column="client_type" />
+		<result property="clientVersionAId" column="client_version_a_id" />
+		<result property="clientVersionIId" column="client_version_i_id" />
+		<result property="clientVersionARemark" column="client_version_a_remark" />
+		<result property="clientVersionIRemark" column="client_version_i_remark" />
+		<result property="clientVersionACode" column="client_version_a_code" />
+		<result property="clientVersionICode" column="client_version_i_code" />
+		<result property="remark" column="remark" />
+		<result property="type" column="type" />
+		<result property="showFgj" column="show_fgj" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+	</resultMap>
+
+	<sql id="cmsTemplateColumns">
+		id,
+		name,
+		status,
+		client_type,
+		client_version_a_id,
+		client_version_i_id,
+		client_version_a_remark,
+		client_version_i_remark,
+		client_version_a_code,
+		client_version_i_code,
+		remark,
+		type,
+		show_fgj,
+		create_time,
+		update_time
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.cms.po.CmsTemplatePO" resultMap="cmsTemplateMap">
+		SELECT
+		<include refid="cmsTemplateColumns" />
+		FROM cms_template
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="cmsTemplateMap">
+		SELECT
+		<include refid="cmsTemplateColumns" />
+		FROM cms_template
+		<where>
+			<if test="po.name != null">
+				and name = #{po.name}
+			</if>
+			<if test="po.status != null">
+				and status = #{po.status}
+			</if>
+			<if test="po.clientType != null">
+				and client_type = #{po.clientType}
+			</if>
+			<if test="po.clientVersionAId != null">
+				and client_version_a_id = #{po.clientVersionAId}
+			</if>
+			<if test="po.clientVersionIId != null">
+				and client_version_i_id = #{po.clientVersionIId}
+			</if>
+			<if test="po.clientVersionARemark != null">
+				and client_version_a_remark = #{po.clientVersionARemark}
+			</if>
+			<if test="po.clientVersionIRemark != null">
+				and client_version_i_remark = #{po.clientVersionIRemark}
+			</if>
+			<if test="po.clientVersionACode != null">
+				and client_version_a_code = #{po.clientVersionACode}
+			</if>
+			<if test="po.clientVersionICode != null">
+				and client_version_i_code = #{po.clientVersionICode}
+			</if>
+			<if test="po.remark != null">
+				and remark = #{po.remark}
+			</if>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+			<if test="po.showFgj != null">
+				and show_fgj = #{po.showFgj}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="findOfPageByType" resultMap="cmsTemplateMap">
+		SELECT
+		<include refid="cmsTemplateColumns" />
+		FROM cms_template
+		<where>
+			<if test="po.name != null">
+				and name  like concat('%',#{po.name},'%')
+			</if>
+			<if test="po.status != null">
+				and status = #{po.status}
+			</if>
+			<if test="po.clientType != null">
+				and client_type = #{po.clientType}
+			</if>
+			<if test="po.clientVersionAId != null">
+				and client_version_a_id = #{po.clientVersionAId}
+			</if>
+			<if test="po.clientVersionIId != null">
+				and client_version_i_id = #{po.clientVersionIId}
+			</if>
+			<if test="po.clientVersionARemark != null">
+				and client_version_a_remark = #{po.clientVersionARemark}
+			</if>
+			<if test="po.clientVersionIRemark != null">
+				and client_version_i_remark = #{po.clientVersionIRemark}
+			</if>
+			<if test="po.clientVersionACode != null">
+				and client_version_a_code = #{po.clientVersionACode}
+			</if>
+			<if test="po.clientVersionICode != null">
+				and client_version_i_code = #{po.clientVersionICode}
+			</if>
+			<if test="po.remark != null">
+				and remark = #{po.remark}
+			</if>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+			<if test="po.showFgj != null">
+				and show_fgj = #{po.showFgj}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<choose>
+				<when test="searchType!=null and searchType == 1">
+					and type = 1	
+				</when>
+				<when test="searchType!=null and searchType == 0">
+					and type != 1	
+				</when>
+			</choose>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM cms_template
+		<where>
+			<if test="po.name != null">
+				and name = #{po.name}
+			</if>
+			<if test="po.status != null">
+				and status = #{po.status}
+			</if>
+			<if test="po.clientType != null">
+				and client_type = #{po.clientType}
+			</if>
+			<if test="po.clientVersionAId != null">
+				and client_version_a_id = #{po.clientVersionAId}
+			</if>
+			<if test="po.clientVersionIId != null">
+				and client_version_i_id = #{po.clientVersionIId}
+			</if>
+			<if test="po.clientVersionARemark != null">
+				and client_version_a_remark = #{po.clientVersionARemark}
+			</if>
+			<if test="po.clientVersionIRemark != null">
+				and client_version_i_remark = #{po.clientVersionIRemark}
+			</if>
+			<if test="po.clientVersionACode != null">
+				and client_version_a_code = #{po.clientVersionACode}
+			</if>
+			<if test="po.clientVersionICode != null">
+				and client_version_i_code = #{po.clientVersionICode}
+			</if>
+			<if test="po.remark != null">
+				and remark = #{po.remark}
+			</if>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+			<if test="po.showFgj != null">
+				and show_fgj = #{po.showFgj}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+	</select>
+	
+	<select id="countOfPageByType" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM cms_template
+		<where>
+			<if test="po.name != null">
+				and name  like concat('%',#{po.name},'%')
+			</if>
+			<if test="po.status != null">
+				and status = #{po.status}
+			</if>
+			<if test="po.clientType != null">
+				and client_type = #{po.clientType}
+			</if>
+			<if test="po.clientVersionAId != null">
+				and client_version_a_id = #{po.clientVersionAId}
+			</if>
+			<if test="po.clientVersionIId != null">
+				and client_version_i_id = #{po.clientVersionIId}
+			</if>
+			<if test="po.clientVersionARemark != null">
+				and client_version_a_remark = #{po.clientVersionARemark}
+			</if>
+			<if test="po.clientVersionIRemark != null">
+				and client_version_i_remark = #{po.clientVersionIRemark}
+			</if>
+			<if test="po.clientVersionACode != null">
+				and client_version_a_code = #{po.clientVersionACode}
+			</if>
+			<if test="po.clientVersionICode != null">
+				and client_version_i_code = #{po.clientVersionICode}
+			</if>
+			<if test="po.remark != null">
+				and remark = #{po.remark}
+			</if>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+			<if test="po.showFgj != null">
+				and show_fgj = #{po.showFgj}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<choose>
+				<when test="searchType!=null and searchType == 1">
+					and type = 1	
+				</when>
+				<when test="searchType!=null and searchType == 0">
+					and type != 1	
+				</when>
+			</choose>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="cmsTemplateMap">
+		SELECT
+		<include refid="cmsTemplateColumns" />
+		FROM cms_template
+		<where>
+			<if test="po.name != null">
+				and name  like concat('%',#{po.name},'%')
+			</if>
+			<if test="po.status != null">
+				and status = #{po.status}
+			</if>
+			<if test="po.clientType != null">
+				and client_type = #{po.clientType}
+			</if>
+			<if test="po.clientVersionAId != null">
+				and client_version_a_id = #{po.clientVersionAId}
+			</if>
+			<if test="po.clientVersionIId != null">
+				and client_version_i_id = #{po.clientVersionIId}
+			</if>
+			<if test="po.clientVersionARemark != null">
+				and client_version_a_remark = #{po.clientVersionARemark}
+			</if>
+			<if test="po.clientVersionIRemark != null">
+				and client_version_i_remark = #{po.clientVersionIRemark}
+			</if>
+			<if test="po.clientVersionACode != null">
+				and client_version_a_code = #{po.clientVersionACode}
+			</if>
+			<if test="po.clientVersionICode != null">
+				and client_version_i_code = #{po.clientVersionICode}
+			</if>
+			<if test="po.remark != null">
+				and remark = #{po.remark}
+			</if>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+			<if test="po.showFgj != null">
+				and show_fgj = #{po.showFgj}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllByType" resultMap="cmsTemplateMap">
+		SELECT
+		<include refid="cmsTemplateColumns" />
+		FROM cms_template
+		<where>
+			<if test="po.name != null">
+				and name = #{po.name}
+			</if>
+			<if test="po.status != null">
+				and status = #{po.status}
+			</if>
+			<if test="po.clientType != null">
+				and client_type = #{po.clientType}
+			</if>
+			<if test="po.clientVersionAId != null">
+				and client_version_a_id = #{po.clientVersionAId}
+			</if>
+			<if test="po.clientVersionIId != null">
+				and client_version_i_id = #{po.clientVersionIId}
+			</if>
+			<if test="po.clientVersionARemark != null">
+				and client_version_a_remark = #{po.clientVersionARemark}
+			</if>
+			<if test="po.clientVersionIRemark != null">
+				and client_version_i_remark = #{po.clientVersionIRemark}
+			</if>
+			<if test="po.clientVersionACode != null">
+				and client_version_a_code = #{po.clientVersionACode}
+			</if>
+			<if test="po.clientVersionICode != null">
+				and client_version_i_code = #{po.clientVersionICode}
+			</if>
+			<if test="po.remark != null">
+				and remark = #{po.remark}
+			</if>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+			<if test="po.showFgj != null">
+				and show_fgj = #{po.showFgj}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<choose>
+				<when test="searchType!=null and searchType == 1">
+					and type = 1	
+				</when>
+				<when test="searchType!=null and searchType == 0">
+					and type != 1	
+				</when>
+			</choose>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+	
+</mapper>
+	

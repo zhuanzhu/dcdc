@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.stock.dao.write.StorePuWarehouseStockWriteDAO">
+	<insert id="insert" parameterType="com.egeo.components.stock.po.StorePuWarehouseStockPO">
+		INSERT INTO store_pu_warehouse_stock(
+        <trim suffixOverrides=",">
+			<if test="storeId != null">
+				store_id,
+			</if>
+			<if test="standardUnitId != null">
+				standard_unit_id,
+			</if>
+			<if test="merchantId != null">
+				merchant_id,
+			</if>
+			<if test="warehouseId != null">
+				warehouse_id,
+			</if>
+			<if test="realStockNum != null">
+				real_stock_num,
+			</if>
+			<if test="realFrozenStockNum != null">
+				real_frozen_stock_num,
+			</if>
+			<if test="pmWarehousePriority != null">
+				pm_warehouse_priority,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="platformId != null">
+				platform_id,
+			</if>
+			<if test="storeProductUnitId != null">
+				store_product_unit_id,
+			</if>
+        </trim>		
+		) VALUES (
+        <trim suffixOverrides=",">
+			<if test="storeId != null">
+				#{storeId},
+			</if>
+			<if test="standardUnitId != null">
+				#{standardUnitId},
+			</if>
+			<if test="merchantId != null">
+				#{merchantId},
+			</if>
+			<if test="warehouseId != null">
+				#{warehouseId},
+			</if>
+			<if test="realStockNum != null">
+				#{realStockNum},
+			</if>
+			<if test="realFrozenStockNum != null">
+				#{realFrozenStockNum},
+			</if>
+			<if test="pmWarehousePriority != null">
+				#{pmWarehousePriority},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
+			</if>
+			<if test="platformId != null">
+				#{platformId},
+			</if>
+			<if test="storeProductUnitId != null">
+				#{storeProductUnitId},
+			</if>
+        </trim>		
+		)
+		<selectKey keyProperty="id" resultType="java.lang.Long">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	
+	<sql id="insertAllClause">
+		<foreach collection="list" item="po" separator=",">
+				(
+					#{po.storeId},
+					#{po.standardUnitId},
+					#{po.merchantId},
+					#{po.warehouseId},
+					#{po.realStockNum},
+					#{po.realFrozenStockNum},
+					#{po.pmWarehousePriority},
+					#{po.platformId},
+					#{po.storeProductUnitId}
+				)
+		</foreach>
+	</sql>
+	
+	<insert id="insertAllWithTx">
+		INSERT INTO store_pu_warehouse_stock(
+				store_id,
+				standard_unit_id,
+				merchant_id,
+				warehouse_id,
+				real_stock_num,
+				real_frozen_stock_num,
+				pm_warehouse_priority,
+				platform_id,
+				store_product_unit_id
+		) VALUES <include refid="insertAllClause" />
+	</insert>
+
+
+	
+	
+	<update id="update">
+	UPDATE store_pu_warehouse_stock 
+		<set>
+			<if test="storeId != null">
+				store_id = #{storeId},
+			</if>			
+			<if test="standardUnitId != null">
+				standard_unit_id = #{standardUnitId},
+			</if>			
+			<if test="merchantId != null">
+				merchant_id = #{merchantId},
+			</if>			
+			<if test="warehouseId != null">
+				warehouse_id = #{warehouseId},
+			</if>			
+			<if test="realStockNum != null">
+				real_stock_num = #{realStockNum},
+			</if>			
+			<if test="realFrozenStockNum != null">
+				real_frozen_stock_num = #{realFrozenStockNum},
+			</if>			
+			<if test="pmWarehousePriority != null">
+				pm_warehouse_priority = #{pmWarehousePriority},
+			</if>			
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>			
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>			
+			<if test="platformId != null">
+				platform_id = #{platformId},
+			</if>			
+			<if test="storeProductUnitId != null">
+				store_product_unit_id = #{storeProductUnitId},
+			</if>			
+		</set>
+			WHERE id = #{id}
+	</update>	
+	
+
+	<delete id="delete">
+		delete from store_pu_warehouse_stock where id = #{id}
+	</delete>
+
+	<delete id="deleteByPara">
+		delete from store_pu_warehouse_stock 
+		<where>
+			<if test="storeId != null">
+				and store_id = #{storeId}
+			</if>
+			<if test="standardUnitId != null">
+				and standard_unit_id = #{standardUnitId}
+			</if>
+			<if test="merchantId != null">
+				and merchant_id = #{merchantId}
+			</if>
+			<if test="warehouseId != null">
+				and warehouse_id = #{warehouseId}
+			</if>
+			<if test="realStockNum != null">
+				and real_stock_num = #{realStockNum}
+			</if>
+			<if test="realFrozenStockNum != null">
+				and real_frozen_stock_num = #{realFrozenStockNum}
+			</if>
+			<if test="pmWarehousePriority != null">
+				and pm_warehouse_priority = #{pmWarehousePriority}
+			</if>
+			<if test="createTime != null">
+				and create_time = #{createTime}
+			</if>
+			<if test="updateTime != null">
+				and update_time = #{updateTime}
+			</if>
+			<if test="platformId != null">
+				and platform_id = #{platformId}
+			</if>
+			<if test="storeProductUnitId != null">
+				and store_product_unit_id = #{storeProductUnitId}
+			</if>
+		</where>
+	</delete>
+
+
+</mapper>
+	

@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.product.dao.read.MerchantProdAttNameReadDAO">
+	<resultMap type="com.egeo.components.product.po.MerchantProdAttNamePO" id="merchantProdAttNameMap">
+		<result property="id" column="id" />
+		<result property="parentId" column="parent_id" />
+		<result property="attNameId" column="att_Name_id" />
+		<result property="sortValue" column="sort_value" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="merchantProductId" column="merchant_product_id" />
+		<result property="platformId" column="platform_id" />
+	</resultMap>
+
+	<sql id="merchantProdAttNameColumns">
+		id,
+		parent_id,
+		att_Name_id,
+		sort_value,
+		create_time,
+		update_time,
+		merchant_product_id,
+		platform_id
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.product.po.MerchantProdAttNamePO" resultMap="merchantProdAttNameMap">
+		SELECT
+		<include refid="merchantProdAttNameColumns" />
+		FROM merchant_prod_att_name
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="merchantProdAttNameMap">
+		SELECT
+		<include refid="merchantProdAttNameColumns" />
+		FROM merchant_prod_att_name
+		<where>
+			<if test="po.parentId != null">
+				and parent_id = #{po.parentId}
+			</if>
+			<if test="po.attNameId != null">
+				and att_Name_id = #{po.attNameId}
+			</if>
+			<if test="po.sortValue != null">
+				and sort_value = #{po.sortValue}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.merchantProductId != null">
+				and merchant_product_id = #{po.merchantProductId}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY sort_value
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM merchant_prod_att_name
+		<where>
+			<if test="po.parentId != null">
+				and parent_id = #{po.parentId}
+			</if>
+			<if test="po.attNameId != null">
+				and att_Name_id = #{po.attNameId}
+			</if>
+			<if test="po.sortValue != null">
+				and sort_value = #{po.sortValue}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.merchantProductId != null">
+				and merchant_product_id = #{po.merchantProductId}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="merchantProdAttNameMap">
+		SELECT
+		<include refid="merchantProdAttNameColumns" />
+		FROM merchant_prod_att_name
+		<where>
+			<if test="po.parentId != null">
+				and parent_id = #{po.parentId}
+			</if>
+			<if test="po.attNameId != null">
+				and att_Name_id = #{po.attNameId}
+			</if>
+			<if test="po.sortValue != null">
+				and sort_value = #{po.sortValue}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.merchantProductId != null">
+				and merchant_product_id = #{po.merchantProductId}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY sort_value
+			</otherwise>
+		</choose>
+	</select>
+</mapper>
+	

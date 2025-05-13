@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.stock.dao.read.StorePuStockRunningWaterReadDAO">
+	<resultMap type="com.egeo.components.stock.po.StorePuStockRunningWaterPO" id="storePuStockRunningWaterMap">
+		<result property="id" column="id" />
+		<result property="storeProductUnitId" column="store_product_unit_id" />
+		<result property="productUnitSerialNumber" column="product_unit_serial_number" />
+		<result property="commodityProductUnitName" column="commodity_product_unit_name" />
+		<result property="preoperativeStockNum" column="preoperative_stock_num" />
+		<result property="operationBackStockNum" column="operation_back_stock_num" />
+		<result property="stockChange" column="stock_change" />
+		<result property="createUserid" column="create_userid" />
+		<result property="createUsername" column="create_username" />
+		<result property="createUserip" column="create_userip" />
+		<result property="createUsermac" column="create_usermac" />
+		<result property="createTime" column="create_time" />
+		<result property="platformId" column="platform_id" />
+		<result property="preoperativeRealStockNum" column="preoperative_real_stock_num" />
+		<result property="operationBackRealStockNum" column="operation_back_real_stock_num" />
+		<result property="type" column="type" />
+		<result property="orderCode" column="order_code" />
+	</resultMap>
+	
+	<resultMap type="com.egeo.components.stock.condition.StorePuStockRunningWaterCondition" id="storePuStockRunningWaterConditionMap"
+	 extends="storePuStockRunningWaterMap">
+		<result property="dictName" column="dict_name" />
+	</resultMap>
+
+	<sql id="storePuStockRunningWaterColumns">
+		id,
+		store_product_unit_id,
+		product_unit_serial_number,
+		commodity_product_unit_name,
+		preoperative_stock_num,
+		operation_back_stock_num,
+		stock_change,
+		create_userid,
+		create_username,
+		create_userip,
+		create_usermac,
+		create_time,
+		platform_id,
+		preoperative_real_stock_num,
+		operation_back_real_stock_num,
+		type,
+		order_code
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.stock.po.StorePuStockRunningWaterPO" resultMap="storePuStockRunningWaterMap">
+		SELECT
+		<include refid="storePuStockRunningWaterColumns" />
+		FROM store_pu_stock_running_water
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="storePuStockRunningWaterMap">
+		SELECT
+		<include refid="storePuStockRunningWaterColumns" />
+		FROM store_pu_stock_running_water
+		<where>
+			<if test="po.storeProductUnitId != null">
+				and store_product_unit_id = #{po.storeProductUnitId}
+			</if>
+			<if test="po.productUnitSerialNumber != null">
+				and product_unit_serial_number like concat('%',#{po.productUnitSerialNumber},'%')
+			</if>
+			<if test="po.commodityProductUnitName != null">
+				and commodity_product_unit_name like concat('%',#{po.commodityProductUnitName},'%')
+			</if>
+			<if test="po.preoperativeStockNum != null">
+				and preoperative_stock_num = #{po.preoperativeStockNum}
+			</if>
+			<if test="po.operationBackStockNum != null">
+				and operation_back_stock_num = #{po.operationBackStockNum}
+			</if>
+			<if test="po.stockChange != null">
+				and stock_change = #{po.stockChange}
+			</if>
+			<if test="po.createUserid != null">
+				and create_userid = #{po.createUserid}
+			</if>
+			<if test="po.createUsername != null">
+				and create_username like concat('%',#{po.createUsername},'%') 
+			</if>
+			<if test="po.createUserip != null">
+				and create_userip = #{po.createUserip}
+			</if>
+			<if test="po.createUsermac != null">
+				and create_usermac = #{po.createUsermac}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.preoperativeRealStockNum != null">
+				and preoperative_real_stock_num = #{po.preoperativeRealStockNum}
+			</if>
+			<if test="po.operationBackRealStockNum != null">
+				and operation_back_real_stock_num = #{po.operationBackRealStockNum}
+			</if>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+			<if test="po.orderCode != null">
+				and order_code = #{po.orderCode}
+			</if>
+			<if test="po.createTimeStart != null">
+				and create_time > #{po.createTimeStart}
+			</if>
+			<if test="po.createTimeStop != null">
+				and #{po.createTimeStop} > create_time
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM store_pu_stock_running_water
+		<where>
+			<if test="po.storeProductUnitId != null">
+				and store_product_unit_id = #{po.storeProductUnitId}
+			</if>
+			<if test="po.productUnitSerialNumber != null">
+				and product_unit_serial_number = #{po.productUnitSerialNumber}
+			</if>
+			<if test="po.commodityProductUnitName != null">
+				and commodity_product_unit_name = #{po.commodityProductUnitName}
+			</if>
+			<if test="po.preoperativeStockNum != null">
+				and preoperative_stock_num = #{po.preoperativeStockNum}
+			</if>
+			<if test="po.operationBackStockNum != null">
+				and operation_back_stock_num = #{po.operationBackStockNum}
+			</if>
+			<if test="po.stockChange != null">
+				and stock_change = #{po.stockChange}
+			</if>
+			<if test="po.createUserid != null">
+				and create_userid = #{po.createUserid}
+			</if>
+			<if test="po.createUsername != null">
+				and create_username = #{po.createUsername}
+			</if>
+			<if test="po.createUserip != null">
+				and create_userip = #{po.createUserip}
+			</if>
+			<if test="po.createUsermac != null">
+				and create_usermac = #{po.createUsermac}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.preoperativeRealStockNum != null">
+				and preoperative_real_stock_num = #{po.preoperativeRealStockNum}
+			</if>
+			<if test="po.operationBackRealStockNum != null">
+				and operation_back_real_stock_num = #{po.operationBackRealStockNum}
+			</if>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+			<if test="po.orderCode != null">
+				and order_code = #{po.orderCode}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="storePuStockRunningWaterMap">
+		SELECT
+		<include refid="storePuStockRunningWaterColumns" />
+		FROM store_pu_stock_running_water
+		<where>
+			<if test="po.storeProductUnitId != null">
+				and store_product_unit_id = #{po.storeProductUnitId}
+			</if>
+			<if test="po.productUnitSerialNumber != null">
+				and product_unit_serial_number = #{po.productUnitSerialNumber}
+			</if>
+			<if test="po.commodityProductUnitName != null">
+				and commodity_product_unit_name = #{po.commodityProductUnitName}
+			</if>
+			<if test="po.preoperativeStockNum != null">
+				and preoperative_stock_num = #{po.preoperativeStockNum}
+			</if>
+			<if test="po.operationBackStockNum != null">
+				and operation_back_stock_num = #{po.operationBackStockNum}
+			</if>
+			<if test="po.stockChange != null">
+				and stock_change = #{po.stockChange}
+			</if>
+			<if test="po.createUserid != null">
+				and create_userid = #{po.createUserid}
+			</if>
+			<if test="po.createUsername != null">
+				and create_username = #{po.createUsername}
+			</if>
+			<if test="po.createUserip != null">
+				and create_userip = #{po.createUserip}
+			</if>
+			<if test="po.createUsermac != null">
+				and create_usermac = #{po.createUsermac}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.preoperativeRealStockNum != null">
+				and preoperative_real_stock_num = #{po.preoperativeRealStockNum}
+			</if>
+			<if test="po.operationBackRealStockNum != null">
+				and operation_back_real_stock_num = #{po.operationBackRealStockNum}
+			</if>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+			<if test="po.orderCode != null">
+				and order_code = #{po.orderCode}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findStorePuStockRunningWaterConditionOfPage" resultMap="storePuStockRunningWaterConditionMap">
+		SELECT
+		sps.id,
+		sps.store_product_unit_id,
+		sps.product_unit_serial_number,
+		sps.commodity_product_unit_name,
+		sps.preoperative_stock_num,
+		sps.operation_back_stock_num,
+		sps.stock_change,
+		sps.create_userid,
+		sps.create_username,
+		sps.create_userip,
+		sps.create_usermac,
+		sps.create_time,
+		sps.platform_id,
+		sps.preoperative_real_stock_num,
+		sps.operation_back_real_stock_num,
+		sps.type,
+		sps.order_code,
+		sd.name dict_name
+		FROM store_pu_stock_running_water sps 
+		left join stock_dict sd on sps.type = sd.id
+		<where>
+			<if test="po.storeProductUnitId != null">
+				and sps.store_product_unit_id = #{po.storeProductUnitId}
+			</if>
+			<if test="po.productUnitSerialNumber != null">
+				and sps.product_unit_serial_number like concat('%',#{po.productUnitSerialNumber},'%')
+			</if>
+			<if test="po.commodityProductUnitName != null">
+				and sps.commodity_product_unit_name like concat('%',#{po.commodityProductUnitName},'%')
+			</if>
+			<if test="po.preoperativeStockNum != null">
+				and sps.preoperative_stock_num = #{po.preoperativeStockNum}
+			</if>
+			<if test="po.operationBackStockNum != null">
+				and sps.operation_back_stock_num = #{po.operationBackStockNum}
+			</if>
+			<if test="po.stockChange != null">
+				and sps.stock_change = #{po.stockChange}
+			</if>
+			<if test="po.createUserid != null">
+				and sps.create_userid = #{po.createUserid}
+			</if>
+			<if test="po.createUsername != null">
+				and sps.create_username like concat('%',#{po.createUsername},'%') 
+			</if>
+			<if test="po.createUserip != null">
+				and sps.create_userip = #{po.createUserip}
+			</if>
+			<if test="po.createUsermac != null">
+				and sps.create_usermac = #{po.createUsermac}
+			</if>
+			<if test="po.createTime != null">
+				and sps.create_time = #{po.createTime}
+			</if>
+			<if test="po.platformId != null">
+				and sps.platform_id = #{po.platformId}
+			</if>
+			<if test="po.preoperativeRealStockNum != null">
+				and sps.preoperative_real_stock_num = #{po.preoperativeRealStockNum}
+			</if>
+			<if test="po.operationBackRealStockNum != null">
+				and sps.operation_back_real_stock_num = #{po.operationBackRealStockNum}
+			</if>
+			<if test="po.type != null">
+				and sps.type = #{po.type}
+			</if>
+			<if test="po.orderCode != null">
+				and sps.order_code = #{po.orderCode}
+			</if>
+			<if test="po.createTimeStart != null">
+				and sps.create_time > #{po.createTimeStart}
+			</if>
+			<if test="po.createTimeStop != null">
+				and sps.#{po.createTimeStop} > create_time
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+</mapper>
+	

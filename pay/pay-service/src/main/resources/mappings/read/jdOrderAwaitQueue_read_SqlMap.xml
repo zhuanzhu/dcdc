@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.pay.dao.read.JdOrderAwaitQueueReadDAO">
+	<resultMap type="com.egeo.components.pay.po.JdOrderAwaitQueuePO" id="jdOrderAwaitQueueMap">
+		<result property="id" column="id" />
+		<result property="soId" column="so_id" />
+		<result property="soChildId" column="so_child_id" />
+		<result property="orderCode" column="order_code" />
+		<result property="randomNumber" column="random_number" />
+		<result property="createTime" column="create_time" />
+		<result property="isPayTrue" column="is_pay_true" />
+		<result property="jdOrderId" column="jd_order_id" />
+	</resultMap>
+
+	<sql id="jdOrderAwaitQueueColumns">
+		id,
+		so_id,
+		so_child_id,
+		order_code,
+		random_number,
+		create_time,
+		is_pay_true,
+		jd_order_id
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.pay.po.JdOrderAwaitQueuePO" resultMap="jdOrderAwaitQueueMap">
+		SELECT
+		<include refid="jdOrderAwaitQueueColumns" />
+		FROM jd_order_await_queue
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="jdOrderAwaitQueueMap">
+		SELECT
+		<include refid="jdOrderAwaitQueueColumns" />
+		FROM jd_order_await_queue
+		<where>
+			<if test="po.soId != null">
+				and so_id = #{po.soId}
+			</if>
+			<if test="po.soChildId != null">
+				and so_child_id = #{po.soChildId}
+			</if>
+			<if test="po.orderCode != null">
+				and order_code = #{po.orderCode}
+			</if>
+			<if test="po.randomNumber != null">
+				and random_number = #{po.randomNumber}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.isPayTrue != null">
+				and is_pay_true = #{po.isPayTrue}
+			</if>
+			<if test="po.jdOrderId != null">
+				and jd_order_id = #{po.jdOrderId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM jd_order_await_queue
+		<where>
+			<if test="po.soId != null">
+				and so_id = #{po.soId}
+			</if>
+			<if test="po.soChildId != null">
+				and so_child_id = #{po.soChildId}
+			</if>
+			<if test="po.orderCode != null">
+				and order_code = #{po.orderCode}
+			</if>
+			<if test="po.randomNumber != null">
+				and random_number = #{po.randomNumber}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.isPayTrue != null">
+				and is_pay_true = #{po.isPayTrue}
+			</if>
+			<if test="po.jdOrderId != null">
+				and jd_order_id = #{po.jdOrderId}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="jdOrderAwaitQueueMap">
+		SELECT
+		<include refid="jdOrderAwaitQueueColumns" />
+		FROM jd_order_await_queue
+		<where>
+			<if test="po.soId != null">
+				and so_id = #{po.soId}
+			</if>
+			<if test="po.soChildId != null">
+				and so_child_id = #{po.soChildId}
+			</if>
+			<if test="po.orderCode != null">
+				and order_code = #{po.orderCode}
+			</if>
+			<if test="po.randomNumber != null">
+				and random_number = #{po.randomNumber}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.isPayTrue != null">
+				and is_pay_true = #{po.isPayTrue}
+			</if>
+			<if test="po.jdOrderId != null">
+				and jd_order_id = #{po.jdOrderId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+</mapper>
+	

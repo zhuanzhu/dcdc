@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.order.dao.read.CartItemReadDAO">
+	<resultMap type="com.egeo.components.order.po.CartItemPO" id="cartItemMap">
+		<result property="id" column="id" />
+		<result property="cartId" column="cart_id" />
+		<result property="standardUnitId" column="standard_unit_id" />
+		<result property="merchantId" column="merchant_id" />
+		<result property="num" column="num" />
+		<result property="source" column="source" />
+		<result property="isGift" column="is_gift" />
+		<result property="salePrice" column="sale_price" />
+		<result property="discountAmount" column="discount_amount" />
+		<result property="cashAmount" column="cash_amount" />
+		<result property="blessingCoinAmount" column="blessing_coin_amount" />
+		<result property="promotionId" column="promotion_id" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="platformId" column="platform_id" />
+		<result property="snapshot" column="snapshot" />
+		<result property="productUnitId" column="product_unit_id" />
+		<result property="channelProductId" column="channel_product_id" />
+	</resultMap>
+
+	<sql id="cartItemColumns">
+		id,
+		cart_id,
+		standard_unit_id,
+		merchant_id,
+		num,
+		is_gift,
+		sale_price,
+		discount_amount,
+		cash_amount,
+		blessing_coin_amount,
+		promotion_id,
+		create_time,
+		source,
+		update_time,
+		platform_id,
+		product_unit_id,
+		channel_product_id,
+		snapshot
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.order.po.CartItemPO" resultMap="cartItemMap">
+		SELECT
+		<include refid="cartItemColumns" />
+		FROM cart_item
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="cartItemMap">
+		SELECT
+		<include refid="cartItemColumns" />
+		FROM cart_item
+		<where>
+			<if test="po.cartId != null">
+				and cart_id = #{po.cartId}
+			</if>
+			<if test="po.standardUnitId != null">
+				and standard_unit_id = #{po.standardUnitId}
+			</if>
+			<if test="po.merchantId != null">
+				and merchant_id = #{po.merchantId}
+			</if>
+			<if test="po.num != null">
+				and num = #{po.num}
+			</if>
+			<if test="po.isGift != null">
+				and is_gift = #{po.isGift}
+			</if>
+			<if test="po.salePrice != null">
+				and sale_price = #{po.salePrice}
+			</if>
+			<if test="po.discountAmount != null">
+				and discount_amount = #{po.discountAmount}
+			</if>
+			<if test="po.cashAmount != null">
+				and cash_amount = #{po.cashAmount}
+			</if>
+			<if test="po.blessingCoinAmount != null">
+				and blessing_coin_amount = #{po.blessingCoinAmount}
+			</if>
+			<if test="po.promotionId != null">
+				and promotion_id = #{po.promotionId}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.productUnitId != null">
+				and product_unit_id = #{po.productUnitId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY create_time desc
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM cart_item
+		<where>
+			<if test="po.cartId != null">
+				and cart_id = #{po.cartId}
+			</if>
+			<if test="po.standardUnitId != null">
+				and standard_unit_id = #{po.standardUnitId}
+			</if>
+			<if test="po.merchantId != null">
+				and merchant_id = #{po.merchantId}
+			</if>
+			<if test="po.num != null">
+				and num = #{po.num}
+			</if>
+			<if test="po.isGift != null">
+				and is_gift = #{po.isGift}
+			</if>
+			<if test="po.salePrice != null">
+				and sale_price = #{po.salePrice}
+			</if>
+			<if test="po.discountAmount != null">
+				and discount_amount = #{po.discountAmount}
+			</if>
+			<if test="po.cashAmount != null">
+				and cash_amount = #{po.cashAmount}
+			</if>
+			<if test="po.blessingCoinAmount != null">
+				and blessing_coin_amount = #{po.blessingCoinAmount}
+			</if>
+			<if test="po.promotionId != null">
+				and promotion_id = #{po.promotionId}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.productUnitId != null">
+				and product_unit_id = #{po.productUnitId}
+			</if>
+		</where>
+	</select>
+
+	<select id="findAll" resultMap="cartItemMap">
+		SELECT
+		<include refid="cartItemColumns" />
+		FROM cart_item
+		<where>
+			<if test="po.cartId != null">
+				and cart_id = #{po.cartId}
+			</if>
+			<if test="po.standardUnitId != null">
+				and standard_unit_id = #{po.standardUnitId}
+			</if>
+			<if test="po.merchantId != null">
+				and merchant_id = #{po.merchantId}
+			</if>
+			<if test="po.num != null">
+				and num = #{po.num}
+			</if>
+			<if test="po.isGift != null">
+				and is_gift = #{po.isGift}
+			</if>
+			<if test="po.salePrice != null">
+				and sale_price = #{po.salePrice}
+			</if>
+			<if test="po.discountAmount != null">
+				and discount_amount = #{po.discountAmount}
+			</if>
+			<if test="po.cashAmount != null">
+				and cash_amount = #{po.cashAmount}
+			</if>
+			<if test="po.blessingCoinAmount != null">
+				and blessing_coin_amount = #{po.blessingCoinAmount}
+			</if>
+			<if test="po.promotionId != null">
+				and promotion_id = #{po.promotionId}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.productUnitId != null">
+				and product_unit_id = #{po.productUnitId}
+			</if>
+		</where>
+
+				ORDER BY update_time desc
+
+	</select>
+
+	<select id="findByCartIdProductUnitId" resultMap="cartItemMap">
+		SELECT
+		<include refid="cartItemColumns" />
+		FROM cart_item
+		WHERE cart_id =#{cartId} and product_unit_id = #{productUnitId}
+	</select>
+
+	<select id="findCartItemSumByUserId" resultType="java.lang.Integer">
+		SELECT
+		sum(num)
+		FROM cart_item WHERE cart_id = (SELECT id from cart WHERE userId = #{userId} and client_id = #{clientId} and platform_id = #{platformId})
+	</select>
+	<select id="findCartItemSumByUserIds" resultType="java.lang.Integer">
+		SELECT
+		sum(num)
+		FROM cart_item
+		 WHERE cart_id
+		 in
+		 (SELECT id from cart
+		 WHERE userId = #{userId}
+		 AND store_Id=#{storeId}
+		 and client_id = #{clientId}
+		 and platform_id = #{platformId})
+	</select>
+
+
+	<select id="findCartItemPUSumByUserId" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM cart_item
+		WHERE cart_id IN (SELECT id from cart WHERE userId = #{userId} and store_id=#{storeId}  and platform_id = #{platformId})
+	</select>
+
+
+</mapper>

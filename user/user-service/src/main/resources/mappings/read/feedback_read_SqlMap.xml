@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.user.dao.read.FeedbackReadDAO">
+	<resultMap type="com.egeo.components.user.po.FeedbackPO" id="feedbackMap">
+		<result property="id" column="id" />
+		<result property="feedback" column="feedback" />
+		<result property="systemVersion" column="system_version" />
+		<result property="deviceModel" column="device_model" />
+		<result property="deviceId" column="device_id" />
+		<result property="createUserid" column="create_userid" />
+		<result property="createUsername" column="create_username" />
+		<result property="createUserip" column="create_userip" />
+		<result property="createUsermac" column="create_usermac" />
+		<result property="clientVersionno" column="client_versionno" />
+		<result property="platformId" column="platform_id" />
+		<result property="orderCode" column="order_code" />
+		<result property="feedStatus" column="feed_status" />
+		<result property="updateUserid" column="update_userid" />
+		<result property="updateUsername" column="update_username" />
+		<result property="updateTime" column="update_time" />
+		<result property="feedbackRslt" column="feedback_rslt" />
+	</resultMap>
+
+	<sql id="feedbackColumns">
+		id,
+		feedback,
+		order_code,
+		system_version,
+		device_model,
+		device_id,
+		create_userid,
+		create_username,
+		create_userip,
+		create_usermac,
+		client_versionno,
+		platform_id,
+		feed_status,
+		update_userid,
+		update_username,
+		feedback_rslt,
+		update_time
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.user.po.FeedbackPO" resultMap="feedbackMap">
+		SELECT
+		<include refid="feedbackColumns" />
+		FROM u_feedback
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="feedbackMap">
+		SELECT
+		<include refid="feedbackColumns" />
+		FROM u_feedback
+		<where>
+			<if test="po.feedback != null">
+				and feedback = #{po.feedback}
+			</if>
+			<if test="po.systemVersion != null">
+				and system_version = #{po.systemVersion}
+			</if>
+			<if test="po.deviceModel != null">
+				and device_model = #{po.deviceModel}
+			</if>
+			<if test="po.deviceId != null">
+				and device_id = #{po.deviceId}
+			</if>
+			<if test="po.createUserid != null">
+				and create_userid = #{po.createUserid}
+			</if>
+			<if test="po.createUsername != null">
+				and create_username = #{po.createUsername}
+			</if>
+			<if test="po.createUserip != null">
+				and create_userip = #{po.createUserip}
+			</if>
+			<if test="po.createUsermac != null">
+				and create_usermac = #{po.createUsermac}
+			</if>
+			<if test="po.clientVersionno != null">
+				and client_versionno = #{po.clientVersionno}
+			</if>
+			<if test="po.feedStatus != null">
+				and feed_status = #{po.feedStatus}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM u_feedback
+		<where>
+			<if test="po.feedback != null">
+				and feedback = #{po.feedback}
+			</if>
+			<if test="po.systemVersion != null">
+				and system_version = #{po.systemVersion}
+			</if>
+			<if test="po.deviceModel != null">
+				and device_model = #{po.deviceModel}
+			</if>
+			<if test="po.deviceId != null">
+				and device_id = #{po.deviceId}
+			</if>
+			<if test="po.createUserid != null">
+				and create_userid = #{po.createUserid}
+			</if>
+			<if test="po.createUsername != null">
+				and create_username = #{po.createUsername}
+			</if>
+			<if test="po.createUserip != null">
+				and create_userip = #{po.createUserip}
+			</if>
+			<if test="po.feedStatus != null">
+				and feed_status = #{po.feedStatus}
+			</if>
+			<if test="po.createUsermac != null">
+				and create_usermac = #{po.createUsermac}
+			</if>
+			<if test="po.clientVersionno != null">
+				and client_versionno = #{po.clientVersionno}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="feedbackMap">
+		SELECT
+		<include refid="feedbackColumns" />
+		FROM u_feedback
+		<where>
+			<if test="po.feedback != null">
+				and feedback = #{po.feedback}
+			</if>
+			<if test="po.systemVersion != null">
+				and system_version = #{po.systemVersion}
+			</if>
+			<if test="po.deviceModel != null">
+				and device_model = #{po.deviceModel}
+			</if>
+			<if test="po.deviceId != null">
+				and device_id = #{po.deviceId}
+			</if>
+			<if test="po.createUserid != null">
+				and create_userid = #{po.createUserid}
+			</if>
+			<if test="po.createUsername != null">
+				and create_username = #{po.createUsername}
+			</if>
+			<if test="po.feedStatus != null">
+				and feed_status = #{po.feedStatus}
+			</if>
+			<if test="po.createUserip != null">
+				and create_userip = #{po.createUserip}
+			</if>
+			<if test="po.createUsermac != null">
+				and create_usermac = #{po.createUsermac}
+			</if>
+			<if test="po.clientVersionno != null">
+				and client_versionno = #{po.clientVersionno}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+</mapper>
+	

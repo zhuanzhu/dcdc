@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.product.dao.write.StandardUnitPictureWriteDAO">
+	
+	<sql id="insertAllClause">
+		<foreach collection="poList" item="po" separator=",">
+				(#{po.merchantPictureId},
+				#{po.type},
+				#{po.createTime},
+				#{po.updateTime},
+				#{po.platformId},
+				#{po.standardUnitId})
+		</foreach>
+	</sql>
+
+	<insert id="saveStandardUnitPicture" parameterType="com.egeo.components.product.po.StandardUnitPicturePO" >
+		insert into standard_unit_picture(
+		merchant_picture_id,
+		type,
+		platform_id,
+		standard_unit_id
+		)values
+		<foreach collection="poList" item="po" separator="," >
+			(
+			#{po.merchantPictureId},
+			#{po.type},
+			#{po.platformId},
+			#{po.standardUnitId}
+			)
+		</foreach>
+	</insert>
+
+	<insert id="insert" parameterType="com.egeo.components.product.po.StandardUnitPicturePO">
+		INSERT INTO standard_unit_picture(
+        <trim suffixOverrides=",">
+			<if test="merchantPictureId != null">
+				merchant_picture_id,
+			</if>
+			<if test="type != null">
+				type,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="platformId != null">
+				platform_id,
+			</if>
+			<if test="standardUnitId != null">
+				standard_unit_id,
+			</if>
+        </trim>		
+		) VALUES (
+        <trim suffixOverrides=",">
+			<if test="merchantPictureId != null">
+				#{merchantPictureId},
+			</if>
+			<if test="type != null">
+				#{type},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
+			</if>
+			<if test="platformId != null">
+				#{platformId},
+			</if>
+			<if test="standardUnitId != null">
+				#{standardUnitId},
+			</if>
+        </trim>		
+		)
+		<selectKey keyProperty="id" resultType="java.lang.Long">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	
+	<insert id="insertAll">
+		INSERT INTO standard_unit_picture(
+				merchant_picture_id,
+				type,
+				create_time,
+				update_time,
+				platform_id,
+				standard_unit_id
+		) VALUES <include refid="insertAllClause" /> 
+	</insert>
+
+
+	
+	
+	<update id="update">
+	UPDATE standard_unit_picture 
+		<set>
+			<if test="merchantPictureId != null">
+				merchant_picture_id = #{merchantPictureId},
+			</if>			
+			<if test="type != null">
+				type = #{type},
+			</if>			
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>			
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>			
+			<if test="platformId != null">
+				platform_id = #{platformId},
+			</if>			
+			<if test="standardUnitId != null">
+				standard_unit_id = #{standardUnitId},
+			</if>			
+		</set>
+			WHERE id = #{id}
+	</update>	
+	
+
+	<delete id="delete">
+		delete from standard_unit_picture where id = #{id}
+	</delete>
+
+	<delete id="deleteByPara">
+		delete from standard_unit_picture 
+		<where>
+			<if test="merchantPictureId != null">
+				and merchant_picture_id = #{merchantPictureId}
+			</if>
+			<if test="type != null">
+				and type = #{type}
+			</if>
+			<if test="createTime != null">
+				and create_time = #{createTime}
+			</if>
+			<if test="updateTime != null">
+				and update_time = #{updateTime}
+			</if>
+			<if test="platformId != null">
+				and platform_id = #{platformId}
+			</if>
+			<if test="standardUnitId != null">
+				and standard_unit_id = #{standardUnitId}
+			</if>
+		</where>
+	</delete>
+
+
+</mapper>
+	

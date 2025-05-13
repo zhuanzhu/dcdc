@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.cms.dao.read.BannerImgReadDAO">
+
+
+
+	<resultMap type="com.egeo.components.cms.po.BannerImgPO" id="bannerImgMap">
+		<result property="id" column="id" />
+		<result property="type" column="type" />
+		<result property="imgUrl" column="img_url" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="title" column="title" />
+	</resultMap>
+
+	<sql id="bannerImgColumns">
+		id,
+		type,
+		img_url,
+		create_time,
+		update_time,
+		title
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.cms.po.BannerImgPO" resultMap="bannerImgMap">
+		SELECT
+		<include refid="bannerImgColumns" />
+		FROM banner_img
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="bannerImgMap">
+		SELECT
+		<include refid="bannerImgColumns" />
+		FROM banner_img
+		<where>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+			<if test="po.imgUrl != null">
+				and img_url = #{po.imgUrl}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.title != null">
+				and title like concat('%',#{title},'%')
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM banner_img
+		<where>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+			<if test="po.imgUrl != null">
+				and img_url = #{po.imgUrl}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.title != null">
+				and title like concat('%',#{po.title},'%')
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="bannerImgMap">
+		SELECT
+		<include refid="bannerImgColumns" />
+		FROM banner_img
+		<where>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+			<if test="po.imgUrl != null">
+				and img_url = #{po.imgUrl}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.title != null">
+				and title like concat('%',#{po.title},'%')
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+</mapper>
+	

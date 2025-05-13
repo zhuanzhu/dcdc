@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.order.dao.write.AddressWriteDAO">
+	<insert id="insert" parameterType="com.egeo.components.order.po.AddressPO">
+		INSERT INTO address(
+        <trim suffixOverrides=",">
+			<if test="addressName != null">
+				address_name,
+			</if>
+			<if test="pid != null">
+				pid,
+			</if>
+			<if test="sortValue != null">
+				sort_value,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="platformId != null">
+				platform_id,
+			</if>
+        </trim>		
+		) VALUES (
+        <trim suffixOverrides=",">
+			<if test="addressName != null">
+				#{addressName},
+			</if>
+			<if test="pid != null">
+				#{pid},
+			</if>
+			<if test="sortValue != null">
+				#{sortValue},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="platformId != null">
+				#{platformId},
+			</if>
+        </trim>		
+		)
+		<selectKey keyProperty="id" resultType="java.lang.Long">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+
+	
+	
+	<update id="update">
+	UPDATE address 
+		<set>
+			<if test="addressName != null">
+				address_name = #{addressName},
+			</if>			
+			<if test="pid != null">
+				pid = #{pid},
+			</if>			
+			<if test="sortValue != null">
+				sort_value = #{sortValue},
+			</if>			
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>			
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>			
+			<if test="platformId != null">
+				platform_id = #{platformId},
+			</if>			
+		</set>
+			WHERE id = #{id}
+	</update>	
+	
+
+	<delete id="delete">
+		delete from address where id = #{id}
+	</delete>
+
+	<delete id="deleteByPara">
+		delete from address 
+		<where>
+			<if test="addressName != null">
+				and address_name = #{addressName}
+			</if>
+			<if test="pid != null">
+				and pid = #{pid}
+			</if>
+			<if test="sortValue != null">
+				and sort_value = #{sortValue}
+			</if>
+			<if test="updateTime != null">
+				and update_time = #{updateTime}
+			</if>
+			<if test="createTime != null">
+				and create_time = #{createTime}
+			</if>
+			<if test="platformId != null">
+				and platform_id = #{platformId}
+			</if>
+		</where>
+	</delete>
+
+
+</mapper>
+	

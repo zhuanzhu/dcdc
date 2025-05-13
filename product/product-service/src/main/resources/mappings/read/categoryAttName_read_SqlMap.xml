@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.product.dao.read.CategoryAttNameReadDAO">
+	<resultMap type="com.egeo.components.product.po.CategoryAttNamePO" id="categoryAttNameMap">
+		<result property="id" column="id" />
+		<result property="parentId" column="parent_id" />
+		<result property="categoryId" column="category_id" />
+		<result property="attNameId" column="att_name_id" />
+		<result property="sortValue" column="sort_value" />
+		<result property="platformId" column="platform_id" />
+		<result property="type" column="type" />
+		<result property="isRequired" column="is_required" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+	</resultMap>
+	
+	<resultMap type="com.egeo.components.product.condition.CategoryAttNameCondition" id="categoryAttNameCondition" extends="categoryAttNameMap">
+		<result property="name" column="name" />
+	</resultMap>
+
+	<sql id="categoryAttNameColumns">
+		id,
+		parent_id,
+		category_id,
+		att_name_id,
+		sort_value,
+		platform_id,
+		type,
+		is_required,
+		create_time,
+		update_time
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.product.po.CategoryAttNamePO" resultMap="categoryAttNameMap">
+		SELECT
+		<include refid="categoryAttNameColumns" />
+		FROM category_att_name
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="categoryAttNameMap">
+		SELECT
+		<include refid="categoryAttNameColumns" />
+		FROM category_att_name
+		<where>
+			<if test="po.parentId != null">
+				and parent_id = #{po.parentId}
+			</if>
+			<if test="po.categoryId != null">
+				and category_id = #{po.categoryId}
+			</if>
+			<if test="po.attNameId != null">
+				and att_name_id = #{po.attNameId}
+			</if>
+			<if test="po.sortValue != null">
+				and sort_value = #{po.sortValue}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+			<if test="po.isRequired != null">
+				and is_required = #{po.isRequired}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY sort_value
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM category_att_name
+		<where>
+			<if test="po.parentId != null">
+				and parent_id = #{po.parentId}
+			</if>
+			<if test="po.categoryId != null">
+				and category_id = #{po.categoryId}
+			</if>
+			<if test="po.attNameId != null">
+				and att_name_id = #{po.attNameId}
+			</if>
+			<if test="po.sortValue != null">
+				and sort_value = #{po.sortValue}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+			<if test="po.isRequired != null">
+				and is_required = #{po.isRequired}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="categoryAttNameMap">
+		SELECT
+		<include refid="categoryAttNameColumns" />
+		FROM category_att_name
+		<where>
+			<if test="po.parentId != null">
+				and parent_id = #{po.parentId}
+			</if>
+			<if test="po.categoryId != null">
+				and category_id = #{po.categoryId}
+			</if>
+			<if test="po.attNameId != null">
+				and att_name_id = #{po.attNameId}
+			</if>
+			<if test="po.sortValue != null">
+				and sort_value = #{po.sortValue}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+			<if test="po.isRequired != null">
+				and is_required = #{po.isRequired}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY sort_value
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="categoryAttNameByCategoryId" resultMap="categoryAttNameCondition">
+		SELECT
+		an.id,
+		an.name,
+		can.parent_id
+		FROM category_att_name can
+		LEFT JOIN attribute_name an ON an.id = can.att_name_id
+		WHERE can.category_id = #{po.categoryId}
+		ORDER BY can.sort_value
+	</select>
+	
+	<select id="categoryAttNameByAttNameId" resultMap="categoryAttNameMap">
+		SELECT
+		<include refid="categoryAttNameColumns" />
+		FROM category_att_name
+		WHERE att_name_id = #{po.attNameId}
+	</select>
+	
+	<select id="categoryAttNameByCId" resultMap="categoryAttNameMap">
+		SELECT
+			can.id,
+			can.parent_id,
+			can.category_id,
+			can.att_name_id,
+			can.sort_value,
+			can.create_time,
+			can.update_time,
+			can.platform_id,
+			can.type
+			FROM category_att_name can
+			WHERE (can.category_id = #{po.categoryId} and can.type) = 1 or (can.category_id = #{po.categoryId} and can.type = 3)
+			ORDER BY can.att_name_id
+	</select>
+	
+	<select id="getcategoryAttNameListByNodeId" resultMap="categoryAttNameMap">
+		SELECT
+			can.id,
+			can.parent_id,
+			can.category_id,
+			can.att_name_id,
+			can.sort_value,
+			can.create_time,
+			can.update_time,			
+			can.platform_id,
+			can.type
+			FROM category_att_name can
+		LEFT JOIN category an on an.id = can.category_id
+		LEFT JOIN category_tree_node ctn on ctn.category_id = an.id
+			WHERE ctn.id = #{po.id} and ctn.category_tree_id = #{po.categoryTreeId}
+			ORDER BY can.sort_value
+	</select>	
+	
+	<select id="merchantProductAttNameByCId" resultMap="categoryAttNameMap">
+		SELECT
+			can.id,
+			can.parent_id,
+			can.category_id,
+			can.att_name_id,
+			can.sort_value,
+			can.platform_id,
+			can.type
+			FROM category_att_name can
+		LEFT JOIN attribute_name an on an.id = can.att_name_id
+			WHERE can.category_id = #{po.categoryId} and can.type = 2
+			ORDER BY can.sort_value
+	</select>
+	
+	<select id="isRequiredByCategoryIdAttNameId" resultType="java.lang.Integer">
+		SELECT
+		is_required
+		FROM category_att_name
+		WHERE category_id = #{categoryId} and att_name_id = #{attNameId}
+	</select>
+	
+	<select id="findSumByCategoryId" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM category_att_name 
+		WHERE type = 2 and category_id = #{categoryId}
+	</select>
+</mapper>
+	

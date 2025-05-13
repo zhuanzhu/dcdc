@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.product.dao.read.AttributeNameDecimalReadDAO">
+	<resultMap type="com.egeo.components.product.po.AttributeNameDecimalPO" id="attributeNameDecimalMap">
+		<result property="id" column="id" />
+		<result property="attributeNameId" column="attribute_name_id" />
+		<result property="beginDecimal" column="begin_decimal" />
+		<result property="finishDecimal" column="finish_decimal" />
+		<result property="unit" column="unit" />
+		<result property="importHint" column="import_hint" />
+	</resultMap>
+
+	<sql id="attributeNameDecimalColumns">
+		id,
+		attribute_name_id,
+		begin_decimal,
+		finish_decimal,
+		unit,
+		import_hint
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.product.po.AttributeNameDecimalPO" resultMap="attributeNameDecimalMap">
+		SELECT
+		<include refid="attributeNameDecimalColumns" />
+		FROM attribute_name_decimal
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="attributeNameDecimalMap">
+		SELECT
+		<include refid="attributeNameDecimalColumns" />
+		FROM attribute_name_decimal
+		<where>
+			<if test="po.attributeNameId != null">
+				and attribute_name_id = #{po.attributeNameId}
+			</if>
+			<if test="po.beginDecimal != null">
+				and begin_decimal = #{po.beginDecimal}
+			</if>
+			<if test="po.finishDecimal != null">
+				and finish_decimal = #{po.finishDecimal}
+			</if>
+			<if test="po.unit != null">
+				and unit = #{po.unit}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM attribute_name_decimal
+		<where>
+			<if test="po.attributeNameId != null">
+				and attribute_name_id = #{po.attributeNameId}
+			</if>
+			<if test="po.beginDecimal != null">
+				and begin_decimal = #{po.beginDecimal}
+			</if>
+			<if test="po.finishDecimal != null">
+				and finish_decimal = #{po.finishDecimal}
+			</if>
+			<if test="po.unit != null">
+				and unit = #{po.unit}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="attributeNameDecimalMap">
+		SELECT
+		<include refid="attributeNameDecimalColumns" />
+		FROM attribute_name_decimal
+		<where>
+			<if test="po.attributeNameId != null">
+				and attribute_name_id = #{po.attributeNameId}
+			</if>
+			<if test="po.beginDecimal != null">
+				and begin_decimal = #{po.beginDecimal}
+			</if>
+			<if test="po.finishDecimal != null">
+				and finish_decimal = #{po.finishDecimal}
+			</if>
+			<if test="po.unit != null">
+				and unit = #{po.unit}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+</mapper>
+	

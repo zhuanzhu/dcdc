@@ -1,0 +1,544 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.order.dao.read.LimitRuleReadDAO">
+	<resultMap type="com.egeo.components.order.po.LimitRulePO" id="limitRuleMap">
+		<result property="id" column="id" />
+		<result property="serialNumber" column="serial_number" />
+		<result property="type" column="type" />
+		<result property="name" column="name" />
+		<result property="isStart" column="is_start" />
+		<result property="standardUnitId" column="standard_unit_id" />
+		<result property="standardUnitSerialNumber" column="standard_unit_serial_number" />
+		<result property="isLimit" column="is_limit" />
+		<result property="suLimitNum" column="su_limit_num" />
+		<result property="limitTimeType" column="limit_time_type" />
+		<result property="limitOriginTime" column="limit_origin_time" />
+		<result property="limitStopTime" column="limit_stop_time" />
+		<result property="periodType" column="period_type" />
+		<result property="userLimitNum" column="user_limit_num" />
+		<result property="userMoneySum" column="user_money_sum" />
+		<result property="createUserid" column="create_userid" />
+		<result property="createUsername" column="create_username" />
+		<result property="createUserip" column="create_userip" />
+		<result property="createUsermac" column="create_usermac" />
+		<result property="createTime" column="create_time" />
+		<result property="updateUserid" column="update_userid" />
+		<result property="updateUsername" column="update_username" />
+		<result property="updateUserip" column="update_userip" />
+		<result property="updateUsermac" column="update_usermac" />
+		<result property="updateTime" column="update_time" />
+		<result property="platformId" column="platform_id" />
+		<result property="limitTarget" column="limit_target" />
+		<result property="suCombId" column="su_comb_id" />
+		<result property="suLimitAmount" column="su_limit_amount" />
+		<result property="companyType" column="company_type" />
+		<result property="limitUnit" column="limit_unit" />
+		<result property="isUserLimit" column="is_user_limit" />
+		<result property="isCompanyLimit" column="is_company_limit" />
+		<result property="companyLimitNum" column="company_limit_num" />
+		<result property="companyMoneySum" column="company_money_sum" />
+		<result property="isStoreLimit" column="is_store_limit" />
+		<result property="storeLimitNum" column="store_limit_num" />
+		<result property="storeMoneySum" column="store_money_sum" />
+	</resultMap>
+
+	<sql id="limitRuleColumns">
+		id,
+		serial_number,
+		type,
+		name,
+		is_start,
+		standard_unit_id,
+		standard_unit_serial_number,
+		is_limit,
+		su_limit_num,
+		limit_time_type,
+		limit_origin_time,
+		limit_stop_time,
+		period_type,
+		user_limit_num,
+		user_money_sum,
+		create_userid,
+		create_username,
+		create_userip,
+		create_usermac,
+		create_time,
+		update_userid,
+		update_username,
+		update_userip,
+		update_usermac,
+		update_time,
+		platform_id,
+		limit_target,  
+		su_comb_id,
+		su_limit_amount,
+		company_type,
+		limit_unit,
+		is_user_limit,
+		is_company_limit,
+		company_limit_num,
+		company_money_sum,
+		is_store_limit,
+		store_limit_num,
+		store_money_sum
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.order.po.LimitRulePO" resultMap="limitRuleMap">
+		SELECT
+		<include refid="limitRuleColumns" />
+		FROM limit_rule
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="limitRuleMap">
+		SELECT
+		<include refid="limitRuleColumns" />
+		FROM limit_rule
+		<where>
+			<if test="po.serialNumber != null">
+				and serial_number = #{po.serialNumber}
+			</if>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+			<if test="po.name != null">
+				and name = #{po.name}
+			</if>
+			<if test="po.isStart != null">
+				and is_start = #{po.isStart}
+			</if>
+			<if test="po.standardUnitId != null">
+				and standard_unit_id = #{po.standardUnitId}
+			</if>
+			<if test="po.standardUnitSerialNumber != null">
+				and standard_unit_serial_number = #{po.standardUnitSerialNumber}
+			</if>
+			<if test="po.isLimit != null">
+				and is_limit = #{po.isLimit}
+			</if>
+			<if test="po.suLimitNum != null">
+				and su_limit_num = #{po.suLimitNum}
+			</if>
+			<if test="po.limitTimeType != null">
+				and limit_time_type = #{po.limitTimeType}
+			</if>
+			<if test="po.limitOriginTime != null">
+				and limit_origin_time = #{po.limitOriginTime}
+			</if>
+			<if test="po.limitStopTime != null">
+				and limit_stop_time = #{po.limitStopTime}
+			</if>
+			<if test="po.periodType != null">
+				and period_type = #{po.periodType}
+			</if>
+			<if test="po.userLimitNum != null">
+				and user_limit_num = #{po.userLimitNum}
+			</if>
+			<if test="po.userMoneySum != null">
+				and user_money_sum = #{po.userMoneySum}
+			</if>
+			<if test="po.createUserid != null">
+				and create_userid = #{po.createUserid}
+			</if>
+			<if test="po.createUsername != null">
+				and create_username = #{po.createUsername}
+			</if>
+			<if test="po.createUserip != null">
+				and create_userip = #{po.createUserip}
+			</if>
+			<if test="po.createUsermac != null">
+				and create_usermac = #{po.createUsermac}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateUserid != null">
+				and update_userid = #{po.updateUserid}
+			</if>
+			<if test="po.updateUsername != null">
+				and update_username = #{po.updateUsername}
+			</if>
+			<if test="po.updateUserip != null">
+				and update_userip = #{po.updateUserip}
+			</if>
+			<if test="po.updateUsermac != null">
+				and update_usermac = #{po.updateUsermac}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.limitTarget != null">
+				and limit_target = #{po.limitTarget}
+			</if>
+			<if test="po.suCombId != null">
+				and su_comb_id = #{po.suCombId}
+			</if>
+			<if test="po.suLimitAmount != null">
+				and su_limit_amount = #{po.suLimitAmount}
+			</if>
+			<if test="po.companyType != null">
+				and company_type = #{po.companyType}
+			</if>
+			<if test="po.limitUnit != null">
+				and limit_unit = #{po.limitUnit}
+			</if>
+			<if test="po.isUserLimit != null">
+				and is_user_limit = #{po.isUserLimit}
+			</if>
+			<if test="po.isCompanyLimit != null">
+				and is_company_limit = #{po.isCompanyLimit}
+			</if>
+			<if test="po.companyLimitNum != null">
+				and company_limit_num = #{po.companyLimitNum}
+			</if>
+			<if test="po.companyMoneySum != null">
+				and company_money_sum = #{po.companyMoneySum}
+			</if>
+			<if test="po.isStoreLimit != null">
+				and is_store_limit = #{po.isStoreLimit}
+			</if>
+			<if test="po.storeLimitNum != null">
+				and store_limit_num = #{po.storeLimitNum}
+			</if>
+			<if test="po.storeMoneySum != null">
+				and store_money_sum = #{po.storeMoneySum}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM limit_rule
+		<where>
+			<if test="po.serialNumber != null">
+				and serial_number = #{po.serialNumber}
+			</if>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+			<if test="po.name != null">
+				and name = #{po.name}
+			</if>
+			<if test="po.isStart != null">
+				and is_start = #{po.isStart}
+			</if>
+			<if test="po.standardUnitId != null">
+				and standard_unit_id = #{po.standardUnitId}
+			</if>
+			<if test="po.standardUnitSerialNumber != null">
+				and standard_unit_serial_number = #{po.standardUnitSerialNumber}
+			</if>
+			<if test="po.isLimit != null">
+				and is_limit = #{po.isLimit}
+			</if>
+			<if test="po.suLimitNum != null">
+				and su_limit_num = #{po.suLimitNum}
+			</if>
+			<if test="po.limitTimeType != null">
+				and limit_time_type = #{po.limitTimeType}
+			</if>
+			<if test="po.limitOriginTime != null">
+				and limit_origin_time = #{po.limitOriginTime}
+			</if>
+			<if test="po.limitStopTime != null">
+				and limit_stop_time = #{po.limitStopTime}
+			</if>
+			<if test="po.periodType != null">
+				and period_type = #{po.periodType}
+			</if>
+			<if test="po.userLimitNum != null">
+				and user_limit_num = #{po.userLimitNum}
+			</if>
+			<if test="po.userMoneySum != null">
+				and user_money_sum = #{po.userMoneySum}
+			</if>
+			<if test="po.createUserid != null">
+				and create_userid = #{po.createUserid}
+			</if>
+			<if test="po.createUsername != null">
+				and create_username = #{po.createUsername}
+			</if>
+			<if test="po.createUserip != null">
+				and create_userip = #{po.createUserip}
+			</if>
+			<if test="po.createUsermac != null">
+				and create_usermac = #{po.createUsermac}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateUserid != null">
+				and update_userid = #{po.updateUserid}
+			</if>
+			<if test="po.updateUsername != null">
+				and update_username = #{po.updateUsername}
+			</if>
+			<if test="po.updateUserip != null">
+				and update_userip = #{po.updateUserip}
+			</if>
+			<if test="po.updateUsermac != null">
+				and update_usermac = #{po.updateUsermac}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.limitTarget != null">
+				and limit_target = #{po.limitTarget}
+			</if>
+			<if test="po.suCombId != null">
+				and su_comb_id = #{po.suCombId}
+			</if>
+			<if test="po.suLimitAmount != null">
+				and su_limit_amount = #{po.suLimitAmount}
+			</if>
+			<if test="po.companyType != null">
+				and company_type = #{po.companyType}
+			</if>
+			<if test="po.limitUnit != null">
+				and limit_unit = #{po.limitUnit}
+			</if>
+			<if test="po.isUserLimit != null">
+				and is_user_limit = #{po.isUserLimit}
+			</if>
+			<if test="po.isCompanyLimit != null">
+				and is_company_limit = #{po.isCompanyLimit}
+			</if>
+			<if test="po.companyLimitNum != null">
+				and company_limit_num = #{po.companyLimitNum}
+			</if>
+			<if test="po.companyMoneySum != null">
+				and company_money_sum = #{po.companyMoneySum}
+			</if>
+			<if test="po.isStoreLimit != null">
+				and is_store_limit = #{po.isStoreLimit}
+			</if>
+			<if test="po.storeLimitNum != null">
+				and store_limit_num = #{po.storeLimitNum}
+			</if>
+			<if test="po.storeMoneySum != null">
+				and store_money_sum = #{po.storeMoneySum}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="limitRuleMap">
+		SELECT
+		<include refid="limitRuleColumns" />
+		FROM limit_rule
+		<where>
+			<if test="po.serialNumber != null">
+				and serial_number = #{po.serialNumber}
+			</if>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+			<if test="po.name != null">
+				and name = #{po.name}
+			</if>
+			<if test="po.isStart != null">
+				and is_start = #{po.isStart}
+			</if>
+			<if test="po.standardUnitId != null">
+				and standard_unit_id = #{po.standardUnitId}
+			</if>
+			<if test="po.standardUnitSerialNumber != null">
+				and standard_unit_serial_number = #{po.standardUnitSerialNumber}
+			</if>
+			<if test="po.isLimit != null">
+				and is_limit = #{po.isLimit}
+			</if>
+			<if test="po.suLimitNum != null">
+				and su_limit_num = #{po.suLimitNum}
+			</if>
+			<if test="po.limitTimeType != null">
+				and limit_time_type = #{po.limitTimeType}
+			</if>
+			<if test="po.limitOriginTime != null">
+				and limit_origin_time = #{po.limitOriginTime}
+			</if>
+			<if test="po.limitStopTime != null">
+				and limit_stop_time = #{po.limitStopTime}
+			</if>
+			<if test="po.periodType != null">
+				and period_type = #{po.periodType}
+			</if>
+			<if test="po.userLimitNum != null">
+				and user_limit_num = #{po.userLimitNum}
+			</if>
+			<if test="po.userMoneySum != null">
+				and user_money_sum = #{po.userMoneySum}
+			</if>
+			<if test="po.createUserid != null">
+				and create_userid = #{po.createUserid}
+			</if>
+			<if test="po.createUsername != null">
+				and create_username = #{po.createUsername}
+			</if>
+			<if test="po.createUserip != null">
+				and create_userip = #{po.createUserip}
+			</if>
+			<if test="po.createUsermac != null">
+				and create_usermac = #{po.createUsermac}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateUserid != null">
+				and update_userid = #{po.updateUserid}
+			</if>
+			<if test="po.updateUsername != null">
+				and update_username = #{po.updateUsername}
+			</if>
+			<if test="po.updateUserip != null">
+				and update_userip = #{po.updateUserip}
+			</if>
+			<if test="po.updateUsermac != null">
+				and update_usermac = #{po.updateUsermac}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.limitTarget != null">
+				and limit_target = #{po.limitTarget}
+			</if>
+			<if test="po.suCombId != null">
+				and su_comb_id = #{po.suCombId}
+			</if>
+			<if test="po.suLimitAmount != null">
+				and su_limit_amount = #{po.suLimitAmount}
+			</if>
+			<if test="po.companyType != null">
+				and company_type = #{po.companyType}
+			</if>
+			<if test="po.limitUnit != null">
+				and limit_unit = #{po.limitUnit}
+			</if>
+			<if test="po.isUserLimit != null">
+				and is_user_limit = #{po.isUserLimit}
+			</if>
+			<if test="po.isCompanyLimit != null">
+				and is_company_limit = #{po.isCompanyLimit}
+			</if>
+			<if test="po.companyLimitNum != null">
+				and company_limit_num = #{po.companyLimitNum}
+			</if>
+			<if test="po.companyMoneySum != null">
+				and company_money_sum = #{po.companyMoneySum}
+			</if>
+			<if test="po.isStoreLimit != null">
+				and is_store_limit = #{po.isStoreLimit}
+			</if>
+			<if test="po.storeLimitNum != null">
+				and store_limit_num = #{po.storeLimitNum}
+			</if>
+			<if test="po.storeMoneySum != null">
+				and store_money_sum = #{po.storeMoneySum}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="startLimitRuleByStandardUnitId" resultMap="limitRuleMap">
+		SELECT
+		lr.id,
+		lr.serial_number,
+		lr.type,
+		lr.name,
+		lr.is_start,
+		lr.standard_unit_id,
+		lr.standard_unit_serial_number,
+		lr.is_limit,
+		lr.su_limit_num,
+		lr.limit_time_type,
+		lr.limit_origin_time,
+		lr.limit_stop_time,
+		lr.period_type,
+		lr.user_limit_num,
+		lr.user_money_sum,
+		lr.platform_id,
+		lr.limit_target,  
+		lr.su_comb_id,
+		lr.su_limit_amount,
+		lr.company_type,
+		lr.limit_unit,
+		lr.is_user_limit,
+		lr.is_company_limit,
+		lr.company_limit_num,
+		lr.company_money_sum,
+		lr.is_store_limit,
+		lr.store_limit_num,
+		lr.store_money_sum
+		FROM limit_rule lr
+		<!-- LEFT JOIN limit_rule_company lrc on lrc.limit_rule_id = lr.id -->
+		<where>
+		lr.is_start = 1 
+			<if test="standardUnitId != null or suCombIdList != null">
+				and (
+				 <if test="standardUnitId != null">
+					lr.standard_unit_id = #{standardUnitId} 
+				 </if>
+				 <if test="standardUnitId != null and suCombIdList != null and suCombIdList.size()>0">
+					  or
+				 </if>
+				 <if test="suCombIdList != null and suCombIdList.size()>0">
+					lr.su_comb_id in
+					<foreach collection="suCombIdList" item="suCombId" open="(" separator=","
+					 close=")">
+						#{suCombId}
+					</foreach> 
+				 </if>
+				 )
+			</if>
+			<if test="platformId != null">
+				and lr.platform_id = #{platformId} 
+			</if>
+			<!-- <if test="companyId != null">
+				<if test="companyAllId == null">
+					and (lrc.company_id in (-1,-2,-3) or lrc.company_id = #{companyId} )
+				</if>
+				<if test="companyAllId != null">
+					and (lrc.company_id = #{companyAllId} or lrc.company_id = #{companyId} )
+				</if>
+			</if>
+			<if test="companyId == null">
+				<if test="companyAllId == null">
+					and lrc.company_id in (-1,-2,-3)
+				</if>
+				<if test="companyAllId != null">
+					and lrc.company_id = #{companyAllId}
+				</if>
+			</if> -->
+		</where>
+		group by lr.id
+		ORDER BY lr.create_time
+	</select>
+</mapper>
+	

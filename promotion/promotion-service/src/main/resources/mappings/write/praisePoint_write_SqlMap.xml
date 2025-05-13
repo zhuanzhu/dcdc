@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.promotion.dao.write.PraisePointWriteDAO">
+
+	<update id="increasePraisePointWithTx">
+		update praise_point
+		set 
+		praise_point=praise_point+#{delta},
+		ciphertext=#{ciphertextNew}
+		where user_id=#{userId}
+	</update>
+
+	<insert id="insert" parameterType="com.egeo.components.promotion.po.PraisePointPO">
+		INSERT INTO praise_point(
+        <trim suffixOverrides=",">
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="praisePoint != null">
+				praise_point,
+			</if>
+			<if test="ciphertext != null">
+				ciphertext,
+			</if>
+			<if test="uuid != null">
+				uuid,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+        </trim>		
+		) VALUES (
+        <trim suffixOverrides=",">
+			<if test="userId != null">
+				#{userId},
+			</if>
+			<if test="praisePoint != null">
+				#{praisePoint},
+			</if>
+			<if test="ciphertext != null">
+				#{ciphertext},
+			</if>
+			<if test="uuid != null">
+				#{uuid},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
+			</if>
+        </trim>		
+		)
+		<selectKey keyProperty="id" resultType="java.lang.Long">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+
+	
+	
+	<update id="update">
+	UPDATE praise_point 
+		<set>
+			<if test="userId != null">
+				user_id = #{userId},
+			</if>			
+			<if test="praisePoint != null">
+				praise_point = #{praisePoint},
+			</if>
+			<if test="ciphertext != null">
+				ciphertext=#{ciphertext},
+			</if>
+			<if test="uuid != null">
+				uuid=#{uuid},
+			</if>		
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>			
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>			
+		</set>
+			WHERE id = #{id}
+	</update>	
+	
+
+	<delete id="delete">
+		delete from praise_point where id = #{id}
+	</delete>
+
+	<delete id="deleteByPara">
+		delete from praise_point 
+		<where>
+			<if test="userId != null">
+				and user_id = #{userId}
+			</if>
+			<if test="praisePoint != null">
+				and praise_point = #{praisePoint}
+			</if>
+			<if test="createTime != null">
+				and create_time = #{createTime}
+			</if>
+			<if test="updateTime != null">
+				and update_time = #{updateTime}
+			</if>
+		</where>
+	</delete>
+
+
+</mapper>
+	

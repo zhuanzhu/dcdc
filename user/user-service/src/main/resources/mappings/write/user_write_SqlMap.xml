@@ -1,0 +1,423 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.user.dao.write.UserWriteDAO">
+	<sql id="inClause">
+		in
+		<foreach collection="ids" item="id" open="(" separator=","
+			close=")">
+			#{id}
+		</foreach>
+	</sql>
+
+	<insert id="insert" parameterType="com.egeo.components.user.po.UserPO">
+		INSERT INTO u_user(
+        <trim suffixOverrides=",">
+			<if test="loginName != null">
+				login_name,
+			</if>
+			<if test="password != null">
+				password,
+			</if>
+			<if test="mobile != null">
+				mobile,
+			</if>
+			<if test="mail != null">
+				mail,
+			</if>
+			<if test="qrcode != null">
+				qrcode,
+			</if>
+			<if test="salt != null">
+				salt,
+			</if>
+			<if test="updateSalt != null">
+				update_salt,
+			</if>
+			<if test="companyId != null">
+				company_id,
+			</if>
+			<if test="type != null">
+				type,
+			</if>
+			<if test="enterpriseId != null">
+				enterprise_id,
+			</if>
+			<if test="isAvailable != null">
+				is_available,
+			</if>
+			<if test="quitTime != null">
+				quit_time,
+			</if>
+			<if test="isDeleted != null">
+				is_deleted,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="paymentCode != null">
+				payment_code,
+			</if>
+			<if test="paymentCodeUuid != null">
+				payment_code_uuid,
+			</if>
+			<if test="wechatUserId != null">
+				wechat_user_id,
+			</if>
+			<if test="channelUserUnique != null">
+				channel_user_unique,
+			</if>
+        </trim>
+		) VALUES (
+        <trim suffixOverrides=",">
+			<if test="loginName != null">
+				#{loginName},
+			</if>
+			<if test="password != null">
+				#{password},
+			</if>
+			<if test="mobile != null">
+				#{mobile},
+			</if>
+			<if test="mail != null">
+				#{mail},
+			</if>
+			<if test="qrcode != null">
+				#{qrcode},
+			</if>
+			<if test="salt != null">
+				#{salt},
+			</if>
+			<if test="updateSalt != null">
+				#{updateSalt},
+			</if>
+			<if test="companyId != null">
+				#{companyId},
+			</if>
+			<if test="type != null">
+				#{type},
+			</if>
+			<if test="enterpriseId != null">
+				#{enterpriseId},
+			</if>
+			<if test="isAvailable != null">
+				#{isAvailable},
+			</if>
+			<if test="quitTime != null">
+				#{quitTime},
+			</if>
+			<if test="isDeleted != null">
+				#{isDeleted},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
+			</if>
+			<if test="paymentCode != null">
+				#{paymentCode},
+			</if>
+			<if test="paymentCodeUuid != null">
+				#{paymentCodeUuid},
+			</if>
+			<if test="wechatUserId != null">
+				#{wechatUserId},
+			</if>
+			<if test="channelUserUnique != null">
+				#{channelUserUnique},
+			</if>
+        </trim>
+		)
+		<selectKey keyProperty="id" resultType="java.lang.Long">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+
+
+
+	<update id="update">
+	UPDATE u_user
+		<set>
+			<if test="loginName != null">
+				login_name = #{loginName},
+			</if>
+			<if test="password != null">
+				password = #{password},
+			</if>
+			<if test="mobile != null">
+				mobile = #{mobile},
+			</if>
+			<if test="mail != null">
+				mail = #{mail},
+			</if>
+			<if test="qrcode != null">
+				qrcode = #{qrcode},
+			</if>
+			<if test="salt != null">
+				salt = #{salt},
+			</if>
+			<if test="updateSalt != null">
+				update_salt = #{updateSalt},
+			</if>
+			<if test="companyId != null">
+				company_id = #{companyId},
+			</if>
+			<if test="type != null">
+				type = #{type},
+			</if>
+			<if test="enterpriseId != null">
+				enterprise_id = #{enterpriseId},
+			</if>
+			<if test="isAvailable != null">
+				is_available = #{isAvailable},
+			</if>
+			<if test="quitTime != null">
+				quit_time = #{quitTime},
+			</if>
+			<if test="isDeleted != null">
+				is_deleted = #{isDeleted},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>
+			<if test="paymentCode != null">
+				payment_code = #{paymentCode},
+			</if>
+			<if test="paymentCodeUuid != null">
+				payment_code_uuid = #{paymentCodeUuid},
+			</if>
+		</set>
+			WHERE id = #{id}
+	</update>
+
+
+	<update id="delete">
+		UPDATE u_user SET is_deleted = 1 WHERE id = #{id}
+	</update>
+
+	<update id="deleteByPara">
+		UPDATE u_user SET is_deleted = 1
+		<where>
+			<if test="loginName != null">
+				and login_name = #{loginName}
+			</if>
+			<if test="password != null">
+				and password = #{password}
+			</if>
+			<if test="mobile != null">
+				and mobile = #{mobile}
+			</if>
+			<if test="mail != null">
+				and mail = #{mail}
+			</if>
+			<if test="qrcode != null">
+				and qrcode = #{qrcode}
+			</if>
+			<if test="salt != null">
+				and salt = #{salt}
+			</if>
+			<if test="updateSalt != null">
+				and update_salt = #{updateSalt}
+			</if>
+			<if test="companyId != null">
+				and company_id = #{companyId}
+			</if>
+			<if test="type != null">
+				and type = #{type},
+			</if>
+			<if test="enterpriseId != null">
+				and enterprise_id = #{enterpriseId},
+			</if>
+			<if test="isAvailable != null">
+				and is_available = #{isAvailable}
+			</if>
+			<if test="quitTime != null">
+				and quit_time = #{quitTime}
+			</if>
+			<if test="isDeleted != null">
+				and is_deleted = #{isDeleted}
+			</if>
+			<if test="createTime != null">
+				and create_time = #{createTime}
+			</if>
+			<if test="updateTime != null">
+				and update_time = #{updateTime}
+			</if>
+			<if test="paymentCode != null">
+				and payment_code = #{paymentCode},
+			</if>
+			<if test="paymentCodeUuid != null">
+				and payment_code_uuid = #{paymentCodeUuid},
+			</if>
+		</where>
+	</update>
+
+	<update id="updateUserPassword">
+	UPDATE u_user set `password` = #{password},salt = #{salt} WHERE mail = #{mail}
+	</update>
+
+	<update id="saveUserMobile">
+		UPDATE u_user set `mobile` = #{mobile} WHERE id = #{id}
+	</update>
+
+	<update id="userRegister">
+	UPDATE u_user u,u_user_extend ue
+		<set>
+			<if test="po.loginName != null">
+				u.login_name = #{po.loginName},
+			</if>
+			<if test="po.password != null">
+				u.password = #{po.password},
+			</if>
+			<if test="po.mobile != null">
+				u.mobile = #{po.mobile},
+			</if>
+			<if test="po.qrcode != null">
+				u.qrcode = #{po.qrcode},
+			</if>
+			<if test="po.salt != null">
+				u.salt = #{po.salt},
+			</if>
+			<if test="po.updateSalt != null">
+				u.update_salt = #{po.updateSalt},
+			</if>
+			<if test="po.companyId != null">
+				u.company_id = #{po.companyId},
+			</if>
+			<if test="po.type != null">
+				u.type = #{po.type},
+			</if>
+			<if test="po.enterpriseId != null">
+				u.enterprise_id = #{po.enterpriseId},
+			</if>
+			<if test="po.isAvailable != null">
+				u.is_available = #{po.isAvailable},
+			</if>
+			<if test="po.quitTime != null">
+				u.quit_time = #{po.quitTime},
+			</if>
+			<if test="po.isDeleted != null">
+				u.is_deleted = #{po.isDeleted},
+			</if>
+			<if test="po.createTime != null">
+				u.create_time = #{po.createTime},
+			</if>
+			<if test="po.updateTime != null">
+				u.update_time = #{po.updateTime},
+			</if>
+			<if test="po.updateTime != null">
+				u.update_time = #{po.updateTime},
+			</if>
+			<if test="regtime != null">
+				ue.regtime = #{regtime},
+			</if>
+			<if test="po.deviceType != null">
+				ue.device_type = #{po.deviceType},
+			</if>
+			<if test="po.version != null">
+				ue.version = #{po.version},
+			</if>
+			<if test="po.deviceId != null">
+				ue.device_id = #{po.deviceId},
+			</if>
+			<if test="po.channelId != null">
+				ue.channel_id = #{po.channelId},
+			</if>
+			<if test="po.campaignCode != null">
+				ue.campaign_code = #{po.campaignCode},
+			</if>
+			<if test="po.registerStoreId != null">
+				ue.register_store_id = #{po.registerStoreId},
+			</if>
+			<if test="true">
+				ue.status = 1,
+			</if>
+		</set>
+			WHERE u.id = ue.id and  u.mail = #{po.mail}
+	</update>
+
+	<update id="setPaymentPassword">
+	UPDATE u_user set payment_code = #{paymentCode},payment_code_uuid = #{paymentCodeUuid} WHERE mail = #{mail}
+	</update>
+
+	<update id="updateUserPasswordWithTx">
+	UPDATE u_user set password = #{password},salt = #{salt},update_salt = #{updateSalt} WHERE id = #{userId}
+	</update>
+
+	<update id="updateQuitTime">
+		update u_user set quit_time = #{po.quitTime} WHERE id = #{po.id}
+	</update>
+
+	<update id="unbindByUserIdsWithTx">
+		update u_user u,u_user_extend ue set u.mobile = null,ue.weixin = null WHERE u.id = ue.id and u.id <include refid="inClause" />
+	</update>
+
+	<update id="bindingMobileByBeforeMobileWithTx">
+		update u_user uu,u_user_platform uup set uu.mobile = #{mobile}
+		WHERE uu.mobile = #{beforeMobile}
+		and uu.id=uup.user_id
+		AND uup.platform_id=#{platformId}
+	</update>
+
+	<update id="updateIsAvailableAccountStatus">
+		UPDATE u_user
+		<set>
+			<if test="isAvailable != null">
+				is_available =  #{isAvailable},
+			</if>
+			<if test="isAvailable != null and isAvailable != 1">
+				quit_time = now(),
+			</if>
+		</set>
+		where id = #{userId}
+	</update>
+
+
+	<update id="updateManageAccountStatus">
+		UPDATE u_user u
+		<set>
+			<if test="isAvailable != null">
+				is_available =  #{isAvailable},
+			</if>
+			<if test="isAvailable != null and isAvailable != 1">
+				quit_time = now(),
+			</if>
+		</set>
+		where u.type in (1,2,3,4) and u.id <include refid="inClause" />
+	</update>
+
+	<update id="deleteManageAccountStatus">
+		UPDATE u_user u set is_deleted = 1
+		where u.type in (1,2,3,4) and u.id <include refid="inClause" />
+	</update>
+	<insert id="syncUserAll">
+		 CALL sync_user(#{importId});
+	</insert>
+
+	<delete id="deleteByImportIdWithTx">
+		delete from u_user where id = #{id} and import_records_id = #{importId}
+	</delete>
+
+	<update id="switchUserEnterpriseByCompanyId">
+		UPDATE u_user
+		<set>
+			<if test="enterpriseId != null">
+				enterprise_id =  #{enterpriseId},
+			</if>
+			<if test="companyNewId != null">
+				company_id =  #{companyNewId},
+			</if>
+		</set>
+		where company_id = #{companyId}
+		<if test="userId != null">
+			and id = #{userId}
+		</if>
+	</update>
+</mapper>

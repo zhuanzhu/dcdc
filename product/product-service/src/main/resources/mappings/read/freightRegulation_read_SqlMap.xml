@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.product.dao.read.FreightRegulationReadDAO">
+	<resultMap type="com.egeo.components.product.po.FreightRegulationPO" id="freightRegulationMap">
+		<result property="id" column="id" />
+		<result property="freightTemplateId" column="freight_template_id" />
+		<result property="orderMoney" column="order_money" />
+		<result property="freightMoney" column="freight_money" />
+	</resultMap>
+
+	<sql id="freightRegulationColumns">
+		id,
+		freight_template_id,
+		order_money,
+		freight_money
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.product.po.FreightRegulationPO" resultMap="freightRegulationMap">
+		SELECT
+		<include refid="freightRegulationColumns" />
+		FROM freight_regulation
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="freightRegulationMap">
+		SELECT
+		<include refid="freightRegulationColumns" />
+		FROM freight_regulation
+		<where>
+			<if test="po.freightTemplateId != null">
+				and freight_template_id = #{po.freightTemplateId}
+			</if>
+			<if test="po.orderMoney != null">
+				and order_money = #{po.orderMoney}
+			</if>
+			<if test="po.freightMoney != null">
+				and freight_money = #{po.freightMoney}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM freight_regulation
+		<where>
+			<if test="po.freightTemplateId != null">
+				and freight_template_id = #{po.freightTemplateId}
+			</if>
+			<if test="po.orderMoney != null">
+				and order_money = #{po.orderMoney}
+			</if>
+			<if test="po.freightMoney != null">
+				and freight_money = #{po.freightMoney}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="freightRegulationMap">
+		SELECT
+		<include refid="freightRegulationColumns" />
+		FROM freight_regulation
+		<where>
+			<if test="po.freightTemplateId != null">
+				and freight_template_id = #{po.freightTemplateId}
+			</if>
+			<if test="po.orderMoney != null">
+				and order_money = #{po.orderMoney}
+			</if>
+			<if test="po.freightMoney != null">
+				and freight_money = #{po.freightMoney}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY order_money
+			</otherwise>
+		</choose>
+	</select>
+</mapper>
+	

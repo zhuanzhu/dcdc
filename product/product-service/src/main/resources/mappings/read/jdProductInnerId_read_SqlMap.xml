@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.product.dao.read.JdProductInnerIdReadDAO">
+	<resultMap type="com.egeo.components.product.po.JdProductInnerIdPO" id="jdProductInnerIdMap">
+		<result property="jdSkuId" column="jd_sku_id" />
+		<result property="innerProductId" column="inner_product_id" />
+		<result property="innerSkuId" column="inner_sku_id" />
+		<result property="innerSuId" column="inner_su_id" />
+		<result property="innerProductUnitId" column="inner_product_unit_id" />
+		<result property="innerPuId" column="inner_pu_id" />
+		<result property="innerPictureId" column="inner_picture_id" />
+		<result property="innerAttValueId" column="inner_att_value_id" />
+	</resultMap>
+
+	<sql id="jdProductInnerIdColumns">
+		jd_sku_id,
+		inner_product_id,
+		inner_sku_id,
+		inner_su_id,
+		inner_product_unit_id,
+		inner_pu_id,
+		inner_picture_id,
+		inner_att_value_id
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.product.po.JdProductInnerIdPO" resultMap="jdProductInnerIdMap">
+		SELECT
+		<include refid="jdProductInnerIdColumns" />
+		FROM jd_product_inner_id
+		WHERE jd_sku_id = #{po.jdSkuId}
+	</select>
+
+
+	<select id="findSuProfitById" resultType="java.lang.Integer">
+		SELECT
+		jp.profit
+		FROM jd_product_inner_id jpii LEFT JOIN jd_product jp ON jpii.jd_sku_id=jp.id
+		WHERE jpii.inner_su_id = #{suId}
+	</select>
+
+	<select id="findOfPage" resultMap="jdProductInnerIdMap">
+		SELECT
+		<include refid="jdProductInnerIdColumns" />
+		FROM jd_product_inner_id
+		<where>
+			<if test="po.innerProductId != null">
+				and inner_product_id = #{po.innerProductId}
+			</if>
+			<if test="po.innerSkuId != null">
+				and inner_sku_id = #{po.innerSkuId}
+			</if>
+			<if test="po.innerSuId != null">
+				and inner_su_id = #{po.innerSuId}
+			</if>
+			<if test="po.innerProductUnitId != null">
+				and inner_product_unit_id = #{po.innerProductUnitId}
+			</if>
+			<if test="po.innerPuId != null">
+				and inner_pu_id = #{po.innerPuId}
+			</if>
+			<if test="po.innerPictureId != null">
+				and inner_picture_id = #{po.innerPictureId}
+			</if>
+			<if test="po.innerAttValueId != null">
+				and inner_att_value_id = #{po.innerAttValueId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY jd_sku_id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM jd_product_inner_id
+		<where>
+			<if test="po.innerProductId != null">
+				and inner_product_id = #{po.innerProductId}
+			</if>
+			<if test="po.innerSkuId != null">
+				and inner_sku_id = #{po.innerSkuId}
+			</if>
+			<if test="po.innerSuId != null">
+				and inner_su_id = #{po.innerSuId}
+			</if>
+			<if test="po.innerProductUnitId != null">
+				and inner_product_unit_id = #{po.innerProductUnitId}
+			</if>
+			<if test="po.innerPuId != null">
+				and inner_pu_id = #{po.innerPuId}
+			</if>
+			<if test="po.innerPictureId != null">
+				and inner_picture_id = #{po.innerPictureId}
+			</if>
+			<if test="po.innerAttValueId != null">
+				and inner_att_value_id = #{po.innerAttValueId}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="jdProductInnerIdMap">
+		SELECT
+		<include refid="jdProductInnerIdColumns" />
+		FROM jd_product_inner_id
+		<where>
+			<if test="po.innerProductId != null">
+				and inner_product_id = #{po.innerProductId}
+			</if>
+			<if test="po.innerSkuId != null">
+				and inner_sku_id = #{po.innerSkuId}
+			</if>
+			<if test="po.innerSuId != null">
+				and inner_su_id = #{po.innerSuId}
+			</if>
+			<if test="po.innerProductUnitId != null">
+				and inner_product_unit_id = #{po.innerProductUnitId}
+			</if>
+			<if test="po.innerPuId != null">
+				and inner_pu_id = #{po.innerPuId}
+			</if>
+			<if test="po.innerPictureId != null">
+				and inner_picture_id = #{po.innerPictureId}
+			</if>
+			<if test="po.innerAttValueId != null">
+				and inner_att_value_id = #{po.innerAttValueId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY jd_sku_id desc		
+			</otherwise>
+		</choose>
+	</select>
+
+
+	<select id="findJdProductInnerIdAllByJdSkuIdList" resultMap="jdProductInnerIdMap">
+		SELECT
+		<include refid="jdProductInnerIdColumns" />
+		FROM jd_product_inner_id
+		<where>
+			jd_sku_id IN
+			<foreach collection="skuIdList" item="skuId" separator="," open="(" close=")">
+				#{skuId}
+			</foreach>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY jd_sku_id desc
+			</otherwise>
+		</choose>
+	</select>
+	<select id="findPuIdByJdSkuId" resultType="java.lang.Long">
+		SELECT inner_pu_id
+		FROM jd_product_inner_id where inner_sku_id = #{skuId}
+	</select>
+</mapper>
+	

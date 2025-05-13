@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.promotion.dao.write.ActivityMerchantProdWriteDAO">
+	<insert id="insert" parameterType="com.egeo.components.promotion.po.ActivityMerchantProdPO">
+		INSERT INTO activity_merchant_prod(
+        <trim suffixOverrides=",">
+			<if test="activityId != null">
+				activity_id,
+			</if>
+			<if test="sortValue != null">
+				sort_value,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="platformId != null">
+				platform_id,
+			</if>
+			<if test="merchantProdId != null">
+				merchant_prod_id,
+			</if>
+        </trim>		
+		) VALUES (
+        <trim suffixOverrides=",">
+			<if test="activityId != null">
+				#{activityId},
+			</if>
+			<if test="sortValue != null">
+				#{sortValue},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
+			</if>
+			<if test="platformId != null">
+				#{platformId},
+			</if>
+			<if test="merchantProdId != null">
+				#{merchantProdId},
+			</if>
+        </trim>		
+		)
+		<selectKey keyProperty="id" resultType="java.lang.Long">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+
+	
+	
+	<update id="update">
+	UPDATE activity_merchant_prod 
+		<set>
+			<if test="activityId != null">
+				activity_id = #{activityId},
+			</if>			
+			<if test="sortValue != null">
+				sort_value = #{sortValue},
+			</if>			
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>			
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>			
+			<if test="platformId != null">
+				platform_id = #{platformId},
+			</if>			
+			<if test="merchantProdId != null">
+				merchant_prod_id = #{merchantProdId},
+			</if>			
+		</set>
+			WHERE id = #{id}
+	</update>	
+	
+
+	<delete id="delete">
+		delete from activity_merchant_prod where id = #{id}
+	</delete>
+
+	<delete id="deleteByPara">
+		delete from activity_merchant_prod 
+		<where>
+			<if test="activityId != null">
+				and activity_id = #{activityId}
+			</if>
+			<if test="sortValue != null">
+				and sort_value = #{sortValue}
+			</if>
+			<if test="createTime != null">
+				and create_time = #{createTime}
+			</if>
+			<if test="updateTime != null">
+				and update_time = #{updateTime}
+			</if>
+			<if test="platformId != null">
+				and platform_id = #{platformId}
+			</if>
+			<if test="merchantProdId != null">
+				and merchant_prod_id = #{merchantProdId}
+			</if>
+		</where>
+	</delete>
+
+	<delete id="deleteActivityMerchantByActivityId">
+		delete from activity_merchant_prod where activity_id = #{activityId}
+	</delete>
+
+</mapper>
+	

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.pay.dao.read.PayWeixinLogReadDAO">
+	<resultMap type="com.egeo.components.pay.po.PayWeixinLogPO" id="payWeixinLogMap">
+		<result property="id" column="id" />
+		<result property="returnCode" column="return_code" />
+		<result property="returnMsg" column="return_msg" />
+		<result property="appid" column="appid" />
+		<result property="mchId" column="mch_id" />
+		<result property="deviceInfo" column="device_info" />
+		<result property="nonceStr" column="nonce_str" />
+		<result property="sign" column="sign" />
+		<result property="resultCode" column="result_code" />
+		<result property="errCode" column="err_code" />
+		<result property="errCodeDes" column="err_code_des" />
+		<result property="tradeType" column="trade_type" />
+		<result property="prepayId" column="prepay_id" />
+		<result property="mwebUrl" column="mweb_url" />
+		<result property="cashFee" column="cash_fee" />
+		<result property="outTradeNo" column="out_trade_no" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="platformId" column="platform_id" />
+		<result property="transactionId" column="transaction_id" />
+	</resultMap>
+
+	<select id="queryPayWeixinLogByOrderCode" resultMap="payWeixinLogMap">
+		SELECT 
+		appid,
+		mch_id,
+		transaction_id,
+		out_trade_no 
+		from 
+		p_pay_weixin_log 
+		where 
+		out_trade_no like concat(#{orderCode},'%') 
+		and transaction_id is not null 
+	</select>
+	
+	
+
+</mapper>
+	

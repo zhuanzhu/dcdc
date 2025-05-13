@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.stock.dao.write.StoreStockChangeApplyWriteDAO">
+	<insert id="insert" parameterType="com.egeo.components.stock.po.StoreStockChangeApplyPO">
+		INSERT INTO store_stock_change_apply(
+        <trim suffixOverrides=",">
+			<if test="storeProductUnitId != null">
+				store_product_unit_id,
+			</if>
+			<if test="stockChange != null">
+				stock_change,
+			</if>
+			<if test="beforeChangeValue != null">
+				before_change_value,
+			</if>
+			<if test="afterChangeValue != null">
+				after_change_value,
+			</if>
+			<if test="applyCauseId != null">
+				apply_cause_id,
+			</if>
+			<if test="concretenessCause != null">
+				concreteness_cause,
+			</if>
+			<if test="afterUserId != null">
+				after_user_id,
+			</if>
+			<if test="afterUserName != null">
+				after_user_name,
+			</if>
+			<if test="afterStoreId != null">
+				after_store_id,
+			</if>
+			<if test="afterStoreName != null">
+				after_store_name,
+			</if>
+			<if test="afterTime != null">
+				after_time,
+			</if>
+			<if test="operationUserId != null">
+				operation_user_id,
+			</if>
+			<if test="operationUserName != null">
+				operation_user_name,
+			</if>
+			<if test="operationTime != null">
+				operation_time,
+			</if>
+			<if test="isConsent != null">
+				is_consent,
+			</if>
+			<if test="platformId != null">
+				platform_id,
+			</if>
+			<if test="commodityProductUnitName != null">
+				commodity_product_unit_name,
+			</if>
+			<if test="productUnitSerialNumber != null">
+				product_unit_serial_number,
+			</if>
+			<if test="type != null">
+				type,
+			</if>
+        </trim>		
+		) VALUES (
+        <trim suffixOverrides=",">
+			<if test="storeProductUnitId != null">
+				#{storeProductUnitId},
+			</if>
+			<if test="stockChange != null">
+				#{stockChange},
+			</if>
+			<if test="beforeChangeValue != null">
+				#{beforeChangeValue},
+			</if>
+			<if test="afterChangeValue != null">
+				#{afterChangeValue},
+			</if>
+			<if test="applyCauseId != null">
+				#{applyCauseId},
+			</if>
+			<if test="concretenessCause != null">
+				#{concretenessCause},
+			</if>
+			<if test="afterUserId != null">
+				#{afterUserId},
+			</if>
+			<if test="afterUserName != null">
+				#{afterUserName},
+			</if>
+			<if test="afterStoreId != null">
+				#{afterStoreId},
+			</if>
+			<if test="afterStoreName != null">
+				#{afterStoreName},
+			</if>
+			<if test="afterTime != null">
+				#{afterTime},
+			</if>
+			<if test="operationUserId != null">
+				#{operationUserId},
+			</if>
+			<if test="operationUserName != null">
+				#{operationUserName},
+			</if>
+			<if test="operationTime != null">
+				#{operationTime},
+			</if>
+			<if test="isConsent != null">
+				#{isConsent},
+			</if>
+			<if test="platformId != null">
+				#{platformId},
+			</if>
+			<if test="commodityProductUnitName != null">
+				#{commodityProductUnitName},
+			</if>
+			<if test="productUnitSerialNumber != null">
+				#{productUnitSerialNumber},
+			</if>
+			<if test="type != null">
+				#{type},
+			</if>
+        </trim>		
+		)
+		<selectKey keyProperty="id" resultType="java.lang.Long">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+
+	
+	
+	<update id="update">
+	UPDATE store_stock_change_apply 
+		<set>
+			<if test="storeProductUnitId != null">
+				store_product_unit_id = #{storeProductUnitId},
+			</if>			
+			<if test="stockChange != null">
+				stock_change = #{stockChange},
+			</if>			
+			<if test="beforeChangeValue != null">
+				before_change_value = #{beforeChangeValue},
+			</if>			
+			<if test="afterChangeValue != null">
+				after_change_value = #{afterChangeValue},
+			</if>			
+			<if test="applyCauseId != null">
+				apply_cause_id = #{applyCauseId},
+			</if>			
+			<if test="concretenessCause != null">
+				concreteness_cause = #{concretenessCause},
+			</if>			
+			<if test="afterUserId != null">
+				after_user_id = #{afterUserId},
+			</if>			
+			<if test="afterUserName != null">
+				after_user_name = #{afterUserName},
+			</if>			
+			<if test="afterStoreId != null">
+				after_store_id = #{afterStoreId},
+			</if>			
+			<if test="afterStoreName != null">
+				after_store_name = #{afterStoreName},
+			</if>			
+			<if test="afterTime != null">
+				after_time = #{afterTime},
+			</if>			
+			<if test="operationUserId != null">
+				operation_user_id = #{operationUserId},
+			</if>			
+			<if test="operationUserName != null">
+				operation_user_name = #{operationUserName},
+			</if>			
+			<if test="operationTime != null">
+				operation_time = #{operationTime},
+			</if>			
+			<if test="isConsent != null">
+				is_consent = #{isConsent},
+			</if>			
+			<if test="platformId != null">
+				platform_id = #{platformId},
+			</if>			
+			<if test="commodityProductUnitName != null">
+				commodity_product_unit_name = #{commodityProductUnitName},
+			</if>			
+			<if test="productUnitSerialNumber != null">
+				product_unit_serial_number = #{productUnitSerialNumber},
+			</if>			
+			<if test="type != null">
+				type = #{type},
+			</if>			
+		</set>
+			WHERE id = #{id}
+	</update>	
+	
+
+	<delete id="delete">
+		delete from store_stock_change_apply where id = #{id}
+	</delete>
+
+	<delete id="deleteByPara">
+		delete from store_stock_change_apply 
+		<where>
+			<if test="storeProductUnitId != null">
+				and store_product_unit_id = #{storeProductUnitId}
+			</if>
+			<if test="stockChange != null">
+				and stock_change = #{stockChange}
+			</if>
+			<if test="beforeChangeValue != null">
+				and before_change_value = #{beforeChangeValue}
+			</if>
+			<if test="afterChangeValue != null">
+				and after_change_value = #{afterChangeValue}
+			</if>
+			<if test="applyCauseId != null">
+				and apply_cause_id = #{applyCauseId}
+			</if>
+			<if test="concretenessCause != null">
+				and concreteness_cause = #{concretenessCause}
+			</if>
+			<if test="afterUserId != null">
+				and after_user_id = #{afterUserId}
+			</if>
+			<if test="afterUserName != null">
+				and after_user_name = #{afterUserName}
+			</if>
+			<if test="afterStoreId != null">
+				and after_store_id = #{afterStoreId}
+			</if>
+			<if test="afterStoreName != null">
+				and after_store_name = #{afterStoreName}
+			</if>
+			<if test="afterTime != null">
+				and after_time = #{afterTime}
+			</if>
+			<if test="operationUserId != null">
+				and operation_user_id = #{operationUserId}
+			</if>
+			<if test="operationUserName != null">
+				and operation_user_name = #{operationUserName}
+			</if>
+			<if test="operationTime != null">
+				and operation_time = #{operationTime}
+			</if>
+			<if test="isConsent != null">
+				and is_consent = #{isConsent}
+			</if>
+			<if test="platformId != null">
+				and platform_id = #{platformId}
+			</if>
+			<if test="commodityProductUnitName != null">
+				and commodity_product_unit_name = #{commodityProductUnitName}
+			</if>
+			<if test="productUnitSerialNumber != null">
+				and product_unit_serial_number = #{productUnitSerialNumber}
+			</if>
+			<if test="type != null">
+				and type = #{type}
+			</if>
+		</where>
+	</delete>
+
+
+</mapper>
+	

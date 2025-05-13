@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.product.dao.write.CategoryAttNameWriteDAO">
+	<insert id="insert" parameterType="com.egeo.components.product.po.CategoryAttNamePO">
+		INSERT INTO category_att_name(
+        <trim suffixOverrides=",">
+			<if test="parentId != null">
+				parent_id,
+			</if>
+			<if test="categoryId != null">
+				category_id,
+			</if>
+			<if test="attNameId != null">
+				att_name_id,
+			</if>
+			<if test="sortValue != null">
+				sort_value,
+			</if>
+			<if test="platformId != null">
+				platform_id,
+			</if>
+			<if test="type != null">
+				type,
+			</if>
+			<if test="isRequired != null">
+				is_required,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+        </trim>		
+		) VALUES (
+        <trim suffixOverrides=",">
+			<if test="parentId != null">
+				#{parentId},
+			</if>
+			<if test="categoryId != null">
+				#{categoryId},
+			</if>
+			<if test="attNameId != null">
+				#{attNameId},
+			</if>
+			<if test="sortValue != null">
+				#{sortValue},
+			</if>
+			<if test="platformId != null">
+				#{platformId},
+			</if>
+			<if test="type != null">
+				#{type},
+			</if>
+			<if test="isRequired != null">
+				#{isRequired},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
+			</if>
+        </trim>		
+		)
+		<selectKey keyProperty="id" resultType="java.lang.Long">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+
+	
+	
+	<update id="update">
+	UPDATE category_att_name 
+		<set>
+			<if test="parentId != null">
+				parent_id = #{parentId},
+			</if>			
+			<if test="categoryId != null">
+				category_id = #{categoryId},
+			</if>			
+			<if test="attNameId != null">
+				att_name_id = #{attNameId},
+			</if>			
+			<if test="sortValue != null">
+				sort_value = #{sortValue},
+			</if>			
+			<if test="platformId != null">
+				platform_id = #{platformId},
+			</if>			
+			<if test="type != null">
+				type = #{type},
+			</if>			
+			<if test="isRequired != null">
+				is_required = #{isRequired},
+			</if>			
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>			
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>			
+		</set>
+			WHERE id = #{id}
+	</update>	
+	
+
+	<delete id="delete">
+		delete from category_att_name where id = #{id}
+	</delete>
+
+	<delete id="deleteByPara">
+		delete from category_att_name 
+		<where>
+			<if test="parentId != null">
+				and parent_id = #{parentId}
+			</if>
+			<if test="categoryId != null">
+				and category_id = #{categoryId}
+			</if>
+			<if test="attNameId != null">
+				and att_name_id = #{attNameId}
+			</if>
+			<if test="sortValue != null">
+				and sort_value = #{sortValue}
+			</if>
+			<if test="platformId != null">
+				and platform_id = #{platformId}
+			</if>
+			<if test="type != null">
+				and type = #{type}
+			</if>
+			<if test="isRequired != null">
+				and is_required = #{isRequired}
+			</if>
+			<if test="createTime != null">
+				and create_time = #{createTime}
+			</if>
+			<if test="updateTime != null">
+				and update_time = #{updateTime}
+			</if>
+		</where>
+	</delete>
+
+
+	<insert id="addCategoryAttNameListWithTx">
+		INSERT INTO category_att_name(
+				category_id,
+				att_name_id,
+				sort_value,type
+		) VALUES
+		<foreach collection="poList" item="po" separator=",">
+			(
+			#{po.categoryId},
+			#{po.attNameId},
+			#{po.sortValue},
+			#{po.type}
+			)
+		</foreach>
+	</insert>
+
+
+
+
+</mapper>
+	

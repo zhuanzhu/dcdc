@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.promotion.dao.write.ECardTempWriteDAO">
+	<insert id="insert" parameterType="com.egeo.components.promotion.po.ECardTempPO">
+		INSERT INTO e_card_temp(
+        <trim suffixOverrides=",">
+			<if test="cardNumber != null">
+				card_number,
+			</if>
+			<if test="cardThick != null">
+				card_thick,
+			</if>
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="skuId != null">
+				sku_id,
+			</if>
+				end_time,
+			<if test="shortUrl != null">
+				short_url,
+			</if>
+			<if test="type != null">
+				type,
+			</if>
+			<if test="skuName != null">
+				sku_name,
+			</if>
+			<if test="skuSerialNumber != null">
+				sku_serial_number,
+			</if>
+			<if test="orderCode != null">
+				order_code,
+			</if>
+        </trim>		
+		) VALUES (
+        <trim suffixOverrides=",">
+			<if test="cardNumber != null">
+				#{cardNumber},
+			</if>
+			<if test="cardThick != null">
+				#{cardThick},
+			</if>
+			<if test="userId != null">
+				#{userId},
+			</if>
+			<if test="skuId != null">
+				#{skuId},
+			</if>
+				#{endTime},
+			<if test="shortUrl != null">
+				#{shortUrl},
+			</if>
+			<if test="type != null">
+				#{type},
+			</if>
+			<if test="skuName != null">
+				#{skuName},
+			</if>
+			<if test="skuSerialNumber != null">
+				#{skuSerialNumber},
+			</if>
+			<if test="orderCode != null">
+				#{orderCode},
+			</if>
+        </trim>		
+		)
+		<selectKey keyProperty="id" resultType="java.lang.Long">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+
+	
+	
+	<update id="update">
+	UPDATE e_card_temp 
+		<set>
+			<if test="cardNumber != null">
+				card_number = #{cardNumber},
+			</if>			
+			<if test="cardThick != null">
+				card_thick = #{cardThick},
+			</if>			
+			<if test="userId != null">
+				user_id = #{userId},
+			</if>			
+			<if test="skuId != null">
+				sku_id = #{skuId},
+			</if>			
+			<if test="endTime != null">
+				end_time = #{endTime},
+			</if>			
+			<if test="shortUrl != null">
+				short_url = #{shortUrl},
+			</if>			
+			<if test="type != null">
+				type = #{type},
+			</if>			
+			<if test="skuName != null">
+				sku_name = #{skuName},
+			</if>			
+			<if test="skuSerialNumber != null">
+				sku_serial_number = #{skuSerialNumber},
+			</if>			
+			<if test="orderCode != null">
+				order_code = #{orderCode},
+			</if>			
+		</set>
+			WHERE id = #{id}
+	</update>	
+	
+
+	<delete id="delete">
+		delete from e_card_temp where id = #{id}
+	</delete>
+
+	<delete id="deleteByPara">
+		delete from e_card_temp 
+		<where>
+			<if test="cardNumber != null">
+				and card_number = #{cardNumber}
+			</if>
+			<if test="cardThick != null">
+				and card_thick = #{cardThick}
+			</if>
+			<if test="userId != null">
+				and user_id = #{userId}
+			</if>
+			<if test="skuId != null">
+				and sku_id = #{skuId}
+			</if>
+			<if test="endTime != null">
+				and end_time = #{endTime}
+			</if>
+			<if test="shortUrl != null">
+				and short_url = #{shortUrl}
+			</if>
+			<if test="type != null">
+				and type = #{type}
+			</if>
+			<if test="skuName != null">
+				and sku_name = #{skuName}
+			</if>
+			<if test="skuSerialNumber != null">
+				and sku_serial_number = #{skuSerialNumber}
+			</if>
+			<if test="orderCode != null">
+				and order_code = #{orderCode}
+			</if>
+		</where>
+	</delete>
+
+
+</mapper>
+	

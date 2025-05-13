@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.order.dao.read.ChannelAddressReadDAO">
+
+	<resultMap type="com.egeo.components.order.po.ChannelAddressPO" id="channelAddressMap">
+		<result property="id" column="id" />
+		<result property="channelCode" column="channel_code" />
+		<result property="receiverAddressId" column="receiver_address_id" />
+		<result property="userId" column="user_id" />
+		<result property="province" column="province" />
+		<result property="city" column="city" />
+		<result property="area" column="area" />
+		<result property="addr" column="addr" />
+		<result property="provinceCode" column="province_code" />
+		<result property="cityId" column="city_id" />
+		<result property="areaCode" column="area_code" />
+		<result property="channelAddressId" column="channel_address_id" />
+		<result property="channelUserId" column="channel_user_id" />
+		<result property="channelUserName" column="channel_user_name" />
+		<result property="phone" column="phone" />
+		<result property="isDefault" column="is_default" />
+		<result property="deleted" column="deleted" />
+		<result property="lng" column="lng" />
+		<result property="lat" column="lat" />
+		<result property="landmark" column="landmark" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+	</resultMap>
+
+	<sql id="channelAddressColumns">
+		id,
+		channel_code,
+		receiver_address_id,
+		user_id,
+		province,
+		city,
+		area,
+		addr,
+		province_code,
+		city_id,
+		area_code,
+		channel_address_id,
+		channel_user_id,
+		channel_user_name,
+		phone,
+		is_default,
+		deleted,
+		lng,
+		lat,
+		landmark,
+		create_time,
+		update_time
+	</sql>
+
+
+	<sql id="whereSql">
+		<where>
+				<if test="channelCode != null">
+					and channel_code = #{channelCode}
+				</if>
+				<if test="receiverAddressId != null">
+					and receiver_address_id = #{receiverAddressId}
+				</if>
+				<if test="userId != null">
+					and user_id = #{userId}
+				</if>
+				<if test="province != null">
+					and province = #{province}
+				</if>
+				<if test="city != null">
+					and city = #{city}
+				</if>
+				<if test="area != null">
+					and area = #{area}
+				</if>
+				<if test="addr != null">
+					and addr = #{addr}
+				</if>
+				<if test="provinceCode != null">
+					and province_code = #{provinceCode}
+				</if>
+				<if test="cityId != null">
+					and city_id = #{cityId}
+				</if>
+				<if test="areaCode != null">
+					and area_code = #{areaCode}
+				</if>
+				<if test="channelAddressId != null">
+					and channel_address_id = #{channelAddressId}
+				</if>
+				<if test="channelUserId != null">
+					and channel_user_id = #{channelUserId}
+				</if>
+				<if test="channelUserName != null">
+					and channel_user_name = #{channelUserName}
+				</if>
+				<if test="phone != null">
+					and phone = #{phone}
+				</if>
+				<if test="isDefault != null">
+					and is_default = #{isDefault}
+				</if>
+				<if test="deleted != null">
+					and deleted = #{deleted}
+				</if>
+		</where>
+	</sql>
+
+	<sql id="inClause">
+		in
+		<foreach collection="ids" item="id" open="(" separator=","
+				 close=")">
+			#{id}
+		</foreach>
+	</sql>
+
+	<sql id="tableNameId">
+		channel_address
+	</sql>
+
+<!--		<select id="findByIds" resultMap="channelServiceConfigMap">-->
+<!--			select * from channel_service_config-->
+<!--			where id -->
+<!--			<include refid="inClause" />-->
+<!--		</select>-->
+
+	<select id="findById" parameterType="com.egeo.components.order.po.ChannelAddressPO" resultMap="channelAddressMap">
+		SELECT
+		<include refid="channelAddressColumns" />
+		FROM
+		<include refid="tableNameId" />
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="channelAddressMap">
+		SELECT
+			<include refid="channelAddressColumns" />
+		FROM
+			<include refid="tableNameId" />
+			<include refid="whereSql"/>
+			<choose>
+				<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+					ORDER BY ${page.orderBy}
+				</when>
+				<otherwise>
+					ORDER BY id desc
+				</otherwise>
+			</choose>
+			<if test="page != null">
+			limit #{page.limitStart},#{page.pageSize}
+			</if>
+	</select>
+
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+			count(1) cnt
+		FROM
+			<include refid="tableNameId" />
+			<include refid="whereSql"/>
+	</select>
+
+	<select id="findAll" resultMap="channelAddressMap">
+		SELECT
+		<include refid="channelAddressColumns" />
+		FROM
+		<include refid="tableNameId" />
+		<include refid="whereSql"/>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY id desc
+			</otherwise>
+		</choose>
+	</select>
+
+	<select id="findByReceiverAddressIdChannel"  resultMap="channelAddressMap">
+		SELECT
+		<include refid="channelAddressColumns" />
+		FROM
+		<include refid="tableNameId" />
+		WHERE  channel_code = #{channelCode}
+			and receiver_address_id = #{receiverAddressId}
+		order by id desc
+		limit 1
+	</select>
+</mapper>

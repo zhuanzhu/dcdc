@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.third.dao.read.EnterpriseBizConfigReadDAO">
+
+	<resultMap type="com.egeo.components.third.po.EnterpriseBizConfigPO" id="enterpriseBizConfigMap">
+		<result property="id" column="id" />
+		<result property="enterpriseId" column="enterprise_id" />
+		<result property="bizCode" column="biz_code" />
+		<result property="bizType" column="biz_type" />
+		<result property="smallBizType" column="small_biz_type" />
+		<result property="ruteName" column="rute_name" />
+		<result property="ruteDetail" column="rute_detail" />
+		<result property="remarks" column="remarks" />
+		<result property="state" column="state" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+	</resultMap>
+
+	<sql id="enterpriseBizConfigColumns">
+		id,
+		enterprise_id,
+		biz_code,
+		biz_type,
+		small_biz_type,
+		rute_name,
+		rute_detail,
+		remarks,
+		state,
+		create_time,
+		update_time
+	</sql>
+
+
+	<sql id="whereSql">
+		<where>
+			<if test="po.id != null">
+				and id =  #{po.id}
+			</if>
+			<if test="po.enterpriseId != null">
+				and enterprise_id = #{po.enterpriseId}
+			</if>
+			<if test="po.bizCode != null">
+				and biz_code = #{po.bizCode}
+			</if>
+			<if test="po.bizType != null">
+				and biz_type = #{po.bizType}
+			</if>
+			<if test="po.smallBizType != null">
+				and small_biz_type = #{po.smallBizType}
+			</if>
+			<if test="po.state != null">
+				and state = #{po.state}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+	</sql>
+
+	<sql id="inClause">
+		in
+		<foreach collection="ids" item="id" open="(" separator=","
+				 close=")">
+			#{id}
+		</foreach>
+	</sql>
+
+	<sql id="tableNameId">
+		enterprise_biz_config
+	</sql>
+
+<!--		<select id="findByIds" resultMap="enterpriseBizConfigMap">-->
+<!--			select -->
+<!--			       * -->
+<!--			from -->
+<!--				<include refid="tableNameId" />-->
+<!--			where id -->
+<!--			<include refid="inClause" />-->
+<!--		</select>-->
+
+	<select id="findById" parameterType="com.egeo.components.third.po.ChannelServiceConfigPO" resultMap="enterpriseBizConfigMap">
+		SELECT
+		<include refid="enterpriseBizConfigColumns" />
+		FROM
+		<include refid="tableNameId" />
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="enterpriseBizConfigMap">
+		SELECT
+			<include refid="enterpriseBizConfigColumns" />
+		FROM
+			<include refid="tableNameId" />
+			<include refid="whereSql"/>
+			<choose>
+				<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+					ORDER BY ${page.orderBy}
+				</when>
+				<otherwise>
+					ORDER BY id desc
+				</otherwise>
+			</choose>
+			<if test="page != null">
+			limit #{page.limitStart},#{page.pageSize}
+			</if>
+	</select>
+
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+			count(1) cnt
+		FROM
+			<include refid="tableNameId" />
+			<include refid="whereSql"/>
+	</select>
+
+	<select id="findAll" resultMap="enterpriseBizConfigMap">
+		SELECT
+		<include refid="enterpriseBizConfigColumns" />
+		FROM
+		<include refid="tableNameId" />
+		<include refid="whereSql"/>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY id desc
+			</otherwise>
+		</choose>
+	</select>
+</mapper>

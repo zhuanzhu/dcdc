@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.third.dao.read.EnterpriseChannelServiceReadDAO">
+
+	<resultMap type="com.egeo.components.third.po.EnterpriseChannelServicePO" id="resultPoMap">
+		<result property="id" column="id" />
+		<result property="enterpriseId" column="enterprise_id" />
+		<result property="channelCode" column="channel_code" />
+		<result property="channelServiceName" column="channel_service_name" />
+		<result property="channelServiceType" column="channel_service_type" />
+		<result property="dataSourceType" column="data_source_type" />
+		<result property="ifDefault" column="if_default" />
+		<result property="bizSort" column="biz_sort" />
+		<result property="remarks" column="remarks" />
+		<result property="state" column="state" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+	</resultMap>
+
+	<sql id="columnsSql">
+		id,
+		enterprise_id,
+		channel_code,
+		channel_service_name,
+		channel_service_type,
+		data_source_type,
+		if_default,
+		biz_sort,
+		remarks,
+		state,
+		create_time,
+		update_time
+	</sql>
+
+
+	<sql id="whereSql">
+		<where>
+			<if test="po.id != null">
+				and id =  #{po.id}
+			</if>
+			<if test="po.enterpriseId != null">
+				and enterprise_id = #{po.enterpriseId}
+			</if>
+			<if test="po.channelServiceName != null">
+				and channel_service_name = #{po.channelServiceName}
+			</if>
+			<if test="po.channelServiceType != null">
+				and channel_service_type = #{po.channelServiceType}
+			</if>
+			<if test="po.dataSourceType != null">
+				and data_source_type = #{po.dataSourceType}
+			</if>
+			<if test="po.ifDefault != null">
+				and if_default = #{po.ifDefault}
+			</if>
+			<if test="po.state != null">
+				and state = #{po.state}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+	</sql>
+
+	<sql id="tableNameId">
+		enterprise_channel_service
+	</sql>
+
+	<sql id="inClause">
+		in
+		<foreach collection="ids" item="id" open="(" separator=","
+				 close=")">
+			#{id}
+		</foreach>
+	</sql>
+
+<!--		<select id="findByIds" resultMap="enterpriseBizConfigMap">-->
+<!--			select -->
+<!--			       * -->
+<!--			from -->
+<!--				<include refid="tableNameId" />-->
+<!--			where id -->
+<!--			<include refid="inClause" />-->
+<!--		</select>-->
+
+	<select id="findById" parameterType="com.egeo.components.third.po.ChannelServiceConfigPO" resultMap="resultPoMap">
+		SELECT
+		<include refid="columnsSql" />
+		FROM
+		<include refid="tableNameId" />
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="resultPoMap">
+		SELECT
+			<include refid="columnsSql" />
+		FROM
+			<include refid="tableNameId" />
+			<include refid="whereSql"/>
+			<choose>
+				<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+					ORDER BY ${page.orderBy}
+				</when>
+				<otherwise>
+					ORDER BY id desc
+				</otherwise>
+			</choose>
+			<if test="page != null">
+			limit #{page.limitStart},#{page.pageSize}
+			</if>
+	</select>
+
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+			count(1) cnt
+		FROM
+			<include refid="tableNameId" />
+			<include refid="whereSql"/>
+	</select>
+
+	<select id="findAll" resultMap="resultPoMap">
+		SELECT
+		<include refid="columnsSql" />
+		FROM
+		<include refid="tableNameId" />
+		<include refid="whereSql"/>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY id desc
+			</otherwise>
+		</choose>
+	</select>
+</mapper>

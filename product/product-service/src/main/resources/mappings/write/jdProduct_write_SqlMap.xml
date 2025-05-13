@@ -1,0 +1,403 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.product.dao.write.JdProductWriteDAO">
+	<insert id="insert" parameterType="com.egeo.components.product.po.JdProductPO">
+		INSERT INTO jd_product(
+        <trim suffixOverrides=",">
+        	id,
+			<if test="categoryId != null">
+				category_id,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="imagePath != null">
+				image_path,
+			</if>
+			<if test="introduction != null">
+				introduction,
+			</if>
+			<if test="param != null">
+				param,
+			</if>
+			<if test="lowestBuy != null">
+				lowest_buy,
+			</if>
+			<if test="spuId != null">
+				spu_id,
+			</if>
+			<if test="spuName != null">
+				spu_name,
+			</if>
+			<if test="price != null">
+				price,
+			</if>
+			<if test="marketPrice != null">
+				market_price,
+			</if>
+			<if test="isSelf != null">
+				is_self,
+			</if>
+			<if test="isJdLogistics != null">
+				is_jd_logistics,
+			</if>
+			<if test="saleState != null">
+				sale_state,
+			</if>
+			<if test="state != null">
+				state,
+			</if>
+			<if test="is7ToReturn != null">
+				is7_to_return,
+			</if>
+			<if test="noReasonToReturn != null">
+				no_reason_to_return,
+			</if>
+			<if test="thwa != null">
+				thwa,
+			</if>
+			<if test="skuJson != null">
+				sku_json,
+			</if>
+			<if test="syncStatus != null">
+				sync_status,
+			</if>
+			<if test="syncTime != null">
+				sync_time,
+			</if>
+			<if test="productCreateTime != null">
+				product_create_time,
+			</if>
+        </trim>		
+		) VALUES (
+        <trim suffixOverrides=",">
+        	#{id},
+			<if test="categoryId != null">
+				#{categoryId},
+			</if>
+			<if test="name != null">
+				#{name},
+			</if>
+			<if test="imagePath != null">
+				#{imagePath},
+			</if>
+			<if test="introduction != null">
+				#{introduction},
+			</if>
+			<if test="param != null">
+				#{param},
+			</if>
+			<if test="lowestBuy != null">
+				#{lowestBuy},
+			</if>
+			<if test="spuId != null">
+				#{spuId},
+			</if>
+			<if test="spuName != null">
+				#{spuName},
+			</if>
+			<if test="price != null">
+				#{price},
+			</if>
+			<if test="marketPrice != null">
+				#{marketPrice},
+			</if>
+			<if test="isSelf != null">
+				#{isSelf},
+			</if>
+			<if test="isJdLogistics != null">
+				#{isJdLogistics},
+			</if>
+			<if test="saleState != null">
+				#{saleState},
+			</if>
+			<if test="state != null">
+				#{state},
+			</if>
+			<if test="is7ToReturn != null">
+				#{is7ToReturn},
+			</if>
+			<if test="noReasonToReturn != null">
+				#{noReasonToReturn},
+			</if>
+			<if test="thwa != null">
+				#{thwa},
+			</if>
+			<if test="skuJson != null">
+				#{skuJson},
+			</if>
+			<if test="syncStatus != null">
+				#{syncStatus},
+			</if>
+			<if test="syncTime != null">
+				#{syncTime},
+			</if>
+			<if test="productCreateTime != null">
+				#{productCreateTime},
+			</if>
+        </trim>		
+		)
+		<selectKey keyProperty="id" resultType="java.lang.Long">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+	
+	<update id="update" parameterType="com.egeo.components.product.po.JdProductPO">
+	UPDATE jd_product 
+		<set>
+			<if test="categoryId != null">
+				category_id = #{categoryId},
+			</if>			
+			<if test="name != null">
+				name = #{name},
+			</if>			
+			<if test="imagePath != null">
+				image_path = #{imagePath},
+			</if>			
+			<if test="introduction != null">
+				introduction = #{introduction},
+			</if>			
+			<if test="param != null">
+				param = #{param},
+			</if>			
+			<if test="lowestBuy != null">
+				lowest_buy = #{lowestBuy},
+			</if>			
+			<if test="spuId != null">
+				spu_id = #{spuId},
+			</if>			
+			<if test="spuName != null">
+				spu_name = #{spuName},
+			</if>			
+			<if test="price != null">
+				price = #{price},
+			</if>			
+			<if test="marketPrice != null">
+				market_price = #{marketPrice},
+			</if>			
+			<if test="isSelf != null">
+				is_self = #{isSelf},
+			</if>			
+			<if test="isJdLogistics != null">
+				is_jd_logistics = #{isJdLogistics},
+			</if>			
+			<if test="saleState != null">
+				sale_state = #{saleState},
+			</if>			
+			<if test="state != null">
+				state = #{state},
+			</if>			
+			<if test="is7ToReturn != null">
+				is7_to_return = #{is7ToReturn},
+			</if>			
+			<if test="noReasonToReturn != null">
+				no_reason_to_return = #{noReasonToReturn},
+			</if>			
+			<if test="thwa != null">
+				thwa = #{thwa},
+			</if>			
+			<if test="skuJson != null">
+				sku_json = #{skuJson},
+			</if>			
+			<if test="syncStatus != null">
+				sync_status = #{syncStatus},
+			</if>
+			<if test="isDetail != null">
+				is_detail = #{isDetail},
+			</if>
+			<if test="syncTime != null">
+				sync_time = #{syncTime},
+			</if>
+			<if test="productCreateTime != null">
+				product_create_time = #{productCreateTime},
+			</if>
+		</set>
+			WHERE id = #{id}
+	</update>	
+	
+
+	<delete id="delete">
+		delete from jd_product where id = #{id}
+	</delete>
+
+	<delete id="deleteByPara">
+		delete from jd_product 
+		<where>
+			<if test="categoryId != null">
+				and category_id = #{categoryId}
+			</if>
+			<if test="name != null">
+				and name = #{name}
+			</if>
+			<if test="imagePath != null">
+				and image_path = #{imagePath}
+			</if>
+			<if test="introduction != null">
+				and introduction = #{introduction}
+			</if>
+			<if test="param != null">
+				and param = #{param}
+			</if>
+			<if test="lowestBuy != null">
+				and lowest_buy = #{lowestBuy}
+			</if>
+			<if test="spuId != null">
+				and spu_id = #{spuId}
+			</if>
+			<if test="spuName != null">
+				and spu_name = #{spuName}
+			</if>
+			<if test="price != null">
+				and price = #{price}
+			</if>
+			<if test="marketPrice != null">
+				and market_price = #{marketPrice}
+			</if>
+			<if test="isSelf != null">
+				and is_self = #{isSelf}
+			</if>
+			<if test="isJdLogistics != null">
+				and is_jd_logistics = #{isJdLogistics}
+			</if>
+			<if test="saleState != null">
+				and sale_state = #{saleState}
+			</if>
+			<if test="state != null">
+				and state = #{state}
+			</if>
+			<if test="is7ToReturn != null">
+				and is7_to_return = #{is7ToReturn}
+			</if>
+			<if test="noReasonToReturn != null">
+				and no_reason_to_return = #{noReasonToReturn}
+			</if>
+			<if test="thwa != null">
+				and thwa = #{thwa}
+			</if>
+			<if test="skuJson != null">
+				and sku_json = #{skuJson}
+			</if>
+			<if test="syncStatus != null">
+				and sync_status = #{syncStatus}
+			</if>
+		</where>
+	</delete>
+	
+	<update id="updateSyncStatus">
+		update jd_product set sync_status = 0 where update_time &lt; #{po.updateTime} or update_time is null
+	</update>
+
+	<insert id="saveJdProductListFirst" parameterType="com.egeo.components.product.po.JdProductPO">
+		insert into jd_product
+		(id,name,spu_id,price,market_price,category_id,state,sync_status,profit,is_show,sync_time,product_create_time,picture,sku_json)
+		values
+		<foreach collection="poList" item="po" separator=",">
+			(#{po.id},#{po.name},#{po.spuId},#{po.price},#{po.marketPrice},#{po.categoryId},
+			#{po.state},
+			#{po.syncStatus},#{po.profit},#{po.isShow},#{po.syncTime},#{po.productCreateTime},#{po.picture},#{po.skuJson})
+		</foreach>
+		on duplicate key update
+		name=VALUES (name),
+		spu_id=VALUES (spu_id),
+		price=VALUES (price),
+		market_price=VALUES (market_price),
+		category_id=VALUES (category_id),
+		state=VALUES (state),
+		sync_status=VALUES (sync_status),
+		profit=VALUES (profit),
+		is_show=VALUES (is_show),
+		sync_time=VALUES (sync_time),
+		product_create_time=VALUES (product_create_time),
+		picture=VALUES (picture),
+		sku_json=VALUES (sku_json)
+	</insert>
+
+
+	<update id="setAllSyncStatus">
+		UPDATE jd_product
+		<set>
+			<if test="status != null">
+				sync_status = #{status},
+			</if>
+		</set>
+	</update>
+
+	<update id="updateProductCreateTime">
+		UPDATE jd_product
+		<set>
+			product_create_time=now()
+		</set>
+		<where>
+			id in
+			<foreach collection="idList" item="id" separator="," open="(" close=")">
+					#{id}
+			</foreach>
+
+		</where>
+	</update>
+
+
+	<insert id="updateList">
+		insert into jd_product
+		(id,name,spu_id,price,market_price,category_id,state,sync_status,profit,is_show,sync_time,product_create_time,picture,sku_json)
+		values
+		<foreach collection="poList" item="po" separator=",">
+			(#{po.id},
+			#{po.name},#{po.spuId},
+			#{po.price},
+			#{po.marketPrice},
+			#{po.categoryId},
+			#{po.state},
+			#{po.syncStatus},
+			#{po.profit},
+			#{po.isShow},#{po.syncTime},#{po.productCreateTime},#{po.picture},#{po.skuJson}
+			)
+		</foreach>
+		on duplicate key update
+		name=VALUES (name),
+		spu_id=VALUES (spu_id),
+		price=VALUES (price),
+		market_price=VALUES (market_price),
+		category_id=VALUES (category_id),
+		state=VALUES (state),
+		sync_status=VALUES (sync_status),
+		profit=VALUES (profit),
+		is_show=VALUES (is_show),
+		sync_time=VALUES (sync_time),
+		product_create_time=VALUES (product_create_time),
+		picture=VALUES (picture),
+		sku_json=VALUES (sku_json)
+	</insert>
+
+
+	<insert id="updateJdProductPrice">
+		insert into jd_product
+		(id,price,market_price,profit)
+		values
+		<foreach collection="poList" item="po" separator=",">
+			(#{po.id},
+			#{po.price},
+			#{po.marketPrice},
+			#{po.profit}
+			)
+		</foreach>
+		on duplicate key update
+		price=VALUES (price),
+		market_price=VALUES (market_price),
+		profit=VALUES (profit)
+	</insert>
+
+	<!--<update id="updateJdProductPrice">
+		<foreach collection="poList" item="po"  open="" close="" separator=";">
+			UPDATE jd_product
+			SET
+				price=#{po.price},
+				market_price=#{po.marketPrice},
+				profit=#{po.profit}
+
+				WHERE id = #{po.id}
+		</foreach>
+	</update>-->
+</mapper>
+	

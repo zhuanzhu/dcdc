@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.product.dao.write.StoreProductUnitWriteDAO">
+	<insert id="insert" parameterType="com.egeo.components.product.po.StoreProductUnitPO">
+		INSERT INTO store_product_unit(
+        <trim suffixOverrides=",">
+			<if test="storeId != null">
+				store_id,
+			</if>
+			<if test="standardUnitId != null">
+				standard_unit_id,
+			</if>
+			<if test="commodityProductUnitId != null">
+				commodity_product_unit_id,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="platformId != null">
+				platform_id,
+			</if>
+        </trim>		
+		) VALUES (
+        <trim suffixOverrides=",">
+			<if test="storeId != null">
+				#{storeId},
+			</if>
+			<if test="standardUnitId != null">
+				#{standardUnitId},
+			</if>
+			<if test="commodityProductUnitId != null">
+				#{commodityProductUnitId},
+			</if>
+			<if test="status != null">
+				#{status},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
+			</if>
+			<if test="platformId != null">
+				#{platformId},
+			</if>
+        </trim>		
+		)
+		<selectKey keyProperty="id" resultType="java.lang.Long">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	
+	<sql id="insertAllClause">
+		<foreach collection="list" item="po" separator=",">
+				(
+					#{po.storeId},
+					#{po.standardUnitId},
+					#{po.commodityProductUnitId},
+					#{po.status},
+					#{po.platformId}
+				)
+		</foreach>
+	</sql>
+
+	<insert id="insertAllWithTx">
+		INSERT INTO store_product_unit(
+				store_id,
+				standard_unit_id,
+				commodity_product_unit_id,
+				status,
+				platform_id
+		) VALUES <include refid="insertAllClause" />
+	</insert>
+	
+	
+	<update id="update">
+	UPDATE store_product_unit 
+		<set>
+			<if test="storeId != null">
+				store_id = #{storeId},
+			</if>			
+			<if test="standardUnitId != null">
+				standard_unit_id = #{standardUnitId},
+			</if>			
+			<if test="commodityProductUnitId != null">
+				commodity_product_unit_id = #{commodityProductUnitId},
+			</if>			
+			<if test="status != null">
+				status = #{status},
+			</if>			
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>			
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>			
+			<if test="platformId != null">
+				platform_id = #{platformId},
+			</if>			
+		</set>
+			WHERE id = #{id}
+	</update>	
+	
+
+	<delete id="delete">
+		delete from store_product_unit where id = #{id}
+	</delete>
+
+	<delete id="deleteByPara">
+		delete from store_product_unit 
+		<where>
+			<if test="storeId != null">
+				and store_id = #{storeId}
+			</if>
+			<if test="standardUnitId != null">
+				and standard_unit_id = #{standardUnitId}
+			</if>
+			<if test="commodityProductUnitId != null">
+				and commodity_product_unit_id = #{commodityProductUnitId}
+			</if>
+			<if test="status != null">
+				and status = #{status}
+			</if>
+			<if test="createTime != null">
+				and create_time = #{createTime}
+			</if>
+			<if test="updateTime != null">
+				and update_time = #{updateTime}
+			</if>
+			<if test="platformId != null">
+				and platform_id = #{platformId}
+			</if>
+		</where>
+	</delete>
+
+
+</mapper>
+	

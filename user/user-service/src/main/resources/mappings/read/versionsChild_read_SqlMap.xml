@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.user.dao.read.VersionsChildReadDAO">
+	<resultMap type="com.egeo.components.user.po.VersionsChildPO" id="versionsChildMap">
+		<result property="id" column="id" />
+		<result property="versionsId" column="versions_id" />
+		<result property="channelId" column="channel_id" />
+		<result property="platformId" column="platform_id" />		
+	</resultMap>
+	
+	<resultMap type="com.egeo.components.user.condition.VersionsChildCondition" id="versionsChildCondition" extends="versionsChildMap">
+		<result property="channelName" column="channel_name" />
+		<result property="path" column="path" />
+		<result property="updateTime" column="update_time" />
+	</resultMap>
+
+	<sql id="versionsChildColumns">
+		id,
+		versions_id,
+		channel_id,
+		platform_id
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.user.po.VersionsChildPO" resultMap="versionsChildMap">
+		SELECT
+		<include refid="versionsChildColumns" />
+		FROM versions_child
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="versionsChildMap">
+		SELECT
+		<include refid="versionsChildColumns" />
+		FROM versions_child
+		<where>
+			<if test="po.versionsId != null">
+				and versions_id = #{po.versionsId}
+			</if>
+			<if test="po.channelId != null">
+				and channel_id = #{po.channelId}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM versions_child
+		<where>
+			<if test="po.versionsId != null">
+				and versions_id = #{po.versionsId}
+			</if>
+			<if test="po.channelId != null">
+				and channel_id = #{po.channelId}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="versionsChildMap">
+		SELECT
+		<include refid="versionsChildColumns" />
+		FROM versions_child
+		<where>
+			<if test="po.versionsId != null">
+				and versions_id = #{po.versionsId}
+			</if>
+			<if test="po.channelId != null">
+				and channel_id = #{po.channelId}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="versionsChildAndChannelOfPage" resultMap="versionsChildCondition">
+		SELECT
+		vc.id,
+		vc.versions_id,
+		vc.channel_id,
+		c.`name` channel_name,
+		c.path,
+		c.update_time
+		FROM versions_child vc
+		LEFT JOIN channel c on c.id = vc.channel_id
+		<where>
+			<if test="po.versionsId != null">
+				and vc.versions_id = #{po.versionsId}
+			</if>
+			<if test="po.channelId != null">
+				and vc.channel_id = #{po.channelId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY vc.id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+</mapper>
+	

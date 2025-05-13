@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.cms.dao.write.CommodityTemplateWriteDAO">
+	<insert id="insert" parameterType="com.egeo.components.cms.po.CommodityTemplatePO">
+		INSERT INTO commodity_template(
+        <trim suffixOverrides=",">
+			<if test="templateName != null">
+				template_name,
+			</if>
+			<if test="templateType != null">
+				template_type,
+			</if>
+			<if test="versionCodeA != null">
+				version_code_a,
+			</if>
+			<if test="versionCodeI != null">
+				version_code_i,
+			</if>
+			<if test="showTemplate != null">
+				show_template,
+			</if>
+			<if test="content != null">
+				content,
+			</if>
+			<if test="createUserid != null">
+				create_userid,
+			</if>
+			<if test="createUsername != null">
+				create_username,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateUserid != null">
+				update_userid,
+			</if>
+			<if test="updateUsername != null">
+				update_username,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="platformId != null">
+				platform_id,
+			</if>
+        </trim>		
+		) VALUES (
+        <trim suffixOverrides=",">
+			<if test="templateName != null">
+				#{templateName},
+			</if>
+			<if test="templateType != null">
+				#{templateType},
+			</if>
+			<if test="versionCodeA != null">
+				#{versionCodeA},
+			</if>
+			<if test="versionCodeI != null">
+				#{versionCodeI},
+			</if>
+			<if test="showTemplate != null">
+				#{showTemplate},
+			</if>
+			<if test="content != null">
+				#{content},
+			</if>
+			<if test="createUserid != null">
+				#{createUserid},
+			</if>
+			<if test="createUsername != null">
+				#{createUsername},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="updateUserid != null">
+				#{updateUserid},
+			</if>
+			<if test="updateUsername != null">
+				#{updateUsername},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
+			</if>
+			<if test="platformId != null">
+				#{platformId},
+			</if>
+        </trim>		
+		)
+		<selectKey keyProperty="id" resultType="java.lang.Long">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+
+	
+	
+	<update id="update">
+	UPDATE commodity_template 
+		<set>
+			<if test="templateName != null">
+				template_name = #{templateName},
+			</if>			
+			<if test="templateType != null">
+				template_type = #{templateType},
+			</if>			
+			<if test="versionCodeA != null">
+				version_code_a = #{versionCodeA},
+			</if>			
+			<if test="versionCodeI != null">
+				version_code_i = #{versionCodeI},
+			</if>			
+			<if test="showTemplate != null">
+				show_template = #{showTemplate},
+			</if>			
+			<if test="content != null">
+				content = #{content},
+			</if>			
+			<if test="createUserid != null">
+				create_userid = #{createUserid},
+			</if>			
+			<if test="createUsername != null">
+				create_username = #{createUsername},
+			</if>			
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>			
+			<if test="updateUserid != null">
+				update_userid = #{updateUserid},
+			</if>			
+			<if test="updateUsername != null">
+				update_username = #{updateUsername},
+			</if>			
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>			
+			<if test="platformId != null">
+				platform_id = #{platformId},
+			</if>			
+		</set>
+			WHERE id = #{id}
+	</update>	
+	
+
+	<delete id="delete">
+		delete from commodity_template where id = #{id}
+	</delete>
+
+	<delete id="deleteByPara">
+		delete from commodity_template 
+		<where>
+			<if test="templateName != null">
+				and template_name = #{templateName}
+			</if>
+			<if test="templateType != null">
+				and template_type = #{templateType}
+			</if>
+			<if test="versionCodeA != null">
+				and version_code_a = #{versionCodeA}
+			</if>
+			<if test="versionCodeI != null">
+				and version_code_i = #{versionCodeI}
+			</if>
+			<if test="showTemplate != null">
+				and show_template = #{showTemplate}
+			</if>
+			<if test="content != null">
+				and content = #{content}
+			</if>
+			<if test="createUserid != null">
+				and create_userid = #{createUserid}
+			</if>
+			<if test="createUsername != null">
+				and create_username = #{createUsername}
+			</if>
+			<if test="createTime != null">
+				and create_time = #{createTime}
+			</if>
+			<if test="updateUserid != null">
+				and update_userid = #{updateUserid}
+			</if>
+			<if test="updateUsername != null">
+				and update_username = #{updateUsername}
+			</if>
+			<if test="updateTime != null">
+				and update_time = #{updateTime}
+			</if>
+			<if test="platformId != null">
+				and platform_id = #{platformId}
+			</if>
+		</where>
+	</delete>
+
+
+</mapper>
+	

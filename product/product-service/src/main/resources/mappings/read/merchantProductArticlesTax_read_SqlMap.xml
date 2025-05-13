@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.product.dao.read.MerchantProductArticlesTaxReadDAO">
+
+	<resultMap type="com.egeo.components.product.po.MerchantProductArticlesTaxPO" id="merchantProductArticlesTaxMap">
+		<result property="id" column="id" />
+		<result property="taxNumber" column="tax_number" />
+		<result property="merchantExplain" column="merchant_explain" />
+		<result property="merchantRange" column="merchant_range" />
+		<result property="taxRale" column="tax_rale" />
+		<result property="platformId" column="platform_id" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+	</resultMap>
+
+	<sql id="merchantProductArticlesTaxColumns">
+		id,
+		tax_number,
+		merchant_explain,
+		merchant_range,
+		tax_rale,
+		platform_id,
+		create_time,
+		update_time
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.product.po.MerchantProductArticlesTaxPO" resultMap="merchantProductArticlesTaxMap">
+		SELECT
+		<include refid="merchantProductArticlesTaxColumns" />
+		FROM merchant_product_articles_tax
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="merchantProductArticlesTaxMap">
+		SELECT
+		<include refid="merchantProductArticlesTaxColumns" />
+		FROM merchant_product_articles_tax
+		<where>
+			<if test="po.taxNumber != null">
+				and tax_number = #{po.taxNumber}
+			</if>
+			<if test="po.merchantExplain != null">
+				and merchant_explain = #{po.merchantExplain}
+			</if>
+			<if test="po.merchantRange != null">
+				and merchant_range = #{po.merchantRange}
+			</if>
+			<if test="po.taxRale != null">
+				and tax_rale = #{po.taxRale}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM merchant_product_articles_tax
+		<where>
+			<if test="po.taxNumber != null">
+				and tax_number = #{po.taxNumber}
+			</if>
+			<if test="po.merchantExplain != null">
+				and merchant_explain = #{po.merchantExplain}
+			</if>
+			<if test="po.merchantRange != null">
+				and merchant_range = #{po.merchantRange}
+			</if>
+			<if test="po.taxRale != null">
+				and tax_rale = #{po.taxRale}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="merchantProductArticlesTaxMap">
+		SELECT
+		<include refid="merchantProductArticlesTaxColumns" />
+		FROM merchant_product_articles_tax
+		<where>
+			<if test="po.taxNumber != null">
+				and tax_number = #{po.taxNumber}
+			</if>
+			<if test="po.merchantExplain != null">
+				and merchant_explain = #{po.merchantExplain}
+			</if>
+			<if test="po.merchantRange != null">
+				and merchant_range = #{po.merchantRange}
+			</if>
+			<if test="po.taxRale != null">
+				and tax_rale = #{po.taxRale}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+</mapper>
+	

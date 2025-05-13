@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.order.dao.read.SoReturnItemReadDAO">
+	<resultMap type="com.egeo.components.order.po.SoReturnItemPO" id="soReturnItemMap">
+		<result property="id" column="id" />
+		<result property="returnId" column="return_id" />
+		<result property="orderCode" column="order_code" />
+		<result property="merchantId" column="merchant_id" />
+		<result property="mpId" column="mp_id" />
+		<result property="productPriceFinal" column="product_price_final" />
+		<result property="productItemNum" column="product_item_num" />
+		<result property="pieceworkUnit" column="piecework_unit" />
+		<result property="productTotalAmount" column="product_total_amount" />
+		<result property="returnProductItemNum" column="return_product_item_num" />
+		<result property="discountAmount" column="discount_amount" />
+		<result property="couponAmount" column="coupon_amount" />
+		<result property="purchaseAmount" column="purchase_amount" />
+		<result property="productCname" column="product_cname" />
+		<result property="productPicPath" column="product_pic_path" />
+		<result property="soItemId" column="so_item_id" />
+		<result property="productPriceSale" column="product_price_sale" />
+		<result property="updateTime" column="update_time" />
+		<result property="createTime" column="create_time" />
+		<result property="platformId" column="platform_id" />
+		<result property="skuId" column="sku_id" />
+	</resultMap>
+
+	<sql id="soReturnItemColumns">
+		id,
+		return_id,
+		order_code,
+		merchant_id,
+		mp_id,
+		product_price_final,
+		product_item_num,
+		piecework_unit,
+		product_total_amount,
+		return_product_item_num,
+		discount_amount,
+		coupon_amount,
+		purchase_amount,
+		product_cname,
+		product_pic_path,
+		so_item_id,
+		product_price_sale,
+		update_time,
+		create_time,
+		platform_id,
+		sku_id
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.order.po.SoReturnItemPO" resultMap="soReturnItemMap">
+		SELECT
+		<include refid="soReturnItemColumns" />
+		FROM so_return_item
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="soReturnItemMap">
+		SELECT
+		<include refid="soReturnItemColumns" />
+		FROM so_return_item
+		<where>
+			<if test="po.returnId != null">
+				and return_id = #{po.returnId}
+			</if>
+			<if test="po.orderCode != null">
+				and order_code = #{po.orderCode}
+			</if>
+			<if test="po.merchantId != null">
+				and merchant_id = #{po.merchantId}
+			</if>
+			<if test="po.mpId != null">
+				and mp_id = #{po.mpId}
+			</if>
+			<if test="po.productPriceFinal != null">
+				and product_price_final = #{po.productPriceFinal}
+			</if>
+			<if test="po.productItemNum != null">
+				and product_item_num = #{po.productItemNum}
+			</if>
+			<if test="po.pieceworkUnit != null">
+				and piecework_unit = #{po.pieceworkUnit}
+			</if>
+			<if test="po.productTotalAmount != null">
+				and product_total_amount = #{po.productTotalAmount}
+			</if>
+			<if test="po.returnProductItemNum != null">
+				and return_product_item_num = #{po.returnProductItemNum}
+			</if>
+			<if test="po.discountAmount != null">
+				and discount_amount = #{po.discountAmount}
+			</if>
+			<if test="po.couponAmount != null">
+				and coupon_amount = #{po.couponAmount}
+			</if>
+			<if test="po.purchaseAmount != null">
+				and purchase_amount = #{po.purchaseAmount}
+			</if>
+			<if test="po.productCname != null">
+				and product_cname = #{po.productCname}
+			</if>
+			<if test="po.productPicPath != null">
+				and product_pic_path = #{po.productPicPath}
+			</if>
+			<if test="po.soItemId != null">
+				and so_item_id = #{po.soItemId}
+			</if>
+			<if test="po.productPriceSale != null">
+				and product_price_sale = #{po.productPriceSale}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.skuId != null">
+				and sku_id = #{po.skuId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM so_return_item
+		<where>
+			<if test="po.returnId != null">
+				and return_id = #{po.returnId}
+			</if>
+			<if test="po.orderCode != null">
+				and order_code = #{po.orderCode}
+			</if>
+			<if test="po.merchantId != null">
+				and merchant_id = #{po.merchantId}
+			</if>
+			<if test="po.mpId != null">
+				and mp_id = #{po.mpId}
+			</if>
+			<if test="po.productPriceFinal != null">
+				and product_price_final = #{po.productPriceFinal}
+			</if>
+			<if test="po.productItemNum != null">
+				and product_item_num = #{po.productItemNum}
+			</if>
+			<if test="po.pieceworkUnit != null">
+				and piecework_unit = #{po.pieceworkUnit}
+			</if>
+			<if test="po.productTotalAmount != null">
+				and product_total_amount = #{po.productTotalAmount}
+			</if>
+			<if test="po.returnProductItemNum != null">
+				and return_product_item_num = #{po.returnProductItemNum}
+			</if>
+			<if test="po.discountAmount != null">
+				and discount_amount = #{po.discountAmount}
+			</if>
+			<if test="po.couponAmount != null">
+				and coupon_amount = #{po.couponAmount}
+			</if>
+			<if test="po.purchaseAmount != null">
+				and purchase_amount = #{po.purchaseAmount}
+			</if>
+			<if test="po.productCname != null">
+				and product_cname = #{po.productCname}
+			</if>
+			<if test="po.productPicPath != null">
+				and product_pic_path = #{po.productPicPath}
+			</if>
+			<if test="po.soItemId != null">
+				and so_item_id = #{po.soItemId}
+			</if>
+			<if test="po.productPriceSale != null">
+				and product_price_sale = #{po.productPriceSale}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.skuId != null">
+				and sku_id = #{po.skuId}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="soReturnItemMap">
+		SELECT
+		<include refid="soReturnItemColumns" />
+		FROM so_return_item
+		<where>
+			<if test="po.returnId != null">
+				and return_id = #{po.returnId}
+			</if>
+			<if test="po.orderCode != null">
+				and order_code = #{po.orderCode}
+			</if>
+			<if test="po.merchantId != null">
+				and merchant_id = #{po.merchantId}
+			</if>
+			<if test="po.mpId != null">
+				and mp_id = #{po.mpId}
+			</if>
+			<if test="po.productPriceFinal != null">
+				and product_price_final = #{po.productPriceFinal}
+			</if>
+			<if test="po.productItemNum != null">
+				and product_item_num = #{po.productItemNum}
+			</if>
+			<if test="po.pieceworkUnit != null">
+				and piecework_unit = #{po.pieceworkUnit}
+			</if>
+			<if test="po.productTotalAmount != null">
+				and product_total_amount = #{po.productTotalAmount}
+			</if>
+			<if test="po.returnProductItemNum != null">
+				and return_product_item_num = #{po.returnProductItemNum}
+			</if>
+			<if test="po.discountAmount != null">
+				and discount_amount = #{po.discountAmount}
+			</if>
+			<if test="po.couponAmount != null">
+				and coupon_amount = #{po.couponAmount}
+			</if>
+			<if test="po.purchaseAmount != null">
+				and purchase_amount = #{po.purchaseAmount}
+			</if>
+			<if test="po.productCname != null">
+				and product_cname = #{po.productCname}
+			</if>
+			<if test="po.productPicPath != null">
+				and product_pic_path = #{po.productPicPath}
+			</if>
+			<if test="po.soItemId != null">
+				and so_item_id = #{po.soItemId}
+			</if>
+			<if test="po.productPriceSale != null">
+				and product_price_sale = #{po.productPriceSale}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.skuId != null">
+				and sku_id = #{po.skuId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+</mapper>
+	

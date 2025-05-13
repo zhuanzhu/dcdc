@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.user.dao.read.SessionReferrerReadDAO">
+	<resultMap type="com.egeo.components.user.po.SessionReferrerPO" id="sessionReferrerMap">
+		<result property="id" column="id" />
+		<result property="referrerId" column="referrer_id" />
+		<result property="channelId" column="channel_id" />
+		<result property="activityId" column="activity_id" />
+		<result property="createTime" column="create_time" />
+	</resultMap>
+
+	<sql id="sessionReferrerColumns">
+		id,
+		referrer_id,
+		channel_id,
+		activity_id,
+		create_time
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.user.po.SessionReferrerPO" resultMap="sessionReferrerMap">
+		SELECT
+		<include refid="sessionReferrerColumns" />
+		FROM session_referrer
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="sessionReferrerMap">
+		SELECT
+		<include refid="sessionReferrerColumns" />
+		FROM session_referrer
+		<where>
+			<if test="po.referrerId != null">
+				and referrer_id = #{po.referrerId}
+			</if>
+			<if test="po.channelId != null">
+				and channel_id = #{po.channelId}
+			</if>
+			<if test="po.activityId != null">
+				and activity_id = #{po.activityId}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM session_referrer
+		<where>
+			<if test="po.referrerId != null">
+				and referrer_id = #{po.referrerId}
+			</if>
+			<if test="po.channelId != null">
+				and channel_id = #{po.channelId}
+			</if>
+			<if test="po.activityId != null">
+				and activity_id = #{po.activityId}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="sessionReferrerMap">
+		SELECT
+		<include refid="sessionReferrerColumns" />
+		FROM session_referrer
+		<where>
+			<if test="po.referrerId != null">
+				and referrer_id = #{po.referrerId}
+			</if>
+			<if test="po.channelId != null">
+				and channel_id = #{po.channelId}
+			</if>
+			<if test="po.activityId != null">
+				and activity_id = #{po.activityId}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+</mapper>
+	

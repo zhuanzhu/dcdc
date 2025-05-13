@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.config.dao.read.SaltReadDAO">
+
+	<select id="querySaltByUUID" resultMap="saltMap">
+		select * from salt
+		where uuid=#{uuid}
+	</select>
+
+	<resultMap type="com.egeo.components.config.po.SaltPO" id="saltMap">
+		<result property="id" column="id" />
+		<result property="uuid" column="uuid" />
+		<result property="saltValue" column="salt_value" />
+	</resultMap>
+
+	<sql id="saltColumns">
+		id,
+		uuid,
+		salt_value
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.config.po.SaltPO" resultMap="saltMap">
+		SELECT
+		<include refid="saltColumns" />
+		FROM salt
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="saltMap">
+		SELECT
+		<include refid="saltColumns" />
+		FROM salt
+		<where>
+			<if test="po.uuid != null">
+				and uuid = #{po.uuid}
+			</if>
+			<if test="po.saltValue != null">
+				and salt_value = #{po.saltValue}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM salt
+		<where>
+			<if test="po.uuid != null">
+				and uuid = #{po.uuid}
+			</if>
+			<if test="po.saltValue != null">
+				and salt_value = #{po.saltValue}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="saltMap">
+		SELECT
+		<include refid="saltColumns" />
+		FROM salt
+		<where>
+			<if test="po.uuid != null">
+				and uuid = #{po.uuid}
+			</if>
+			<if test="po.saltValue != null">
+				and salt_value = #{po.saltValue}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+</mapper>
+	

@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.stock.dao.write.CommodityProductUnitStockRunningWaterWriteDAO">
+	<insert id="insert" parameterType="com.egeo.components.stock.po.CommodityProductUnitStockRunningWaterPO">
+		INSERT INTO commodity_product_unit_stock_running_water(
+        <trim suffixOverrides=",">
+			<if test="commodityProductUnitId != null">
+				commodity_product_unit_id,
+			</if>
+			<if test="productUnitSerialNumber != null">
+				product_unit_serial_number,
+			</if>
+			<if test="commodityProductUnitName != null">
+				commodity_product_unit_name,
+			</if>
+			<if test="preoperativeStockNum != null">
+				preoperative_stock_num,
+			</if>
+			<if test="operationBackStockNum != null">
+				operation_back_stock_num,
+			</if>
+			<if test="stockChange != null">
+				stock_change,
+			</if>
+			<if test="createUserid != null">
+				create_userid,
+			</if>
+			<if test="createUsername != null">
+				create_username,
+			</if>
+			<if test="createUserip != null">
+				create_userip,
+			</if>
+			<if test="createUsermac != null">
+				create_usermac,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="platformId != null">
+				platform_id,
+			</if>
+			<if test="enterpriseId != null">
+				enterprise_id,
+			</if>
+			<if test="preoperativeRealStockNum != null">
+				preoperative_real_stock_num,
+			</if>
+			<if test="operationBackRealStockNum != null">
+				operation_back_real_stock_num,
+			</if>
+			<if test="type != null">
+				type,
+			</if>
+			<if test="orderCode != null">
+				order_code,
+			</if>
+			<if test="contactGroupStockId != null">
+				contact_group_stock_id,
+			</if>
+        </trim>		
+		) VALUES (
+        <trim suffixOverrides=",">
+			<if test="commodityProductUnitId != null">
+				#{commodityProductUnitId},
+			</if>
+			<if test="productUnitSerialNumber != null">
+				#{productUnitSerialNumber},
+			</if>
+			<if test="commodityProductUnitName != null">
+				#{commodityProductUnitName},
+			</if>
+			<if test="preoperativeStockNum != null">
+				#{preoperativeStockNum},
+			</if>
+			<if test="operationBackStockNum != null">
+				#{operationBackStockNum},
+			</if>
+			<if test="stockChange != null">
+				#{stockChange},
+			</if>
+			<if test="createUserid != null">
+				#{createUserid},
+			</if>
+			<if test="createUsername != null">
+				#{createUsername},
+			</if>
+			<if test="createUserip != null">
+				#{createUserip},
+			</if>
+			<if test="createUsermac != null">
+				#{createUsermac},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="platformId != null">
+				#{platformId},
+			</if>
+			<if test="enterpriseId != null">
+				#{enterpriseId},
+			</if>
+			<if test="preoperativeRealStockNum != null">
+				#{preoperativeRealStockNum},
+			</if>
+			<if test="operationBackRealStockNum != null">
+				#{operationBackRealStockNum},
+			</if>
+			<if test="type != null">
+				#{type},
+			</if>
+			<if test="orderCode != null">
+				#{orderCode},
+			</if>
+			<if test="contactGroupStockId != null">
+				#{contactGroupStockId},
+			</if>
+        </trim>		
+		)
+		<selectKey keyProperty="id" resultType="java.lang.Long">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+
+	
+	
+	<update id="update">
+	UPDATE commodity_product_unit_stock_running_water 
+		<set>
+			<if test="commodityProductUnitId != null">
+				commodity_product_unit_id = #{commodityProductUnitId},
+			</if>			
+			<if test="productUnitSerialNumber != null">
+				product_unit_serial_number = #{productUnitSerialNumber},
+			</if>			
+			<if test="commodityProductUnitName != null">
+				commodity_product_unit_name = #{commodityProductUnitName},
+			</if>			
+			<if test="preoperativeStockNum != null">
+				preoperative_stock_num = #{preoperativeStockNum},
+			</if>			
+			<if test="operationBackStockNum != null">
+				operation_back_stock_num = #{operationBackStockNum},
+			</if>			
+			<if test="stockChange != null">
+				stock_change = #{stockChange},
+			</if>			
+			<if test="createUserid != null">
+				create_userid = #{createUserid},
+			</if>			
+			<if test="createUsername != null">
+				create_username = #{createUsername},
+			</if>			
+			<if test="createUserip != null">
+				create_userip = #{createUserip},
+			</if>			
+			<if test="createUsermac != null">
+				create_usermac = #{createUsermac},
+			</if>			
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>			
+			<if test="platformId != null">
+				platform_id = #{platformId},
+			</if>			
+			<if test="enterpriseId != null">
+				enterprise_id = #{enterpriseId},
+			</if>
+			<if test="preoperativeRealStockNum != null">
+				preoperative_real_stock_num = #{preoperativeRealStockNum},
+			</if>			
+			<if test="operationBackRealStockNum != null">
+				operation_back_real_stock_num = #{operationBackRealStockNum},
+			</if>			
+			<if test="type != null">
+				type = #{type},
+			</if>			
+			<if test="orderCode != null">
+				order_code = #{orderCode},
+			</if>			
+		</set>
+			WHERE id = #{id}
+	</update>	
+	
+
+	<delete id="delete">
+		delete from commodity_product_unit_stock_running_water where id = #{id}
+	</delete>
+
+	<delete id="deleteByPara">
+		delete from commodity_product_unit_stock_running_water 
+		<where>
+			<if test="commodityProductUnitId != null">
+				and commodity_product_unit_id = #{commodityProductUnitId}
+			</if>
+			<if test="productUnitSerialNumber != null">
+				and product_unit_serial_number = #{productUnitSerialNumber}
+			</if>
+			<if test="commodityProductUnitName != null">
+				and commodity_product_unit_name = #{commodityProductUnitName}
+			</if>
+			<if test="preoperativeStockNum != null">
+				and preoperative_stock_num = #{preoperativeStockNum}
+			</if>
+			<if test="operationBackStockNum != null">
+				and operation_back_stock_num = #{operationBackStockNum}
+			</if>
+			<if test="stockChange != null">
+				and stock_change = #{stockChange}
+			</if>
+			<if test="createUserid != null">
+				and create_userid = #{createUserid}
+			</if>
+			<if test="createUsername != null">
+				and create_username = #{createUsername}
+			</if>
+			<if test="createUserip != null">
+				and create_userip = #{createUserip}
+			</if>
+			<if test="createUsermac != null">
+				and create_usermac = #{createUsermac}
+			</if>
+			<if test="createTime != null">
+				and create_time = #{createTime}
+			</if>
+			<if test="platformId != null">
+				and platform_id = #{platformId}
+			</if>
+			<if test="enterpriseId != null">
+				and enterprise_id = #{enterpriseId},
+			</if>
+			<if test="preoperativeRealStockNum != null">
+				and preoperative_real_stock_num = #{preoperativeRealStockNum}
+			</if>
+			<if test="operationBackRealStockNum != null">
+				and operation_back_real_stock_num = #{operationBackRealStockNum}
+			</if>
+			<if test="type != null">
+				and type = #{type}
+			</if>
+			<if test="orderCode != null">
+				and order_code = #{orderCode}
+			</if>
+		</where>
+	</delete>
+
+
+
+	<insert id="insertBatchCommodityProductUnitStockRunningWaterWithTx" parameterType="java.util.List" useGeneratedKeys="true">
+		<selectKey resultType="long" keyProperty="id" order="AFTER">
+            SELECT
+            LAST_INSERT_ID()
+        </selectKey>
+		INSERT INTO commodity_product_unit_stock_running_water(
+				commodity_product_unit_id,
+				product_unit_serial_number,
+				commodity_product_unit_name,
+				preoperative_stock_num,
+				operation_back_stock_num,
+				stock_change,
+				create_userid,
+				create_username,
+				create_userip,
+				create_usermac,
+				platform_id,
+				enterprise_id,
+				preoperative_real_stock_num,
+				operation_back_real_stock_num,
+				type,
+				order_code,
+				contact_group_stock_id
+		) VALUES
+		<foreach collection="list" item="item"  separator=",">
+			(
+			#{item.commodityProductUnitId},
+			#{item.productUnitSerialNumber},
+			#{item.commodityProductUnitName},
+			#{item.preoperativeStockNum},
+			#{item.operationBackStockNum},
+			#{item.stockChange},
+			#{item.createUserid},
+			#{item.createUsername},
+			#{item.createUserip},
+			#{item.createUsermac},
+			#{item.platformId},
+			#{item.enterpriseId},
+			#{item.preoperativeRealStockNum},
+			#{item.operationBackRealStockNum},
+			#{item.type},
+			#{item.orderCode},
+			#{item.contactGroupStockId}
+			)
+		</foreach>
+	</insert>
+
+</mapper>
+	

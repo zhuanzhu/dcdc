@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.product.dao.write.StoreTreeNodeWriteDAO">
+	<insert id="insert" parameterType="com.egeo.components.product.po.StoreTreeNodePO">
+		INSERT INTO store_tree_node(
+        <trim suffixOverrides=",">
+			<if test="parentId != null">
+				parent_id,
+			</if>
+			<if test="pids != null">
+				pids,
+			</if>
+			<if test="storeTreeId != null">
+				store_tree_id,
+			</if>
+			<if test="storeId != null">
+				store_id,
+			</if>
+			<if test="listSort != null">
+				list_sort,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="platformId != null">
+				platform_id,
+			</if>
+        </trim>		
+		) VALUES (
+        <trim suffixOverrides=",">
+			<if test="parentId != null">
+				#{parentId},
+			</if>
+			<if test="pids != null">
+				#{pids},
+			</if>
+			<if test="storeTreeId != null">
+				#{storeTreeId},
+			</if>
+			<if test="storeId != null">
+				#{storeId},
+			</if>
+			<if test="listSort != null">
+				#{listSort},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
+			</if>
+			<if test="platformId != null">
+				#{platformId},
+			</if>
+        </trim>		
+		)
+		<selectKey keyProperty="id" resultType="java.lang.Long">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+
+	
+	
+	<update id="update">
+	UPDATE store_tree_node 
+		<set>
+			<if test="parentId != null">
+				parent_id = #{parentId},
+			</if>			
+			<if test="pids != null">
+				pids = #{pids},
+			</if>			
+			<if test="storeTreeId != null">
+				store_tree_id = #{storeTreeId},
+			</if>			
+			<if test="storeId != null">
+				store_id = #{storeId},
+			</if>			
+			<if test="listSort != null">
+				list_sort = #{listSort},
+			</if>			
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>			
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>			
+			<if test="platformId != null">
+				platform_id = #{platformId},
+			</if>			
+		</set>
+			WHERE id = #{id}
+	</update>	
+	
+
+	<delete id="delete">
+		delete from store_tree_node where id = #{id}
+	</delete>
+
+	<delete id="deleteByPara">
+		delete from store_tree_node 
+		<where>
+			<if test="parentId != null">
+				and parent_id = #{parentId}
+			</if>
+			<if test="pids != null">
+				and pids = #{pids}
+			</if>
+			<if test="storeTreeId != null">
+				and store_tree_id = #{storeTreeId}
+			</if>
+			<if test="storeId != null">
+				and store_id = #{storeId}
+			</if>
+			<if test="listSort != null">
+				and list_sort = #{listSort}
+			</if>
+			<if test="createTime != null">
+				and create_time = #{createTime}
+			</if>
+			<if test="updateTime != null">
+				and update_time = #{updateTime}
+			</if>
+			<if test="platformId != null">
+				and platform_id = #{platformId}
+			</if>
+		</where>
+	</delete>
+
+
+</mapper>
+	

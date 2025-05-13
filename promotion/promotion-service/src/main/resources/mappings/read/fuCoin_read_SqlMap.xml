@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.promotion.dao.read.FuCoinReadDAO">
+	<resultMap type="com.egeo.components.promotion.po.FuCoinPO" id="fuCoinMap">
+		<result property="id" column="id" />
+		<result property="userId" column="user_id" />
+		<result property="coin" column="coin" />
+		<result property="descs" column="descs" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="platformId" column="platform_id" />
+	</resultMap>
+
+	<sql id="fuCoinColumns">
+		id,
+		user_id,
+		coin,
+		descs,
+		create_time,
+		update_time,
+		platform_id
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.promotion.po.FuCoinPO" resultMap="fuCoinMap">
+		SELECT
+		<include refid="fuCoinColumns" />
+		FROM fu_coin
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="fuCoinMap">
+		SELECT
+		<include refid="fuCoinColumns" />
+		FROM fu_coin
+		<where>
+			<if test="po.userId != null">
+				and user_id = #{po.userId}
+			</if>
+			<if test="po.coin != null">
+				and coin = #{po.coin}
+			</if>
+			<if test="po.descs != null">
+				and descs = #{po.descs}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM fu_coin
+		<where>
+			<if test="po.userId != null">
+				and user_id = #{po.userId}
+			</if>
+			<if test="po.coin != null">
+				and coin = #{po.coin}
+			</if>
+			<if test="po.descs != null">
+				and descs = #{po.descs}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="fuCoinMap">
+		SELECT
+		<include refid="fuCoinColumns" />
+		FROM fu_coin
+		<where>
+			<if test="po.userId != null">
+				and user_id = #{po.userId}
+			</if>
+			<if test="po.coin != null">
+				and coin = #{po.coin}
+			</if>
+			<if test="po.descs != null">
+				and descs = #{po.descs}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findFCoinByUserId" resultMap="fuCoinMap">
+		SELECT
+		<include refid="fuCoinColumns" />
+		FROM fu_coin
+		where user_id = #{memberId}
+		and platform_id = #{platformId}
+	</select>
+</mapper>
+	

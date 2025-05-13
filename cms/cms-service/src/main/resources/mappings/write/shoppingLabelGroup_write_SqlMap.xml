@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.cms.dao.write.ShoppingLabelGroupWriteDAO">
+	<insert id="insert" parameterType="com.egeo.components.cms.po.ShoppingLabelGroupPO">
+		INSERT INTO shopping_label_group(
+        <trim suffixOverrides=",">
+			<if test="type != null">
+				type,
+			</if>
+			<if test="imgUrl != null">
+				img_url,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="instId != null">
+				inst_id,
+			</if>
+        </trim>		
+		) VALUES (
+        <trim suffixOverrides=",">
+			<if test="type != null">
+				#{type},
+			</if>
+			<if test="imgUrl != null">
+				#{imgUrl},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
+			</if>
+			<if test="instId != null">
+				#{instId},
+			</if>
+        </trim>		
+		)
+		<selectKey keyProperty="id" resultType="java.lang.Long">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+
+	
+	
+	<update id="update">
+	UPDATE shopping_label_group 
+		<set>
+			<if test="type != null">
+				type = #{type},
+			</if>			
+			<if test="imgUrl != null">
+				img_url = #{imgUrl},
+			</if>			
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>			
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>
+			<if test="instId != null">
+				inst_id=#{instId},
+			</if>			
+		</set>
+			WHERE id = #{id}
+	</update>	
+	
+
+	<delete id="delete">
+		delete from shopping_label_group where id = #{id}
+	</delete>
+
+	<delete id="deleteByPara">
+		delete from shopping_label_group 
+		<where>
+			<if test="type != null">
+				and type = #{type}
+			</if>
+			<if test="imgUrl != null">
+				and img_url = #{imgUrl}
+			</if>
+			<if test="createTime != null">
+				and create_time = #{createTime}
+			</if>
+			<if test="updateTime != null">
+				and update_time = #{updateTime}
+			</if>
+			<if test="instId != null">
+				and inst_id=#{instId}
+			</if>
+		</where>
+	</delete>
+
+
+</mapper>
+	

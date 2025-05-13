@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.product.dao.read.StandardProductUnitAttNameReadDAO">
+	<resultMap type="com.egeo.components.product.po.StandardProductUnitAttNamePO" id="standardProductUnitAttNameMap">
+		<result property="id" column="id" />
+		<result property="parentId" column="parent_id" />
+		<result property="standardProductUnitId" column="standard_product_unit_id" />
+		<result property="attNameId" column="att_name_id" />
+		<result property="sortValue" column="sort_value" />
+		<result property="type" column="type" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="platformId" column="platform_id" />
+		<result property="showPicture" column="show_picture" />
+	</resultMap>
+	
+	<resultMap type="com.egeo.components.product.condition.StandardProductUnitAttNameCondition" id="standardProductUnitAttNameCondition" extends="standardProductUnitAttNameMap">
+		<result property="attName" column="att_name" />
+		<result property="unit" column="unit" />
+		<result property="mode" column="mode" />
+	</resultMap>
+
+
+	<select id="findLastId" resultType="java.lang.Long">
+		SELECT
+		MAX(id)
+		FROM standard_product_unit_att_name
+	</select>
+
+
+	<sql id="standardProductUnitAttNameColumns">
+		id,
+		parent_id,
+		standard_product_unit_id,
+		att_name_id,
+		sort_value,
+		type,
+		create_time,
+		update_time,
+		platform_id,
+		show_picture
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.product.po.StandardProductUnitAttNamePO" resultMap="standardProductUnitAttNameMap">
+		SELECT
+		<include refid="standardProductUnitAttNameColumns" />
+		FROM standard_product_unit_att_name
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="standardProductUnitAttNameMap">
+		SELECT
+		<include refid="standardProductUnitAttNameColumns" />
+		FROM standard_product_unit_att_name
+		<where>
+			<if test="po.parentId != null">
+				and parent_id = #{po.parentId}
+			</if>
+			<if test="po.standardProductUnitId != null">
+				and standard_product_unit_id = #{po.standardProductUnitId}
+			</if>
+			<if test="po.attNameId != null">
+				and att_name_id = #{po.attNameId}
+			</if>
+			<if test="po.sortValue != null">
+				and sort_value = #{po.sortValue}
+			</if>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY sort_value
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM standard_product_unit_att_name
+		<where>
+			<if test="po.parentId != null">
+				and parent_id = #{po.parentId}
+			</if>
+			<if test="po.standardProductUnitId != null">
+				and standard_product_unit_id = #{po.standardProductUnitId}
+			</if>
+			<if test="po.attNameId != null">
+				and att_name_id = #{po.attNameId}
+			</if>
+			<if test="po.sortValue != null">
+				and sort_value = #{po.sortValue}
+			</if>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="standardProductUnitAttNameMap">
+		SELECT
+		<include refid="standardProductUnitAttNameColumns" />
+		FROM standard_product_unit_att_name
+		<where>
+			<if test="po.parentId != null">
+				and parent_id = #{po.parentId}
+			</if>
+			<if test="po.standardProductUnitId != null">
+				and standard_product_unit_id = #{po.standardProductUnitId}
+			</if>
+			<if test="po.attNameId != null">
+				and att_name_id = #{po.attNameId}
+			</if>
+			<if test="po.sortValue != null">
+				and sort_value = #{po.sortValue}
+			</if>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY sort_value
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findByStandardProductUnitIdAttNameId" resultMap="standardProductUnitAttNameMap">
+		SELECT
+		<include refid="standardProductUnitAttNameColumns" />
+		FROM standard_product_unit_att_name
+		WHERE type = 2 and standard_product_unit_id = #{standardProductUnitId} and not att_name_id = #{attNameId}
+	</select>
+	
+	<select id="findByStandardProductUnitId" resultMap="standardProductUnitAttNameCondition">
+		SELECT
+		spuan.id,
+		spuan.parent_id,
+		spuan.standard_product_unit_id,
+		spuan.att_name_id,
+		spuan.sort_value,
+		spuan.type,
+		spuan.platform_id,
+		an.`name` att_name,
+		an.`mode`,
+		andl.unit
+		FROM standard_product_unit_att_name spuan
+		LEFT JOIN attribute_name an on an.id = spuan.att_name_id
+		LEFT JOIN attribute_name_decimal andl on andl.attribute_name_id = spuan.att_name_id
+		WHERE spuan.type = 3 and spuan.standard_product_unit_id = #{standardProductUnitId}
+		ORDER BY spuan.id
+	</select>
+	
+	<select id="findByStandardUnitId" resultMap="standardProductUnitAttNameCondition">
+		SELECT
+		spuan.id,
+		spuan.parent_id,
+		spuan.standard_product_unit_id,
+		spuan.att_name_id,
+		spuan.show_picture,
+		spuan.sort_value,
+		spuan.type,
+		spuan.platform_id,
+		an.`name` att_name,
+		an.`mode`,
+		andl.unit
+		FROM standard_product_unit_att_name spuan
+		LEFT JOIN attribute_name an on an.id = spuan.att_name_id
+		LEFT JOIN attribute_name_decimal andl on andl.attribute_name_id = spuan.att_name_id
+		LEFT JOIN standard_unit su on su.standard_product_unit_id = spuan.standard_product_unit_id
+		WHERE spuan.type = 2 and su.id = #{standardUnitId}
+		ORDER BY spuan.id
+	</select>
+	
+	<select id="findStandardProductUnitAttNameAll" resultMap="standardProductUnitAttNameCondition">
+		SELECT
+		spuan.id,
+		spuan.parent_id,
+		spuan.standard_product_unit_id,
+		spuan.att_name_id,
+		spuan.sort_value,
+		spuan.type,
+		spuan.platform_id,
+		spuan.show_picture,
+		an.`name` att_name,
+		an.`mode`,
+		andl.unit
+		FROM standard_product_unit_att_name spuan
+		LEFT JOIN attribute_name an on an.id = spuan.att_name_id
+		LEFT JOIN attribute_name_decimal andl on andl.attribute_name_id = spuan.att_name_id
+		WHERE spuan.standard_product_unit_id = #{standardProductUnitId}
+		ORDER BY spuan.att_name_id
+	</select>
+</mapper>
+	

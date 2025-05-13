@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.product.dao.write.StandardProductUnitAttValueWriteDAO">
+	
+	<sql id="inClause">
+		<foreach collection="poList" item="po" separator=",">
+				(#{po.standardProductUnitAttNameId},
+				#{po.attValueId},
+				#{po.specificationCode},
+				#{po.attValueCustom},
+				#{po.sortValue},
+				#{po.platformId},
+				#{po.pictureUrl})
+		</foreach>
+	</sql>
+	<insert id="saveSPUValue" parameterType="com.egeo.components.product.po.StandardProductUnitAttValuePO" >
+		insert into standard_product_unit_att_value(
+		standard_product_unit_att_name_id,
+		att_value_id,
+		platform_id
+		)values
+		<foreach collection="poList" item="po"  separator="," >
+
+			(
+			#{po.standardProductUnitAttNameId},
+			#{po.attValueId},
+			#{po.platformId}
+			)
+
+		</foreach>
+	</insert>
+
+
+
+
+
+
+
+
+
+
+	<insert id="insert" parameterType="com.egeo.components.product.po.StandardProductUnitAttValuePO">
+		INSERT INTO standard_product_unit_att_value(
+        <trim suffixOverrides=",">
+			<if test="standardProductUnitAttNameId != null">
+				standard_product_unit_att_name_id,
+			</if>
+			<if test="attValueId != null">
+				att_value_id,
+			</if>
+			<if test="specificationCode != null">
+				specification_code,
+			</if>
+			<if test="attValueCustom != null">
+				att_value_custom,
+			</if>
+			<if test="sortValue != null">
+				sort_value,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="platformId != null">
+				platform_id,
+			</if>
+			<if test="pictureUrl != null">
+				picture_url,
+			</if>
+        </trim>		
+		) VALUES (
+        <trim suffixOverrides=",">
+			<if test="standardProductUnitAttNameId != null">
+				#{standardProductUnitAttNameId},
+			</if>
+			<if test="attValueId != null">
+				#{attValueId},
+			</if>
+			<if test="specificationCode != null">
+				#{specificationCode},
+			</if>
+			<if test="attValueCustom != null">
+				#{attValueCustom},
+			</if>
+			<if test="sortValue != null">
+				#{sortValue},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
+			</if>
+			<if test="platformId != null">
+				#{platformId},
+			</if>
+			<if test="pictureUrl != null">
+				#{pictureUrl},
+			</if>
+        </trim>		
+		)
+		<selectKey keyProperty="id" resultType="java.lang.Long">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	
+	<insert id="insertAll">
+		INSERT INTO standard_product_unit_att_value(
+				standard_product_unit_att_name_id,
+				att_value_id,
+				specification_code,
+				att_value_custom,
+				sort_value,
+				platform_id,
+				picture_url
+		) VALUES <include refid="inClause" />
+	</insert>
+
+
+	
+	
+	<update id="update">
+	UPDATE standard_product_unit_att_value 
+		<set>
+			<if test="standardProductUnitAttNameId != null">
+				standard_product_unit_att_name_id = #{standardProductUnitAttNameId},
+			</if>			
+			<if test="attValueId != null">
+				att_value_id = #{attValueId},
+			</if>			
+			<if test="specificationCode != null">
+				specification_code = #{specificationCode},
+			</if>			
+			<if test="attValueCustom != null">
+				att_value_custom = #{attValueCustom},
+			</if>			
+			<if test="sortValue != null">
+				sort_value = #{sortValue},
+			</if>			
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>			
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>			
+			<if test="platformId != null">
+				platform_id = #{platformId},
+			</if>			
+			<if test="pictureUrl != null">
+				picture_url = #{pictureUrl},
+			</if>
+		</set>
+			WHERE id = #{id}
+	</update>	
+	
+
+	<delete id="delete">
+		delete from standard_product_unit_att_value where id = #{id}
+	</delete>
+
+	<delete id="deleteByPara">
+		delete from standard_product_unit_att_value 
+		<where>
+			<if test="standardProductUnitAttNameId != null">
+				and standard_product_unit_att_name_id = #{standardProductUnitAttNameId}
+			</if>
+			<if test="attValueId != null">
+				and att_value_id = #{attValueId}
+			</if>
+			<if test="specificationCode != null">
+				and specification_code = #{specificationCode}
+			</if>
+			<if test="attValueCustom != null">
+				and att_value_custom = #{attValueCustom}
+			</if>
+			<if test="sortValue != null">
+				and sort_value = #{sortValue}
+			</if>
+			<if test="createTime != null">
+				and create_time = #{createTime}
+			</if>
+			<if test="updateTime != null">
+				and update_time = #{updateTime}
+			</if>
+			<if test="platformId != null">
+				and platform_id = #{platformId}
+			</if>
+		</where>
+	</delete>
+
+
+</mapper>
+	

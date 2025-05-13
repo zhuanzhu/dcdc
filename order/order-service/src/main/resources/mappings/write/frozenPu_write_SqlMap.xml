@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.order.dao.write.FrozenPuWriteDAO">
+	<insert id="insert" parameterType="com.egeo.components.order.po.FrozenPuPO">
+		INSERT INTO frozen_pu(
+        <trim suffixOverrides=",">
+			<if test="skuId != null">
+				sku_id,
+			</if>
+			<if test="puId != null">
+				pu_id,
+			</if>
+			<if test="soId != null">
+				so_id,
+			</if>
+			<if test="soChildId != null">
+				so_child_id,
+			</if>
+			<if test="frozenCount != null">
+				frozen_count,
+			</if>
+			<if test="freezeStatus != null">
+				freeze_status,
+			</if>
+			<if test="unfreezeReason != null">
+				unfreeze_reason,
+			</if>
+			<if test="unfreezeTime != null">
+				unfreeze_time,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+        </trim>		
+		) VALUES (
+        <trim suffixOverrides=",">
+			<if test="skuId != null">
+				#{skuId},
+			</if>
+			<if test="puId != null">
+				#{puId},
+			</if>
+			<if test="soId != null">
+				#{soId},
+			</if>
+			<if test="soChildId != null">
+				#{soChildId},
+			</if>
+			<if test="frozenCount != null">
+				#{frozenCount},
+			</if>
+			<if test="freezeStatus != null">
+				#{freezeStatus},
+			</if>
+			<if test="unfreezeReason != null">
+				#{unfreezeReason},
+			</if>
+			<if test="unfreezeTime != null">
+				#{unfreezeTime},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
+			</if>
+        </trim>		
+		)
+		<selectKey keyProperty="id" resultType="java.lang.Long">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+
+	
+	
+	<update id="update">
+	UPDATE frozen_pu 
+		<set>
+			<if test="skuId != null">
+				sku_id = #{skuId},
+			</if>			
+			<if test="puId != null">
+				pu_id = #{puId},
+			</if>			
+			<if test="soId != null">
+				so_id = #{soId},
+			</if>			
+			<if test="soChildId != null">
+				so_child_id = #{soChildId},
+			</if>			
+			<if test="frozenCount != null">
+				frozen_count = #{frozenCount},
+			</if>			
+			<if test="freezeStatus != null">
+				freeze_status = #{freezeStatus},
+			</if>			
+			<if test="unfreezeReason != null">
+				unfreeze_reason = #{unfreezeReason},
+			</if>			
+			<if test="unfreezeTime != null">
+				unfreeze_time = #{unfreezeTime},
+			</if>			
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>			
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>			
+		</set>
+			WHERE id = #{id}
+	</update>	
+	
+
+	<delete id="delete">
+		delete from frozen_pu where id = #{id}
+	</delete>
+
+	<delete id="deleteByPara">
+		delete from frozen_pu 
+		<where>
+			<if test="skuId != null">
+				and sku_id = #{skuId}
+			</if>
+			<if test="puId != null">
+				and pu_id = #{puId}
+			</if>
+			<if test="soId != null">
+				and so_id = #{soId}
+			</if>
+			<if test="soChildId != null">
+				and so_child_id = #{soChildId}
+			</if>
+			<if test="frozenCount != null">
+				and frozen_count = #{frozenCount}
+			</if>
+			<if test="freezeStatus != null">
+				and freeze_status = #{freezeStatus}
+			</if>
+			<if test="unfreezeReason != null">
+				and unfreeze_reason = #{unfreezeReason}
+			</if>
+			<if test="unfreezeTime != null">
+				and unfreeze_time = #{unfreezeTime}
+			</if>
+			<if test="createTime != null">
+				and create_time = #{createTime}
+			</if>
+			<if test="updateTime != null">
+				and update_time = #{updateTime}
+			</if>
+		</where>
+	</delete>
+
+
+</mapper>
+	

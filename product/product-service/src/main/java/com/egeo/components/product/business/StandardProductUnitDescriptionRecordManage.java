@@ -1,0 +1,23 @@
+package com.egeo.components.product.business;
+
+import java.util.List;
+	
+import com.egeo.components.product.dto.StandardProductUnitDescriptionRecordDTO;
+import com.egeo.orm.PageResult;
+import com.egeo.orm.Pagination;	
+
+public interface StandardProductUnitDescriptionRecordManage {
+
+	public StandardProductUnitDescriptionRecordDTO findStandardProductUnitDescriptionRecordById(StandardProductUnitDescriptionRecordDTO dto);	
+
+	public PageResult<StandardProductUnitDescriptionRecordDTO> findStandardProductUnitDescriptionRecordOfPage(StandardProductUnitDescriptionRecordDTO dto,Pagination page);
+
+	public List<StandardProductUnitDescriptionRecordDTO> findStandardProductUnitDescriptionRecordAll(StandardProductUnitDescriptionRecordDTO dto);
+
+	Long insertStandardProductUnitDescriptionRecordWithTx(StandardProductUnitDescriptionRecordDTO dto);
+
+	int updateStandardProductUnitDescriptionRecordWithTx(StandardProductUnitDescriptionRecordDTO dto);
+
+	int deleteStandardProductUnitDescriptionRecordWithTx(StandardProductUnitDescriptionRecordDTO dto);
+}
+	

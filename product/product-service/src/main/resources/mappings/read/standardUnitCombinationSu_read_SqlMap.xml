@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.product.dao.read.StandardUnitCombinationSuReadDAO">
+	<resultMap type="com.egeo.components.product.po.StandardUnitCombinationSuPO" id="standardUnitCombinationSuMap">
+		<result property="id" column="id" />
+		<result property="standardUnitCombinationId" column="standard_unit_combination_id" />
+		<result property="standardUnitId" column="standard_unit_id" />
+		<result property="sortValue" column="sort_value" />
+		<result property="source" column="source" />
+		<result property="snapshot" column="snapshot" />
+		<result property="sellState" column="sell_state"/>
+		<result property="checkTime" column="check_time"/>
+		<result property="thirdSkuId" column="third_sku_id" />
+		<result property="sortPrice" column="sort_price" />
+		<result property="sortSalesNum" column="sort_sales_num" />
+		<result property="thirdSkuName" column="third_sku_name" />
+	</resultMap>
+
+	<resultMap type="com.egeo.components.product.condition.StandardUnitCombinationSuCondition" id="standardUnitCombinationSuCondition" extends="standardUnitCombinationSuMap">
+		<result property="StandardUnitName" column="standard_unit_name" />
+		<result property="salePrice" column="sale_price" />
+		<result property="merchantProductSerialNumber" column="merchant_product_serial_number"/>
+		<result property="supplierId" column="supplier_id"/>
+		<result property="isVendible" column="is_vendible"/>
+		<result property="isVisible" column="is_visible"/>
+	</resultMap>
+
+	<sql id="standardUnitCombinationSuColumns">
+		id,
+		standard_unit_combination_id,
+		standard_unit_id,
+		sort_value,
+		source,
+		snapshot,
+		sell_state,check_time,
+		third_sku_id,
+		sort_price,
+		sort_sales_num,
+		third_sku_name
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.product.po.StandardUnitCombinationSuPO" resultMap="standardUnitCombinationSuMap">
+		SELECT
+		<include refid="standardUnitCombinationSuColumns" />
+		FROM standard_unit_combination_su
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="standardUnitCombinationSuMap">
+		SELECT
+		<include refid="standardUnitCombinationSuColumns" />
+		FROM standard_unit_combination_su
+		<where>
+			<if test="po.standardUnitCombinationId != null">
+				and standard_unit_combination_id = #{po.standardUnitCombinationId}
+			</if>
+			<if test="po.standardUnitId != null">
+				and standard_unit_id = #{po.standardUnitId}
+			</if>
+			<if test="po.sortValue != null">
+				and sort_value = #{po.sortValue}
+			</if>
+			<if test="po.source != null">
+				and source = #{po.source}
+			</if>
+			<if test="po.sellState != null">
+				and sell_state = #{po.sellState}
+			</if>
+			<if test="po.thirdSkuId != null">
+				and third_sku_id = #{po.thirdSkuId}
+			</if>
+			<if test="po.thirdSkuName != null and po.thirdSkuName !=''">
+				and third_sku_name like concat('%',#{po.thirdSkuName},'%')
+			</if>
+
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY sort_value
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM standard_unit_combination_su
+		<where>
+			<if test="po.standardUnitCombinationId != null">
+				and standard_unit_combination_id = #{po.standardUnitCombinationId}
+			</if>
+			<if test="po.standardUnitId != null">
+				and standard_unit_id = #{po.standardUnitId}
+			</if>
+			<if test="po.sortValue != null">
+				and sort_value = #{po.sortValue}
+			</if>
+			<if test="po.source != null">
+				and source = #{po.source}
+			</if>
+			<if test="po.sellState != null">
+				and sell_state = #{po.sellState}
+			</if>
+			<if test="po.thirdSkuId != null">
+				and third_sku_id = #{po.thirdSkuId}
+			</if>
+			<if test="po.thirdSkuName != null and po.thirdSkuName !=''">
+				and third_sku_name like concat('%',#{po.thirdSkuName},'%')
+			</if>
+		</where>
+	</select>
+
+	<select id="findAll" resultMap="standardUnitCombinationSuMap">
+		SELECT
+		<include refid="standardUnitCombinationSuColumns" />
+		FROM standard_unit_combination_su
+		<where>
+			<if test="po.standardUnitCombinationId != null">
+				and standard_unit_combination_id = #{po.standardUnitCombinationId}
+			</if>
+			<if test="po.standardUnitId != null">
+				and standard_unit_id = #{po.standardUnitId}
+			</if>
+			<if test="po.sortValue != null">
+				and sort_value = #{po.sortValue}
+			</if>
+			<if test="po.source != null">
+				and source = #{po.source}
+			</if>
+			<if test="po.sellState != null">
+				and sell_state = #{po.sellState}
+			</if>
+			<if test="po.thirdSkuId != null">
+				and third_sku_id = #{po.thirdSkuId}
+			</if>
+			<if test="po.standardUnitCombinationIds != null">
+				and standard_unit_combination_id in
+				<foreach collection="po.standardUnitCombinationIds" item="standardUnitCombinationId" open="(" separator=","
+						 close=")">
+					#{standardUnitCombinationId}
+				</foreach>
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY sort_value
+			</otherwise>
+		</choose>
+	</select>
+
+	<select id="findByStandardUnitCombinationIdOfPage" resultMap="standardUnitCombinationSuCondition">
+		SELECT
+		sucs.id as id,
+		sucs.standard_unit_combination_id as standard_unit_combination_id,
+		sucs.standard_unit_id as standard_unit_id,
+		sucs.sort_value as sort_value,
+		sucs.source as source,
+		sucs.snapshot as snapshot,
+		sucs.sell_state as sell_state,
+		sucs.check_time as check_time,
+		sucs.third_sku_id as third_sku_id,
+		su.name as standard_unit_name,
+		su.sale_price as sale_price,
+		su.merchant_product_serial_number as merchant_product_serial_number,
+		su.supplier_id as supplier_id,
+		su.is_vendible as is_vendible,
+		su.is_visible as is_visible
+		FROM standard_unit_combination_su sucs left join standard_unit su on sucs.standard_unit_id=su.id
+		WHERE sucs.standard_unit_combination_id = #{standardUnitCombinationId}
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY sucs.sort_value
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+
+	<select id="countByStandardUnitCombinationIdOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM standard_unit_combination_su
+		WHERE standard_unit_combination_id = #{standardUnitCombinationId}
+	</select>
+
+	<select id="findStandardUnitNumberMax" resultType="java.lang.Integer">
+		SELECT
+		IFNULL(max(sort_value),0) max
+		FROM standard_unit_combination_su
+		WHERE standard_unit_combination_id = #{standardUnitCombinationId}
+	</select>
+
+	<select id="findStandardUnitSize" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM standard_unit_combination_su
+		WHERE standard_unit_combination_id = #{standardUnitCombinationId}
+	</select>
+
+	<select id="syncJdSellState" resultMap="standardUnitCombinationSuMap">
+		SELECT
+		<include refid="standardUnitCombinationSuColumns" />
+		FROM standard_unit_combination_su
+		<where>
+			<if test="source != null">
+				and source = #{source}
+			</if>
+			<if test="endCheckTime !=null ">
+				and (#{endCheckTime}>=check_time or check_time is null)
+			</if>
+		</where>
+		ORDER BY check_time,id
+		limit #{size}
+	</select>
+</mapper>

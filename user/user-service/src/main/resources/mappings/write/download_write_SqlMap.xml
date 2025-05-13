@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.user.dao.write.DownloadWriteDAO">
+	<insert id="insert" parameterType="com.egeo.components.user.po.DownloadPO">
+		INSERT INTO download(
+        <trim suffixOverrides=",">
+			<if test="name != null">
+				name,
+			</if>
+			<if test="session != null">
+				session,
+			</if>
+			<if test="url != null">
+				url,
+			</if>
+			<if test="dailyDownloads != null">
+				daily_downloads,
+			</if>
+			<if test="downloads != null">
+				downloads,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="uodateTime != null">
+				uodate_time,
+			</if>
+			<if test="platformId != null">
+				platform_id,
+			</if>
+        </trim>		
+		) VALUES (
+        <trim suffixOverrides=",">
+			<if test="name != null">
+				#{name},
+			</if>
+			<if test="session != null">
+				#{session},
+			</if>
+			<if test="url != null">
+				#{url},
+			</if>
+			<if test="dailyDownloads != null">
+				#{dailyDownloads},
+			</if>
+			<if test="downloads != null">
+				#{downloads},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="uodateTime != null">
+				#{uodateTime},
+			</if>
+			<if test="platformId != null">
+				#{platformId},
+			</if>
+        </trim>		
+		)
+		<selectKey keyProperty="id" resultType="java.lang.Long">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+
+	
+	
+	<update id="update">
+	UPDATE download 
+		<set>
+			<if test="name != null">
+				name = #{name},
+			</if>			
+			<if test="session != null">
+				session = #{session},
+			</if>			
+			<if test="url != null">
+				url = #{url},
+			</if>			
+			<if test="dailyDownloads != null">
+				daily_downloads = #{dailyDownloads},
+			</if>			
+			<if test="downloads != null">
+				downloads = #{downloads},
+			</if>			
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>			
+			<if test="uodateTime != null">
+				uodate_time = #{uodateTime},
+			</if>			
+			<if test="platformId != null">
+				platform_id = #{platformId},
+			</if>			
+		</set>
+			WHERE id = #{id}
+	</update>	
+	
+
+	<delete id="delete">
+		delete from download where id = #{id}
+	</delete>
+
+	<delete id="deleteByPara">
+		delete from download 
+		<where>
+			<if test="name != null">
+				and name = #{name}
+			</if>
+			<if test="session != null">
+				and session = #{session}
+			</if>
+			<if test="url != null">
+				and url = #{url}
+			</if>
+			<if test="dailyDownloads != null">
+				and daily_downloads = #{dailyDownloads}
+			</if>
+			<if test="downloads != null">
+				and downloads = #{downloads}
+			</if>
+			<if test="createTime != null">
+				and create_time = #{createTime}
+			</if>
+			<if test="uodateTime != null">
+				and uodate_time = #{uodateTime}
+			</if>
+			<if test="platformId != null">
+				and platform_id = #{platformId}
+			</if>
+		</where>
+	</delete>
+
+	<update id="refreshDownloadDailyDownloadCount">
+		update download 
+		set daily_downloads = 0
+	</update>
+
+</mapper>
+	

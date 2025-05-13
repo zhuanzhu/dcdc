@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.order.dao.write.SoDeliveryItemWriteDAO">
+	<insert id="insert" parameterType="com.egeo.components.order.po.SoDeliveryItemPO">
+		INSERT INTO so_delivery_item(
+        <trim suffixOverrides=",">
+			<if test="orderCode != null">
+				order_code,
+			</if>
+			<if test="packageNo != null">
+				package_no,
+			</if>
+			<if test="deliveryExpressNbr != null">
+				delivery_express_nbr,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+			<if test="deliveryDate != null">
+				delivery_date,
+			</if>
+			<if test="estimateReceiveDate != null">
+				estimate_receive_date,
+			</if>
+			<if test="deliveryRemark != null">
+				delivery_remark,
+			</if>
+			<if test="deliverierName != null">
+				deliverier_name,
+			</if>
+			<if test="deliverierMobile != null">
+				deliverier_mobile,
+			</if>
+			<if test="platformId != null">
+				platform_id,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+        </trim>		
+		) VALUES (
+        <trim suffixOverrides=",">
+			<if test="orderCode != null">
+				#{orderCode},
+			</if>
+			<if test="packageNo != null">
+				#{packageNo},
+			</if>
+			<if test="deliveryExpressNbr != null">
+				#{deliveryExpressNbr},
+			</if>
+			<if test="remark != null">
+				#{remark},
+			</if>
+			<if test="deliveryDate != null">
+				#{deliveryDate},
+			</if>
+			<if test="estimateReceiveDate != null">
+				#{estimateReceiveDate},
+			</if>
+			<if test="deliveryRemark != null">
+				#{deliveryRemark},
+			</if>
+			<if test="deliverierName != null">
+				#{deliverierName},
+			</if>
+			<if test="deliverierMobile != null">
+				#{deliverierMobile},
+			</if>
+			<if test="platformId != null">
+				#{platformId},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+        </trim>		
+		)
+		<selectKey keyProperty="id" resultType="java.lang.Long">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+
+	
+	
+	<update id="update">
+	UPDATE so_delivery_item 
+		<set>
+			<if test="orderCode != null">
+				order_code = #{orderCode},
+			</if>			
+			<if test="packageNo != null">
+				package_no = #{packageNo},
+			</if>			
+			<if test="deliveryExpressNbr != null">
+				delivery_express_nbr = #{deliveryExpressNbr},
+			</if>			
+			<if test="remark != null">
+				remark = #{remark},
+			</if>			
+			<if test="deliveryDate != null">
+				delivery_date = #{deliveryDate},
+			</if>			
+			<if test="estimateReceiveDate != null">
+				estimate_receive_date = #{estimateReceiveDate},
+			</if>			
+			<if test="deliveryRemark != null">
+				delivery_remark = #{deliveryRemark},
+			</if>			
+			<if test="deliverierName != null">
+				deliverier_name = #{deliverierName},
+			</if>			
+			<if test="deliverierMobile != null">
+				deliverier_mobile = #{deliverierMobile},
+			</if>			
+			<if test="platformId != null">
+				platform_id = #{platformId},
+			</if>			
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>			
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>			
+		</set>
+			WHERE id = #{id}
+	</update>	
+	
+
+	<delete id="delete">
+		delete from so_delivery_item where id = #{id}
+	</delete>
+
+	<delete id="deleteByPara">
+		delete from so_delivery_item 
+		<where>
+			<if test="orderCode != null">
+				and order_code = #{orderCode}
+			</if>
+			<if test="packageNo != null">
+				and package_no = #{packageNo}
+			</if>
+			<if test="deliveryExpressNbr != null">
+				and delivery_express_nbr = #{deliveryExpressNbr}
+			</if>
+			<if test="remark != null">
+				and remark = #{remark}
+			</if>
+			<if test="deliveryDate != null">
+				and delivery_date = #{deliveryDate}
+			</if>
+			<if test="estimateReceiveDate != null">
+				and estimate_receive_date = #{estimateReceiveDate}
+			</if>
+			<if test="deliveryRemark != null">
+				and delivery_remark = #{deliveryRemark}
+			</if>
+			<if test="deliverierName != null">
+				and deliverier_name = #{deliverierName}
+			</if>
+			<if test="deliverierMobile != null">
+				and deliverier_mobile = #{deliverierMobile}
+			</if>
+			<if test="platformId != null">
+				and platform_id = #{platformId}
+			</if>
+			<if test="updateTime != null">
+				and update_time = #{updateTime}
+			</if>
+			<if test="createTime != null">
+				and create_time = #{createTime}
+			</if>
+		</where>
+	</delete>
+
+
+</mapper>
+	

@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.stock.dao.read.MerchantProductAreaReadDAO">
+	<resultMap type="com.egeo.components.stock.po.MerchantProductAreaPO" id="merchantProductAreaMap">
+		<result property="id" column="id" />
+		<result property="provinceId" column="province_id" />
+		<result property="cityId" column="city_id" />
+		<result property="countyId" column="county_id" />
+		<result property="areaId" column="area_id" />
+		<result property="coverLevel" column="cover_level" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="platformId" column="platform_id" />
+		<result property="skuId" column="sku_id" />
+	</resultMap>
+
+	<sql id="merchantProductAreaColumns">
+		id,
+		province_id,
+		city_id,
+		county_id,
+		area_id,
+		cover_level,
+		create_time,
+		update_time,
+		platform_id,
+		sku_id
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.stock.po.MerchantProductAreaPO" resultMap="merchantProductAreaMap">
+		SELECT
+		<include refid="merchantProductAreaColumns" />
+		FROM merchant_product_area
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="merchantProductAreaMap">
+		SELECT
+		<include refid="merchantProductAreaColumns" />
+		FROM merchant_product_area
+		<where>
+			<if test="po.provinceId != null">
+				and province_id = #{po.provinceId}
+			</if>
+			<if test="po.cityId != null">
+				and city_id = #{po.cityId}
+			</if>
+			<if test="po.countyId != null">
+				and county_id = #{po.countyId}
+			</if>
+			<if test="po.areaId != null">
+				and area_id = #{po.areaId}
+			</if>
+			<if test="po.coverLevel != null">
+				and cover_level = #{po.coverLevel}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.skuId != null">
+				and sku_id = #{po.skuId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM merchant_product_area
+		<where>
+			<if test="po.provinceId != null">
+				and province_id = #{po.provinceId}
+			</if>
+			<if test="po.cityId != null">
+				and city_id = #{po.cityId}
+			</if>
+			<if test="po.countyId != null">
+				and county_id = #{po.countyId}
+			</if>
+			<if test="po.areaId != null">
+				and area_id = #{po.areaId}
+			</if>
+			<if test="po.coverLevel != null">
+				and cover_level = #{po.coverLevel}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.skuId != null">
+				and sku_id = #{po.skuId}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="merchantProductAreaMap">
+		SELECT
+		<include refid="merchantProductAreaColumns" />
+		FROM merchant_product_area
+		<where>
+			<if test="po.provinceId != null">
+				and province_id = #{po.provinceId}
+			</if>
+			<if test="po.cityId != null">
+				and city_id = #{po.cityId}
+			</if>
+			<if test="po.countyId != null">
+				and county_id = #{po.countyId}
+			</if>
+			<if test="po.areaId != null">
+				and area_id = #{po.areaId}
+			</if>
+			<if test="po.coverLevel != null">
+				and cover_level = #{po.coverLevel}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.skuId != null">
+				and sku_id = #{po.skuId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+</mapper>
+	

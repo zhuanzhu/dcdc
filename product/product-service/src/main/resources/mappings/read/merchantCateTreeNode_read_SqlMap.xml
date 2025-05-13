@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.product.dao.read.MerchantCateTreeNodeReadDAO">
+	<resultMap type="com.egeo.components.product.po.MerchantCateTreeNodePO" id="merchantCateTreeNodeMap">
+		<result property="id" column="id" />
+		<result property="parentId" column="parent_id" />
+		<result property="merchantCatTreeId" column="merchant_cat_tree_id" />
+		<result property="categoryId" column="category_id" />
+		<result property="platformId" column="platform_id" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+	</resultMap>
+
+	<sql id="merchantCateTreeNodeColumns">
+		id,
+		parent_id,
+		merchant_cat_tree_id,
+		category_id,
+		platform_id,
+		create_time,
+		update_time
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.product.po.MerchantCateTreeNodePO" resultMap="merchantCateTreeNodeMap">
+		SELECT
+		<include refid="merchantCateTreeNodeColumns" />
+		FROM merchant_cate_tree_node
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="merchantCateTreeNodeMap">
+		SELECT
+		<include refid="merchantCateTreeNodeColumns" />
+		FROM merchant_cate_tree_node
+		<where>
+			<if test="po.parentId != null">
+				and parent_id = #{po.parentId}
+			</if>
+			<if test="po.merchantCatTreeId != null">
+				and merchant_cat_tree_id = #{po.merchantCatTreeId}
+			</if>
+			<if test="po.categoryId != null">
+				and category_id = #{po.categoryId}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM merchant_cate_tree_node
+		<where>
+			<if test="po.parentId != null">
+				and parent_id = #{po.parentId}
+			</if>
+			<if test="po.merchantCatTreeId != null">
+				and merchant_cat_tree_id = #{po.merchantCatTreeId}
+			</if>
+			<if test="po.categoryId != null">
+				and category_id = #{po.categoryId}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="merchantCateTreeNodeMap">
+		SELECT
+		<include refid="merchantCateTreeNodeColumns" />
+		FROM merchant_cate_tree_node
+		<where>
+			<if test="po.parentId != null">
+				and parent_id = #{po.parentId}
+			</if>
+			<if test="po.merchantCatTreeId != null">
+				and merchant_cat_tree_id = #{po.merchantCatTreeId}
+			</if>
+			<if test="po.categoryId != null">
+				and category_id = #{po.categoryId}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+</mapper>
+	

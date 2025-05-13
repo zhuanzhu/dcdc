@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.order.dao.write.FreightTemplateItemWriteDAO">
+	<insert id="insert" parameterType="com.egeo.components.order.po.FreightTemplateItemPO">
+		INSERT INTO freight_template_item(
+        <trim suffixOverrides=",">
+			<if test="merchantId != null">
+				merchant_id,
+			</if>
+			<if test="freightTemplateId != null">
+				freight_template_id,
+			</if>
+			<if test="distributionCode != null">
+				distribution_code,
+			</if>
+			<if test="type != null">
+				type,
+			</if>
+			<if test="chargeWay != null">
+				charge_way,
+			</if>
+			<if test="freightRule != null">
+				freight_rule,
+			</if>
+			<if test="distributionRegion != null">
+				distribution_region,
+			</if>
+			<if test="platformId != null">
+				platform_id,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+        </trim>		
+		) VALUES (
+        <trim suffixOverrides=",">
+			<if test="merchantId != null">
+				#{merchantId},
+			</if>
+			<if test="freightTemplateId != null">
+				#{freightTemplateId},
+			</if>
+			<if test="distributionCode != null">
+				#{distributionCode},
+			</if>
+			<if test="type != null">
+				#{type},
+			</if>
+			<if test="chargeWay != null">
+				#{chargeWay},
+			</if>
+			<if test="freightRule != null">
+				#{freightRule},
+			</if>
+			<if test="distributionRegion != null">
+				#{distributionRegion},
+			</if>
+			<if test="platformId != null">
+				#{platformId},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+        </trim>		
+		)
+		<selectKey keyProperty="id" resultType="java.lang.Long">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+
+	
+	
+	<update id="update">
+	UPDATE freight_template_item 
+		<set>
+			<if test="merchantId != null">
+				merchant_id = #{merchantId},
+			</if>			
+			<if test="freightTemplateId != null">
+				freight_template_id = #{freightTemplateId},
+			</if>			
+			<if test="distributionCode != null">
+				distribution_code = #{distributionCode},
+			</if>			
+			<if test="type != null">
+				type = #{type},
+			</if>			
+			<if test="chargeWay != null">
+				charge_way = #{chargeWay},
+			</if>			
+			<if test="freightRule != null">
+				freight_rule = #{freightRule},
+			</if>			
+			<if test="distributionRegion != null">
+				distribution_region = #{distributionRegion},
+			</if>			
+			<if test="platformId != null">
+				platform_id = #{platformId},
+			</if>			
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>			
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>			
+		</set>
+			WHERE id = #{id}
+	</update>	
+	
+
+	<delete id="delete">
+		delete from freight_template_item where id = #{id}
+	</delete>
+
+	<delete id="deleteByPara">
+		delete from freight_template_item 
+		<where>
+			<if test="merchantId != null">
+				and merchant_id = #{merchantId}
+			</if>
+			<if test="freightTemplateId != null">
+				and freight_template_id = #{freightTemplateId}
+			</if>
+			<if test="distributionCode != null">
+				and distribution_code = #{distributionCode}
+			</if>
+			<if test="type != null">
+				and type = #{type}
+			</if>
+			<if test="chargeWay != null">
+				and charge_way = #{chargeWay}
+			</if>
+			<if test="freightRule != null">
+				and freight_rule = #{freightRule}
+			</if>
+			<if test="distributionRegion != null">
+				and distribution_region = #{distributionRegion}
+			</if>
+			<if test="platformId != null">
+				and platform_id = #{platformId}
+			</if>
+			<if test="updateTime != null">
+				and update_time = #{updateTime}
+			</if>
+			<if test="createTime != null">
+				and create_time = #{createTime}
+			</if>
+		</where>
+	</delete>
+
+
+</mapper>
+	

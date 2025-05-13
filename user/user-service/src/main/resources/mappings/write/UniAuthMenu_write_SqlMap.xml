@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.user.dao.write.UniAuthMenuMapper">
+<!-- 自定义返回结果集 -->
+    <resultMap id="MenuMap" type="com.egeo.components.user.bean.UniAuthMenu">
+        <id property="mId" column="mid" javaType="java.lang.Integer"></id>
+        <result property="menuCode" column="menu_code" javaType="java.lang.String"></result>
+        <result property="menuName" column="menu_name" javaType="java.lang.String"></result>
+        <result property="menuParentCode" column="menu_parent_code" javaType="java.lang.String"></result>
+        <result property="menuImg" column="menu_img" javaType="java.lang.String"></result>
+  </resultMap>
+	<resultMap id="UniauthMenuResultMapper" type="com.egeo.components.user.bean.UniAuthMenu">
+		<result column="mid" property="mid"/>
+		<result column="menu_code" property="menuCode"/>
+		<result column="menu_name" property="menuName"/>
+		<result column="menu_parent_code" property="menuParentCode"/>
+		<result column="menu_parent_codes" property="menuParentCodes"/>
+		<result column="menu_img" property="menuImg"/>
+		<result column="menu_url" property="menuUrl"/>
+		<result column="id" property="id"/>
+		<result column="menu_state" property="menuState"/>
+		<result column="menu_type" property="menuType"/>
+		<result column="menu_index" property="menuIndex"/>
+		<result column="menu_params" property="menuParams"/>
+		<result column="create_time" property="createTime"/>
+		<result column="update_time" property="updateTime"/>
+		<result column="create_by" property="createBy"/>
+		<result column="update_by" property="updateBy"/>
+		<result column="remark" property="remark"/>
+	</resultMap>
+
+	<resultMap id="GetTreeResultMapper" type="com.egeo.components.user.bean.UniAuthMenu"
+			   extends="UniauthMenuResultMapper">
+		<collection property="children" select="getTree" column="{menuParentCode=menu_code}"/>
+	</resultMap>
+
+	<sql id="commonColumns">
+		 mid
+		, menu_code
+		, menu_name
+		, menu_parent_code
+		, menu_parent_codes
+		, menu_img
+		, menu_url
+		, `id`
+		, menu_state
+		, menu_type
+		, menu_index
+		, menu_params
+		, DATE_FORMAT(create_time, '%Y-%m-%d %T') create_time
+		, DATE_FORMAT(update_time, '%Y-%m-%d %T') update_time
+		, create_by
+		, update_by
+		, remark
+	</sql>
+
+	<sql id="commonCondition">
+		<if test="mid!= null and mid!= ''">
+			AND mid=#{mid}
+		</if>
+		<if test="menuCode!= null and menuCode!= ''">
+			AND menu_code=#{menuCode}
+		</if>
+		<if test="menuName!= null and menuName!= ''">
+			AND menu_name=#{menuName}
+		</if>
+		<if test="menuParentCode!= null and menuParentCode!= ''">
+			AND menu_parent_code=#{menuParentCode}
+		</if>
+		<if test="menuParentCodes!= null and menuParentCodes!= ''">
+			AND menu_parent_codes=#{menuParentCodes}
+		</if>
+		<if test="menuImg!= null and menuImg!= ''">
+			AND menu_img=#{menuImg}
+		</if>
+		<if test="menuUrl!= null and menuUrl!= ''">
+			AND menu_url=#{menuUrl}
+		</if>
+		<if test="id!= null and id!= ''">
+			AND `id`=#{`id`}
+		</if>
+		<if test="menuState!= null and menuState!= ''">
+			AND menu_state=#{menuState}
+		</if>
+		<if test="menuType!= null and menuType!= ''">
+			AND menu_type=#{menuType}
+		</if>
+		<if test="menuIndex!= null and menuIndex!= ''">
+			AND menu_index=#{menuIndex}
+		</if>
+		<if test="menuParams!= null and menuParams!= ''">
+			AND menu_params=#{menuParams}
+		</if>
+		<if test="createTime!= null and createTime!= ''">
+			AND create_time=STR_TO_DATE(#{createTime},'%Y-%m-%d %T')
+		</if>
+		<if test="updateTime!= null and updateTime!= ''">
+			AND update_time=STR_TO_DATE(#{updateTime},'%Y-%m-%d %T')
+		</if>
+		<if test="createBy!= null and createBy!= ''">
+			AND create_by=#{createBy}
+		</if>
+		<if test="updateBy!= null and updateBy!= ''">
+			AND update_by=#{updateBy}
+		</if>
+		<if test="remark!= null and remark!= ''">
+			AND remark=#{remark}
+		</if>
+	</sql>
+
+	<insert id="insert" parameterType="com.egeo.components.user.bean.UniAuthMenu" keyProperty="mid" useGeneratedKeys="true">
+		<![CDATA[ INSERT INTO uniauth_menu (
+				 menu_code
+				, menu_name
+				, menu_parent_code
+				, menu_parent_codes
+				, menu_img
+				, menu_url
+				, `id`
+				, menu_state
+				, menu_type
+				, menu_index
+				, menu_params
+				, create_time
+				, update_time
+				, create_by
+				, update_by
+				, remark
+				 ) VALUES (
+				 #{menuCode}
+				, #{menuName}
+				, #{menuParentCode}
+				, #{menuParentCodes}
+				, #{menuImg}
+				, #{menuUrl}
+				, #{id}
+				, #{menuState}
+				, #{menuType}
+				, #{menuIndex}
+				, #{menuParams}
+				, STR_TO_DATE(#{createTime},'%Y-%m-%d %T')
+				, STR_TO_DATE(#{updateTime},'%Y-%m-%d %T')
+				, #{createBy}
+				, #{updateBy}
+				, #{remark}
+  				) ]]>
+	</insert>
+	<update id="updatePart" parameterType="com.egeo.components.user.bean.UniAuthMenu">
+		<![CDATA[ UPDATE uniauth_menu SET mid = #{mid} ]]>
+		<if test="menuCode!= null">
+			, menu_code=#{menuCode}
+		</if>
+		<if test="menuName!= null">
+			, menu_name=#{menuName}
+		</if>
+		<if test="menuParentCode!= null">
+			, menu_parent_code=#{menuParentCode}
+		</if>
+		<if test="menuParentCodes!= null">
+			, menu_parent_codes=#{menuParentCodes}
+		</if>
+		<if test="menuImg!= null">
+			, menu_img=#{menuImg}
+		</if>
+		<if test="menuUrl!= null">
+			, menu_url=#{menuUrl}
+		</if>
+		<if test="id!= null">
+			, `id`=#{id}
+		</if>
+		<if test="menuState!= null">
+			, menu_state=#{menuState}
+		</if>
+		<if test="menuType!= null">
+			, menu_type=#{menuType}
+		</if>
+		<if test="menuIndex!= null">
+			, menu_index=#{menuIndex}
+		</if>
+		<if test="menuParams!= null">
+			, menu_params=#{menuParams}
+		</if>
+		<if test="createTime!= null">
+			, create_time=STR_TO_DATE(#{createTime}, '%Y-%m-%d %T')
+		</if>
+		<if test="updateTime!= null">
+			, update_time=STR_TO_DATE(#{updateTime}, '%Y-%m-%d %T')
+		</if>
+		<if test="createBy!= null">
+			, create_by=#{createBy}
+		</if>
+		<if test="updateBy!= null">
+			, update_by=#{updateBy}
+		</if>
+		<if test="remark!= null">
+			, remark=#{remark}
+		</if>
+		<![CDATA[ WHERE mid = #{mid}  ]]>
+	</update>
+	<update id="updateStateByParentCodes" parameterType="com.egeo.components.user.bean.UniAuthMenu">
+		<![CDATA[ UPDATE uniauth_menu SET menu_state=#{menuState} ]]>
+		<if test="updateTime!= null">
+			, update_time=STR_TO_DATE(#{updateTime}, '%Y-%m-%d %T')
+		</if>
+		<if test="updateBy!= null">
+			, update_by=#{updateBy}
+		</if>
+		<![CDATA[ WHERE menu_parent_codes LIKE concat(#{menuParentCodes}, '%') ]]>
+	</update>
+	<update id="updateIndex" parameterType="Map">
+		UPDATE uniauth_menu SET menu_index=menu_index+#{index}
+		WHERE menu_parent_codes=#{menuParentCodes}
+		AND menu_index > #{minIndex} AND  menu_index <![CDATA[ < ]]> #{maxIndex}
+	</update>
+	<select id="getByPK" parameterType="java.lang.Integer" resultMap="UniauthMenuResultMapper">
+		<![CDATA[ SELECT ]]>
+		<include refid="commonColumns"/>
+		FROM uniauth_menu WHERE mid = #{mid}
+	</select>
+	<select id="listByProperty" parameterType="com.egeo.components.user.bean.UniAuthMenu" resultMap="UniauthMenuResultMapper">
+		<![CDATA[ SELECT ]]>
+		<include refid="commonColumns"/>
+		FROM uniauth_menu WHERE menu_state != -1
+		<include refid="commonCondition"/>
+	</select>
+	<select id="getTree" parameterType="com.egeo.components.user.bean.UniAuthMenu" resultMap="GetTreeResultMapper">
+		<![CDATA[ SELECT ]]>
+			id
+			, mid
+			, menu_code
+			, menu_name
+			, menu_parent_code
+			, menu_state
+			, menu_type
+			, menu_index
+			, menu_params
+			, remark
+		FROM uniauth_menu WHERE menu_state != -1
+		<include refid="commonCondition"/>
+		ORDER BY menu_parent_code, menu_index
+	</select>
+	<select id="getListByRids" parameterType="Map" resultMap="UniauthMenuResultMapper">
+		<![CDATA[ SELECT ]]>
+	    m.id
+		, m.menu_code
+		, m.menu_name
+		, m.menu_parent_code
+		, m.menu_index
+		FROM uniauth_menu m
+		WHERE m.menu_state = 1 AND m.menu_type IN (1,2,3)
+		<if test="rids != null">
+			AND m.menu_code IN (SELECT rm.menu_code FROM uniauth_role_menu rm WHERE
+			<foreach collection="rids" index="index" item="rid"
+					 open=" rm.rid IN(" separator="," close=") ">
+				${rid}
+			</foreach>
+			)
+		</if>
+		ORDER BY m.menu_parent_code,m.menu_index
+	</select>
+
+	<select id="getMenuByRids" parameterType="Map" resultMap="UniauthMenuResultMapper">
+		<![CDATA[ SELECT ]]>
+		m.id
+		, m.mid
+		, m.menu_code
+		, m.menu_name
+		, m.menu_state
+		, m.menu_type
+		, m.menu_parent_code
+		, menu_params
+		, m.menu_index
+		FROM uniauth_menu m
+		WHERE m.menu_state in(0,1) AND m.menu_type IN (2, 3)
+		<if test="rids != null">
+			AND m.menu_code IN (SELECT rm.menu_code FROM uniauth_role_menu rm WHERE
+			<foreach collection="rids" index="index" item="rid"
+					 open=" rm.rid IN(" separator="," close=") ">
+				${rid}
+			</foreach>
+			)
+		</if>
+		<if test="menuParentCodes != null and menuParentCodes !=''">
+			AND m.menu_parent_codes LIKE concat(#{menuParentCodes}, '%')
+		</if>
+		ORDER BY m.menu_parent_code,m.menu_index
+	</select>
+
+	<select id="getResourceByRidsAndDomain" parameterType="Map" resultType="String">
+		<![CDATA[ SELECT ]]>
+			DISTINCT p.menu_params
+		FROM uniauth_menu p
+		WHERE p.menu_type=4 AND p.menu_state=1
+		<if test="rids != null">
+			AND p.menu_parent_code IN (SELECT rm.menu_code FROM uniauth_role_menu rm WHERE
+			<foreach collection="rids" index="index" item="rid"
+					 open=" rm.rid IN(" separator="," close=") ">
+				${rid}
+			</foreach>
+			)
+		</if>
+		<if test="domain != null and domain != ''">
+			AND p.menu_parent_codes LIKE
+			(
+				SELECT CONCAT(m.menu_parent_codes, m.menu_code, '-%') FROM uniauth_menu_domain md, uniauth_domain d, uniauth_menu m
+				WHERE md.domain_id=d.id AND m.mid=md.mid AND d.domain_url=#{domain}  AND m.menu_state=1 AND m.menu_type=1
+			)
+		</if>
+	</select>
+
+	<select id="getByUniAuthMenu" parameterType="com.egeo.components.user.bean.UniAuthMenu" resultMap="UniauthMenuResultMapper">
+		<![CDATA[ SELECT ]]>
+		<include refid="commonColumns"/>
+		FROM uniauth_menu WHERE 1=1
+		<include refid="commonCondition"/>
+	</select>
+
+	<select id="findByCount" parameterType="com.egeo.components.user.bean.UniAuthMenu" resultType="int">
+		SELECT count(1) AS totalcount FROM uniauth_menu WHERE menu_state != -1
+		<include refid="commonCondition"/>
+	</select>
+
+  <select id="byRid" resultMap="MenuMap">
+  		SELECT m.* FROM uniauth_menu m JOIN uniauth_role_menu rm ON m.menu_code = rm.menu_code 
+		AND rm.rid = #{rid}
+  </select>
+  
+  <select id="queryByParams" parameterType="com.egeo.components.user.bean.UniAuthMenu" resultMap="MenuMap">
+		SELECT * FROM uniauth_menu
+		<where>
+			<if test="menuParentCode != null">
+				menu_parent_code = #{menuParentCode}
+			</if>
+		</where>
+	</select>
+	<delete id="delete">
+  		DELETE FROM uniauth_role_menu WHERE rid = #{rid}
+  	</delete>
+</mapper>

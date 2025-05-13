@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.finance.dao.read.CompanyAccountReadDAO">
+
+	<select id="queryCompanyAccountById" resultMap="companyAccountMap">
+		select * from company_account
+		where id=#{id}
+	</select>
+
+	<select id="querySpecialCompanyAccountByType" resultMap="companyAccountMap">
+		select * from company_account
+		where type=#{type}
+		AND platform_id=#{platformId}
+	</select>
+
+	<select id="queryNormalCompanyAccountByCompnayId" resultMap="companyAccountMap">
+		select * from company_account
+		where company_id=#{companyId}
+		and type=20
+	</select>
+
+	<select id="queryCompanyAccountsByIds" resultMap="companyAccountMap">
+		select * from company_account
+		where id in
+		<foreach collection="ids" item="id" open="(" separator="," close=")">
+		#{id}
+		</foreach>
+	</select>
+
+	<select id="queryNormalAccounts" resultMap="companyAccountMap" >
+		select * from company_account
+		<where> 
+		type=20
+		<if test="companyId!=null and companyId.size() > 0">
+				and company_id in
+					<foreach collection="companyId" item="id" open="(" separator="," close=")">
+					#{id}
+					</foreach>
+			</if>
+			<if test="platformId!=null">
+				and platform_id=#{platformId}
+			</if>
+		</where>
+		order by create_time desc
+	</select>
+
+	<select id="queryCompanyAccountPage" resultMap="companyAccountMap">
+		select * from company_account
+		<where>
+			<if test="accountName!=null">
+				name like concat('%',#{accountName},'%')
+			</if>
+			<if test="companyId!=null and companyId.size() > 0">
+				and company_id in
+					<foreach collection="companyId" item="id" open="(" separator="," close=")">
+					#{id}
+					</foreach>
+			</if>
+			<if test="disabled!=null">
+				and disabled=#{disabled}
+			</if>
+			<if test="platformId!=null">
+				and platform_id=#{platformId}
+			</if>
+		</where>
+		order by type,create_time desc
+		limit #{page.limitStart},#{page.pageSize}
+	</select>
+
+	<select id="queryCompanyAccountPageTotalCount" resultType="java.lang.Integer">
+		select count(0) from company_account
+		<where>
+			<if test="accountName!=null">
+				name like concat('%',#{accountName},'%')
+			</if>
+			<if test="companyId!=null and companyId.size() > 0">
+				and company_id in
+					<foreach collection="companyId" item="id" open="(" separator="," close=")">
+					#{id}
+					</foreach>
+			</if>
+			<if test="disabled!=null">
+				and disabled=#{disabled}
+			</if>
+			<if test="platformId!=null">
+				and platform_id=#{platformId}
+			</if>
+		</where>
+	</select>
+
+	<resultMap type="com.egeo.components.finance.po.CompanyAccountPO"
+		id="companyAccountMap">
+		<result property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="balance" column="balance" />
+		<result property="type" column="type" />
+		<result property="companyId" column="company_id" />
+		<result property="disabled" column="disabled" />
+		<result property="lastRechargeTime" column="last_recharge_time" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="platformId" column="platform_id" />
+		<result property="ciphertext" column="ciphertext" />
+		<result property="uuid" column="uuid" />
+		<result property="beforeDisableBalance" column="before_disabled_balance" />
+	</resultMap>
+
+	<sql id="companyAccountColumns">
+		id,
+		name,
+		balance,
+		type,
+		company_id,
+		disabled,
+		last_recharge_time,
+		create_time,
+		update_time,
+		ciphertext,
+		uuid,
+		before_disabled_balance
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.finance.po.CompanyAccountPO"
+		resultMap="companyAccountMap">
+		SELECT
+		<include refid="companyAccountColumns" />
+		FROM company_account
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="companyAccountMap">
+		SELECT
+		<include refid="companyAccountColumns" />
+		FROM company_account
+		<where>
+			<if test="po.name != null">
+				and name = #{po.name}
+			</if>
+			<if test="po.balance != null">
+				and balance = #{po.balance}
+			</if>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+			<if test="po.companyId != null">
+				and company_id = #{po.companyId}
+			</if>
+			<if test="po.disabled != null">
+				and disabled = #{po.disabled}
+			</if>
+			<if test="po.lastRechargeTime != null">
+				and last_recharge_time = #{po.lastRechargeTime}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.beforeDisableBalance != null">
+				and before_disabled_balance = #{po.beforeDisableBalance}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY id desc
+			</otherwise>
+		</choose>
+		<if test="page != null">
+			limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM company_account
+		<where>
+			<if test="po.name != null">
+				and name = #{po.name}
+			</if>
+			<if test="po.balance != null">
+				and balance = #{po.balance}
+			</if>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+			<if test="po.companyId != null">
+				and company_id = #{po.companyId}
+			</if>
+			<if test="po.disabled != null">
+				and disabled = #{po.disabled}
+			</if>
+			<if test="po.lastRechargeTime != null">
+				and last_recharge_time = #{po.lastRechargeTime}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.beforeDisableBalance != null">
+				and before_disabled_balance = #{po.beforeDisableBalance}
+			</if>
+		</where>
+	</select>
+
+	<select id="findAll" resultMap="companyAccountMap">
+		SELECT
+		<include refid="companyAccountColumns" />
+		FROM company_account
+		<where>
+			<if test="po.name != null">
+				and name = #{po.name}
+			</if>
+			<if test="po.balance != null">
+				and balance = #{po.balance}
+			</if>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+			<if test="po.companyId != null">
+				and company_id = #{po.companyId}
+			</if>
+			<if test="po.disabled != null">
+				and disabled = #{po.disabled}
+			</if>
+			<if test="po.lastRechargeTime != null">
+				and last_recharge_time = #{po.lastRechargeTime}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.beforeDisableBalance != null">
+				and before_disabled_balance = #{po.beforeDisableBalance}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY id desc
+			</otherwise>
+		</choose>
+	</select>
+</mapper>
+	

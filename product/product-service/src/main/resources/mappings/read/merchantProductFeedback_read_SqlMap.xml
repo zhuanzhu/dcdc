@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.product.dao.read.MerchantProductFeedbackReadDAO">
+	<resultMap type="com.egeo.components.product.po.MerchantProductFeedbackPO" id="merchantProductFeedbackMap">
+		<result property="id" column="id" />
+		<result property="merchantProductId" column="merchant_product_id" />
+		<result property="merchantProductSerialNumber" column="merchant_product_serial_number" />
+		<result property="merchantProductName" column="merchant_product_name" />
+		<result property="attributeName" column="attribute_name" />
+		<result property="salePrice" column="sale_price" />
+		<result property="sellPlatformId" column="sell_platform_id" />
+		<result property="userName" column="user_name" />
+		<result property="account" column="account" />
+		<result property="phone" column="phone" />
+		<result property="content" column="content" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="feedbackStatus" column="feedback_status" />
+		<result property="receiverId" column="receiver_id" />
+		<result property="acceptResult" column="accept_result" />
+		<result property="certificateUrl" column="certificate_url" />
+		<result property="platformId" column="platform_id" />
+	</resultMap>
+
+	<sql id="merchantProductFeedbackColumns">
+		id,
+		merchant_product_id,
+		merchant_product_serial_number,
+		merchant_product_name,
+		attribute_name,
+		sale_price,
+		sell_platform_id,
+		user_name,
+		account,
+		phone,
+		content,
+		create_time,
+		update_time,
+		feedback_status,
+		receiver_id,
+		accept_result,
+		certificate_url,
+		platform_id
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.product.po.MerchantProductFeedbackPO" resultMap="merchantProductFeedbackMap">
+		SELECT
+		<include refid="merchantProductFeedbackColumns" />
+		FROM merchant_product_feedback
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="merchantProductFeedbackMap">
+		SELECT
+		<include refid="merchantProductFeedbackColumns" />
+		FROM merchant_product_feedback
+		<where>
+			<if test="po.merchantProductId != null">
+				and merchant_product_id = #{po.merchantProductId}
+			</if>
+			<if test="po.merchantProductSerialNumber != null">
+				and merchant_product_serial_number = #{po.merchantProductSerialNumber}
+			</if>
+			<if test="po.merchantProductName != null">
+				and merchant_product_name = #{po.merchantProductName}
+			</if>
+			<if test="po.attributeName != null">
+				and attribute_name = #{po.attributeName}
+			</if>
+			<if test="po.salePrice != null">
+				and sale_price = #{po.salePrice}
+			</if>
+			<if test="po.sellPlatformId != null">
+				and sell_platform_id = #{po.sellPlatformId}
+			</if>
+			<if test="po.userName != null">
+				and user_name = #{po.userName}
+			</if>
+			<if test="po.account != null">
+				and account = #{po.account}
+			</if>
+			<if test="po.phone != null">
+				and phone = #{po.phone}
+			</if>
+			<if test="po.content != null">
+				and content = #{po.content}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.feedbackStatus != null">
+				and feedback_status = #{po.feedbackStatus}
+			</if>
+			<if test="po.receiverId != null">
+				and receiver_id = #{po.receiverId}
+			</if>
+			<if test="po.acceptResult != null">
+				and accept_result = #{po.acceptResult}
+			</if>
+			<if test="po.certificateUrl != null">
+				and certificate_url = #{po.certificateUrl}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM merchant_product_feedback
+		<where>
+			<if test="po.merchantProductId != null">
+				and merchant_product_id = #{po.merchantProductId}
+			</if>
+			<if test="po.merchantProductSerialNumber != null">
+				and merchant_product_serial_number = #{po.merchantProductSerialNumber}
+			</if>
+			<if test="po.merchantProductName != null">
+				and merchant_product_name = #{po.merchantProductName}
+			</if>
+			<if test="po.attributeName != null">
+				and attribute_name = #{po.attributeName}
+			</if>
+			<if test="po.salePrice != null">
+				and sale_price = #{po.salePrice}
+			</if>
+			<if test="po.sellPlatformId != null">
+				and sell_platform_id = #{po.sellPlatformId}
+			</if>
+			<if test="po.userName != null">
+				and user_name = #{po.userName}
+			</if>
+			<if test="po.account != null">
+				and account = #{po.account}
+			</if>
+			<if test="po.phone != null">
+				and phone = #{po.phone}
+			</if>
+			<if test="po.content != null">
+				and content = #{po.content}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.feedbackStatus != null">
+				and feedback_status = #{po.feedbackStatus}
+			</if>
+			<if test="po.receiverId != null">
+				and receiver_id = #{po.receiverId}
+			</if>
+			<if test="po.acceptResult != null">
+				and accept_result = #{po.acceptResult}
+			</if>
+			<if test="po.certificateUrl != null">
+				and certificate_url = #{po.certificateUrl}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="merchantProductFeedbackMap">
+		SELECT
+		<include refid="merchantProductFeedbackColumns" />
+		FROM merchant_product_feedback
+		<where>
+			<if test="po.merchantProductId != null">
+				and merchant_product_id = #{po.merchantProductId}
+			</if>
+			<if test="po.merchantProductSerialNumber != null">
+				and merchant_product_serial_number = #{po.merchantProductSerialNumber}
+			</if>
+			<if test="po.merchantProductName != null">
+				and merchant_product_name = #{po.merchantProductName}
+			</if>
+			<if test="po.attributeName != null">
+				and attribute_name = #{po.attributeName}
+			</if>
+			<if test="po.salePrice != null">
+				and sale_price = #{po.salePrice}
+			</if>
+			<if test="po.sellPlatformId != null">
+				and sell_platform_id = #{po.sellPlatformId}
+			</if>
+			<if test="po.userName != null">
+				and user_name = #{po.userName}
+			</if>
+			<if test="po.account != null">
+				and account = #{po.account}
+			</if>
+			<if test="po.phone != null">
+				and phone = #{po.phone}
+			</if>
+			<if test="po.content != null">
+				and content = #{po.content}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.feedbackStatus != null">
+				and feedback_status = #{po.feedbackStatus}
+			</if>
+			<if test="po.receiverId != null">
+				and receiver_id = #{po.receiverId}
+			</if>
+			<if test="po.acceptResult != null">
+				and accept_result = #{po.acceptResult}
+			</if>
+			<if test="po.certificateUrl != null">
+				and certificate_url = #{po.certificateUrl}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+</mapper>
+	

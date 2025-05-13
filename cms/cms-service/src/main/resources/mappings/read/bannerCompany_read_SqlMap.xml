@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.cms.dao.read.BannerCompanyReadDAO">
+	<resultMap type="com.egeo.components.cms.po.BannerCompanyPO" id="bannerCompanyMap">
+		<result property="id" column="id" />
+		<result property="bannerId" column="banner_id" />
+		<result property="companyId" column="company_id" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="up" column="up" />
+	</resultMap>
+
+	<sql id="bannerCompanyColumns">
+		id,
+		banner_id,
+		company_id,
+		create_time,
+		update_time,
+		up
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.cms.po.BannerCompanyPO" resultMap="bannerCompanyMap">
+		SELECT
+		<include refid="bannerCompanyColumns" />
+		FROM banner_company
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="bannerCompanyMap">
+		SELECT
+		<include refid="bannerCompanyColumns" />
+		FROM banner_company
+		<where>
+			<if test="po.bannerId != null">
+				and banner_id = #{po.bannerId}
+			</if>
+			<if test="po.companyId != null">
+				and company_id = #{po.companyId}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM banner_company
+		<where>
+			<if test="po.bannerId != null">
+				and banner_id = #{po.bannerId}
+			</if>
+			<if test="po.companyId != null">
+				and company_id = #{po.companyId}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="bannerCompanyMap">
+		SELECT
+		<include refid="bannerCompanyColumns" />
+		FROM banner_company
+		<where>
+			<if test="po.bannerId != null">
+				and banner_id = #{po.bannerId}
+			</if>
+			<if test="po.companyId != null">
+				and company_id = #{po.companyId}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+	
+	
+	<select id="findEnterpriseOfPage" resultMap="bannerCompanyMap">
+		SELECT
+		<include refid="bannerCompanyColumns" />
+		FROM banner_company
+		<where>
+			<if test="po.bannerId != null">
+				and banner_id = #{po.bannerId}
+			</if>
+			<if test="companyIdList != null and companyIdList.size() > 0">
+				and company_id in 
+				<foreach item="companyId" collection="companyIdList" separator="," open="(" close=")">
+					#{companyId}
+				</foreach>
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countEnterpriseOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM banner_company
+		<where>
+			<if test="po.bannerId != null">
+				and banner_id = #{po.bannerId}
+			</if>
+			<if test="companyIdList != null and companyIdList.size() > 0">
+				and company_id in 
+				<foreach item="companyId" collection="companyIdList" separator="," open="(" close=")">
+					#{companyId}
+				</foreach>
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findEnterpriseAll" resultMap="bannerCompanyMap">
+		SELECT
+		<include refid="bannerCompanyColumns" />
+		FROM banner_company
+		<where>
+			<if test="po.bannerId != null">
+				and banner_id = #{po.bannerId}
+			</if>
+			<if test="companyIdList != null and companyIdList.size() > 0">
+				and company_id in 
+				<foreach item="companyId" collection="companyIdList" separator="," open="(" close=")">
+					#{companyId}
+				</foreach>
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+	
+	
+</mapper>
+	

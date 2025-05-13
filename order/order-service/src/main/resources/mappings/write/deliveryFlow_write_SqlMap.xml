@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.order.dao.write.DeliveryFlowWriteDAO">
+	<insert id="insert" parameterType="com.egeo.components.order.po.DeliveryFlowPO">
+		INSERT INTO delivery_flow(
+        <trim suffixOverrides=",">
+			<if test="soChildId != null">
+				so_child_id,
+			</if>
+			<if test="operate != null">
+				operate,
+			</if>
+			<if test="doMail != null">
+				do_mail,
+			</if>
+			<if test="creatTime != null">
+				creat_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="soId != null">
+				so_id,
+			</if>
+        </trim>		
+		) VALUES (
+        <trim suffixOverrides=",">
+			<if test="soChildId != null">
+				#{soChildId},
+			</if>
+			<if test="operate != null">
+				#{operate},
+			</if>
+			<if test="doMail != null">
+				#{doMail},
+			</if>
+			<if test="creatTime != null">
+				#{creatTime},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
+			</if>
+			<if test="soId != null">
+				#{soId},
+			</if>
+        </trim>		
+		)
+		<selectKey keyProperty="id" resultType="java.lang.Long">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+
+	
+	
+	<update id="update">
+	UPDATE delivery_flow 
+		<set>
+			<if test="soChildId != null">
+				so_child_id = #{soChildId},
+			</if>			
+			<if test="operate != null">
+				operate = #{operate},
+			</if>			
+			<if test="doMail != null">
+				do_mail = #{doMail},
+			</if>			
+			<if test="creatTime != null">
+				creat_time = #{creatTime},
+			</if>			
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>			
+			<if test="soId != null">
+				so_id = #{soId},
+			</if>			
+		</set>
+			WHERE id = #{id}
+	</update>	
+	
+
+	<delete id="delete">
+		delete from delivery_flow where id = #{id}
+	</delete>
+
+	<delete id="deleteByPara">
+		delete from delivery_flow 
+		<where>
+			<if test="soChildId != null">
+				and so_child_id = #{soChildId}
+			</if>
+			<if test="operate != null">
+				and operate = #{operate}
+			</if>
+			<if test="doMail != null">
+				and do_mail = #{doMail}
+			</if>
+			<if test="creatTime != null">
+				and creat_time = #{creatTime}
+			</if>
+			<if test="updateTime != null">
+				and update_time = #{updateTime}
+			</if>
+			<if test="soId != null">
+				and so_id = #{soId}
+			</if>
+		</where>
+	</delete>
+
+
+</mapper>
+	

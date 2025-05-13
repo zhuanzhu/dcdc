@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.user.dao.read.MenuReadDAO">
+	<resultMap type="com.egeo.components.user.po.MenuPO" id="menuMap">
+		<result property="id" column="id" />
+		<result property="parentId" column="parent_id" />
+		<result property="name" column="name" />
+		<result property="sort" column="sort" />
+		<result property="href" column="href" />
+		<result property="icon" column="icon" />
+		<result property="isShow" column="is_show" />
+		<result property="permission" column="permission" />
+		<result property="remarks" column="remarks" />
+		<result property="platformId" column="platform_id" />
+		<result property="createTime" column="create_time" />
+		<result property="sysCode" column="sys_code" />
+		<result property="updateTime" column="update_time" />
+	</resultMap>
+
+	<resultMap type="com.egeo.components.user.condition.MenuCondition" id="menuConditionMap" extends="menuMap">
+		<result property="parentName" column="parent_name" />
+	</resultMap>
+	
+	<sql id="menuColumns">
+		id,
+		parent_id,
+		name,
+		sort,
+		href,
+		icon,
+		is_show,
+		sys_code,
+		permission,
+		remarks,
+		platform_id,
+		create_time,
+		update_time
+	</sql>
+
+	<sql id="menuJoins">
+		LEFT JOIN u_menu p ON p.id = a.parent_id
+    </sql>
+	<select id="findById" parameterType="com.egeo.components.user.po.MenuPO" resultMap="menuMap">
+		SELECT
+		<include refid="menuColumns" />
+		FROM u_menu
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="menuMap">
+		SELECT
+		<include refid="menuColumns" />
+		FROM u_menu
+		<where>
+			<if test="po.id != null">
+				and id = #{po.id}
+			</if>
+			<if test="po.parentId != null">
+				and parent_id = #{po.parentId}
+			</if>
+			<if test="po.name != null">
+				and name = #{po.name}
+			</if>
+			<if test="po.sort != null">
+				and sort = #{po.sort}
+			</if>
+			<if test="po.sysCode != null">
+				and sys_code = #{po.sysCode}
+			</if>
+			<if test="po.href != null">
+				and href = #{po.href}
+			</if>
+			<if test="po.icon != null">
+				and icon = #{po.icon}
+			</if>
+			<if test="po.isShow != null">
+				and is_show = #{po.isShow}
+			</if>
+			<if test="po.permission != null">
+				and permission = #{po.permission}
+			</if>
+			<if test="po.remarks != null">
+				and remarks = #{po.remarks}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY sort	
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM u_menu
+		<where>
+		    <if test="po.id != null">
+				and id = #{po.id}
+			</if>
+			<if test="po.parentId != null">
+				and parent_id = #{po.parentId}
+			</if>
+			<if test="po.name != null">
+				and name = #{po.name}
+			</if>
+			<if test="po.sort != null">
+				and sort = #{po.sort}
+			</if>
+			<if test="po.href != null">
+				and href = #{po.href}
+			</if>
+			<if test="po.icon != null">
+				and icon = #{po.icon}
+			</if>
+			<if test="po.isShow != null">
+				and is_show = #{po.isShow}
+			</if>
+			<if test="po.sysCode != null">
+				and sys_code = #{po.sysCode}
+			</if>
+			<if test="po.permission != null">
+				and permission = #{po.permission}
+			</if>
+			<if test="po.remarks != null">
+				and remarks = #{po.remarks}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+	</select>
+	
+	<select id="getMenuListByUserId"  resultMap="menuMap">
+		SELECT distinct
+		a.id,
+		a.parent_id,
+		a.name,
+		a.sort,
+		a.href,
+		a.icon,
+		a.is_show,
+		a.permission,
+		a.remarks,
+		a.sys_code,
+		a.platform_id,
+		a.create_time,
+		a.update_time
+	FROM u_menu a
+		LEFT JOIN u_menu p ON p.id = a.parent_id
+		JOIN u_role_menu r
+		ON a.id=r.menu_id
+		AND a.is_show='1'
+		AND a.platform_id = #{platformId}
+		AND r.role_id in 
+		(select e.id from u_user u,u_user_role r,u_role e where u.id=r.user_id and r.role_id=e.id and u.id=#{userId}) order by a.parent_id,a.sort
+	</select>
+	<select id="getMenuListBySysCode"  resultMap="menuMap">
+		SELECT distinct
+		a.id,
+		a.parent_id,
+		a.name,
+		a.sort,
+		a.href,
+		a.icon,
+		a.is_show,
+		a.sys_code,
+		a.permission,
+		a.remarks,
+		a.platform_id,
+		a.create_time,
+		a.update_time
+	FROM u_menu a
+		WHERE a.is_show='1'
+		AND a.platform_id = #{platformId}
+		AND a.sys_code = #{sysCode}
+		order by a.parent_id,a.sort
+	</select>
+
+	<select id="getShowMenuListByUserId"  resultMap="menuMap">
+		SELECT distinct
+		a.id,
+		a.parent_id,
+		a.name,
+		a.sort,
+		a.href,
+		a.icon,
+		a.is_show,
+		a.permission,
+		a.remarks,
+		a.sys_code,
+		a.platform_id,
+		a.create_time,
+		a.update_time
+		FROM u_menu a
+		WHERE id in (
+			SELECT menu_id from u_role_menu where role_id in (
+				SELECT id from u_role where id in (
+					  SELECT role_id from u_user_role where user_id = #{userId})
+					  and platform_id = #{platformId} ))
+		order by a.parent_id,a.sort
+	</select>
+	
+	<select id="findAll" resultMap="menuMap">
+		SELECT
+		<include refid="menuColumns" />
+		FROM u_menu
+		<where>
+		    <if test="po.id != null">
+				and id = #{po.id}
+			</if>
+			<if test="po.parentId != null">
+				and parent_id = #{po.parentId}
+			</if>
+			<if test="po.name != null">
+				and name = #{po.name}
+			</if>
+			<if test="po.sort != null">
+				and sort = #{po.sort}
+			</if>
+			<if test="po.href != null">
+				and href = #{po.href}
+			</if>
+			<if test="po.sysCode != null">
+				and sys_code = #{po.sysCode}
+			</if>
+			<if test="po.icon != null">
+				and icon = #{po.icon}
+			</if>
+			<if test="po.isShow != null">
+				and is_show = #{po.isShow}
+			</if>
+			<if test="po.permission != null">
+				and permission = #{po.permission}
+			</if>
+			<if test="po.remarks != null">
+				and remarks = #{po.remarks}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY sort	
+			</otherwise>
+		</choose>
+	</select>
+	<select id="menuListByroleId"  resultMap="menuConditionMap">
+		SELECT
+		a.id,
+		a.parent_id,
+		a.name,
+		a.sort,
+		a.href,
+		a.icon,
+		a.is_show,
+		a.permission,
+		a.sys_code,
+		a.remarks,
+		a.platform_id,
+		a.create_time,
+		a.update_time,
+		a.platform_id,
+		p.name AS "parent_name"
+	FROM u_menu a
+		LEFT JOIN u_menu p ON p.id = a.parent_id
+		JOIN u_role_menu r
+		ON a.id=r.menu_id
+		AND a.is_show='1'
+		AND r.role_id= #{roleId} order by a.parent_id,a.sort
+	</select>
+	
+	<select id="menuByPlatformId"  resultMap="menuMap">
+		SELECT
+		a.id,
+		a.parent_id,
+		a.name,
+		a.sort,
+		a.href,
+		a.icon,
+		a.sys_code,
+		a.is_show,
+		a.permission,
+		a.remarks,
+		a.platform_id,
+		a.create_time,
+		a.update_time,
+		a.platform_id,
+		p.name AS "parent_name"
+	FROM u_menu a
+		LEFT JOIN u_menu p ON p.id = a.parent_id
+		JOIN u_role_menu r
+		ON a.id=r.menu_id
+		AND r.role_id in 
+		(select role_id from u_platform_role where platform_id = #{platformId} ) order by a.parent_id,a.sort
+	</select>
+	
+	<select id="menuAllByMenuIds" resultMap="menuMap">
+		SELECT distinct 
+		<include refid="menuColumns" />
+		FROM u_menu WHERE id IN(SELECT distinct parent_id FROM u_menu WHERE id IN(${menus})) order by parent_id,sort
+	</select>
+	
+	<select id="menuByMenuIds" resultMap="menuMap">
+		SELECT distinct 
+		<include refid="menuColumns" />
+		FROM u_menu WHERE id IN(${menuIds}) order by parent_id,sort
+	</select>
+</mapper>
+	

@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.user.dao.write.UserTempWriteDAO">
+	
+	<sql id="insertAllClause">
+		<foreach collection="poList" item="po" separator=",">
+				(#{po.companyId},
+				#{po.departmentId},
+				#{po.name},
+				#{po.memberCode},
+				#{po.mail},
+				#{po.platformId},
+				#{po.birthday},
+				#{po.sex},
+				#{po.mobile},
+				#{po.createUserid},
+				#{po.createUsername},
+				#{po.createUserip},
+				#{po.createUsermac},
+				#{po.enterpriseId},
+				#{po.importRecordsId},
+			#{po.type})
+		</foreach>
+	</sql>
+	
+	<insert id="insert" parameterType="com.egeo.components.user.po.UserTempPO">
+		INSERT INTO u_user_temp(
+        <trim suffixOverrides=",">
+			<if test="companyId != null">
+				company_id,
+			</if>
+			<if test="departmentId != null">
+				department_id,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="memberCode != null">
+				member_code,
+			</if>
+			<if test="mail != null">
+				mail,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="platformId != null">
+				platform_id,
+			</if>
+			<if test="birthday != null">
+				birthday,
+			</if>
+			<if test="sex != null">
+				sex,
+			</if>
+			<if test="mobile != null">
+				mobile,
+			</if>
+			<if test="createUserid != null">
+				create_userid,
+			</if>
+			<if test="createUsername != null">
+				create_username,
+			</if>
+			<if test="createUserip != null">
+				create_userip,
+			</if>
+			<if test="createUsermac != null">
+				create_usermac,
+			</if>
+			<if test="type != null">
+				type,
+			</if>
+        </trim>		
+		) VALUES (
+        <trim suffixOverrides=",">
+			<if test="companyId != null">
+				#{companyId},
+			</if>
+			<if test="departmentId != null">
+				#{departmentId},
+			</if>
+			<if test="name != null">
+				#{name},
+			</if>
+			<if test="memberCode != null">
+				#{memberCode},
+			</if>
+			<if test="mail != null">
+				#{mail},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="platformId != null">
+				#{platformId},
+			</if>
+			<if test="birthday != null">
+				#{birthday},
+			</if>
+			<if test="sex != null">
+				#{sex},
+			</if>
+			<if test="mobile != null">
+				#{mobile},
+			</if>
+			<if test="createUserid != null">
+				#{createUserid},
+			</if>
+			<if test="createUsername != null">
+				#{createUsername},
+			</if>
+			<if test="createUserip != null">
+				#{createUserip},
+			</if>
+			<if test="createUsermac != null">
+				#{createUsermac},
+			</if>
+			<if test="type != null">
+				#{type},
+			</if>
+        </trim>		
+		)
+		<selectKey keyProperty="id" resultType="java.lang.Long">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	
+	<insert id="insertUserTempAllWithTx">
+		INSERT INTO u_user_temp(
+				company_id,
+				department_id,
+				name,
+				member_code,
+				mail,
+				platform_id,
+				birthday,
+				sex,
+				mobile,
+				create_userid,
+				create_username,
+				create_userip,
+				create_usermac,
+				enterprise_id,
+				import_records_id,
+		type
+		) VALUES <include refid="insertAllClause" /> 
+	</insert>
+
+
+	
+	
+	<update id="update">
+	UPDATE u_user_temp 
+		<set>
+			<if test="companyId != null">
+				company_id = #{companyId},
+			</if>			
+			<if test="departmentId != null">
+				department_id = #{departmentId},
+			</if>			
+			<if test="name != null">
+				name = #{name},
+			</if>			
+			<if test="memberCode != null">
+				member_code = #{memberCode},
+			</if>			
+			<if test="mail != null">
+				mail = #{mail},
+			</if>			
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>			
+			<if test="platformId != null">
+				platform_id = #{platformId},
+			</if>		
+			<if test="createUserid != null">
+				create_userid = #{createUserid},
+			</if>			
+			<if test="createUsername != null">
+				create_username = #{createUsername},
+			</if>			
+			<if test="createUserip != null">
+				create_userip = #{createUserip},
+			</if>			
+			<if test="createUsermac != null">
+				create_usermac = #{createUsermac},
+			</if>
+			<if test="type != null">
+				type = #{type},
+			</if>
+		</set>
+			WHERE id = #{id}
+	</update>	
+	
+
+	<delete id="delete">
+		delete from u_user_temp where id = #{id}
+	</delete>
+
+	<delete id="deleteByPara">
+		delete from u_user_temp 
+		<where>
+			<if test="companyId != null">
+				and company_id = #{companyId}
+			</if>
+			<if test="departmentId != null">
+				and department_id = #{departmentId}
+			</if>
+			<if test="name != null">
+				and name = #{name}
+			</if>
+			<if test="memberCode != null">
+				and member_code = #{memberCode}
+			</if>
+			<if test="mail != null">
+				and mail = #{mail}
+			</if>
+			<if test="createTime != null">
+				and create_time = #{createTime}
+			</if>
+			<if test="platformId != null">
+				and platform_id = #{platformId}
+			</if>
+			<if test="createUserid != null">
+				and create_userid = #{createUserid}
+			</if>			
+			<if test="createUsername != null">
+				and create_username = #{createUsername}
+			</if>			
+			<if test="createUserip != null">
+				and create_userip = #{createUserip}
+			</if>			
+			<if test="createUsermac != null">
+				and create_usermac = #{createUsermac}
+			</if>
+			<if test="type != null">
+				and type = #{type}
+			</if>
+		</where>
+	</delete>
+
+
+</mapper>
+	

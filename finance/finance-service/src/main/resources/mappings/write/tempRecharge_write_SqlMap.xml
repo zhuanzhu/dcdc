@@ -1,0 +1,410 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.finance.dao.write.TempRechargeWriteDAO">
+
+	<delete id="deleteTempRechargeBySn">
+		delete from temp_recharge
+		where sn=#{sn}
+	</delete>
+
+	<update id="updateTempRechargeStatus">
+		update temp_recharge
+		set status=#{status}
+		where sn=#{sn}
+	</update>
+
+	<insert id="batchInsertTempRecharge" 
+	parameterType="com.egeo.components.finance.po.TempRechargePO">
+		insert into temp_recharge
+		(
+				rownum,
+				user_name,
+				member_code,
+				email,
+				user_id,
+				sum,
+				company_id,
+				company_name,
+				imp_res,
+				sn,
+				generated_time,
+				tmpl_type,
+				tmpl_name,
+				account_type,
+				reason_id,
+				batch_reason,
+				flow_reason,
+				remark,
+				platform_id,
+				salt,
+				fin_batch,
+				account_id,
+				status
+		)
+		values
+		<foreach collection="list" item="it"
+			separator=",">
+			(
+				#{it.rownum},
+				#{it.userName},
+				#{it.memberCode},
+				#{it.email},
+				#{it.userId},
+				#{it.sum},
+				#{it.companyId},
+				#{it.companyName},
+				#{it.impRes},
+				#{it.sn},
+				#{it.generatedTime},
+				#{it.tmplType},
+				#{it.tmplName},
+				#{it.accountType},
+				#{it.reasonId},
+				#{it.batchReason},
+				#{it.flowReason},
+				#{it.remark},
+				#{it.platformId},
+				#{it.salt},
+				#{it.finBatch},
+				#{it.accountId},
+				#{it.status}
+			)
+		</foreach>
+	</insert>
+
+	<insert id="insert" parameterType="com.egeo.components.finance.po.TempRechargePO">
+		INSERT INTO temp_recharge(
+		<trim suffixOverrides=",">
+			<if test="rownum != null">
+				rownum,
+			</if>
+			<if test="userName != null">
+				user_name,
+			</if>
+			<if test="memberCode != null">
+				member_code,
+			</if>
+			<if test="email != null">
+				email,
+			</if>
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="sum != null">
+				sum,
+			</if>
+			<if test="companyId != null">
+				company_id,
+			</if>
+			<if test="companyName != null">
+				company_name,
+			</if>
+			<if test="impRes != null">
+				imp_res,
+			</if>
+			<if test="sn != null">
+				sn,
+			</if>
+			<if test="generatedTime != null">
+				generated_time,
+			</if>
+			<if test="tmplType != null">
+				tmpl_type,
+			</if>
+			<if test="tmplName != null">
+				tmpl_name,
+			</if>
+			<if test="accountType != null">
+				account_type,
+			</if>
+			<if test="reasonId != null">
+				reason_id,
+			</if>
+			<if test="batchReason != null">
+				batch_reason,
+			</if>
+			<if test="flowReason != null">
+				flow_reason,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="platformId != null">
+				platform_id,
+			</if>
+			<if test="salt != null">
+				salt,
+			</if>
+			<if test="finBatch != null">
+				fin_batch,
+			</if>
+			<if test="accountId != null">
+				account_id,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+		</trim>
+		) VALUES (
+		<trim suffixOverrides=",">
+			<if test="rownum != null">
+				#{rownum},
+			</if>
+			<if test="userName != null">
+				#{userName},
+			</if>
+			<if test="memberCode != null">
+				#{memberCode},
+			</if>
+			<if test="email != null">
+				#{email},
+			</if>
+			<if test="userId != null">
+				#{userId},
+			</if>
+			<if test="sum != null">
+				#{sum},
+			</if>
+			<if test="companyId != null">
+				#{companyId},
+			</if>
+			<if test="companyName != null">
+				#{companyName},
+			</if>
+			<if test="impRes != null">
+				#{impRes},
+			</if>
+			<if test="sn != null">
+				#{sn},
+			</if>
+			<if test="generatedTime != null">
+				#{generatedTime},
+			</if>
+			<if test="tmplType != null">
+				#{tmplType},
+			</if>
+			<if test="tmplName != null">
+				#{tmplName},
+			</if>
+			<if test="accountType != null">
+				#{accountType},
+			</if>
+			<if test="reasonId != null">
+				#{reasonId},
+			</if>
+			<if test="batchReason != null">
+				#{batchReason},
+			</if>
+			<if test="flowReason != null">
+				#{flowReason},
+			</if>
+			<if test="remark != null">
+				#{remark},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
+			</if>
+			<if test="platformId != null">
+				#{platformId},
+			</if>
+			<if test="salt != null">
+				#{salt},
+			</if>
+			<if test="finBatch != null">
+				#{finBatch},
+			</if>
+			<if test="accountId != null">
+				#{accountId},
+			</if>
+			<if test="status != null">
+				#{status},
+			</if>
+		</trim>
+		)
+		<selectKey keyProperty="id" resultType="java.lang.Long">
+			select
+			LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+
+
+
+	<update id="update">
+		UPDATE temp_recharge
+		<set>
+			<if test="rownum != null">
+				rownum = #{rownum},
+			</if>
+			<if test="userName != null">
+				user_name = #{userName},
+			</if>
+			<if test="memberCode != null">
+				member_code = #{memberCode},
+			</if>
+			<if test="email != null">
+				email = #{email},
+			</if>
+			<if test="userId != null">
+				user_id = #{userId},
+			</if>
+			<if test="sum != null">
+				sum = #{sum},
+			</if>
+			<if test="companyId != null">
+				company_id = #{companyId},
+			</if>
+			<if test="companyName != null">
+				company_name = #{companyName},
+			</if>
+			<if test="impRes != null">
+				imp_res = #{impRes},
+			</if>
+			<if test="sn != null">
+				sn = #{sn},
+			</if>
+			<if test="generatedTime != null">
+				generated_time = #{generatedTime},
+			</if>
+			<if test="tmplType != null">
+				tmpl_type = #{tmplType},
+			</if>
+			<if test="tmplName != null">
+				tmpl_name = #{tmplName},
+			</if>
+			<if test="accountType != null">
+				account_type = #{accountType},
+			</if>
+			<if test="reasonId != null">
+				reason_id = #{reasonId},
+			</if>
+			<if test="batchReason != null">
+				batch_reason = #{batchReason},
+			</if>
+			<if test="flowReason != null">
+				flow_reason = #{flowReason},
+			</if>
+			<if test="remark != null">
+				remark = #{remark},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>
+			<if test="platformId != null">
+				platform_id = #{platformId},
+			</if>
+			<if test="salt != null">
+				salt=#{salt},
+			</if>
+			<if test="finBatch != null">
+				fin_batch=#{finBatch},
+			</if>
+			<if test="accountId != null">
+				account_id=#{accountId},
+			</if>
+			<if test="status != null">
+				status=#{status},
+			</if>
+		</set>
+		WHERE id = #{id}
+	</update>
+
+
+	<delete id="delete">
+		delete from temp_recharge where id = #{id}
+	</delete>
+
+	<delete id="deleteByPara">
+		delete from temp_recharge
+		<where>
+			<if test="rownum != null">
+				and rownum = #{rownum}
+			</if>
+			<if test="userName != null">
+				and user_name = #{userName}
+			</if>
+			<if test="memberCode != null">
+				and member_code = #{memberCode}
+			</if>
+			<if test="email != null">
+				and email = #{email}
+			</if>
+			<if test="userId != null">
+				and user_id = #{userId}
+			</if>
+			<if test="sum != null">
+				and sum = #{sum}
+			</if>
+			<if test="companyId != null">
+				and company_id = #{companyId}
+			</if>
+			<if test="companyName != null">
+				and company_name = #{companyName}
+			</if>
+			<if test="impRes != null">
+				and imp_res = #{impRes}
+			</if>
+			<if test="sn != null">
+				and sn = #{sn}
+			</if>
+			<if test="generatedTime != null">
+				and generated_time = #{generatedTime}
+			</if>
+			<if test="tmplType != null">
+				and tmpl_type = #{tmplType}
+			</if>
+			<if test="tmplName != null">
+				and tmpl_name = #{tmplName}
+			</if>
+			<if test="accountType != null">
+				and account_type = #{accountType}
+			</if>
+			<if test="reasonId != null">
+				and reason_id = #{reasonId}
+			</if>
+			<if test="batchReason != null">
+				and batch_reason = #{batchReason}
+			</if>
+			<if test="flowReason != null">
+				and flow_reason = #{flowReason}
+			</if>
+			<if test="remark != null">
+				and remark = #{remark}
+			</if>
+			<if test="createTime != null">
+				and create_time = #{createTime}
+			</if>
+			<if test="updateTime != null">
+				and update_time = #{updateTime}
+			</if>
+			<if test="platformId != null">
+				and platform_id = #{platformId}
+			</if>
+			<if test="salt != null">
+				and salt=#{salt}
+			</if>
+			<if test="finBatch != null">
+				and fin_batch=#{finBatch}
+			</if>
+			<if test="accountId != null">
+				and account_id=#{accountId}
+			</if>
+			<if test="status != null">
+				and status=#{status}
+			</if>
+		</where>
+	</delete>
+</mapper>
+	

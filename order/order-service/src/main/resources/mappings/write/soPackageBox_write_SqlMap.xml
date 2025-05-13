@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.order.dao.write.SoPackageBoxWriteDAO">
+	<insert id="insert" parameterType="com.egeo.components.order.po.SoPackageBoxPO">
+		INSERT INTO so_package_box(
+        <trim suffixOverrides=",">
+			<if test="soChildId != null">
+				so_child_id,
+			</if>
+			<if test="soBoxCode != null">
+				so_box_code,
+			</if>
+			<if test="soPackageId != null">
+				so_package_id,
+			</if>
+        </trim>		
+		) VALUES (
+        <trim suffixOverrides=",">
+			<if test="soChildId != null">
+				#{soChildId},
+			</if>
+			<if test="soBoxCode != null">
+				#{soBoxCode},
+			</if>
+			<if test="soPackageId != null">
+				#{soPackageId},
+			</if>
+        </trim>		
+		)
+		<selectKey keyProperty="id" resultType="java.lang.Long">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+
+	
+	
+	<update id="update">
+	UPDATE so_package_box 
+		<set>
+			<if test="soChildId != null">
+				so_child_id = #{soChildId},
+			</if>			
+			<if test="soBoxCode != null">
+				so_box_code = #{soBoxCode},
+			</if>
+			<if test="soPackageId != null">
+				so_package_id=#{soPackageId},
+			</if>
+		</set>
+			WHERE id = #{id}
+	</update>	
+	
+
+	<delete id="delete">
+		delete from so_package_box where id = #{id}
+	</delete>
+
+	<delete id="deleteByPara">
+		delete from so_package_box 
+		<where>
+			<if test="soChildId != null">
+				and so_child_id = #{soChildId}
+			</if>
+			<if test="soBoxCode != null">
+				and so_box_code = #{soBoxCode}
+			</if>
+			<if test="soPackageId != null">
+				and so_package_id=#{soPackageId}
+			</if>
+		</where>
+	</delete>
+
+
+</mapper>
+	

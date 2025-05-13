@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.cms.dao.write.FunctionModuleWriteDAO">
+	<insert id="insert" parameterType="com.egeo.components.cms.po.FunctionModulePO">
+		INSERT INTO function_module(
+        <trim suffixOverrides=",">
+			<if test="functionName != null">
+				function_name,
+			</if>
+			<if test="type != null">
+				type,
+			</if>
+			<if test="path != null">
+				path,
+			</if>
+			<if test="pictureUrl != null">
+				picture_url,
+			</if>
+			<if test="sortValue != null">
+				sort_value,
+			</if>
+			<if test="isShow != null">
+				is_show,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="platformId != null">
+				platform_id,
+			</if>
+        </trim>		
+		) VALUES (
+        <trim suffixOverrides=",">
+			<if test="functionName != null">
+				#{functionName},
+			</if>
+			<if test="type != null">
+				#{type},
+			</if>
+			<if test="path != null">
+				#{path},
+			</if>
+			<if test="pictureUrl != null">
+				#{pictureUrl},
+			</if>
+			<if test="sortValue != null">
+				#{sortValue},
+			</if>
+			<if test="isShow != null">
+				#{isShow},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
+			</if>
+			<if test="platformId != null">
+				#{platformId},
+			</if>
+        </trim>		
+		)
+		<selectKey keyProperty="id" resultType="java.lang.Long">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+
+	
+	
+	<update id="update">
+	UPDATE function_module 
+		<set>
+			<if test="functionName != null">
+				function_name = #{functionName},
+			</if>			
+			<if test="type != null">
+				type = #{type},
+			</if>			
+			<if test="path != null">
+				path = #{path},
+			</if>			
+			<if test="pictureUrl != null">
+				picture_url = #{pictureUrl},
+			</if>			
+			<if test="sortValue != null">
+				sort_value = #{sortValue},
+			</if>			
+			<if test="isShow != null">
+				is_show = #{isShow},
+			</if>			
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>			
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>			
+			<if test="platformId != null">
+				platform_id = #{platformId},
+			</if>			
+		</set>
+			WHERE id = #{id}
+	</update>	
+	
+
+	<delete id="delete">
+		delete from function_module where id = #{id}
+	</delete>
+
+	<delete id="deleteByPara">
+		delete from function_module 
+		<where>
+			<if test="functionName != null">
+				and function_name = #{functionName}
+			</if>
+			<if test="type != null">
+				and type = #{type}
+			</if>
+			<if test="path != null">
+				and path = #{path}
+			</if>
+			<if test="pictureUrl != null">
+				and picture_url = #{pictureUrl}
+			</if>
+			<if test="sortValue != null">
+				and sort_value = #{sortValue}
+			</if>
+			<if test="isShow != null">
+				and is_show = #{isShow}
+			</if>
+			<if test="createTime != null">
+				and create_time = #{createTime}
+			</if>
+			<if test="updateTime != null">
+				and update_time = #{updateTime}
+			</if>
+			<if test="platformId != null">
+				and platform_id = #{platformId}
+			</if>
+		</where>
+	</delete>
+
+
+</mapper>
+	

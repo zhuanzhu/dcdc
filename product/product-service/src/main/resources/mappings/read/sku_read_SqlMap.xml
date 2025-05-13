@@ -1,0 +1,682 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.product.dao.read.SkuReadDAO">
+	<resultMap type="com.egeo.components.product.po.SkuPO" id="skuMap">
+		<result property="id" column="id" />
+		<result property="skuSerialNumber" column="sku_serial_number" />
+		<result property="merchantId" column="merchant_id" />
+		<result property="standardProductUnitId" column="standard_product_unit_id" />
+		<result property="skuName" column="sku_name" />
+		<result property="skuProductName" column="sku_product_name" />
+		<result property="skuMarketPrice" column="sku_market_price" />
+		<result property="skuCostingPrice" column="sku_costing_price" />
+		<result property="remark" column="remark" />
+		<result property="isAvailable" column="is_available" />
+		<result property="code" column="code" />
+		<result property="skuPicUrl" column="sku_pic_url" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="platformId" column="platform_id" />
+		<result property="synchronizationTime" column="synchronization_time" />
+		<result property="isValid" column="is_valid" />
+		<result property="barCode" column="bar_code" />
+		<result property="externalSkuId" column="external_sku_id" />
+		<result property="taxRate" column="tax_rate"/>
+	</resultMap>
+	
+	<resultMap type="com.egeo.components.product.condition.SkuCondition" id="skuCondition" extends="skuMap">
+		<result property="name" column="name" />
+		<result property="attValueId" column="att_value_id" />
+		<result property="merchantProductId" column="merchant_product_id" />
+		<result property="standardUnitId" column="standard_unit_id" />
+		<result property="productUnitId" column="product_unit_id" />
+		<result property="commodityProductUnitId" column="commodity_product_unit_id" />
+	</resultMap>
+
+	<sql id="skuColumns">
+		id,
+		sku_serial_number,
+		merchant_id,
+		standard_product_unit_id,
+		sku_name,
+		sku_product_name,
+		sku_market_price,
+		sku_costing_price,
+		remark,
+		is_available,
+		code,
+		sku_pic_url,
+		create_time,
+		update_time,
+		platform_id,
+		is_valid,
+		synchronization_time,
+		bar_code,
+		external_sku_id
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.product.po.SkuPO" resultMap="skuMap">
+		SELECT
+		<include refid="skuColumns" />
+		FROM sku
+		WHERE id = #{po.id}
+	</select>
+	<select id="findLastId" resultType="java.lang.Long">
+		SELECT
+		MAX(id)
+		FROM sku
+	</select>
+
+
+
+	<select id="findSkuLikeName" parameterType="java.lang.String" resultMap="skuMap">
+		SELECT
+		<include refid="skuColumns" />
+		FROM sku
+		WHERE  platform_id=#{platformId} AND sku_name LIKE concat('%',#{linkedSkuName},'%')
+	</select>
+
+	<select id="findSkuByPuId" parameterType="java.lang.Long" resultMap="skuMap">
+		SELECT
+		sku.id,
+		sku.sku_serial_number,
+		sku.merchant_id,
+		sku.standard_product_unit_id,
+		sku.sku_name,
+		sku.sku_product_name,
+		sku.sku_market_price,
+		sku.sku_costing_price,
+		sku.remark,
+		sku.is_available,
+		sku.code,
+		sku.sku_pic_url,
+		sku.create_time,
+		sku.update_time,
+		sku.platform_id,
+		sku.is_valid,
+		sku.synchronization_time,
+		sku.bar_code,
+		sku.external_sku_id,
+		sku.tax_rate
+		FROM commodity_product_unit pu LEFT JOIN sku sku
+		ON pu.sku_id=sku.id
+		WHERE pu.id=#{puId}
+	</select>
+
+	<resultMap id="resultMap"   type="com.egeo.components.product.po.MapResultPO">
+		<result column="key" property="key"/>
+		<result column="value"  property="value"/>
+	</resultMap>
+	<select id="getMembershipSku" parameterType="java.lang.Long" resultMap="resultMap">
+		  SELECT a.id AS 'key' ,COUNT(*) AS  'value'
+		  FROM standard_product_unit as a
+			inner join standard_product_unit_att_name as b
+			inner join standard_product_unit_att_value AS c
+			WHERE
+			a.id=b.standard_product_unit_id
+			and b.id=c.standard_product_unit_att_name_id
+			AND c.att_value_id IN (1,4,10) GROUP BY a.id
+	</select>
+
+
+	<select id="findOfPage" resultMap="skuMap">
+		SELECT
+		<include refid="skuColumns" />
+		FROM sku
+		<where>
+			<if test="po.skuSerialNumber != null">
+				and sku_serial_number = #{po.skuSerialNumber}
+			</if>
+			<if test="po.merchantId != null">
+				and merchant_id = #{po.merchantId}
+			</if>
+			<if test="po.standardProductUnitId != null">
+				and standard_product_unit_id = #{po.standardProductUnitId}
+			</if>
+			<if test="po.skuName != null">
+				and sku_name = #{po.skuName}
+			</if>
+			<if test="po.skuProductName != null">
+				and sku_product_name = #{po.skuProductName}
+			</if>
+			<if test="po.skuMarketPrice != null">
+				and sku_market_price = #{po.skuMarketPrice}
+			</if>
+			<if test="po.skuCostingPrice != null">
+				and sku_costing_price = #{po.skuCostingPrice}
+			</if>
+			<if test="po.remark != null">
+				and remark = #{po.remark}
+			</if>
+			<if test="po.isAvailable != null">
+				and is_available = #{po.isAvailable}
+			</if>
+			<if test="po.code != null">
+				and code = #{po.code}
+			</if>
+			<if test="po.skuPicUrl != null">
+				and sku_pic_url = #{po.skuPicUrl}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.isValid != null">
+				and is_valid = #{po.isValid}
+			</if>
+			<if test="po.barCode != null">
+				and bar_code = #{po.barCode}
+			</if>
+			<if test="po.externalSkuId != null">
+				and external_sku_id= #{po.externalSkuId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="findSkuOfPage" resultMap="skuCondition">
+		SELECT
+		sku.id,
+		sku.sku_serial_number,
+		sku.merchant_id,
+		sku.standard_product_unit_id,
+		sku.sku_name,
+		sku.sku_product_name,
+		sku.sku_market_price,
+		sku.sku_costing_price,
+		sku.remark,
+		sku.is_available,
+		sku.code,
+		sku.sku_pic_url,
+		sku.create_time,
+		sku.update_time,
+		sku.platform_id,
+		sku.is_valid,
+		sku.synchronization_time,
+		sku.bar_code,
+		sku.external_sku_id,
+		spu.name,
+		sku.tax_rate
+		FROM sku sku,standard_product_unit spu
+		<where>
+			<if test="true">
+				and sku.standard_product_unit_id = spu.id
+			</if>
+			<if test="po.skuSerialNumber != null">
+				and sku.sku_serial_number like concat('%',#{po.skuSerialNumber},'%')
+			</if>
+			<if test="po.merchantId != null">
+				and sku.merchant_id = #{po.merchantId}
+			</if>
+			<if test="po.standardProductUnitId != null">
+				and sku.standard_product_unit_id = #{po.standardProductUnitId}
+			</if>
+			<if test="po.skuName != null">
+				and sku.sku_name like concat('%',#{po.skuName},'%')
+			</if>
+			<if test="po.skuProductName != null">
+				and spu.name like concat('%',#{po.skuProductName},'%')
+			</if>
+			<if test="po.skuMarketPrice != null">
+				and sku.sku_market_price = #{po.skuMarketPrice}
+			</if>
+			<if test="po.skuCostingPrice != null">
+				and sku.sku_costing_price = #{po.skuCostingPrice}
+			</if>
+			<if test="po.remark != null">
+				and sku.remark = #{po.remark}
+			</if>
+			<if test="po.isAvailable != null">
+				and sku.is_available = #{po.isAvailable}
+			</if>
+			<if test="po.code != null">
+				and sku.code like concat('%',#{po.code},'%')
+			</if>
+			<if test="po.skuPicUrl != null">
+				and sku.sku_pic_url = #{po.skuPicUrl}
+			</if>
+			<if test="po.createTime != null">
+				and sku.create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and sku.update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and sku.platform_id = #{po.platformId}
+			</if>
+			<if test="po.isValid != null">
+				and sku.is_valid = #{po.isValid}
+			</if>
+			<if test="po.barCode != null">
+				and sku.bar_code like concat('%',#{po.barCode},'%')
+			</if>
+			<if test="po.externalSkuId != null">
+				and sku.external_sku_id like concat('%',#{po.externalSkuId},'%')
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY sku.id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM sku sku,standard_product_unit spu
+		<where>
+			<if test="true">
+				and sku.standard_product_unit_id = spu.id
+			</if>
+			<if test="po.skuSerialNumber != null">
+				and sku.sku_serial_number like concat('%',#{po.skuSerialNumber},'%')
+			</if>
+			<if test="po.merchantId != null">
+				and sku.merchant_id = #{po.merchantId}
+			</if>
+			<if test="po.standardProductUnitId != null">
+				and sku.standard_product_unit_id = #{po.standardProductUnitId}
+			</if>
+			<if test="po.skuName != null">
+				and sku.sku_name like concat('%',#{po.skuName},'%')
+			</if>
+			<if test="po.skuProductName != null">
+				and spu.name like concat('%',#{po.skuProductName},'%')
+			</if>
+			<if test="po.skuMarketPrice != null">
+				and sku.sku_market_price = #{po.skuMarketPrice}
+			</if>
+			<if test="po.skuCostingPrice != null">
+				and sku.sku_costing_price = #{po.skuCostingPrice}
+			</if>
+			<if test="po.remark != null">
+				and sku.remark = #{po.remark}
+			</if>
+			<if test="po.isAvailable != null">
+				and sku.is_available = #{po.isAvailable}
+			</if>
+			<if test="po.code != null">
+				and sku.code like concat('%',#{po.code},'%')
+			</if>
+			<if test="po.skuPicUrl != null">
+				and sku.sku_pic_url = #{po.skuPicUrl}
+			</if>
+			<if test="po.createTime != null">
+				and sku.create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and sku.update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and spu.platform_id = #{po.platformId}
+			</if>
+			<if test="po.isValid != null">
+				and sku.is_valid = #{po.isValid}
+			</if>
+			<if test="po.barCode != null">
+				and sku.bar_code = #{po.barCode}
+			</if>
+			<if test="po.externalSkuId != null">
+				and sku.external_sku_id= #{po.externalSkuId}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="skuMap">
+		SELECT
+		<include refid="skuColumns" />
+		FROM sku
+		<where>
+			<if test="po.skuSerialNumber != null">
+				and sku_serial_number = #{po.skuSerialNumber}
+			</if>
+			<if test="po.merchantId != null">
+				and merchant_id = #{po.merchantId}
+			</if>
+			<if test="po.standardProductUnitId != null">
+				and standard_product_unit_id = #{po.standardProductUnitId}
+			</if>
+			<if test="po.skuName != null">
+				and sku_name = #{po.skuName}
+			</if>
+			<if test="po.skuProductName != null">
+				and sku_product_name = #{po.skuProductName}
+			</if>
+			<if test="po.skuMarketPrice != null">
+				and sku_market_price = #{po.skuMarketPrice}
+			</if>
+			<if test="po.skuCostingPrice != null">
+				and sku_costing_price = #{po.skuCostingPrice}
+			</if>
+			<if test="po.remark != null">
+				and remark = #{po.remark}
+			</if>
+			<if test="po.isAvailable != null">
+				and is_available = #{po.isAvailable}
+			</if>
+			<if test="po.code != null">
+				and code = #{po.code}
+			</if>
+			<if test="po.skuPicUrl != null">
+				and sku_pic_url = #{po.skuPicUrl}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.isValid != null">
+				and is_valid = #{po.isValid}
+			</if>
+			<if test="po.barCode != null">
+				and bar_code = #{po.barCode}
+			</if>
+			<if test="po.externalSkuId != null">
+				and external_sku_id= #{po.externalSkuId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findSkuECardOfPage" resultMap="skuCondition">
+		SELECT
+		s.id,
+		s.sku_serial_number,
+		s.merchant_id,
+		s.standard_product_unit_id,
+		s.sku_name,
+		s.sku_product_name,
+		s.sku_market_price,
+		s.sku_costing_price,
+		s.remark,
+		s.is_available,
+		s.code,
+		s.sku_pic_url,
+		s.is_valid,
+		s.synchronization_time,
+		s.bar_code,
+		s.external_sku_id,
+		sid.att_value_id
+		FROM sku s,
+		(SELECT s.id as id,spuav.att_value_id as att_value_id from
+		(SELECT id,standard_product_unit_id,sku_serial_number,sku_name,platform_id from sku) s,
+		(SELECT id from standard_product_unit) spu,
+		(SELECT id,standard_product_unit_id from standard_product_unit_att_name) spun,
+		(SELECT standard_product_unit_att_name_id,att_value_id from standard_product_unit_att_value) spuav
+		<where>
+			spu.id = s.standard_product_unit_id 
+			and spun.standard_product_unit_id = spu.id 
+			and spuav.standard_product_unit_att_name_id = spun.id
+			and spuav.att_value_id IN (3,11)
+			<if test="po.skuSerialNumber != null">
+				and s.sku_serial_number like concat('%',#{po.skuSerialNumber},'%')
+			</if>
+			<if test="po.standardProductUnitId != null">
+				and s.standard_product_unit_id = #{po.standardProductUnitId}
+			</if>
+			<if test="po.skuName != null">
+				and s.sku_name like concat('%',#{po.skuName},'%')
+			</if>
+			<if test="po.platformId != null">
+				and s.platform_id = #{po.platformId}
+			</if>
+		</where>
+		) sid
+		where s.id = sid.id
+		ORDER BY s.id desc
+	</select>
+	
+	<select id="countECardOfOfPage" resultType="java.lang.Integer">
+		SELECT count(1) cnt from 
+		(SELECT standard_product_unit_id,sku_serial_number,sku_name,platform_id from sku) s,
+		(SELECT id from standard_product_unit) spu,
+		(SELECT id,standard_product_unit_id from standard_product_unit_att_name) spun,
+		(SELECT standard_product_unit_att_name_id,att_value_id from standard_product_unit_att_value) spuav
+		<where>
+			spu.id = s.standard_product_unit_id 
+			and spun.standard_product_unit_id = spu.id 
+			and spuav.standard_product_unit_att_name_id = spun.id
+			and spuav.att_value_id IN (3,11)
+			<if test="po.skuSerialNumber != null">
+				and s.sku_serial_number like concat('%',#{po.skuSerialNumber},'%')
+			</if>
+			<if test="po.standardProductUnitId != null">
+				and s.standard_product_unit_id = #{po.standardProductUnitId}
+			</if>
+			<if test="po.skuName != null">
+				and s.sku_name like concat('%',#{po.skuName},'%')
+			</if>
+			<if test="po.platformId != null">
+				and s.platform_id = #{po.platformId}
+			</if>
+		</where>
+		
+	</select>
+	
+	<select id="findSkuECardBySkuSerialNumber" resultMap="skuMap">
+		SELECT
+		s.id,
+		s.sku_serial_number,
+		s.merchant_id,
+		s.standard_product_unit_id,
+		s.sku_name,
+		s.sku_product_name,
+		s.sku_market_price,
+		s.sku_costing_price,
+		s.remark,
+		s.is_available,
+		s.code,
+		s.sku_pic_url,
+		s.create_time,
+		s.update_time,
+		s.platform_id,
+		s.is_valid,
+		s.synchronization_time,
+		s.bar_code,
+		s.external_sku_id
+		FROM sku s
+		LEFT JOIN standard_product_unit spu on spu.id = s.standard_product_unit_id
+		LEFT JOIN standard_product_unit_att_name spun on spun.standard_product_unit_id = spu.id
+		LEFT JOIN standard_product_unit_att_value spuav on  spuav.standard_product_unit_att_name_id = spun.id
+		<where>
+			<if test="true">
+				and spuav.att_value_id = 3
+			</if>
+			<if test="skuSerialNumber != null">
+				and s.sku_serial_number = #{skuSerialNumber}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findSkuAll" resultMap="skuCondition">
+		SELECT
+		s.id,
+		s.sku_serial_number,
+		s.merchant_id,
+		s.standard_product_unit_id,
+		s.sku_name,
+		s.sku_product_name,
+		s.sku_market_price,
+		s.sku_costing_price,
+		s.remark,
+		s.is_available,
+		s.code,
+		s.sku_pic_url,
+		s.create_time,
+		s.update_time,
+		s.platform_id,
+		s.is_valid,
+		s.synchronization_time,
+		s.bar_code,
+		s.external_sku_id,
+		spu.`name`,
+		s.tax_rate
+		FROM sku s
+		LEFT JOIN standard_product_unit spu on spu.id = s.standard_product_unit_id
+		<where>
+			<!-- begin add by paul 2018/08/29 -->
+			<if test="po.id != null">
+				and s.id = #{po.id}
+			</if>
+			<!-- end add by paul 2018/08/29 -->
+			<if test="po.skuSerialNumber != null">
+				and s.sku_serial_number = #{po.skuSerialNumber}
+			</if>
+			<if test="po.merchantId != null">
+				and s.merchant_id = #{po.merchantId}
+			</if>
+			<if test="po.standardProductUnitId != null">
+				and s.standard_product_unit_id = #{po.standardProductUnitId}
+			</if>
+			<if test="po.skuName != null">
+				and s.sku_name = #{po.skuName}
+			</if>
+			<if test="po.skuProductName != null">
+				and s.sku_product_name = #{po.skuProductName}
+			</if>
+			<if test="po.skuMarketPrice != null">
+				and s.sku_market_price = #{po.skuMarketPrice}
+			</if>
+			<if test="po.skuCostingPrice != null">
+				and s.sku_costing_price = #{po.skuCostingPrice}
+			</if>
+			<if test="po.remark != null">
+				and s.remark = #{po.remark}
+			</if>
+			<if test="po.isAvailable != null">
+				and s.is_available = #{po.isAvailable}
+			</if>
+			<if test="po.code != null">
+				and s.code = #{po.code}
+			</if>
+			<if test="po.skuPicUrl != null">
+				and s.sku_pic_url = #{po.skuPicUrl}
+			</if>
+			<if test="po.createTime != null">
+				and s.create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and s.update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and s.platform_id = #{po.platformId}
+			</if>
+			<if test="po.isValid != null">
+				and s.is_valid = #{po.isValid}
+			</if>
+			<if test="po.barCode != null">
+				and s.bar_code = #{po.barCode}
+			</if>
+			<if test="po.externalSkuId != null">
+				and s.external_sku_id= #{po.externalSkuId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="skuSerialNumberBySkuId" resultType="java.lang.String">
+		SELECT sku_serial_number from sku WHERE id = #{skuId}
+	</select>
+	
+	<select id="puMaxBySkuId" resultType="java.lang.Integer">
+		SELECT count(1) cnt from commodity_product_unit WHERE sku_id = #{skuId}
+	</select>
+
+	<select id="findSkuIdAndPreDaysByPreAttNameId" resultType="com.egeo.components.product.po.ProductAttValuePO">
+		select sku.id,spuv.att_value_custom attValueCustom from standard_product_unit spu
+		left join standard_product_unit_att_name spun on spu.id=spun.standard_product_unit_id
+		LEFT JOIN standard_product_unit_att_value spuv on spuv.standard_product_unit_att_name_id=spun.id
+		left join sku on spu.id=sku.standard_product_unit_id
+		where spun.att_name_id =#{precautiousAttNameId};
+	</select>
+
+
+
+
+	<select id="findSkuListConByIdList" resultMap="skuCondition">
+		SELECT
+		sku.external_sku_id,
+			cpu.id commodity_product_unit_id,
+			cpu.standard_unit_id standard_unit_id,
+		cpu.product_unit_id product_unit_id,
+		mp.id merchant_product_id,
+		FROM sku sku LEFT JOIN  commodity_product_unit cpu on sku.id= cpu.sku_id
+		LEFT JOIN merchant_product mp ON sku.standard_product_unit_id=mp.standard_product_unit_id
+		WHERE
+		sku.external_sku_id IN (
+		<foreach collection="idList" item="id" separator=",">
+			#{id}
+		</foreach>
+		)
+	</select>
+
+	<select id="findSkuIdAndAttValueId" resultType="java.lang.Long">
+		SELECT s.id
+		FROM sku s,sku_att_name sn,sku_att_value sv
+		WHERE s.id=sn.sku_id and sn.id=sv.sku_att_name_id
+		and s.standard_product_unit_id=#{standardProductUnitId} and sv.att_value_id=#{attValudId}
+	</select>
+
+	<select id="findSkuBySkuSerialNo"  resultMap="skuMap">
+		SELECT
+		<include refid="skuColumns" />
+		FROM sku
+		WHERE  sku_serial_number IN (
+		<foreach collection="skuNos" item="skuNo" separator=",">
+			#{skuNo}
+		</foreach>
+		)
+	</select>
+
+	<select id="findSkuBySkuIds"  resultMap="skuMap">
+		SELECT
+		<include refid="skuColumns" />
+		FROM sku
+		WHERE  id IN (
+		<foreach collection="skuIds" item="id" separator=",">
+			#{id}
+		</foreach>
+		)
+	</select>
+</mapper>
+	

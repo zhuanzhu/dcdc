@@ -1,0 +1,557 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.order.dao.read.SoPackageItemReadDAO">
+	<resultMap type="com.egeo.components.order.po.SoPackageItemPO" id="soPackageItemMap">
+		<result property="id" column="id" />
+		<result property="soPackageId" column="so_package_id" />
+		<result property="orderCode" column="order_code" />
+		<result property="parentOrderCode" column="parent_order_code" />
+		<result property="userId" column="user_id" />
+		<result property="merchantId" column="merchant_id" />
+		<result property="productId" column="product_id" />
+		<result property="mpId" column="mp_id" />
+		<result property="warehouseId" column="warehouse_id" />
+		<result property="productItemAmount" column="product_item_amount" />
+		<result property="productPriceFinal" column="product_price_final" />
+		<result property="productItemNum" column="product_item_num" />
+		<result property="productItemOutNum" column="product_item_out_num" />
+		<result property="productCname" column="product_cname" />
+		<result property="productEname" column="product_ename" />
+		<result property="productPicPath" column="product_pic_path" />
+		<result property="productVersionNo" column="product_version_no" />
+		<result property="productSaleType" column="product_sale_type" />
+		<result property="productPriceOriginal" column="product_price_original" />
+		<result property="productPriceMarket" column="product_price_market" />
+		<result property="productPriceSale" column="product_price_sale" />
+		<result property="productTaxAmount" column="product_tax_amount" />
+		<result property="buyType" column="buy_type" />
+		<result property="productType" column="product_type" />
+		<result property="amountShareCoupon" column="amount_share_coupon" />
+		<result property="amountSharePromotion" column="amount_share_promotion" />
+		<result property="amountShareDeliveryFee" column="amount_share_delivery_fee" />
+		<result property="amountShareDeliveryFeeAccounting" column="amount_share_delivery_fee_accounting" />
+		<result property="productGrossWeight" column="product_gross_weight" />
+		<result property="vehicleWarranty" column="vehicle_warranty" />
+		<result property="deliveryTime" column="delivery_time" />
+		<result property="deliveryMethod" column="delivery_method" />
+		<result property="violationResponsibility" column="violation_responsibility" />
+		<result property="sourceId" column="source_id" />
+		<result property="code" column="code" />
+		<result property="unit" column="unit" />
+		<result property="placeOfOrigin" column="place_of_origin" />
+		<result property="exciseTaxAmount" column="excise_tax_amount" />
+		<result property="incrementTaxAmount" column="increment_tax_amount" />
+		<result property="customsDutiesAmount" column="customs_duties_amount" />
+		<result property="extInfo" column="ext_info" />
+		<result property="soItemId" column="so_item_id" />
+		<result property="updateTime" column="update_time" />
+		<result property="createTime" column="create_time" />
+		<result property="platformId" column="platform_id" />
+		<result property="skuId" column="sku_id" />
+	</resultMap>
+
+	<sql id="soPackageItemColumns">
+		id,
+		so_package_id,
+		order_code,
+		parent_order_code,
+		user_id,
+		merchant_id,
+		product_id,
+		mp_id,
+		warehouse_id,
+		product_item_amount,
+		product_price_final,
+		product_item_num,
+		product_item_out_num,
+		product_cname,
+		product_ename,
+		product_pic_path,
+		product_version_no,
+		product_sale_type,
+		product_price_original,
+		product_price_market,
+		product_price_sale,
+		product_tax_amount,
+		buy_type,
+		product_type,
+		amount_share_coupon,
+		amount_share_promotion,
+		amount_share_delivery_fee,
+		amount_share_delivery_fee_accounting,
+		product_gross_weight,
+		vehicle_warranty,
+		delivery_time,
+		delivery_method,
+		violation_responsibility,
+		source_id,
+		code,
+		unit,
+		place_of_origin,
+		excise_tax_amount,
+		increment_tax_amount,
+		customs_duties_amount,
+		ext_info,
+		so_item_id,
+		update_time,
+		create_time,
+		platform_id,
+		sku_id
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.order.po.SoPackageItemPO" resultMap="soPackageItemMap">
+		SELECT
+		<include refid="soPackageItemColumns" />
+		FROM so_package_item
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="soPackageItemMap">
+		SELECT
+		<include refid="soPackageItemColumns" />
+		FROM so_package_item
+		<where>
+			<if test="po.soPackageId != null">
+				and so_package_id = #{po.soPackageId}
+			</if>
+			<if test="po.orderCode != null">
+				and order_code = #{po.orderCode}
+			</if>
+			<if test="po.parentOrderCode != null">
+				and parent_order_code = #{po.parentOrderCode}
+			</if>
+			<if test="po.userId != null">
+				and user_id = #{po.userId}
+			</if>
+			<if test="po.merchantId != null">
+				and merchant_id = #{po.merchantId}
+			</if>
+			<if test="po.productId != null">
+				and product_id = #{po.productId}
+			</if>
+			<if test="po.mpId != null">
+				and mp_id = #{po.mpId}
+			</if>
+			<if test="po.warehouseId != null">
+				and warehouse_id = #{po.warehouseId}
+			</if>
+			<if test="po.productItemAmount != null">
+				and product_item_amount = #{po.productItemAmount}
+			</if>
+			<if test="po.productPriceFinal != null">
+				and product_price_final = #{po.productPriceFinal}
+			</if>
+			<if test="po.productItemNum != null">
+				and product_item_num = #{po.productItemNum}
+			</if>
+			<if test="po.productItemOutNum != null">
+				and product_item_out_num = #{po.productItemOutNum}
+			</if>
+			<if test="po.productCname != null">
+				and product_cname = #{po.productCname}
+			</if>
+			<if test="po.productEname != null">
+				and product_ename = #{po.productEname}
+			</if>
+			<if test="po.productPicPath != null">
+				and product_pic_path = #{po.productPicPath}
+			</if>
+			<if test="po.productVersionNo != null">
+				and product_version_no = #{po.productVersionNo}
+			</if>
+			<if test="po.productSaleType != null">
+				and product_sale_type = #{po.productSaleType}
+			</if>
+			<if test="po.productPriceOriginal != null">
+				and product_price_original = #{po.productPriceOriginal}
+			</if>
+			<if test="po.productPriceMarket != null">
+				and product_price_market = #{po.productPriceMarket}
+			</if>
+			<if test="po.productPriceSale != null">
+				and product_price_sale = #{po.productPriceSale}
+			</if>
+			<if test="po.productTaxAmount != null">
+				and product_tax_amount = #{po.productTaxAmount}
+			</if>
+			<if test="po.buyType != null">
+				and buy_type = #{po.buyType}
+			</if>
+			<if test="po.productType != null">
+				and product_type = #{po.productType}
+			</if>
+			<if test="po.amountShareCoupon != null">
+				and amount_share_coupon = #{po.amountShareCoupon}
+			</if>
+			<if test="po.amountSharePromotion != null">
+				and amount_share_promotion = #{po.amountSharePromotion}
+			</if>
+			<if test="po.amountShareDeliveryFee != null">
+				and amount_share_delivery_fee = #{po.amountShareDeliveryFee}
+			</if>
+			<if test="po.amountShareDeliveryFeeAccounting != null">
+				and amount_share_delivery_fee_accounting = #{po.amountShareDeliveryFeeAccounting}
+			</if>
+			<if test="po.productGrossWeight != null">
+				and product_gross_weight = #{po.productGrossWeight}
+			</if>
+			<if test="po.vehicleWarranty != null">
+				and vehicle_warranty = #{po.vehicleWarranty}
+			</if>
+			<if test="po.deliveryTime != null">
+				and delivery_time = #{po.deliveryTime}
+			</if>
+			<if test="po.deliveryMethod != null">
+				and delivery_method = #{po.deliveryMethod}
+			</if>
+			<if test="po.violationResponsibility != null">
+				and violation_responsibility = #{po.violationResponsibility}
+			</if>
+			<if test="po.sourceId != null">
+				and source_id = #{po.sourceId}
+			</if>
+			<if test="po.code != null">
+				and code = #{po.code}
+			</if>
+			<if test="po.unit != null">
+				and unit = #{po.unit}
+			</if>
+			<if test="po.placeOfOrigin != null">
+				and place_of_origin = #{po.placeOfOrigin}
+			</if>
+			<if test="po.exciseTaxAmount != null">
+				and excise_tax_amount = #{po.exciseTaxAmount}
+			</if>
+			<if test="po.incrementTaxAmount != null">
+				and increment_tax_amount = #{po.incrementTaxAmount}
+			</if>
+			<if test="po.customsDutiesAmount != null">
+				and customs_duties_amount = #{po.customsDutiesAmount}
+			</if>
+			<if test="po.extInfo != null">
+				and ext_info = #{po.extInfo}
+			</if>
+			<if test="po.soItemId != null">
+				and so_item_id = #{po.soItemId}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.skuId != null">
+				and sku_id = #{po.skuId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM so_package_item
+		<where>
+			<if test="po.soPackageId != null">
+				and so_package_id = #{po.soPackageId}
+			</if>
+			<if test="po.orderCode != null">
+				and order_code = #{po.orderCode}
+			</if>
+			<if test="po.parentOrderCode != null">
+				and parent_order_code = #{po.parentOrderCode}
+			</if>
+			<if test="po.userId != null">
+				and user_id = #{po.userId}
+			</if>
+			<if test="po.merchantId != null">
+				and merchant_id = #{po.merchantId}
+			</if>
+			<if test="po.productId != null">
+				and product_id = #{po.productId}
+			</if>
+			<if test="po.mpId != null">
+				and mp_id = #{po.mpId}
+			</if>
+			<if test="po.warehouseId != null">
+				and warehouse_id = #{po.warehouseId}
+			</if>
+			<if test="po.productItemAmount != null">
+				and product_item_amount = #{po.productItemAmount}
+			</if>
+			<if test="po.productPriceFinal != null">
+				and product_price_final = #{po.productPriceFinal}
+			</if>
+			<if test="po.productItemNum != null">
+				and product_item_num = #{po.productItemNum}
+			</if>
+			<if test="po.productItemOutNum != null">
+				and product_item_out_num = #{po.productItemOutNum}
+			</if>
+			<if test="po.productCname != null">
+				and product_cname = #{po.productCname}
+			</if>
+			<if test="po.productEname != null">
+				and product_ename = #{po.productEname}
+			</if>
+			<if test="po.productPicPath != null">
+				and product_pic_path = #{po.productPicPath}
+			</if>
+			<if test="po.productVersionNo != null">
+				and product_version_no = #{po.productVersionNo}
+			</if>
+			<if test="po.productSaleType != null">
+				and product_sale_type = #{po.productSaleType}
+			</if>
+			<if test="po.productPriceOriginal != null">
+				and product_price_original = #{po.productPriceOriginal}
+			</if>
+			<if test="po.productPriceMarket != null">
+				and product_price_market = #{po.productPriceMarket}
+			</if>
+			<if test="po.productPriceSale != null">
+				and product_price_sale = #{po.productPriceSale}
+			</if>
+			<if test="po.productTaxAmount != null">
+				and product_tax_amount = #{po.productTaxAmount}
+			</if>
+			<if test="po.buyType != null">
+				and buy_type = #{po.buyType}
+			</if>
+			<if test="po.productType != null">
+				and product_type = #{po.productType}
+			</if>
+			<if test="po.amountShareCoupon != null">
+				and amount_share_coupon = #{po.amountShareCoupon}
+			</if>
+			<if test="po.amountSharePromotion != null">
+				and amount_share_promotion = #{po.amountSharePromotion}
+			</if>
+			<if test="po.amountShareDeliveryFee != null">
+				and amount_share_delivery_fee = #{po.amountShareDeliveryFee}
+			</if>
+			<if test="po.amountShareDeliveryFeeAccounting != null">
+				and amount_share_delivery_fee_accounting = #{po.amountShareDeliveryFeeAccounting}
+			</if>
+			<if test="po.productGrossWeight != null">
+				and product_gross_weight = #{po.productGrossWeight}
+			</if>
+			<if test="po.vehicleWarranty != null">
+				and vehicle_warranty = #{po.vehicleWarranty}
+			</if>
+			<if test="po.deliveryTime != null">
+				and delivery_time = #{po.deliveryTime}
+			</if>
+			<if test="po.deliveryMethod != null">
+				and delivery_method = #{po.deliveryMethod}
+			</if>
+			<if test="po.violationResponsibility != null">
+				and violation_responsibility = #{po.violationResponsibility}
+			</if>
+			<if test="po.sourceId != null">
+				and source_id = #{po.sourceId}
+			</if>
+			<if test="po.code != null">
+				and code = #{po.code}
+			</if>
+			<if test="po.unit != null">
+				and unit = #{po.unit}
+			</if>
+			<if test="po.placeOfOrigin != null">
+				and place_of_origin = #{po.placeOfOrigin}
+			</if>
+			<if test="po.exciseTaxAmount != null">
+				and excise_tax_amount = #{po.exciseTaxAmount}
+			</if>
+			<if test="po.incrementTaxAmount != null">
+				and increment_tax_amount = #{po.incrementTaxAmount}
+			</if>
+			<if test="po.customsDutiesAmount != null">
+				and customs_duties_amount = #{po.customsDutiesAmount}
+			</if>
+			<if test="po.extInfo != null">
+				and ext_info = #{po.extInfo}
+			</if>
+			<if test="po.soItemId != null">
+				and so_item_id = #{po.soItemId}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.skuId != null">
+				and sku_id = #{po.skuId}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="soPackageItemMap">
+		SELECT
+		<include refid="soPackageItemColumns" />
+		FROM so_package_item
+		<where>
+			<if test="po.soPackageId != null">
+				and so_package_id = #{po.soPackageId}
+			</if>
+			<if test="po.orderCode != null">
+				and order_code = #{po.orderCode}
+			</if>
+			<if test="po.parentOrderCode != null">
+				and parent_order_code = #{po.parentOrderCode}
+			</if>
+			<if test="po.userId != null">
+				and user_id = #{po.userId}
+			</if>
+			<if test="po.merchantId != null">
+				and merchant_id = #{po.merchantId}
+			</if>
+			<if test="po.productId != null">
+				and product_id = #{po.productId}
+			</if>
+			<if test="po.mpId != null">
+				and mp_id = #{po.mpId}
+			</if>
+			<if test="po.warehouseId != null">
+				and warehouse_id = #{po.warehouseId}
+			</if>
+			<if test="po.productItemAmount != null">
+				and product_item_amount = #{po.productItemAmount}
+			</if>
+			<if test="po.productPriceFinal != null">
+				and product_price_final = #{po.productPriceFinal}
+			</if>
+			<if test="po.productItemNum != null">
+				and product_item_num = #{po.productItemNum}
+			</if>
+			<if test="po.productItemOutNum != null">
+				and product_item_out_num = #{po.productItemOutNum}
+			</if>
+			<if test="po.productCname != null">
+				and product_cname = #{po.productCname}
+			</if>
+			<if test="po.productEname != null">
+				and product_ename = #{po.productEname}
+			</if>
+			<if test="po.productPicPath != null">
+				and product_pic_path = #{po.productPicPath}
+			</if>
+			<if test="po.productVersionNo != null">
+				and product_version_no = #{po.productVersionNo}
+			</if>
+			<if test="po.productSaleType != null">
+				and product_sale_type = #{po.productSaleType}
+			</if>
+			<if test="po.productPriceOriginal != null">
+				and product_price_original = #{po.productPriceOriginal}
+			</if>
+			<if test="po.productPriceMarket != null">
+				and product_price_market = #{po.productPriceMarket}
+			</if>
+			<if test="po.productPriceSale != null">
+				and product_price_sale = #{po.productPriceSale}
+			</if>
+			<if test="po.productTaxAmount != null">
+				and product_tax_amount = #{po.productTaxAmount}
+			</if>
+			<if test="po.buyType != null">
+				and buy_type = #{po.buyType}
+			</if>
+			<if test="po.productType != null">
+				and product_type = #{po.productType}
+			</if>
+			<if test="po.amountShareCoupon != null">
+				and amount_share_coupon = #{po.amountShareCoupon}
+			</if>
+			<if test="po.amountSharePromotion != null">
+				and amount_share_promotion = #{po.amountSharePromotion}
+			</if>
+			<if test="po.amountShareDeliveryFee != null">
+				and amount_share_delivery_fee = #{po.amountShareDeliveryFee}
+			</if>
+			<if test="po.amountShareDeliveryFeeAccounting != null">
+				and amount_share_delivery_fee_accounting = #{po.amountShareDeliveryFeeAccounting}
+			</if>
+			<if test="po.productGrossWeight != null">
+				and product_gross_weight = #{po.productGrossWeight}
+			</if>
+			<if test="po.vehicleWarranty != null">
+				and vehicle_warranty = #{po.vehicleWarranty}
+			</if>
+			<if test="po.deliveryTime != null">
+				and delivery_time = #{po.deliveryTime}
+			</if>
+			<if test="po.deliveryMethod != null">
+				and delivery_method = #{po.deliveryMethod}
+			</if>
+			<if test="po.violationResponsibility != null">
+				and violation_responsibility = #{po.violationResponsibility}
+			</if>
+			<if test="po.sourceId != null">
+				and source_id = #{po.sourceId}
+			</if>
+			<if test="po.code != null">
+				and code = #{po.code}
+			</if>
+			<if test="po.unit != null">
+				and unit = #{po.unit}
+			</if>
+			<if test="po.placeOfOrigin != null">
+				and place_of_origin = #{po.placeOfOrigin}
+			</if>
+			<if test="po.exciseTaxAmount != null">
+				and excise_tax_amount = #{po.exciseTaxAmount}
+			</if>
+			<if test="po.incrementTaxAmount != null">
+				and increment_tax_amount = #{po.incrementTaxAmount}
+			</if>
+			<if test="po.customsDutiesAmount != null">
+				and customs_duties_amount = #{po.customsDutiesAmount}
+			</if>
+			<if test="po.extInfo != null">
+				and ext_info = #{po.extInfo}
+			</if>
+			<if test="po.soItemId != null">
+				and so_item_id = #{po.soItemId}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.skuId != null">
+				and sku_id = #{po.skuId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+</mapper>
+	

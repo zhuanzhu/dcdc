@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.user.dao.write.FunctionModuleWriteDAO">
+	<insert id="insert" parameterType="com.egeo.components.user.po.FunctionModulePO">
+		INSERT INTO u_function_module(
+        <trim suffixOverrides=",">
+			<if test="parentId != null">
+				parent_id,
+			</if>
+			<if test="functionModuleName != null">
+				function_module_name,
+			</if>
+			<if test="sortValue != null">
+				sort_value,
+			</if>
+			<if test="description != null">
+				description,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="platformId != null">
+				platform_id,
+			</if>
+        </trim>		
+		) VALUES (
+        <trim suffixOverrides=",">
+			<if test="parentId != null">
+				#{parentId},
+			</if>
+			<if test="functionModuleName != null">
+				#{functionModuleName},
+			</if>
+			<if test="sortValue != null">
+				#{sortValue},
+			</if>
+			<if test="description != null">
+				#{description},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="platformId != null">
+				#{platformId},
+			</if>
+        </trim>		
+		)
+		<selectKey keyProperty="id" resultType="java.lang.Long">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+
+	
+	
+	<update id="update">
+	UPDATE u_function_module 
+		<set>
+			<if test="parentId != null">
+				parent_id = #{parentId},
+			</if>			
+			<if test="functionModuleName != null">
+				function_module_name = #{functionModuleName},
+			</if>			
+			<if test="sortValue != null">
+				sort_value = #{sortValue},
+			</if>			
+			<if test="description != null">
+				description = #{description},
+			</if>			
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>			
+			<if test="platformId != null">
+				platform_id = #{platformId},
+			</if>			
+		</set>
+			WHERE id = #{id}
+	</update>	
+	
+
+	<delete id="delete">
+		delete from u_function_module where id = #{id}
+	</delete>
+
+	<delete id="deleteByPara">
+		delete from u_function_module 
+		<where>
+			<if test="parentId != null">
+				and parent_id = #{parentId}
+			</if>
+			<if test="functionModuleName != null">
+				and function_module_name = #{functionModuleName}
+			</if>
+			<if test="sortValue != null">
+				and sort_value = #{sortValue}
+			</if>
+			<if test="description != null">
+				and description = #{description}
+			</if>
+			<if test="createTime != null">
+				and create_time = #{createTime}
+			</if>
+			<if test="platformId != null">
+				and platform_id = #{platformId}
+			</if>
+		</where>
+	</delete>
+
+
+</mapper>
+	

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.product.dao.write.ProductDescriptionWriteDAO">
+	<insert id="insert" parameterType="com.egeo.components.product.po.ProductDescriptionPO">
+		INSERT INTO product_description(
+        <trim suffixOverrides=",">
+			<if test="productId != null">
+				product_id,
+			</if>
+			<if test="content != null">
+				content,
+			</if>
+			<if test="platformId != null">
+				platform_id,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+        </trim>		
+		) VALUES (
+        <trim suffixOverrides=",">
+			<if test="productId != null">
+				#{productId},
+			</if>
+			<if test="content != null">
+				#{content},
+			</if>
+			<if test="platformId != null">
+				#{platformId},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
+			</if>
+        </trim>		
+		)
+		<selectKey keyProperty="id" resultType="java.lang.Long">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+
+	
+	
+	<update id="update">
+	UPDATE product_description 
+		<set>
+			<if test="productId != null">
+				product_id = #{productId},
+			</if>			
+			<if test="content != null">
+				content = #{content},
+			</if>			
+			<if test="platformId != null">
+				platform_id = #{platformId},
+			</if>			
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>			
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>			
+		</set>
+			WHERE id = #{id}
+	</update>	
+	
+
+	<delete id="delete">
+		delete from product_description where id = #{id}
+	</delete>
+
+	<delete id="deleteByPara">
+		delete from product_description 
+		<where>
+			<if test="productId != null">
+				and product_id = #{productId}
+			</if>
+			<if test="content != null">
+				and content = #{content}
+			</if>
+			<if test="platformId != null">
+				and platform_id = #{platformId}
+			</if>
+			<if test="createTime != null">
+				and create_time = #{createTime}
+			</if>
+			<if test="updateTime != null">
+				and update_time = #{updateTime}
+			</if>
+		</where>
+	</delete>
+
+	<delete id="deleteByProductId">
+		delete from product_description WHERE product_id = #{productId}
+	</delete>
+
+
+	<insert id="saveProductDescriptionList" parameterType="com.egeo.components.product.po.ProductDescriptionPO" >
+		insert into product_description(
+		product_id,
+		content,
+		platform_id
+
+		)values
+		<foreach collection="poList" item="po"  separator="," >
+
+			(#{po.productId},
+			#{po.content},
+			#{po.platformId}
+			)
+
+		</foreach>
+	</insert>
+
+
+
+
+	<update id="updateProductDescriptionSWithTx">
+		UPDATE product_description
+		<set>
+			<if test="po.content != null">
+				content = #{po.content},
+			</if>
+		</set>
+		WHERE product_id = #{po.productId}
+	</update>
+</mapper>
+	

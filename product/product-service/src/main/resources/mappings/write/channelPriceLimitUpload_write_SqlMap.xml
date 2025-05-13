@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.product.dao.write.ChannelPriceLimitUploadWriteDAO">
+	<insert id="insert" parameterType="com.egeo.components.product.po.ChannelPriceLimitUploadPO">
+		INSERT INTO channel_price_limit_upload(
+        <trim suffixOverrides=",">
+			<if test="jdPriceLimitStart != null">
+				jd_price_limit_start,
+			</if>
+			<if test="jdPriceLimitEnd != null">
+				jd_price_limit_end,
+			</if>
+			<if test="channelCode != null">
+				channel_code,
+			</if>
+        </trim>
+		) VALUES (
+        <trim suffixOverrides=",">
+			<if test="jdPriceLimitStart != null">
+				#{jdPriceLimitStart},
+			</if>
+			<if test="jdPriceLimitEnd != null">
+				#{jdPriceLimitEnd},
+			</if>
+			<if test="channelCode != null">
+				#{channelCode},
+			</if>
+        </trim>
+		)
+		<selectKey keyProperty="id" resultType="java.lang.Long">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+
+
+
+	<update id="update">
+	UPDATE channel_price_limit_upload
+		<set>
+			<if test="jdPriceLimitStart != null">
+				jd_price_limit_start = #{jdPriceLimitStart},
+			</if>
+			<if test="jdPriceLimitEnd != null">
+				jd_price_limit_end = #{jdPriceLimitEnd},
+			</if>
+			<if test="channelCode != null">
+				channel_code = #{channelCode},
+			</if>
+		</set>
+			WHERE id = #{id}
+	</update>
+
+
+	<delete id="delete">
+		delete from channel_price_limit_upload where id = #{id}
+	</delete>
+
+	<delete id="deleteByPara">
+		delete from channel_price_limit_upload
+		<where>
+			<if test="jdPriceLimitStart != null">
+				and jd_price_limit_start = #{jdPriceLimitStart}
+			</if>
+			<if test="jdPriceLimitEnd != null">
+				and jd_price_limit_end = #{jdPriceLimitEnd}
+			</if>
+			<if test="channelCode != null">
+				and channel_code = #{channelCode}
+			</if>
+		</where>
+	</delete>
+
+
+</mapper>

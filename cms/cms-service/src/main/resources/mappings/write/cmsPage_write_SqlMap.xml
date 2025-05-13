@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.cms.dao.write.CmsPageWriteDAO">
+	<insert id="insert" parameterType="com.egeo.components.cms.po.CmsPagePO">
+		INSERT INTO cms_page(
+        <trim suffixOverrides=",">
+			<if test="templateId != null">
+				template_id,
+			</if>
+			<if test="pageName != null">
+				page_name,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="platformId != null">
+				platform_id,
+			</if>
+			<if test="updateUserId != null">
+				update_user_id,
+			</if>
+			<if test="pageStatus != null">
+				page_status,
+			</if>
+			<if test="cfgStatus != null">
+				cfg_status,
+			</if>
+			<if test="companyType != null">
+				company_type,
+			</if>
+        </trim>		
+		) VALUES (
+        <trim suffixOverrides=",">
+			<if test="templateId != null">
+				#{templateId},
+			</if>
+			<if test="pageName != null">
+				#{pageName},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
+			</if>
+			<if test="platformId != null">
+				#{platformId},
+			</if>
+			<if test="updateUserId != null">
+				#{updateUserId},
+			</if>
+			<if test="pageStatus != null">
+				#{pageStatus},
+			</if>
+			<if test="cfgStatus != null">
+				#{cfgStatus},
+			</if>
+			<if test="companyType != null">
+				#{companyType},
+			</if>
+        </trim>		
+		)
+		<selectKey keyProperty="id" resultType="java.lang.Long">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+
+	
+	
+	<update id="update">
+	UPDATE cms_page 
+		<set>
+			<if test="templateId != null">
+				template_id = #{templateId},
+			</if>			
+			<if test="pageName != null">
+				page_name = #{pageName},
+			</if>			
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>			
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>			
+			<if test="platformId != null">
+				platform_id = #{platformId},
+			</if>
+			<if test="updateUserId != null">
+				update_user_id = #{updateUserId},
+			</if>
+			<if test="pageStatus != null">
+				page_status = #{pageStatus},
+			</if>	
+			<if test="cfgStatus != null">
+				cfg_status = #{cfgStatus},
+			</if>	
+			<if test="companyType != null">
+				company_type = #{companyType},
+			</if>		
+		</set>
+			WHERE id = #{id}
+	</update>	
+	
+
+	<delete id="delete">
+		delete from cms_page where id = #{id}
+	</delete>
+
+	<delete id="deleteByPara">
+		delete from cms_page 
+		<where>
+			<if test="templateId != null">
+				and template_id = #{templateId}
+			</if>
+			<if test="pageName != null">
+				and page_name = #{pageName}
+			</if>
+			<if test="createTime != null">
+				and create_time = #{createTime}
+			</if>
+			<if test="updateTime != null">
+				and update_time = #{updateTime}
+			</if>
+			<if test="platformId != null">
+				and platform_id = #{platformId}
+			</if>
+		</where>
+	</delete>
+
+
+</mapper>
+	

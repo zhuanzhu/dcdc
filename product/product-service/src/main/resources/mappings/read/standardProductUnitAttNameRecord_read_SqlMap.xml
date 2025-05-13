@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.product.dao.read.StandardProductUnitAttNameRecordReadDAO">
+	<resultMap type="com.egeo.components.product.po.StandardProductUnitAttNameRecordPO" id="standardProductUnitAttNameRecordMap">
+		<result property="id" column="id" />
+		<result property="parentId" column="parent_id" />
+		<result property="standardProductUnitRecordId" column="standard_product_unit_record_id" />
+		<result property="attNameId" column="att_name_id" />
+		<result property="sortValue" column="sort_value" />
+		<result property="type" column="type" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="platformId" column="platform_id" />
+	</resultMap>
+
+	<sql id="standardProductUnitAttNameRecordColumns">
+		id,
+		parent_id,
+		standard_product_unit_record_id,
+		att_name_id,
+		sort_value,
+		type,
+		create_time,
+		update_time,
+		platform_id
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.product.po.StandardProductUnitAttNameRecordPO" resultMap="standardProductUnitAttNameRecordMap">
+		SELECT
+		<include refid="standardProductUnitAttNameRecordColumns" />
+		FROM standard_product_unit_att_name_record
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="standardProductUnitAttNameRecordMap">
+		SELECT
+		<include refid="standardProductUnitAttNameRecordColumns" />
+		FROM standard_product_unit_att_name_record
+		<where>
+			<if test="po.parentId != null">
+				and parent_id = #{po.parentId}
+			</if>
+			<if test="po.standardProductUnitRecordId != null">
+				and standard_product_unit_record_id = #{po.standardProductUnitRecordId}
+			</if>
+			<if test="po.attNameId != null">
+				and att_name_id = #{po.attNameId}
+			</if>
+			<if test="po.sortValue != null">
+				and sort_value = #{po.sortValue}
+			</if>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY sort_value
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM standard_product_unit_att_name_record
+		<where>
+			<if test="po.parentId != null">
+				and parent_id = #{po.parentId}
+			</if>
+			<if test="po.standardProductUnitRecordId != null">
+				and standard_product_unit_record_id = #{po.standardProductUnitRecordId}
+			</if>
+			<if test="po.attNameId != null">
+				and att_name_id = #{po.attNameId}
+			</if>
+			<if test="po.sortValue != null">
+				and sort_value = #{po.sortValue}
+			</if>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="standardProductUnitAttNameRecordMap">
+		SELECT
+		<include refid="standardProductUnitAttNameRecordColumns" />
+		FROM standard_product_unit_att_name_record
+		<where>
+			<if test="po.parentId != null">
+				and parent_id = #{po.parentId}
+			</if>
+			<if test="po.standardProductUnitRecordId != null">
+				and standard_product_unit_record_id = #{po.standardProductUnitRecordId}
+			</if>
+			<if test="po.attNameId != null">
+				and att_name_id = #{po.attNameId}
+			</if>
+			<if test="po.sortValue != null">
+				and sort_value = #{po.sortValue}
+			</if>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY sort_value
+			</otherwise>
+		</choose>
+	</select>
+</mapper>
+	

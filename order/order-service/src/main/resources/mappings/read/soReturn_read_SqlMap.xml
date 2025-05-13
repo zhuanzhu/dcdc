@@ -1,0 +1,491 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.order.dao.read.SoReturnReadDAO">
+	<resultMap type="com.egeo.components.order.po.SoReturnPO" id="soReturnMap">
+		<result property="id" column="id" />
+		<result property="parentOrderCode" column="parent_order_code" />
+		<result property="orderCode" column="order_code" />
+		<result property="userId" column="user_id" />
+		<result property="merchantId" column="merchant_id" />
+		<result property="returnStatus" column="return_status" />
+		<result property="refundStatus" column="refund_status" />
+		<result property="actualReturnAmount" column="actual_return_amount" />
+		<result property="applyReturnAmount" column="apply_return_amount" />
+		<result property="returnType" column="return_type" />
+		<result property="returnRemark" column="return_remark" />
+		<result property="serviceUserId" column="service_user_id" />
+		<result property="serviceDesc" column="service_desc" />
+		<result property="serviceReturnReason" column="service_return_reason" />
+		<result property="applyTime" column="apply_time" />
+		<result property="returnReason" column="return_reason" />
+		<result property="refundTime" column="refund_time" />
+		<result property="consigneeAddress" column="consignee_address" />
+		<result property="consigneeName" column="consignee_name" />
+		<result property="consigneeMobile" column="consignee_mobile" />
+		<result property="courierNumber" column="courier_number" />
+		<result property="logisticsCompany" column="logistics_company" />
+		<result property="refundConfirmUserId" column="refund_confirm_user_id" />
+		<result property="refundNo" column="refund_no" />
+		<result property="auditReason" column="audit_reason" />
+		<result property="auditUserId" column="audit_user_id" />
+		<result property="auditUserName" column="audit_user_name" />
+		<result property="freight" column="freight" />
+		<result property="cancelStatus" column="cancel_status" />
+		<result property="auditTime" column="audit_time" />
+		<result property="type" column="type" />
+		<result property="orderCreateTime" column="order_create_time" />
+		<result property="returnReasonId" column="return_reason_id" />
+		<result property="returnCode" column="return_code" />
+		<result property="isPickUp" column="is_pick_up" />
+		<result property="userCourierNumber" column="user_courier_number" />
+		<result property="userLogisticsCompanyId" column="user_logistics_company_id" />
+		<result property="updateTime" column="update_time" />
+		<result property="createTime" column="create_time" />
+		<result property="platformId" column="platform_id" />
+	</resultMap>
+
+	<sql id="soReturnColumns">
+		id,
+		parent_order_code,
+		order_code,
+		user_id,
+		merchant_id,
+		return_status,
+		refund_status,
+		actual_return_amount,
+		apply_return_amount,
+		return_type,
+		return_remark,
+		service_user_id,
+		service_desc,
+		service_return_reason,
+		apply_time,
+		return_reason,
+		refund_time,
+		consignee_address,
+		consignee_name,
+		consignee_mobile,
+		courier_number,
+		logistics_company,
+		refund_confirm_user_id,
+		refund_no,
+		audit_reason,
+		audit_user_id,
+		audit_user_name,
+		freight,
+		cancel_status,
+		audit_time,
+		type,
+		order_create_time,
+		return_reason_id,
+		return_code,
+		is_pick_up,
+		user_courier_number,
+		user_logistics_company_id,
+		update_time,
+		create_time,
+		platform_id
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.order.po.SoReturnPO" resultMap="soReturnMap">
+		SELECT
+		<include refid="soReturnColumns" />
+		FROM so_return
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="soReturnMap">
+		SELECT
+		<include refid="soReturnColumns" />
+		FROM so_return
+		<where>
+			<if test="po.parentOrderCode != null">
+				and parent_order_code = #{po.parentOrderCode}
+			</if>
+			<if test="po.orderCode != null">
+				and order_code = #{po.orderCode}
+			</if>
+			<if test="po.userId != null">
+				and user_id = #{po.userId}
+			</if>
+			<if test="po.merchantId != null">
+				and merchant_id = #{po.merchantId}
+			</if>
+			<if test="po.returnStatus != null">
+				and return_status = #{po.returnStatus}
+			</if>
+			<if test="po.refundStatus != null">
+				and refund_status = #{po.refundStatus}
+			</if>
+			<if test="po.actualReturnAmount != null">
+				and actual_return_amount = #{po.actualReturnAmount}
+			</if>
+			<if test="po.applyReturnAmount != null">
+				and apply_return_amount = #{po.applyReturnAmount}
+			</if>
+			<if test="po.returnType != null">
+				and return_type = #{po.returnType}
+			</if>
+			<if test="po.returnRemark != null">
+				and return_remark = #{po.returnRemark}
+			</if>
+			<if test="po.serviceUserId != null">
+				and service_user_id = #{po.serviceUserId}
+			</if>
+			<if test="po.serviceDesc != null">
+				and service_desc = #{po.serviceDesc}
+			</if>
+			<if test="po.serviceReturnReason != null">
+				and service_return_reason = #{po.serviceReturnReason}
+			</if>
+			<if test="po.applyTime != null">
+				and apply_time = #{po.applyTime}
+			</if>
+			<if test="po.returnReason != null">
+				and return_reason = #{po.returnReason}
+			</if>
+			<if test="po.refundTime != null">
+				and refund_time = #{po.refundTime}
+			</if>
+			<if test="po.consigneeAddress != null">
+				and consignee_address = #{po.consigneeAddress}
+			</if>
+			<if test="po.consigneeName != null">
+				and consignee_name = #{po.consigneeName}
+			</if>
+			<if test="po.consigneeMobile != null">
+				and consignee_mobile = #{po.consigneeMobile}
+			</if>
+			<if test="po.courierNumber != null">
+				and courier_number = #{po.courierNumber}
+			</if>
+			<if test="po.logisticsCompany != null">
+				and logistics_company = #{po.logisticsCompany}
+			</if>
+			<if test="po.refundConfirmUserId != null">
+				and refund_confirm_user_id = #{po.refundConfirmUserId}
+			</if>
+			<if test="po.refundNo != null">
+				and refund_no = #{po.refundNo}
+			</if>
+			<if test="po.auditReason != null">
+				and audit_reason = #{po.auditReason}
+			</if>
+			<if test="po.auditUserId != null">
+				and audit_user_id = #{po.auditUserId}
+			</if>
+			<if test="po.auditUserName != null">
+				and audit_user_name = #{po.auditUserName}
+			</if>
+			<if test="po.freight != null">
+				and freight = #{po.freight}
+			</if>
+			<if test="po.cancelStatus != null">
+				and cancel_status = #{po.cancelStatus}
+			</if>
+			<if test="po.auditTime != null">
+				and audit_time = #{po.auditTime}
+			</if>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+			<if test="po.orderCreateTime != null">
+				and order_create_time = #{po.orderCreateTime}
+			</if>
+			<if test="po.returnReasonId != null">
+				and return_reason_id = #{po.returnReasonId}
+			</if>
+			<if test="po.returnCode != null">
+				and return_code = #{po.returnCode}
+			</if>
+			<if test="po.isPickUp != null">
+				and is_pick_up = #{po.isPickUp}
+			</if>
+			<if test="po.userCourierNumber != null">
+				and user_courier_number = #{po.userCourierNumber}
+			</if>
+			<if test="po.userLogisticsCompanyId != null">
+				and user_logistics_company_id = #{po.userLogisticsCompanyId}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM so_return
+		<where>
+			<if test="po.parentOrderCode != null">
+				and parent_order_code = #{po.parentOrderCode}
+			</if>
+			<if test="po.orderCode != null">
+				and order_code = #{po.orderCode}
+			</if>
+			<if test="po.userId != null">
+				and user_id = #{po.userId}
+			</if>
+			<if test="po.merchantId != null">
+				and merchant_id = #{po.merchantId}
+			</if>
+			<if test="po.returnStatus != null">
+				and return_status = #{po.returnStatus}
+			</if>
+			<if test="po.refundStatus != null">
+				and refund_status = #{po.refundStatus}
+			</if>
+			<if test="po.actualReturnAmount != null">
+				and actual_return_amount = #{po.actualReturnAmount}
+			</if>
+			<if test="po.applyReturnAmount != null">
+				and apply_return_amount = #{po.applyReturnAmount}
+			</if>
+			<if test="po.returnType != null">
+				and return_type = #{po.returnType}
+			</if>
+			<if test="po.returnRemark != null">
+				and return_remark = #{po.returnRemark}
+			</if>
+			<if test="po.serviceUserId != null">
+				and service_user_id = #{po.serviceUserId}
+			</if>
+			<if test="po.serviceDesc != null">
+				and service_desc = #{po.serviceDesc}
+			</if>
+			<if test="po.serviceReturnReason != null">
+				and service_return_reason = #{po.serviceReturnReason}
+			</if>
+			<if test="po.applyTime != null">
+				and apply_time = #{po.applyTime}
+			</if>
+			<if test="po.returnReason != null">
+				and return_reason = #{po.returnReason}
+			</if>
+			<if test="po.refundTime != null">
+				and refund_time = #{po.refundTime}
+			</if>
+			<if test="po.consigneeAddress != null">
+				and consignee_address = #{po.consigneeAddress}
+			</if>
+			<if test="po.consigneeName != null">
+				and consignee_name = #{po.consigneeName}
+			</if>
+			<if test="po.consigneeMobile != null">
+				and consignee_mobile = #{po.consigneeMobile}
+			</if>
+			<if test="po.courierNumber != null">
+				and courier_number = #{po.courierNumber}
+			</if>
+			<if test="po.logisticsCompany != null">
+				and logistics_company = #{po.logisticsCompany}
+			</if>
+			<if test="po.refundConfirmUserId != null">
+				and refund_confirm_user_id = #{po.refundConfirmUserId}
+			</if>
+			<if test="po.refundNo != null">
+				and refund_no = #{po.refundNo}
+			</if>
+			<if test="po.auditReason != null">
+				and audit_reason = #{po.auditReason}
+			</if>
+			<if test="po.auditUserId != null">
+				and audit_user_id = #{po.auditUserId}
+			</if>
+			<if test="po.auditUserName != null">
+				and audit_user_name = #{po.auditUserName}
+			</if>
+			<if test="po.freight != null">
+				and freight = #{po.freight}
+			</if>
+			<if test="po.cancelStatus != null">
+				and cancel_status = #{po.cancelStatus}
+			</if>
+			<if test="po.auditTime != null">
+				and audit_time = #{po.auditTime}
+			</if>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+			<if test="po.orderCreateTime != null">
+				and order_create_time = #{po.orderCreateTime}
+			</if>
+			<if test="po.returnReasonId != null">
+				and return_reason_id = #{po.returnReasonId}
+			</if>
+			<if test="po.returnCode != null">
+				and return_code = #{po.returnCode}
+			</if>
+			<if test="po.isPickUp != null">
+				and is_pick_up = #{po.isPickUp}
+			</if>
+			<if test="po.userCourierNumber != null">
+				and user_courier_number = #{po.userCourierNumber}
+			</if>
+			<if test="po.userLogisticsCompanyId != null">
+				and user_logistics_company_id = #{po.userLogisticsCompanyId}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="soReturnMap">
+		SELECT
+		<include refid="soReturnColumns" />
+		FROM so_return
+		<where>
+			<if test="po.parentOrderCode != null">
+				and parent_order_code = #{po.parentOrderCode}
+			</if>
+			<if test="po.orderCode != null">
+				and order_code = #{po.orderCode}
+			</if>
+			<if test="po.userId != null">
+				and user_id = #{po.userId}
+			</if>
+			<if test="po.merchantId != null">
+				and merchant_id = #{po.merchantId}
+			</if>
+			<if test="po.returnStatus != null">
+				and return_status = #{po.returnStatus}
+			</if>
+			<if test="po.refundStatus != null">
+				and refund_status = #{po.refundStatus}
+			</if>
+			<if test="po.actualReturnAmount != null">
+				and actual_return_amount = #{po.actualReturnAmount}
+			</if>
+			<if test="po.applyReturnAmount != null">
+				and apply_return_amount = #{po.applyReturnAmount}
+			</if>
+			<if test="po.returnType != null">
+				and return_type = #{po.returnType}
+			</if>
+			<if test="po.returnRemark != null">
+				and return_remark = #{po.returnRemark}
+			</if>
+			<if test="po.serviceUserId != null">
+				and service_user_id = #{po.serviceUserId}
+			</if>
+			<if test="po.serviceDesc != null">
+				and service_desc = #{po.serviceDesc}
+			</if>
+			<if test="po.serviceReturnReason != null">
+				and service_return_reason = #{po.serviceReturnReason}
+			</if>
+			<if test="po.applyTime != null">
+				and apply_time = #{po.applyTime}
+			</if>
+			<if test="po.returnReason != null">
+				and return_reason = #{po.returnReason}
+			</if>
+			<if test="po.refundTime != null">
+				and refund_time = #{po.refundTime}
+			</if>
+			<if test="po.consigneeAddress != null">
+				and consignee_address = #{po.consigneeAddress}
+			</if>
+			<if test="po.consigneeName != null">
+				and consignee_name = #{po.consigneeName}
+			</if>
+			<if test="po.consigneeMobile != null">
+				and consignee_mobile = #{po.consigneeMobile}
+			</if>
+			<if test="po.courierNumber != null">
+				and courier_number = #{po.courierNumber}
+			</if>
+			<if test="po.logisticsCompany != null">
+				and logistics_company = #{po.logisticsCompany}
+			</if>
+			<if test="po.refundConfirmUserId != null">
+				and refund_confirm_user_id = #{po.refundConfirmUserId}
+			</if>
+			<if test="po.refundNo != null">
+				and refund_no = #{po.refundNo}
+			</if>
+			<if test="po.auditReason != null">
+				and audit_reason = #{po.auditReason}
+			</if>
+			<if test="po.auditUserId != null">
+				and audit_user_id = #{po.auditUserId}
+			</if>
+			<if test="po.auditUserName != null">
+				and audit_user_name = #{po.auditUserName}
+			</if>
+			<if test="po.freight != null">
+				and freight = #{po.freight}
+			</if>
+			<if test="po.cancelStatus != null">
+				and cancel_status = #{po.cancelStatus}
+			</if>
+			<if test="po.auditTime != null">
+				and audit_time = #{po.auditTime}
+			</if>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+			<if test="po.orderCreateTime != null">
+				and order_create_time = #{po.orderCreateTime}
+			</if>
+			<if test="po.returnReasonId != null">
+				and return_reason_id = #{po.returnReasonId}
+			</if>
+			<if test="po.returnCode != null">
+				and return_code = #{po.returnCode}
+			</if>
+			<if test="po.isPickUp != null">
+				and is_pick_up = #{po.isPickUp}
+			</if>
+			<if test="po.userCourierNumber != null">
+				and user_courier_number = #{po.userCourierNumber}
+			</if>
+			<if test="po.userLogisticsCompanyId != null">
+				and user_logistics_company_id = #{po.userLogisticsCompanyId}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+</mapper>
+	

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.config.dao.read.PolymallUserReadDAO">
+	<resultMap type="com.egeo.components.config.po.PolymallUserPO" id="polymallUserMap">
+		<result property="id" column="id" />
+		<result property="token" column="token" />
+		<result property="merchantId" column="merchant_id" />
+	</resultMap>
+
+	<sql id="polymallUserColumns">
+		id,
+		token,
+		merchant_id
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.config.po.PolymallUserPO" resultMap="polymallUserMap">
+		SELECT
+		<include refid="polymallUserColumns" />
+		FROM polymall_user
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="polymallUserMap">
+		SELECT
+		<include refid="polymallUserColumns" />
+		FROM polymall_user
+		<where>
+			<if test="po.token != null">
+				and token = #{po.token}
+			</if>
+			<if test="po.merchantId != null">
+				and merchant_id = #{po.merchantId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM polymall_user
+		<where>
+			<if test="po.token != null">
+				and token = #{po.token}
+			</if>
+			<if test="po.merchantId != null">
+				and merchant_id = #{po.merchantId}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="polymallUserMap">
+		SELECT
+		<include refid="polymallUserColumns" />
+		FROM polymall_user
+		<where>
+			<if test="po.token != null">
+				and token = #{po.token}
+			</if>
+			<if test="po.merchantId != null">
+				and merchant_id = #{po.merchantId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+</mapper>
+	

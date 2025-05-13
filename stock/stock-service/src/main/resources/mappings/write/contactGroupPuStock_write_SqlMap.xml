@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.stock.dao.write.ContactGroupPuStockWriteDAO">
+	<insert id="insert" parameterType="com.egeo.components.stock.po.ContactGroupPuStockPO">
+		INSERT INTO contact_group_pu_stock(
+        <trim suffixOverrides=",">
+			<if test="suId != null">
+				su_id,
+			</if>
+			<if test="puId != null">
+				pu_id,
+			</if>
+			<if test="contactGroupSkuId != null">
+				contact_group_sku_id,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+        </trim>		
+		) VALUES (
+        <trim suffixOverrides=",">
+			<if test="suId != null">
+				#{suId},
+			</if>
+			<if test="puId != null">
+				#{puId},
+			</if>
+			<if test="contactGroupSkuId != null">
+				#{contactGroupSkuId},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
+			</if>
+        </trim>		
+		)
+		<selectKey keyProperty="id" resultType="java.lang.Long">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+
+	
+	
+	<update id="update">
+	UPDATE contact_group_pu_stock 
+		<set>
+			<if test="suId != null">
+				su_id = #{suId},
+			</if>			
+			<if test="puId != null">
+				pu_id = #{puId},
+			</if>			
+			<if test="contactGroupSkuId != null">
+				contact_group_sku_id = #{contactGroupSkuId},
+			</if>			
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>			
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>			
+		</set>
+			WHERE id = #{id}
+	</update>	
+	
+
+	<delete id="delete">
+		delete from contact_group_pu_stock where id = #{id}
+	</delete>
+
+	<delete id="deleteByPara">
+		delete from contact_group_pu_stock 
+		<where>
+			<if test="suId != null">
+				and su_id = #{suId}
+			</if>
+			<if test="puId != null">
+				and pu_id = #{puId}
+			</if>
+			<if test="contactGroupSkuId != null">
+				and contact_group_sku_id = #{contactGroupSkuId}
+			</if>
+			<if test="createTime != null">
+				and create_time = #{createTime}
+			</if>
+			<if test="updateTime != null">
+				and update_time = #{updateTime}
+			</if>
+		</where>
+	</delete>
+
+
+	<insert id="insertContactGroupPuListStockWithTx" parameterType="java.util.List" useGeneratedKeys="false">
+
+		INSERT INTO contact_group_pu_stock( su_id, pu_id, contact_group_sku_id )
+		VALUES
+		<foreach collection="list" item="item" index="index" separator=",">
+			 ( #{item.suId}, #{item.puId}, #{item.contactGroupSkuId} )
+		</foreach>
+
+	</insert>
+
+</mapper>
+	

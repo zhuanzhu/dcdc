@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.order.dao.read.LimitRuleCompanyReadDAO">
+	<resultMap type="com.egeo.components.order.po.LimitRuleCompanyPO" id="limitRuleCompanyMap">
+		<result property="id" column="id" />
+		<result property="limitRuleId" column="limit_rule_id" />
+		<result property="companyId" column="company_id" />
+	</resultMap>
+
+	<sql id="limitRuleCompanyColumns">
+		id,
+		limit_rule_id,
+		company_id
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.order.po.LimitRuleCompanyPO" resultMap="limitRuleCompanyMap">
+		SELECT
+		<include refid="limitRuleCompanyColumns" />
+		FROM limit_rule_company
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="limitRuleCompanyMap">
+		SELECT
+		<include refid="limitRuleCompanyColumns" />
+		FROM limit_rule_company
+		<where>
+			<if test="po.limitRuleId != null">
+				and limit_rule_id = #{po.limitRuleId}
+			</if>
+			<if test="po.companyId != null">
+				and company_id = #{po.companyId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM limit_rule_company
+		<where>
+			<if test="po.limitRuleId != null">
+				and limit_rule_id = #{po.limitRuleId}
+			</if>
+			<if test="po.companyId != null">
+				and company_id = #{po.companyId}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="limitRuleCompanyMap">
+		SELECT
+		<include refid="limitRuleCompanyColumns" />
+		FROM limit_rule_company
+		<where>
+			<if test="po.limitRuleId != null">
+				and limit_rule_id = #{po.limitRuleId}
+			</if>
+			<if test="po.companyId != null">
+				and company_id = #{po.companyId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findCompanyByLimitRuleId" resultType="java.lang.Long">
+		SELECT
+		company_id
+		FROM limit_rule_company where limit_rule_id = #{limitRuleId}
+	</select>
+
+
+
+	<select id="findLimitRuleCompanyCount" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM limit_rule_company
+		<where>
+			<if test="po.limitRuleId != null">
+				and limit_rule_id = #{po.limitRuleId}
+			</if>
+			<if test="po.companyId != null">
+				and (company_id = #{po.companyId} OR company_id=-1)
+			</if>
+		</where>
+	</select>
+</mapper>
+	

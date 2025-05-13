@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.user.dao.read.ClientReadDAO">
+	<resultMap type="com.egeo.components.user.po.ClientPO" id="clientMap">
+		<result property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="description" column="description" />
+		<result property="clientPayTypeRemarks" column="client_pay_type_remarks"/>
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+	</resultMap>
+
+	<sql id="clientColumns">
+		id,
+		name,
+		description,
+		client_pay_type_remarks,
+		create_time,
+		update_time
+	</sql>
+	<sql id="inClause">
+		in
+		<foreach collection="ids" item="id" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.user.po.ClientPO" resultMap="clientMap">
+		SELECT
+		<include refid="clientColumns" />
+		FROM u_client
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="clientMap">
+		SELECT
+		<include refid="clientColumns" />
+		FROM u_client
+		<where>
+			<if test="po.name != null">
+				and name = #{po.name}
+			</if>
+			<if test="po.description != null">
+				and description = #{po.description}
+			</if>
+			<if test="po.clientPayTypeRemarks != null">
+				and client_pay_type_remarks = #{po.clientPayTypeRemarks}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM u_client
+		<where>
+			<if test="po.name != null">
+				and name = #{po.name}
+			</if>
+			<if test="po.description != null">
+				and description = #{po.description}
+			</if>
+			<if test="po.clientPayTypeRemarks != null">
+				and client_pay_type_remarks = #{po.clientPayTypeRemarks}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="clientMap">
+		SELECT
+		<include refid="clientColumns" />
+		FROM u_client
+		<where>
+			<if test="po.name != null">
+				and name = #{po.name}
+			</if>
+			<if test="po.description != null">
+				and description = #{po.description}
+			</if>
+			<if test="po.clientPayTypeRemarks != null">
+				and client_pay_type_remarks = #{po.clientPayTypeRemarks}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+
+	</select>
+	<select id="findClientByClientIds" resultMap="clientMap">
+		SELECT
+		<include refid="clientColumns" />
+		FROM u_client
+		where id 
+		<include refid="inClause" />
+	</select>
+	
+	<select id="clientNameByClientIds" resultType="java.lang.String">
+		SELECT
+		name
+		FROM u_client
+		where id 
+		<include refid="inClause" />
+	</select>
+</mapper>
+	

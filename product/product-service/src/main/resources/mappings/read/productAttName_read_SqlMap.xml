@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.product.dao.read.ProductAttNameReadDAO">
+	<resultMap type="com.egeo.components.product.po.ProductAttNamePO" id="productAttNameMap">
+		<result property="id" column="id" />
+		<result property="parentId" column="parent_id" />
+		<result property="productId" column="product_id" />
+		<result property="attNameId" column="att_name_id" />
+		<result property="sortValue" column="sort_value" />
+		<result property="type" column="type" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="platformId" column="platform_id" />
+		<result property="showPicture" column="show_picture" />
+	</resultMap>
+
+	<sql id="productAttNameColumns">
+		id,
+		parent_id,
+		product_id,
+		att_name_id,
+		sort_value,
+		type,
+		create_time,
+		update_time,
+		platform_id,
+		show_picture
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.product.po.ProductAttNamePO" resultMap="productAttNameMap">
+		SELECT
+		<include refid="productAttNameColumns" />
+		FROM product_att_name
+		WHERE id = #{po.id}
+	</select>
+	<select id="findLastId" resultType="java.lang.Long">
+		SELECT
+		MAX(id)
+		FROM product_att_name
+
+	</select>
+
+	<select id="findOfPage" resultMap="productAttNameMap">
+		SELECT
+		<include refid="productAttNameColumns" />
+		FROM product_att_name
+		<where>
+			<if test="po.parentId != null">
+				and parent_id = #{po.parentId}
+			</if>
+			<if test="po.productId != null">
+				and product_id = #{po.productId}
+			</if>
+			<if test="po.attNameId != null">
+				and att_name_id = #{po.attNameId}
+			</if>
+			<if test="po.sortValue != null">
+				and sort_value = #{po.sortValue}
+			</if>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY sort_value
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM product_att_name
+		<where>
+			<if test="po.parentId != null">
+				and parent_id = #{po.parentId}
+			</if>
+			<if test="po.productId != null">
+				and product_id = #{po.productId}
+			</if>
+			<if test="po.attNameId != null">
+				and att_name_id = #{po.attNameId}
+			</if>
+			<if test="po.sortValue != null">
+				and sort_value = #{po.sortValue}
+			</if>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="productAttNameMap">
+		SELECT
+		<include refid="productAttNameColumns" />
+		FROM product_att_name
+		<where>
+			<if test="po.parentId != null">
+				and parent_id = #{po.parentId}
+			</if>
+			<if test="po.productId != null">
+				and product_id = #{po.productId}
+			</if>
+			<if test="po.attNameId != null">
+				and att_name_id = #{po.attNameId}
+			</if>
+			<if test="po.sortValue != null">
+				and sort_value = #{po.sortValue}
+			</if>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY att_name_id
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findSumByProductId" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM product_att_name
+		WHERE product_id = #{productId}
+	</select>
+
+	<select id="queryIsElectronicBySpuId" resultMap="productAttNameMap" >
+		SELECT pat.* FROM product_att_name pat
+		LEFT JOIN product_att_value pav
+		on pat.id = pav.product_att_name_id
+		WHERE ( pat.att_name_id = 1 and pav.att_value_id = 1)
+		and pat.product_id = #{po.id}
+
+	</select>
+
+	<select id="queryIsUnitBySpuId" resultMap="productAttNameMap" >
+		SELECT pat.* FROM product_att_name pat
+		LEFT JOIN product_att_value pav
+		on pat.id = pav.product_att_name_id
+		WHERE ( pat.att_name_id = 2 and pav.att_value_id = 3 )
+		and pat.product_id = #{po.id}
+
+	</select>
+
+
+
+</mapper>
+	

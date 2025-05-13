@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.stock.dao.read.ContactGroupStockReadDAO">
+	<resultMap type="com.egeo.components.stock.po.ContactGroupStockPO" id="contactGroupStockMap">
+		<result property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="spuId" column="spu_id" />
+		<result property="count" column="count" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="merchantId" column="merchant_id" />
+		<result property="createUserName" column="create_user_name" />
+		<result property="createUserId" column="create_user_id" />
+
+	</resultMap>
+
+	<sql id="contactGroupStockColumns">
+		id,
+		name,
+		spu_id,
+		count,
+		create_time,
+		update_time,
+		merchant_id,
+		create_user_name,
+		create_user_id
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.stock.po.ContactGroupStockPO" resultMap="contactGroupStockMap">
+		SELECT
+		<include refid="contactGroupStockColumns" />
+		FROM contact_group_stock
+		WHERE id = #{po.id}
+	</select>
+	
+	<select id="findByPuId"  resultMap="contactGroupStockMap">
+		select 
+		cgs.id,
+		cgs.name,
+		cgs.spu_id,
+		cgs.count,
+		cgs.create_time,
+		cgs.update_time 
+		from contact_group_stock cgs
+		LEFT JOIN contact_group_sku_stock cgss ON cgss.contact_group_stock_id = cgs.id
+		LEFT JOIN contact_group_pu_stock cgps ON cgps.contact_group_sku_id = cgss.id
+		where cgps.pu_id = #{puId}
+	</select>
+
+	<select id="findOfPage" resultMap="contactGroupStockMap">
+		SELECT
+		<include refid="contactGroupStockColumns" />
+		FROM contact_group_stock
+		<where>
+			<if test="po.name != null">
+				and name = #{po.name}
+			</if>
+			<if test="po.spuId != null">
+				and spu_id = #{po.spuId}
+			</if>
+			<if test="po.count != null">
+				and count = #{po.count}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.merchantId != null">
+				and merchant_id = #{po.merchantId}
+			</if>
+			<if test="po.createUserName != null">
+				and create_user_name = #{po.createUserName}
+			</if>
+			<if test="po.createUserId != null">
+				and create_user_id = #{po.createUserId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM contact_group_stock
+		<where>
+			<if test="po.name != null">
+				and name = #{po.name}
+			</if>
+			<if test="po.spuId != null">
+				and spu_id = #{po.spuId}
+			</if>
+			<if test="po.count != null">
+				and count = #{po.count}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.merchantId != null">
+				and merchant_id = #{po.merchantId}
+			</if>
+			<if test="po.createUserName != null">
+				and create_user_name = #{po.createUserName}
+			</if>
+			<if test="po.createUserId != null">
+				and create_user_id = #{po.createUserId}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="contactGroupStockMap">
+		SELECT
+		<include refid="contactGroupStockColumns" />
+		FROM contact_group_stock
+		<where>
+			<if test="po.name != null">
+				and name like '%${po.name}%'
+			</if>
+			<if test="po.spuId != null">
+				and spu_id = #{po.spuId}
+			</if>
+			<if test="po.count != null">
+				and count = #{po.count}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.merchantId != null">
+				and merchant_id = #{po.merchantId}
+			</if>
+			<if test="po.createUserName != null">
+				and create_user_name = #{po.createUserName}
+			</if>
+			<if test="po.createUserId != null">
+				and create_user_id = #{po.createUserId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllByName" resultMap="contactGroupStockMap">
+		SELECT
+		<include refid="contactGroupStockColumns" />
+		FROM contact_group_stock
+		<where>
+			<if test="po.name != null">
+				and name = #{po.name}
+			</if>
+			<if test="po.spuId != null">
+				and spu_id = #{po.spuId}
+			</if>
+			<if test="po.count != null">
+				and count = #{po.count}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.merchantId != null">
+				and merchant_id = #{po.merchantId}
+			</if>
+			<if test="po.createUserName != null">
+				and create_user_name = #{po.createUserName}
+			</if>
+			<if test="po.createUserId != null">
+				and create_user_id = #{po.createUserId}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+
+
+
+	<select id="findMapOfPage" resultMap="contactGroupStockMap">
+		SELECT
+		<include refid="contactGroupStockColumns" />
+		FROM contact_group_stock
+		<where>
+			<if test="po.name != null">
+				and name like concat('%',#{po.name},'%')
+			</if>
+			<if test="po.spuId != null">
+				and spu_id = #{po.spuId}
+			</if>
+			<if test="po.count != null">
+				and count = #{po.count}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.merchantId != null">
+				and merchant_id = #{po.merchantId}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="spuIds != null">
+				and spu_id
+				in
+				<foreach collection="spuIds" item="spuId" open="(" separator="," close=")">
+					#{spuId}
+				</foreach>
+			</if>
+			<if test="merchantIds != null">
+				and  merchant_id
+				in
+				<foreach collection="merchantIds" item="merchantId" open="(" separator="," close=")">
+					#{merchantId}
+				</foreach>
+			</if>
+			<if test="po.createUserName != null">
+				and create_user_name = #{po.createUserName}
+			</if>
+			<if test="po.createUserId != null">
+				and create_user_id = #{po.createUserId}
+			</if>
+
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY id desc
+			</otherwise>
+		</choose>
+		<if test="page != null">
+			limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+
+	<select id="countMapOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM contact_group_stock
+		<where>
+			<if test="po.name != null">
+				and name like concat('%',#{po.name},'%')
+			</if>
+			<if test="po.spuId != null">
+				and spu_id = #{po.spuId}
+			</if>
+			<if test="po.count != null">
+				and count = #{po.count}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.merchantId != null">
+				and merchant_id = #{po.merchantId}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="spuIds != null">
+				and spu_id
+				in
+				<foreach collection="spuIds" item="spuId" open="(" separator="," close=")">
+					#{spuId}
+				</foreach>
+			</if>
+			<if test="merchantIds != null">
+				and  merchant_id
+				in
+				<foreach collection="merchantIds" item="merchantId" open="(" separator="," close=")">
+					#{merchantId}
+				</foreach>
+			</if>
+			<if test="po.createUserName != null">
+				and create_user_name = #{po.createUserName}
+			</if>
+			<if test="po.createUserId != null">
+				and create_user_id = #{po.createUserId}
+			</if>
+
+		</where>
+	</select>
+
+	<select id="findContactGroupStockByMerchantIdAndSuId" resultMap="contactGroupStockMap">
+		SELECT cgs.id,cgs.name
+		FROM contact_group_stock cgs
+		LEFT JOIN contact_group_sku_stock cgss
+		on cgs.id = cgss.contact_group_stock_id
+		LEFT JOIN contact_group_pu_stock cgps
+		on cgps.contact_group_sku_id = cgss.id
+		<where>
+			<if test="po.merchantId != null">
+				and cgs.merchant_id = #{po.merchantId}
+			</if>
+			<if test="suId != null">
+				and cgps.su_id = #{suId}
+			</if>
+		</where>
+
+	</select>
+
+</mapper>
+	

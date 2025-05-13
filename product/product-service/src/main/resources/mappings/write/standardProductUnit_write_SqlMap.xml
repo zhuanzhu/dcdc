@@ -1,0 +1,375 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.product.dao.write.StandardProductUnitWriteDAO">
+	<insert id="insert" parameterType="com.egeo.components.product.po.StandardProductUnitPO">
+		INSERT INTO standard_product_unit(
+        <trim suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="productSerialNumber != null">
+				product_serial_number,
+			</if>
+			<if test="productCategory != null">
+				product_category,
+			</if>
+			<if test="brandId != null">
+				brand_id,
+			</if>
+			<if test="categoryTreeNodeId != null">
+				category_tree_node_id,
+			</if>
+			<if test="title != null">
+				title,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="chineseName != null">
+				chinese_name,
+			</if>
+			<if test="marketPrice != null">
+				market_price,
+			</if>
+			<if test="taxNo != null">
+				tax_no,
+			</if>
+			<if test="eanNo != null">
+				ean_no,
+			</if>
+			<if test="referlink != null">
+				referlink,
+			</if>
+			<if test="extend != null">
+				extend,
+			</if>
+			<if test="placeOfOrigin != null">
+				place_of_origin,
+			</if>
+			<if test="calculationUnit != null">
+				calculation_unit,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="isAvailable != null">
+				is_available,
+			</if>
+			<if test="productDetails != null">
+				product_details,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="platformId != null">
+				platform_id,
+			</if>
+				<if test="enterpriseId != null">
+					 enterprise_id,
+				</if>
+				<if test="supplierId != null">
+					 supplier_id,
+				</if>
+			<if test="commodityTemplateId != null">
+				commodity_template_id,
+			</if>
+        </trim>		
+		) VALUES (
+        <trim suffixOverrides=",">
+        	<if test="id != null">
+        		#{id},
+			</if>
+			<if test="productSerialNumber != null">
+				#{productSerialNumber},
+			</if>
+			<if test="productCategory != null">
+				#{productCategory},
+			</if>
+			<if test="brandId != null">
+				#{brandId},
+			</if>
+			<if test="categoryTreeNodeId != null">
+				#{categoryTreeNodeId},
+			</if>
+			<if test="title != null">
+				#{title},
+			</if>
+			<if test="name != null">
+				#{name},
+			</if>
+			<if test="chineseName != null">
+				#{chineseName},
+			</if>
+			<if test="marketPrice != null">
+				#{marketPrice},
+			</if>
+			<if test="taxNo != null">
+				#{taxNo},
+			</if>
+			<if test="eanNo != null">
+				#{eanNo},
+			</if>
+			<if test="referlink != null">
+				#{referlink},
+			</if>
+			<if test="extend != null">
+				#{extend},
+			</if>
+			<if test="placeOfOrigin != null">
+				#{placeOfOrigin},
+			</if>
+			<if test="calculationUnit != null">
+				#{calculationUnit},
+			</if>
+			<if test="status != null">
+				#{status},
+			</if>
+			<if test="isAvailable != null">
+				#{isAvailable},
+			</if>
+			<if test="productDetails != null">
+				#{productDetails},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
+			</if>
+			<if test="platformId != null">
+				#{platformId},
+			</if>
+				<if test="enterpriseId != null">
+					#{enterpriseId},
+				</if>
+				<if test="supplierId != null">
+					#{supplierId},
+				</if>
+			<if test="commodityTemplateId != null">
+				#{commodityTemplateId},
+			</if>
+        </trim>		
+		)
+		<selectKey keyProperty="id" resultType="java.lang.Long">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+
+	
+	
+	<update id="update">
+	UPDATE standard_product_unit spu, standard_product_unit_description spud
+		<set>
+			<if test="productSerialNumber != null">
+				spu.product_serial_number = #{productSerialNumber},
+			</if>	
+			<if test="productCategory != null">
+				spu.product_category = #{productCategory},
+			</if>		
+			<if test="brandId != null">
+				spu.brand_id = #{brandId},
+			</if>			
+			<if test="categoryTreeNodeId != null">
+				spu.category_tree_node_id = #{categoryTreeNodeId},
+			</if>			
+			<if test="title != null">
+				spu.title = #{title},
+			</if>			
+			<if test="name != null">
+				spu.name = #{name},
+			</if>			
+			<if test="chineseName != null">
+				spu.chinese_name = #{chineseName},
+			</if>			
+			<if test="marketPrice != null">
+				spu.market_price = #{marketPrice},
+			</if>			
+			<if test="taxNo != null">
+				spu.tax_no = #{taxNo},
+			</if>			
+			<if test="eanNo != null">
+				spu.ean_no = #{eanNo},
+			</if>	
+			<if test="referlink != null">
+				spu.referlink = #{referlink},
+			</if>
+			<if test="extend != null">
+				spu.extend = #{extend},
+			</if>		
+			<if test="placeOfOrigin != null">
+				spu.place_of_origin = #{placeOfOrigin},
+			</if>			
+			<if test="calculationUnit != null">
+				spu.calculation_unit = #{calculationUnit},
+			</if>			
+			<if test="status != null">
+				spu.status = #{status},
+			</if>			
+			<if test="isAvailable != null">
+				spu.is_available = #{isAvailable},
+			</if>			
+			<if test="productDetails != null">
+				spu.product_details = #{productDetails},
+			</if>			
+			<if test="createTime != null">
+				spu.create_time = #{createTime},
+			</if>			
+			<if test="updateTime != null">
+				spu.update_time = #{updateTime},
+			</if>			
+			<if test="platformId != null">
+				spu.platform_id = #{platformId},
+			</if>			
+			<if test="enterpriseId != null">
+				spu.enterprise_id = #{enterpriseId},
+			</if>		
+			<if test="supplierId != null">
+				spu.supplier_id = #{supplierId},
+			</if>
+			<if test="commodityTemplateId != null">
+				spu.commodity_template_id=#{commodityTemplateId},
+			</if>
+			<if test="content != null">
+				spud.content = #{content},
+			</if>
+			<if test="commodityTemplateId != null">
+				spu.commodity_template_id = #{commodityTemplateId},
+			</if>
+		</set>
+			WHERE spu.id = spud.standard_product_unit_id and spu.id = #{id}
+	</update>	
+	
+
+	<delete id="delete">
+		delete from standard_product_unit where id = #{id}
+	</delete>
+
+	<delete id="deleteByPara">
+		delete from standard_product_unit 
+		<where>
+			<if test="productSerialNumber != null">
+				and product_serial_number = #{productSerialNumber}
+			</if>
+			<if test="brandId != null">
+				and brand_id = #{brandId}
+			</if>
+			<if test="categoryTreeNodeId != null">
+				and category_tree_node_id = #{categoryTreeNodeId}
+			</if>
+			<if test="title != null">
+				and title = #{title}
+			</if>
+			<if test="name != null">
+				and name = #{name}
+			</if>
+			<if test="chineseName != null">
+				and chinese_name = #{chineseName}
+			</if>
+			<if test="marketPrice != null">
+				and market_price = #{marketPrice}
+			</if>
+			<if test="taxNo != null">
+				and tax_no = #{taxNo}
+			</if>
+			<if test="eanNo != null">
+				and ean_no = #{eanNo}
+			</if>
+			<if test="referlink != null">
+				and referlink = #{referlink},
+			</if>
+			<if test="extend != null">
+				and extend = #{extend},
+			</if>	
+			<if test="placeOfOrigin != null">
+				and place_of_origin = #{placeOfOrigin}
+			</if>
+			<if test="calculationUnit != null">
+				and calculation_unit = #{calculationUnit}
+			</if>
+			<if test="status != null">
+				and status = #{status}
+			</if>
+			<if test="isAvailable != null">
+				and is_available = #{isAvailable}
+			</if>
+			<if test="productDetails != null">
+				and product_details = #{productDetails}
+			</if>
+			<if test="createTime != null">
+				and create_time = #{createTime}
+			</if>
+			<if test="updateTime != null">
+				and update_time = #{updateTime}
+			</if>
+			<if test="platformId != null">
+				and platform_id = #{platformId}
+			</if>		
+			<if test="enterpriseId != null">
+				and enterprise_id = #{enterpriseId},
+			</if>		
+			<if test="supplierId != null">
+				and supplier_id = #{supplierId},
+			</if>
+			<if test="commodityTemplateId != null">
+				and commodity_template_id=#{commodityTemplateId}
+			</if>
+		</where>
+	</delete>
+
+	<insert id="saveSPU" parameterType="com.egeo.components.product.po.StandardProductUnitPO" >
+		insert into standard_product_unit  (
+		id,
+		product_serial_number,
+		product_category,
+		category_tree_node_id,
+		name,
+		status,
+		is_available,
+		platform_id,
+		enterprise_id,
+		supplier_id,
+		commodity_template_id
+
+		)values
+		<foreach collection="poList" item="po"  separator=",">
+
+			(
+			#{po.id},
+			#{po.productSerialNumber},
+			#{po.productCategory},
+			#{po.categoryTreeNodeId},
+			#{po.name},
+			#{po.status},
+			#{po.isAvailable},
+			#{po.platformId},	
+			#{po.enterpriseId},	
+			#{po.supplierId},	
+			#{po.commodityTemplateId}
+			)
+
+		</foreach>
+	</insert>
+
+	<insert id="updateStandardProductUnitList" parameterType="com.egeo.components.product.po.StandardProductUnitPO" >
+		insert into standard_product_unit  (
+		id,
+		name
+
+		)values
+		<foreach collection="poList" item="po"  separator=",">
+
+			(
+			#{po.id},
+			#{po.name}
+			)
+
+		</foreach>
+		on duplicate key update
+		name=VALUES (name)
+	</insert>
+</mapper>
+	

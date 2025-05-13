@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.product.dao.read.MerchantProdVideoReadDAO">
+	<resultMap type="com.egeo.components.product.po.MerchantProdVideoPO" id="merchantProdVideoMap">
+		<result property="id" column="id" />
+		<result property="merchantProdId" column="merchant_prod_id" />
+		<result property="merchantVideoId" column="merchant_video_id" />
+		<result property="name" column="name" />
+		<result property="type" column="type" />
+		<result property="thumbnailUrl" column="thumbnail_url" />
+		<result property="videoUrl" column="video_url" />
+		<result property="platformId" column="platform_id" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+	</resultMap>
+
+	<sql id="merchantProdVideoColumns">
+		id,
+		merchant_prod_id,
+		merchant_video_id,
+		name,
+		type,
+		thumbnail_url,
+		video_url,
+		platform_id,
+		create_time,
+		update_time
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.product.po.MerchantProdVideoPO" resultMap="merchantProdVideoMap">
+		SELECT
+		<include refid="merchantProdVideoColumns" />
+		FROM merchant_prod_video
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="merchantProdVideoMap">
+		SELECT
+		<include refid="merchantProdVideoColumns" />
+		FROM merchant_prod_video
+		<where>
+			<if test="po.merchantProdId != null">
+				and merchant_prod_id = #{po.merchantProdId}
+			</if>
+			<if test="po.merchantVideoId != null">
+				and merchant_video_id = #{po.merchantVideoId}
+			</if>
+			<if test="po.name != null">
+				and name = #{po.name}
+			</if>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+			<if test="po.thumbnailUrl != null">
+				and thumbnail_url = #{po.thumbnailUrl}
+			</if>
+			<if test="po.videoUrl != null">
+				and video_url = #{po.videoUrl}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM merchant_prod_video
+		<where>
+			<if test="po.merchantProdId != null">
+				and merchant_prod_id = #{po.merchantProdId}
+			</if>
+			<if test="po.merchantVideoId != null">
+				and merchant_video_id = #{po.merchantVideoId}
+			</if>
+			<if test="po.name != null">
+				and name = #{po.name}
+			</if>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+			<if test="po.thumbnailUrl != null">
+				and thumbnail_url = #{po.thumbnailUrl}
+			</if>
+			<if test="po.videoUrl != null">
+				and video_url = #{po.videoUrl}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="merchantProdVideoMap">
+		SELECT
+		<include refid="merchantProdVideoColumns" />
+		FROM merchant_prod_video
+		<where>
+			<if test="po.merchantProdId != null">
+				and merchant_prod_id = #{po.merchantProdId}
+			</if>
+			<if test="po.merchantVideoId != null">
+				and merchant_video_id = #{po.merchantVideoId}
+			</if>
+			<if test="po.name != null">
+				and name = #{po.name}
+			</if>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+			<if test="po.thumbnailUrl != null">
+				and thumbnail_url = #{po.thumbnailUrl}
+			</if>
+			<if test="po.videoUrl != null">
+				and video_url = #{po.videoUrl}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+</mapper>
+	

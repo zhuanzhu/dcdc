@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.user.dao.read.InfoReadDAO">
+	<resultMap type="com.egeo.components.user.po.InfoPO" id="infoMap">
+		<result property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="triggers" column="triggers" />
+		<result property="type" column="type" />
+		<result property="isStart" column="is_start" />
+		<result property="systemInfo" column="system_info" />
+		<result property="moblieInfo" column="moblie_info" />
+		<result property="weChatOfficialInfo" column="we_chat_official_info" />
+		<result property="mailInfoTitle" column="mail_info_title" />
+		<result property="mailInfo" column="mail_info" />
+		<result property="mailRemark" column="mail_remark" />
+		<result property="infoTemplateRemark" column="info_template_remark" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="platformId" column="platform_id" />
+		<result property="isAdmin" column="is_admin" />
+		<result property="title" column="title" />
+		<result property="infoInform" column="info_inform" />
+	</resultMap>
+
+	<sql id="infoColumns">
+		id,
+		name,
+		triggers,
+		type,
+		is_start,
+		system_info,
+		moblie_info,
+		we_chat_official_info,
+		mail_info_title,
+		mail_info,
+		mail_remark,
+		info_template_remark,
+		create_time,
+		update_time,
+		platform_id,
+		is_admin,
+		title
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.user.po.InfoPO" resultMap="infoMap">
+		SELECT
+		<include refid="infoColumns" />
+		FROM u_info
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="infoMap">
+		SELECT
+		i.id,
+		i.name,
+		i.triggers,
+		i.type,
+		i.is_start,
+		i.system_info,
+		i.moblie_info,
+		i.we_chat_official_info,
+		i.mail_info_title,
+		i.mail_info,
+		i.mail_remark,
+		i.info_template_remark,
+		i.create_time,
+		i.update_time,
+		i.platform_id,
+		i.is_admin
+		FROM u_info i
+		<if test="po.type!=null">
+			LEFT JOIN u_info_send_way isw
+			ON i.id=isw.info_template_id
+		</if>
+		<where>
+			<if test="po.type!=null">
+				and isw.send_way_id=#{po.type}
+			</if>
+			<if test="po.name != null">
+				and i.name = #{po.name}
+			</if>
+			<if test="po.triggers != null">
+				and i.triggers = #{po.triggers}
+			</if>
+			<if test="po.isStart != null">
+				and i.is_start = #{po.isStart}
+			</if>
+			<if test="po.systemInfo != null">
+				and i.system_info like concat('%',#{po.systemInfo},'%')
+			</if>
+			<if test="po.moblieInfo != null">
+				and i.moblie_info = #{po.moblieInfo}
+			</if>
+			<if test="po.weChatOfficialInfo != null">
+				and i.we_chat_official_info = #{po.weChatOfficialInfo}
+			</if>
+			<if test="po.mailInfoTitle != null">
+				and i.mail_info_title = #{po.mailInfoTitle}
+			</if>
+			<if test="po.mailInfo != null">
+				and i.mail_info = #{po.mailInfo}
+			</if>
+			<if test="po.mailRemark != null">
+				and i.mail_remark = #{po.mailRemark}
+			</if>
+			<if test="po.infoTemplateRemark != null">
+				and i.info_template_remark = #{po.infoTemplateRemark}
+			</if>
+			<if test="po.createTime != null">
+				and i.create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and i.update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and i.platform_id = #{po.platformId}
+			</if>
+			<if test="po.isAdmin != null">
+				and i.is_admin = #{po.isAdmin}
+			</if>
+			<if test="po.title != null">
+				and i.title = #{po.title}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY i.id desc
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+
+	<select id="findUserInfoOfPage" resultMap="infoMap">
+		SELECT
+		i.id,
+		i.type,
+		i.system_info,
+		ui.create_time
+		FROM u_info i,u_user_info ui,(SELECT info_template_id from u_info_send_way WHERE send_way_id = #{po.type}) isw
+		WHERE ui.info_id = i.id and i.id = isw.info_template_id and ui.is_deleted = 0 and ui.user_id = #{po.userId} and i.platform_id = #{po.platformId}
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY ui.create_time desc
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+
+	<select id="countUserInfoOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM u_info i,u_user_info ui,(SELECT info_template_id from u_info_send_way WHERE send_way_id = #{po.type}) isw
+		WHERE ui.info_id = i.id and i.id = isw.info_template_id and ui.is_deleted = 0 and ui.user_id = #{po.userId} and i.platform_id = #{po.platformId}
+	</select>
+
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(i.id) cnt
+		FROM u_info i
+		<if test="po.type!=null">
+			LEFT JOIN u_info_send_way isw
+			ON i.id=isw.info_template_id
+		</if>
+
+		<where>
+			<if test="po.type!=null">
+				isw.send_way_id=#{po.type}
+			</if>
+			<if test="po.name != null">
+				and i.name = #{po.name}
+			</if>
+			<if test="po.triggers != null">
+				and i.triggers = #{po.triggers}
+			</if>
+			<if test="po.isStart != null">
+				and i.is_start = #{po.isStart}
+			</if>
+			<if test="po.systemInfo != null">
+				and i.system_info like concat('%',#{po.systemInfo},'%')
+			</if>
+			<if test="po.moblieInfo != null">
+				and i.moblie_info = #{po.moblieInfo}
+			</if>
+			<if test="po.weChatOfficialInfo != null">
+				and i.we_chat_official_info = #{po.weChatOfficialInfo}
+			</if>
+			<if test="po.mailInfoTitle != null">
+				and i.mail_info_title = #{po.mailInfoTitle}
+			</if>
+			<if test="po.mailInfo != null">
+				and i.mail_info = #{po.mailInfo}
+			</if>
+			<if test="po.mailRemark != null">
+				and i.mail_remark = #{po.mailRemark}
+			</if>
+			<if test="po.infoTemplateRemark != null">
+				and i.info_template_remark = #{po.infoTemplateRemark}
+			</if>
+			<if test="po.createTime != null">
+				and i.create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and i.update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and i.platform_id = #{po.platformId}
+			</if>
+			<if test="po.isAdmin != null">
+				and i.is_admin = #{po.isAdmin}
+			</if>
+			<if test="po.title != null">
+				and i.title = #{po.title}
+			</if>
+		</where>
+	</select>
+
+	<select id="findAll" resultMap="infoMap">
+		SELECT
+		<include refid="infoColumns" />
+		FROM u_info
+		<where>
+			<if test="po.name != null">
+				and name = #{po.name}
+			</if>
+			<if test="po.triggers != null">
+				and triggers = #{po.triggers}
+			</if>
+			<if test="po.type != null">
+				and type = #{po.type}
+			</if>
+			<if test="po.isStart != null">
+				and is_start = #{po.isStart}
+			</if>
+			<if test="po.systemInfo != null">
+				and system_info = #{po.systemInfo}
+			</if>
+			<if test="po.moblieInfo != null">
+				and moblie_info = #{po.moblieInfo}
+			</if>
+			<if test="po.weChatOfficialInfo != null">
+				and we_chat_official_info = #{po.weChatOfficialInfo}
+			</if>
+			<if test="po.mailInfoTitle != null">
+				and mail_info_title = #{po.mailInfoTitle}
+			</if>
+			<if test="po.mailInfo != null">
+				and mail_info = #{po.mailInfo}
+			</if>
+			<if test="po.mailRemark != null">
+				and mail_remark = #{po.mailRemark}
+			</if>
+			<if test="po.infoTemplateRemark != null">
+				and info_template_remark = #{po.infoTemplateRemark}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.title != null">
+				and title = #{po.title}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY id desc
+			</otherwise>
+		</choose>
+	</select>
+
+	<select id="findUnreadInfoSum" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM u_info i,u_user_info ui,(SELECT info_template_id from u_info_send_way WHERE send_way_id = #{type}) isw
+		WHERE ui.info_id = i.id and i.id = isw.info_template_id and ui.is_deleted = 0 and ui.is_read = 0 and ui.user_id = #{userId} and i.platform_id = #{platformId}
+	</select>
+
+	<select id="findUserInfoForMsgBox" resultMap="infoMap">
+		SELECT
+		i.title,
+		i.system_info,
+		i.info_inform,
+		i.create_time,
+		i.type
+		FROM u_user_info u, u_info i
+		WHERE u.info_id = i.id
+		<if test="userId != null">
+			AND u.user_id = #{userId}
+		</if>
+		<if test="isRead != null">
+			AND u.is_read = #{isRead}
+		</if>
+		<if test="type != null">
+			AND i.type = #{type}
+		</if>
+		<if test="createTime != null">
+			AND u.create_time &gt; #{createTime}
+		</if>
+		<if test="platformId != null">
+			AND u.platform_id = #{platformId}
+		</if>
+		<if test="count != null">
+			LIMIT 0,${count}
+		</if>
+	</select>
+
+</mapper>

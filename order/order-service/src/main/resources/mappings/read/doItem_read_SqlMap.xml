@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.order.dao.read.DoItemReadDAO">
+	<resultMap type="com.egeo.components.order.po.DoItemPO" id="doItemMap">
+		<result property="id" column="ID" />
+		<result property="doCode" column="do_code" />
+		<result property="orderCode" column="ORDER_CODE" />
+		<result property="userId" column="USER_ID" />
+		<result property="merchantId" column="MERCHANT_ID" />
+		<result property="productId" column="PRODUCT_ID" />
+		<result property="mpId" column="mp_id" />
+		<result property="warehouseId" column="WAREHOUSE_ID" />
+		<result property="productItemAmount" column="PRODUCT_ITEM_AMOUNT" />
+		<result property="productPriceFinal" column="PRODUCT_PRICE_FINAL" />
+		<result property="productItemNum" column="PRODUCT_ITEM_NUM" />
+		<result property="productCname" column="PRODUCT_CNAME" />
+		<result property="productEname" column="PRODUCT_ENAME" />
+		<result property="productPicPath" column="PRODUCT_PIC_PATH" />
+		<result property="productVersionNo" column="PRODUCT_VERSION_NO" />
+		<result property="productPriceOriginal" column="PRODUCT_PRICE_ORIGINAL" />
+		<result property="productPriceMarket" column="PRODUCT_PRICE_MARKET" />
+		<result property="productPriceSale" column="PRODUCT_PRICE_SALE" />
+		<result property="productType" column="PRODUCT_TYPE" />
+		<result property="virtualStockStatus" column="VIRTUAL_STOCK_STATUS" />
+		<result property="soItemId" column="so_item_id" />
+		<result property="updateTime" column="update_time" />
+		<result property="createTime" column="create_time" />
+		<result property="platformId" column="platform_id" />
+		<result property="skuId" column="sku_id" />
+	</resultMap>
+
+	<sql id="doItemColumns">
+		ID,
+		do_code,
+		ORDER_CODE,
+		USER_ID,
+		MERCHANT_ID,
+		PRODUCT_ID,
+		mp_id,
+		WAREHOUSE_ID,
+		PRODUCT_ITEM_AMOUNT,
+		PRODUCT_PRICE_FINAL,
+		PRODUCT_ITEM_NUM,
+		PRODUCT_CNAME,
+		PRODUCT_ENAME,
+		PRODUCT_PIC_PATH,
+		PRODUCT_VERSION_NO,
+		PRODUCT_PRICE_ORIGINAL,
+		PRODUCT_PRICE_MARKET,
+		PRODUCT_PRICE_SALE,
+		PRODUCT_TYPE,
+		VIRTUAL_STOCK_STATUS,
+		so_item_id,
+		update_time,
+		create_time,
+		platform_id,
+		sku_id
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.order.po.DoItemPO" resultMap="doItemMap">
+		SELECT
+		<include refid="doItemColumns" />
+		FROM do_item
+		WHERE ID = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="doItemMap">
+		SELECT
+		<include refid="doItemColumns" />
+		FROM do_item
+		<where>
+			<if test="po.doCode != null">
+				and do_code = #{po.doCode}
+			</if>
+			<if test="po.orderCode != null">
+				and ORDER_CODE = #{po.orderCode}
+			</if>
+			<if test="po.userId != null">
+				and USER_ID = #{po.userId}
+			</if>
+			<if test="po.merchantId != null">
+				and MERCHANT_ID = #{po.merchantId}
+			</if>
+			<if test="po.productId != null">
+				and PRODUCT_ID = #{po.productId}
+			</if>
+			<if test="po.mpId != null">
+				and mp_id = #{po.mpId}
+			</if>
+			<if test="po.warehouseId != null">
+				and WAREHOUSE_ID = #{po.warehouseId}
+			</if>
+			<if test="po.productItemAmount != null">
+				and PRODUCT_ITEM_AMOUNT = #{po.productItemAmount}
+			</if>
+			<if test="po.productPriceFinal != null">
+				and PRODUCT_PRICE_FINAL = #{po.productPriceFinal}
+			</if>
+			<if test="po.productItemNum != null">
+				and PRODUCT_ITEM_NUM = #{po.productItemNum}
+			</if>
+			<if test="po.productCname != null">
+				and PRODUCT_CNAME = #{po.productCname}
+			</if>
+			<if test="po.productEname != null">
+				and PRODUCT_ENAME = #{po.productEname}
+			</if>
+			<if test="po.productPicPath != null">
+				and PRODUCT_PIC_PATH = #{po.productPicPath}
+			</if>
+			<if test="po.productVersionNo != null">
+				and PRODUCT_VERSION_NO = #{po.productVersionNo}
+			</if>
+			<if test="po.productPriceOriginal != null">
+				and PRODUCT_PRICE_ORIGINAL = #{po.productPriceOriginal}
+			</if>
+			<if test="po.productPriceMarket != null">
+				and PRODUCT_PRICE_MARKET = #{po.productPriceMarket}
+			</if>
+			<if test="po.productPriceSale != null">
+				and PRODUCT_PRICE_SALE = #{po.productPriceSale}
+			</if>
+			<if test="po.productType != null">
+				and PRODUCT_TYPE = #{po.productType}
+			</if>
+			<if test="po.virtualStockStatus != null">
+				and VIRTUAL_STOCK_STATUS = #{po.virtualStockStatus}
+			</if>
+			<if test="po.soItemId != null">
+				and so_item_id = #{po.soItemId}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.skuId != null">
+				and sku_id = #{po.skuId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY ID desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM do_item
+		<where>
+			<if test="po.doCode != null">
+				and do_code = #{po.doCode}
+			</if>
+			<if test="po.orderCode != null">
+				and ORDER_CODE = #{po.orderCode}
+			</if>
+			<if test="po.userId != null">
+				and USER_ID = #{po.userId}
+			</if>
+			<if test="po.merchantId != null">
+				and MERCHANT_ID = #{po.merchantId}
+			</if>
+			<if test="po.productId != null">
+				and PRODUCT_ID = #{po.productId}
+			</if>
+			<if test="po.mpId != null">
+				and mp_id = #{po.mpId}
+			</if>
+			<if test="po.warehouseId != null">
+				and WAREHOUSE_ID = #{po.warehouseId}
+			</if>
+			<if test="po.productItemAmount != null">
+				and PRODUCT_ITEM_AMOUNT = #{po.productItemAmount}
+			</if>
+			<if test="po.productPriceFinal != null">
+				and PRODUCT_PRICE_FINAL = #{po.productPriceFinal}
+			</if>
+			<if test="po.productItemNum != null">
+				and PRODUCT_ITEM_NUM = #{po.productItemNum}
+			</if>
+			<if test="po.productCname != null">
+				and PRODUCT_CNAME = #{po.productCname}
+			</if>
+			<if test="po.productEname != null">
+				and PRODUCT_ENAME = #{po.productEname}
+			</if>
+			<if test="po.productPicPath != null">
+				and PRODUCT_PIC_PATH = #{po.productPicPath}
+			</if>
+			<if test="po.productVersionNo != null">
+				and PRODUCT_VERSION_NO = #{po.productVersionNo}
+			</if>
+			<if test="po.productPriceOriginal != null">
+				and PRODUCT_PRICE_ORIGINAL = #{po.productPriceOriginal}
+			</if>
+			<if test="po.productPriceMarket != null">
+				and PRODUCT_PRICE_MARKET = #{po.productPriceMarket}
+			</if>
+			<if test="po.productPriceSale != null">
+				and PRODUCT_PRICE_SALE = #{po.productPriceSale}
+			</if>
+			<if test="po.productType != null">
+				and PRODUCT_TYPE = #{po.productType}
+			</if>
+			<if test="po.virtualStockStatus != null">
+				and VIRTUAL_STOCK_STATUS = #{po.virtualStockStatus}
+			</if>
+			<if test="po.soItemId != null">
+				and so_item_id = #{po.soItemId}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.skuId != null">
+				and sku_id = #{po.skuId}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="doItemMap">
+		SELECT
+		<include refid="doItemColumns" />
+		FROM do_item
+		<where>
+			<if test="po.doCode != null">
+				and do_code = #{po.doCode}
+			</if>
+			<if test="po.orderCode != null">
+				and ORDER_CODE = #{po.orderCode}
+			</if>
+			<if test="po.userId != null">
+				and USER_ID = #{po.userId}
+			</if>
+			<if test="po.merchantId != null">
+				and MERCHANT_ID = #{po.merchantId}
+			</if>
+			<if test="po.productId != null">
+				and PRODUCT_ID = #{po.productId}
+			</if>
+			<if test="po.mpId != null">
+				and mp_id = #{po.mpId}
+			</if>
+			<if test="po.warehouseId != null">
+				and WAREHOUSE_ID = #{po.warehouseId}
+			</if>
+			<if test="po.productItemAmount != null">
+				and PRODUCT_ITEM_AMOUNT = #{po.productItemAmount}
+			</if>
+			<if test="po.productPriceFinal != null">
+				and PRODUCT_PRICE_FINAL = #{po.productPriceFinal}
+			</if>
+			<if test="po.productItemNum != null">
+				and PRODUCT_ITEM_NUM = #{po.productItemNum}
+			</if>
+			<if test="po.productCname != null">
+				and PRODUCT_CNAME = #{po.productCname}
+			</if>
+			<if test="po.productEname != null">
+				and PRODUCT_ENAME = #{po.productEname}
+			</if>
+			<if test="po.productPicPath != null">
+				and PRODUCT_PIC_PATH = #{po.productPicPath}
+			</if>
+			<if test="po.productVersionNo != null">
+				and PRODUCT_VERSION_NO = #{po.productVersionNo}
+			</if>
+			<if test="po.productPriceOriginal != null">
+				and PRODUCT_PRICE_ORIGINAL = #{po.productPriceOriginal}
+			</if>
+			<if test="po.productPriceMarket != null">
+				and PRODUCT_PRICE_MARKET = #{po.productPriceMarket}
+			</if>
+			<if test="po.productPriceSale != null">
+				and PRODUCT_PRICE_SALE = #{po.productPriceSale}
+			</if>
+			<if test="po.productType != null">
+				and PRODUCT_TYPE = #{po.productType}
+			</if>
+			<if test="po.virtualStockStatus != null">
+				and VIRTUAL_STOCK_STATUS = #{po.virtualStockStatus}
+			</if>
+			<if test="po.soItemId != null">
+				and so_item_id = #{po.soItemId}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.skuId != null">
+				and sku_id = #{po.skuId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY ID desc		
+			</otherwise>
+		</choose>
+	</select>
+</mapper>
+	

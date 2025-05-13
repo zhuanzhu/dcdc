@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.promotion.dao.write.ExchangeOrderRecordWriteDAO">
+	<insert id="insert" parameterType="com.egeo.components.promotion.po.ExchangeOrderRecordPO">
+		INSERT INTO exchange_order_record(
+        <trim suffixOverrides=",">
+			<if test="exchangeId != null">
+				exchange_id,
+			</if>
+			<if test="exchangeName != null">
+				exchange_name,
+			</if>
+			<if test="oldUnitCode != null">
+				old_unit_code,
+			</if>
+			<if test="oldUnitStatus != null">
+				old_unit_status,
+			</if>
+			<if test="oldCouponName != null">
+				old_coupon_name,
+			</if>
+			<if test="oldBatchCode != null">
+				old_batch_code,
+			</if>
+			<if test="oldCouponType != null">
+				old_coupon_type,
+			</if>
+			<if test="newUnitCode != null">
+				new_unit_code,
+			</if>
+			<if test="newBatchCode != null">
+				new_batch_code,
+			</if>
+			<if test="newCouponName != null">
+				new_coupon_name,
+			</if>
+			<if test="newCouponType != null">
+				new_coupon_type,
+			</if>
+			<if test="userMail != null">
+				user_mail,
+			</if>
+			<if test="exchangeTime != null">
+				exchange_time,
+			</if>
+			<if test="orderCode != null">
+				order_code,
+			</if>
+			<if test="conversionStatus != null">
+				conversion_status,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="platformId != null">
+				platform_id,
+			</if>
+			<if test="orderAmount != null">
+				order_amount,
+			</if>
+			<if test="newCouponBatchName != null">
+				new_coupon_batch_name,
+			</if>
+			<if test="oldCouponBatchName != null">
+				old_coupon_batch_name,
+			</if>
+        </trim>		
+		) VALUES (
+        <trim suffixOverrides=",">
+			<if test="exchangeId != null">
+				#{exchangeId},
+			</if>
+			<if test="exchangeName != null">
+				#{exchangeName},
+			</if>
+			<if test="oldUnitCode != null">
+				#{oldUnitCode},
+			</if>
+			<if test="oldUnitStatus != null">
+				#{oldUnitStatus},
+			</if>
+			<if test="oldCouponName != null">
+				#{oldCouponName},
+			</if>
+			<if test="oldBatchCode != null">
+				#{oldBatchCode},
+			</if>
+			<if test="oldCouponType != null">
+				#{oldCouponType},
+			</if>
+			<if test="newUnitCode != null">
+				#{newUnitCode},
+			</if>
+			<if test="newBatchCode != null">
+				#{newBatchCode},
+			</if>
+			<if test="newCouponName != null">
+				#{newCouponName},
+			</if>
+			<if test="newCouponType != null">
+				#{newCouponType},
+			</if>
+			<if test="userMail != null">
+				#{userMail},
+			</if>
+			<if test="exchangeTime != null">
+				#{exchangeTime},
+			</if>
+			<if test="orderCode != null">
+				#{orderCode},
+			</if>
+			<if test="conversionStatus != null">
+				#{conversionStatus},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
+			</if>
+			<if test="platformId != null">
+				#{platformId},
+			</if>
+			<if test="orderAmount != null">
+				#{orderAmount},
+			</if>
+			<if test="newCouponBatchName != null">
+				#{newCouponBatchName},
+			</if>
+			<if test="oldCouponBatchName != null">
+				#{oldCouponBatchName},
+			</if>
+        </trim>		
+		)
+		<selectKey keyProperty="id" resultType="java.lang.Long">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+
+	
+	
+	<update id="update">
+	UPDATE exchange_order_record 
+		<set>
+			<if test="exchangeId != null">
+				exchange_id = #{exchangeId},
+			</if>			
+			<if test="exchangeName != null">
+				exchange_name = #{exchangeName},
+			</if>			
+			<if test="oldUnitCode != null">
+				old_unit_code = #{oldUnitCode},
+			</if>			
+			<if test="oldUnitStatus != null">
+				old_unit_status = #{oldUnitStatus},
+			</if>			
+			<if test="oldCouponName != null">
+				old_coupon_name = #{oldCouponName},
+			</if>			
+			<if test="oldBatchCode != null">
+				old_batch_code = #{oldBatchCode},
+			</if>			
+			<if test="oldCouponType != null">
+				old_coupon_type = #{oldCouponType},
+			</if>			
+			<if test="newUnitCode != null">
+				new_unit_code = #{newUnitCode},
+			</if>			
+			<if test="newBatchCode != null">
+				new_batch_code = #{newBatchCode},
+			</if>			
+			<if test="newCouponName != null">
+				new_coupon_name = #{newCouponName},
+			</if>			
+			<if test="newCouponType != null">
+				new_coupon_type = #{newCouponType},
+			</if>			
+			<if test="userMail != null">
+				user_mail = #{userMail},
+			</if>			
+			<if test="exchangeTime != null">
+				exchange_time = #{exchangeTime},
+			</if>			
+			<if test="orderCode != null">
+				order_code = #{orderCode},
+			</if>			
+			<if test="conversionStatus!= null">
+				conversion_status = #{conversionStatus},
+			</if>			
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>			
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>
+			<if test="platformId != null">
+				platform_id = #{platformId},
+			</if>
+			<if test="orderAmount != null">
+				order_amount = #{orderAmount},
+			</if>
+			<if test="newCouponBatchName != null">
+				new_coupon_batch_name = #{newCouponBatchName},
+			</if>
+			<if test="oldCouponBatchName != null">
+				old_coupon_batch_name = #{oldCouponBatchName},
+			</if>
+		</set>
+			WHERE id = #{id}
+	</update>	
+	
+
+	<delete id="delete">
+		delete from exchange_order_record where id = #{id}
+	</delete>
+
+	<delete id="deleteByPara">
+		delete from exchange_order_record 
+		<where>
+			<if test="exchangeId != null">
+				and exchange_id = #{exchangeId}
+			</if>
+			<if test="exchangeName != null">
+				and exchange_name = #{exchangeName}
+			</if>
+			<if test="oldUnitCode != null">
+				and old_unit_code = #{oldUnitCode}
+			</if>
+			<if test="oldUnitStatus != null">
+				and old_unit_status = #{oldUnitStatus}
+			</if>
+			<if test="oldCouponName != null">
+				and old_coupon_name = #{oldCouponName}
+			</if>
+			<if test="oldBatchCode != null">
+				and old_batch_code = #{oldBatchCode}
+			</if>
+			<if test="oldCouponType != null">
+				and old_coupon_type = #{oldCouponType}
+			</if>
+			<if test="newUnitCode != null">
+				and new_unit_code = #{newUnitCode}
+			</if>
+			<if test="newBatchCode != null">
+				and new_batch_code = #{newBatchCode}
+			</if>
+			<if test="newCouponName != null">
+				and new_coupon_name = #{newCouponName}
+			</if>
+			<if test="newCouponType != null">
+				and new_coupon_type = #{newCouponType}
+			</if>
+			<if test="userMail != null">
+				and user_mail = #{userMail}
+			</if>
+			<if test="exchangeTime != null">
+				and exchange_time = #{exchangeTime}
+			</if>
+			<if test="orderCode != null">
+				and order_code = #{orderCode}
+			</if>
+			<if test="conversionStatus != null">
+				and conversion_status= #{conversionStatus}
+			</if>
+			<if test="createTime != null">
+				and create_time = #{createTime}
+			</if>
+			<if test="updateTime != null">
+				and update_time = #{updateTime}
+			</if>
+			<if test="platformId != null">
+				and platform_id = #{platformId}
+			</if>
+			<if test="orderAmount != null">
+				and order_amount = #{orderAmount}
+			</if>
+			<if test="newCouponBatchName != null">
+				new_coupon_batch_name = #{newCouponBatchName}
+			</if>
+			<if test="oldCouponBatchName != null">
+				old_coupon_batch_name = #{oldCouponBatchName}
+			</if>
+		</where>
+	</delete>
+
+	<update id="updateByOrderCode">
+		UPDATE exchange_order_record
+		<set>
+			<if test="po.exchangeId != null">
+				exchange_id = #{po.exchangeId},
+			</if>
+			<if test="po.exchangeName != null">
+				exchange_name = #{po.exchangeName},
+			</if>
+			<if test="po.oldUnitCode != null">
+				old_unit_code = #{po.oldUnitCode},
+			</if>
+			<if test="po.oldUnitStatus != null">
+				old_unit_status = #{po.oldUnitStatus},
+			</if>
+			<if test="po.oldCouponName != null">
+				old_coupon_name = #{po.oldCouponName},
+			</if>
+			<if test="po.oldBatchCode != null">
+				old_batch_code = #{po.oldBatchCode},
+			</if>
+			<if test="po.oldCouponType != null">
+				old_coupon_type = #{po.oldCouponType},
+			</if>
+			<if test="po.newUnitCode != null">
+				new_unit_code = #{po.newUnitCode},
+			</if>
+			<if test="po.newBatchCode != null">
+				new_batch_code = #{po.newBatchCode},
+			</if>
+			<if test="po.newCouponName != null">
+				new_coupon_name = #{po.newCouponName},
+			</if>
+			<if test="po.newCouponType != null">
+				new_coupon_type = #{po.newCouponType},
+			</if>
+			<if test="po.userMail != null">
+				user_mail = #{po.userMail},
+			</if>
+			<if test="po.exchangeTime != null">
+				exchange_time = #{po.exchangeTime},
+			</if>
+			<if test="po.conversionStatus!= null">
+				conversion_status = #{po.conversionStatus},
+			</if>
+			<if test="po.createTime != null">
+				create_time = #{po.createTime},
+			</if>
+			<if test="po.updateTime != null">
+				update_time = #{po.updateTime},
+			</if>
+			<if test="po.platformId != null">
+				platform_id = #{po.platformId},
+			</if>
+			<if test="po.orderAmount != null">
+				order_amount = #{po.orderAmount},
+			</if>
+			<if test="newCouponBatchName != null">
+				new_coupon_batch_name = #{newCouponBatchName},
+			</if>
+			<if test="oldCouponBatchName != null">
+				old_coupon_batch_name = #{oldCouponBatchName},
+			</if>
+		</set>
+		WHERE
+			order_code = #{po.orderCode}
+	</update>
+</mapper>
+	

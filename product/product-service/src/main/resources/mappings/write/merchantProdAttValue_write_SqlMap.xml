@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.product.dao.write.MerchantProdAttValueWriteDAO">
+	<insert id="insertList" parameterType="com.egeo.components.product.po.MerchantProdAttValuePO" >
+		insert into merchant_prod_att_value (
+		id,
+		merchant_prod_att_name_id,
+		att_value_Custom
+		)values
+		<foreach collection="poList" item="po"  separator="," >
+
+			(#{po.id},
+			#{po.merchantProdAttNameId},
+			#{po.attValueCustom}
+			)
+
+		</foreach>
+	</insert>
+
+
+
+
+
+
+
+	<insert id="insert" parameterType="com.egeo.components.product.po.MerchantProdAttValuePO">
+		INSERT INTO merchant_prod_att_value(
+        <trim suffixOverrides=",">
+			<if test="merchantProdAttNameId != null">
+				merchant_prod_att_name_id,
+			</if>
+			<if test="attValueId != null">
+				att_value_id,
+			</if>
+			<if test="attValueCustom != null">
+				att_value_Custom,
+			</if>
+			<if test="sortValue != null">
+				sort_value,
+			</if>
+			<if test="pictureUrl != null">
+				picture_url,
+			</if>
+			<if test="isWith != null">
+				is_with,
+			</if>
+			<if test="platformId != null">
+				platform_id,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+        </trim>		
+		) VALUES (
+        <trim suffixOverrides=",">
+			<if test="merchantProdAttNameId != null">
+				#{merchantProdAttNameId},
+			</if>
+			<if test="attValueId != null">
+				#{attValueId},
+			</if>
+			<if test="attValueCustom != null">
+				#{attValueCustom},
+			</if>
+			<if test="sortValue != null">
+				#{sortValue},
+			</if>
+			<if test="pictureUrl != null">
+				#{pictureUrl},
+			</if>
+			<if test="isWith != null">
+				#{isWith},
+			</if>
+			<if test="platformId != null">
+				#{platformId},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
+			</if>
+        </trim>		
+		)
+		<selectKey keyProperty="id" resultType="java.lang.Long">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+
+	
+	
+	<update id="update">
+	UPDATE merchant_prod_att_value 
+		<set>
+			<if test="merchantProdAttNameId != null">
+				merchant_prod_att_name_id = #{merchantProdAttNameId},
+			</if>			
+			<if test="attValueId != null">
+				att_value_id = #{attValueId},
+			</if>			
+			<if test="attValueCustom != null">
+				att_value_Custom = #{attValueCustom},
+			</if>			
+			<if test="sortValue != null">
+				sort_value = #{sortValue},
+			</if>			
+			<if test="pictureUrl != null">
+				picture_url = #{pictureUrl},
+			</if>			
+			<if test="isWith != null">
+				is_with = #{isWith},
+			</if>			
+			<if test="platformId != null">
+				platform_id = #{platformId},
+			</if>			
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>			
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>			
+		</set>
+			WHERE id = #{id}
+	</update>	
+	
+
+	<delete id="delete">
+		delete from merchant_prod_att_value where id = #{id}
+	</delete>
+
+	<delete id="deleteByPara">
+		delete from merchant_prod_att_value 
+		<where>
+			<if test="merchantProdAttNameId != null">
+				and merchant_prod_att_name_id = #{merchantProdAttNameId}
+			</if>
+			<if test="attValueId != null">
+				and att_value_id = #{attValueId}
+			</if>
+			<if test="attValueCustom != null">
+				and att_value_Custom = #{attValueCustom}
+			</if>
+			<if test="sortValue != null">
+				and sort_value = #{sortValue}
+			</if>
+			<if test="pictureUrl != null">
+				and picture_url = #{pictureUrl}
+			</if>
+			<if test="isWith != null">
+				and is_with = #{isWith}
+			</if>
+			<if test="platformId != null">
+				and platform_id = #{platformId}
+			</if>
+			<if test="createTime != null">
+				and create_time = #{createTime}
+			</if>
+			<if test="updateTime != null">
+				and update_time = #{updateTime}
+			</if>
+		</where>
+	</delete>
+
+
+</mapper>
+	

@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.order.dao.read.ContractReadDAO">
+	<resultMap type="com.egeo.components.order.po.ContractPO" id="contractMap">
+		<result property="id" column="id" />
+		<result property="orderCode" column="order_code" />
+		<result property="contractingPlace" column="contracting_place" />
+		<result property="sellersType" column="sellers_type" />
+		<result property="userId" column="user_id" />
+		<result property="purchaserCompanyName" column="purchaser_company_name" />
+		<result property="purchaserPhone" column="purchaser_phone" />
+		<result property="purchaserFax" column="purchaser_fax" />
+		<result property="purchaserAddress" column="purchaser_address" />
+		<result property="sellersCompanyName" column="sellers_company_name" />
+		<result property="sellersPhone" column="sellers_phone" />
+		<result property="sellersFax" column="sellers_fax" />
+		<result property="sellersAddress" column="sellers_address" />
+		<result property="deliveryDate" column="delivery_date" />
+		<result property="deliveryAddress" column="delivery_address" />
+		<result property="freightAndDeliveryCharges" column="freight_and_delivery_charges" />
+		<result property="termsOfPaymentAndTimeLimit" column="terms_of_payment_and_time_limit" />
+		<result property="productAmount" column="product_amount" />
+		<result property="remarks" column="remarks" />
+		<result property="platformId" column="platform_id" />
+		<result property="merchantId" column="merchant_id" />
+		<result property="contractCode" column="contract_code" />
+		<result property="updateTime" column="update_time" />
+		<result property="createTime" column="create_time" />
+	</resultMap>
+
+	<sql id="contractColumns">
+		id,
+		order_code,
+		contracting_place,
+		sellers_type,
+		user_id,
+		purchaser_company_name,
+		purchaser_phone,
+		purchaser_fax,
+		purchaser_address,
+		sellers_company_name,
+		sellers_phone,
+		sellers_fax,
+		sellers_address,
+		delivery_date,
+		delivery_address,
+		freight_and_delivery_charges,
+		terms_of_payment_and_time_limit,
+		product_amount,
+		remarks,
+		platform_id,
+		merchant_id,
+		contract_code,
+		update_time,
+		create_time
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.order.po.ContractPO" resultMap="contractMap">
+		SELECT
+		<include refid="contractColumns" />
+		FROM contract
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="contractMap">
+		SELECT
+		<include refid="contractColumns" />
+		FROM contract
+		<where>
+			<if test="po.orderCode != null">
+				and order_code = #{po.orderCode}
+			</if>
+			<if test="po.contractingPlace != null">
+				and contracting_place = #{po.contractingPlace}
+			</if>
+			<if test="po.sellersType != null">
+				and sellers_type = #{po.sellersType}
+			</if>
+			<if test="po.userId != null">
+				and user_id = #{po.userId}
+			</if>
+			<if test="po.purchaserCompanyName != null">
+				and purchaser_company_name = #{po.purchaserCompanyName}
+			</if>
+			<if test="po.purchaserPhone != null">
+				and purchaser_phone = #{po.purchaserPhone}
+			</if>
+			<if test="po.purchaserFax != null">
+				and purchaser_fax = #{po.purchaserFax}
+			</if>
+			<if test="po.purchaserAddress != null">
+				and purchaser_address = #{po.purchaserAddress}
+			</if>
+			<if test="po.sellersCompanyName != null">
+				and sellers_company_name = #{po.sellersCompanyName}
+			</if>
+			<if test="po.sellersPhone != null">
+				and sellers_phone = #{po.sellersPhone}
+			</if>
+			<if test="po.sellersFax != null">
+				and sellers_fax = #{po.sellersFax}
+			</if>
+			<if test="po.sellersAddress != null">
+				and sellers_address = #{po.sellersAddress}
+			</if>
+			<if test="po.deliveryDate != null">
+				and delivery_date = #{po.deliveryDate}
+			</if>
+			<if test="po.deliveryAddress != null">
+				and delivery_address = #{po.deliveryAddress}
+			</if>
+			<if test="po.freightAndDeliveryCharges != null">
+				and freight_and_delivery_charges = #{po.freightAndDeliveryCharges}
+			</if>
+			<if test="po.termsOfPaymentAndTimeLimit != null">
+				and terms_of_payment_and_time_limit = #{po.termsOfPaymentAndTimeLimit}
+			</if>
+			<if test="po.productAmount != null">
+				and product_amount = #{po.productAmount}
+			</if>
+			<if test="po.remarks != null">
+				and remarks = #{po.remarks}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.merchantId != null">
+				and merchant_id = #{po.merchantId}
+			</if>
+			<if test="po.contractCode != null">
+				and contract_code = #{po.contractCode}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM contract
+		<where>
+			<if test="po.orderCode != null">
+				and order_code = #{po.orderCode}
+			</if>
+			<if test="po.contractingPlace != null">
+				and contracting_place = #{po.contractingPlace}
+			</if>
+			<if test="po.sellersType != null">
+				and sellers_type = #{po.sellersType}
+			</if>
+			<if test="po.userId != null">
+				and user_id = #{po.userId}
+			</if>
+			<if test="po.purchaserCompanyName != null">
+				and purchaser_company_name = #{po.purchaserCompanyName}
+			</if>
+			<if test="po.purchaserPhone != null">
+				and purchaser_phone = #{po.purchaserPhone}
+			</if>
+			<if test="po.purchaserFax != null">
+				and purchaser_fax = #{po.purchaserFax}
+			</if>
+			<if test="po.purchaserAddress != null">
+				and purchaser_address = #{po.purchaserAddress}
+			</if>
+			<if test="po.sellersCompanyName != null">
+				and sellers_company_name = #{po.sellersCompanyName}
+			</if>
+			<if test="po.sellersPhone != null">
+				and sellers_phone = #{po.sellersPhone}
+			</if>
+			<if test="po.sellersFax != null">
+				and sellers_fax = #{po.sellersFax}
+			</if>
+			<if test="po.sellersAddress != null">
+				and sellers_address = #{po.sellersAddress}
+			</if>
+			<if test="po.deliveryDate != null">
+				and delivery_date = #{po.deliveryDate}
+			</if>
+			<if test="po.deliveryAddress != null">
+				and delivery_address = #{po.deliveryAddress}
+			</if>
+			<if test="po.freightAndDeliveryCharges != null">
+				and freight_and_delivery_charges = #{po.freightAndDeliveryCharges}
+			</if>
+			<if test="po.termsOfPaymentAndTimeLimit != null">
+				and terms_of_payment_and_time_limit = #{po.termsOfPaymentAndTimeLimit}
+			</if>
+			<if test="po.productAmount != null">
+				and product_amount = #{po.productAmount}
+			</if>
+			<if test="po.remarks != null">
+				and remarks = #{po.remarks}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.merchantId != null">
+				and merchant_id = #{po.merchantId}
+			</if>
+			<if test="po.contractCode != null">
+				and contract_code = #{po.contractCode}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="contractMap">
+		SELECT
+		<include refid="contractColumns" />
+		FROM contract
+		<where>
+			<if test="po.orderCode != null">
+				and order_code = #{po.orderCode}
+			</if>
+			<if test="po.contractingPlace != null">
+				and contracting_place = #{po.contractingPlace}
+			</if>
+			<if test="po.sellersType != null">
+				and sellers_type = #{po.sellersType}
+			</if>
+			<if test="po.userId != null">
+				and user_id = #{po.userId}
+			</if>
+			<if test="po.purchaserCompanyName != null">
+				and purchaser_company_name = #{po.purchaserCompanyName}
+			</if>
+			<if test="po.purchaserPhone != null">
+				and purchaser_phone = #{po.purchaserPhone}
+			</if>
+			<if test="po.purchaserFax != null">
+				and purchaser_fax = #{po.purchaserFax}
+			</if>
+			<if test="po.purchaserAddress != null">
+				and purchaser_address = #{po.purchaserAddress}
+			</if>
+			<if test="po.sellersCompanyName != null">
+				and sellers_company_name = #{po.sellersCompanyName}
+			</if>
+			<if test="po.sellersPhone != null">
+				and sellers_phone = #{po.sellersPhone}
+			</if>
+			<if test="po.sellersFax != null">
+				and sellers_fax = #{po.sellersFax}
+			</if>
+			<if test="po.sellersAddress != null">
+				and sellers_address = #{po.sellersAddress}
+			</if>
+			<if test="po.deliveryDate != null">
+				and delivery_date = #{po.deliveryDate}
+			</if>
+			<if test="po.deliveryAddress != null">
+				and delivery_address = #{po.deliveryAddress}
+			</if>
+			<if test="po.freightAndDeliveryCharges != null">
+				and freight_and_delivery_charges = #{po.freightAndDeliveryCharges}
+			</if>
+			<if test="po.termsOfPaymentAndTimeLimit != null">
+				and terms_of_payment_and_time_limit = #{po.termsOfPaymentAndTimeLimit}
+			</if>
+			<if test="po.productAmount != null">
+				and product_amount = #{po.productAmount}
+			</if>
+			<if test="po.remarks != null">
+				and remarks = #{po.remarks}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.merchantId != null">
+				and merchant_id = #{po.merchantId}
+			</if>
+			<if test="po.contractCode != null">
+				and contract_code = #{po.contractCode}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+</mapper>
+	

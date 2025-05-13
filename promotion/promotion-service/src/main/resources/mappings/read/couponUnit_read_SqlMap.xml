@@ -1,0 +1,869 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.promotion.dao.read.CouponUnitReadDAO">
+	<resultMap type="com.egeo.components.promotion.po.CouponUnitPO" id="couponUnitMap">
+		<result property="id" column="id" />
+		<result property="couponUnitCode" column="coupon_unit_code" />
+		<result property="couponId" column="coupon_id" />
+		<result property="couponBatchId" column="coupon_batch_id" />
+		<result property="orderId" column="order_id" />
+		<result property="userId" column="user_id" />
+		<result property="usedTime" column="used_time" />
+		<result property="usedCount" column="used_count" />
+		<result property="effectStartTime" column="effect_start_time" />
+		<result property="effectEndTime" column="effect_end_time" />
+		<result property="couponUnitStatus" column="coupon_unit_status" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="platformId" column="platform_id" />
+		<result property="receivedTime" column="received_time" />
+		<result property="batchIndex" column="batch_index" />
+		<result property="couponBatchName" column="coupon_batch_name" />
+		<result property="isRead" column="is_read" />
+	</resultMap>
+	
+	<resultMap type="com.egeo.components.promotion.condition.CouponUnitCondition" 
+		extends="couponUnitMap" id="couponUnitConditionMap">
+		<result property="couponCode" column="coupon_code" />
+		<result property="couponBatchCode" column="coupon_batch_code" />
+		<result property="couponBatchId" column="coupon_batch_Id" />
+		<result property="couponType" column="coupon_type" />
+		<result property="title" column="title" />
+		<result property="grantType" column="grant_type" />
+		<result property="getType" column="get_type" />
+		<result property="discountAmount" column="discount_amount" />
+		<result property="triggerAmount" column="trigger_amount" />
+		<result property="iconUrl" column="icon_url" />
+		<result property="detail" column="detail" />
+		<result property="couponBatchEffectStartTime" column="coupon_batch_effect_start_time" />
+		<result property="couponBatchEffectEndTime" column="coupon_batch_effect_end_time" />
+		<result property="couponBatchReceiveStartTime" column="coupon_batch_receive_start_time" />
+		<result property="couponBatchReceiveEndTime" column="coupon_batch_receive_end_time" />
+		<result property="grantCount" column="grant_count" />
+		<result property="isRepeat" column="is_repeat" />
+		<result property="jumpType" column="jump_type" />
+		<result property="goodsType" column="goods_type" />
+		<result property="goodsId" column="goods_id" />
+		<result property="couponRelType" column="coupon_rel_type" />
+		<result property="couponRelId" column="coupon_rel_id" />
+		<result property="companyId" column="company_id" />
+		<result property="effectDays" column="effect_days" />
+		<result property="couponId" column="coupon_id" />
+		<result property="couponBatchName" column="coupon_batch_name" />
+	</resultMap>
+
+	<sql id="couponUnitColumns">
+		id,
+		coupon_unit_code,
+		coupon_id,
+		coupon_batch_id,
+		order_id,
+		user_id,
+		used_time,
+		used_count,
+		effect_start_time,
+		effect_end_time,
+		coupon_unit_status,
+		create_time,
+		update_time,
+		platform_id,
+		received_time,
+		batch_index,
+		coupon_batch_name,
+		is_read
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.promotion.po.CouponUnitPO" resultMap="couponUnitMap">
+		SELECT
+		<include refid="couponUnitColumns" />
+		FROM coupon_unit
+		WHERE id = #{po.id}
+	</select>
+	<select id="findCouponUnitListByBatchIdList" resultMap="couponUnitConditionMap">
+		SELECT
+		cu.id,
+		cu.coupon_unit_code,
+		cu.coupon_id,
+		cu.coupon_batch_id,
+		cu.order_id,
+		cu.user_id,
+		cu.used_time,
+		cu.used_count,
+		cu.effect_start_time,
+		cu.effect_end_time,
+		cu.coupon_unit_status,
+		cu.create_time,
+		cu.update_time,
+		cu.platform_id,
+		cu.received_time,
+		cu.is_read,
+		c.coupon_code,
+		c.coupon_type,
+		c.title title
+		FROM coupon_unit cu LEFT JOIN coupon c ON cu.coupon_id=c.id
+		<where>
+			coupon_batch_id IN
+			<foreach collection="couponBatchList" item="batchId" open="(" separator="," close=")">
+				#{batchId}
+			</foreach>
+		</where>
+
+	</select>
+	<select id="findOfPage" resultMap="couponUnitMap">
+		SELECT
+		<include refid="couponUnitColumns" />
+		FROM coupon_unit
+		<where>
+			<if test="po.couponUnitCode != null">
+				and coupon_unit_code = #{po.couponUnitCode}
+			</if>
+			<if test="po.receivedTime != null">
+				and received_time = #{po.receivedTime}
+			</if>
+			<if test="po.couponId != null">
+				and coupon_id = #{po.couponId}
+			</if>
+			<if test="po.couponBatchId != null">
+				and coupon_batch_id = #{po.couponBatchId}
+			</if>
+			<if test="po.orderId != null">
+				and order_id = #{po.orderId}
+			</if>
+			<if test="po.userId != null">
+				and user_id = #{po.userId}
+			</if>
+			<if test="po.usedTime != null">
+				and used_time = #{po.usedTime}
+			</if>
+			<if test="po.usedCount != null">
+				and used_count = #{po.usedCount}
+			</if>
+			<if test="po.effectStartTime != null">
+				and effect_start_time = #{po.effectStartTime}
+			</if>
+			<if test="po.effectEndTime != null">
+				and effect_end_time = #{po.effectEndTime}
+			</if>
+			<if test="po.couponUnitStatus != null">
+				and coupon_unit_status = #{po.couponUnitStatus}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.couponBatchName != null">
+				and coupon_batch_name = #{po.couponBatchName}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM coupon_unit
+		<where>
+			<if test="po.couponUnitCode != null">
+				and coupon_unit_code = #{po.couponUnitCode}
+			</if>
+			<if test="po.receivedTime != null">
+				and received_time = #{po.receivedTime}
+			</if>
+			<if test="po.couponId != null">
+				and coupon_id = #{po.couponId}
+			</if>
+			<if test="po.couponBatchId != null">
+				and coupon_batch_id = #{po.couponBatchId}
+			</if>
+			<if test="po.orderId != null">
+				and order_id = #{po.orderId}
+			</if>
+			<if test="po.userId != null">
+				and user_id = #{po.userId}
+			</if>
+			<if test="po.usedTime != null">
+				and used_time = #{po.usedTime}
+			</if>
+			<if test="po.usedCount != null">
+				and used_count = #{po.usedCount}
+			</if>
+			<if test="po.effectStartTime != null">
+				and effect_start_time = #{po.effectStartTime}
+			</if>
+			<if test="po.effectEndTime != null">
+				and effect_end_time = #{po.effectEndTime}
+			</if>
+			<if test="po.couponUnitStatus != null">
+				and coupon_unit_status = #{po.couponUnitStatus}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.couponBatchName != null">
+				and coupon_batch_name = #{po.couponBatchName}
+			</if>
+		</where>
+	</select>
+	
+	<sql id="findOfPageByBlurrySql">
+		FROM coupon_unit cu 
+		LEFT JOIN coupon c on c.id = cu.coupon_id 
+		LEFT JOIN coupon_batch cb on cb.id = cu.coupon_batch_id 
+		<where>
+				<if test="po.couponCode != null">
+					and c.coupon_code = #{po.couponCode}
+				</if>
+				<if test="po.couponBatchCode != null">
+					and cb.coupon_batch_code = #{po.couponBatchCode}
+				</if>
+				<if test="po.couponBatchName != null">
+					and cb.coupon_batch_name LIKE  concat('%',#{po.couponBatchName},'%')
+				</if>
+				<if test="po.couponType != null">
+					and c.coupon_type = #{po.couponType}
+				</if>
+				<if test="po.couponUnitStatus != null">
+					<choose>
+						<when test="po.couponUnitStatus == 0">
+							<!-- 可使用 -->
+							and cu.coupon_unit_status = #{po.couponUnitStatus} 
+							and (cu.effect_end_time &gt; now() or cu.effect_end_time is null)
+						</when>
+						<when test="po.couponUnitStatus == 3">
+							<!-- 已过期 -->
+							and (cu.coupon_unit_status = #{po.couponUnitStatus} or 
+								(cu.coupon_unit_status = 0 and cu.effect_end_time &lt;= now())) 
+						</when>
+						<otherwise>
+							and cu.coupon_unit_status = #{po.couponUnitStatus} 
+						</otherwise>
+					</choose>
+				</if>
+				<if test="po.couponUnitCode != null">
+					and cu.coupon_unit_code = #{po.couponUnitCode}
+				</if>
+			<if test="po.receivedTime != null">
+				and received_time = #{po.receivedTime}
+			</if>
+				<if test="po.effectStartTime != null">
+					and cu.effect_start_time &gt;= #{po.effectStartTime}
+				</if>
+				<if test="po.effectEndTime != null">
+					and cu.effect_end_time &lt;= #{po.effectEndTime}
+				</if>
+				<if test="po.createTime != null">
+					and date_format(cu.create_time,'%y-%m-%d') = date_format(#{po.createTime},'%y-%m-%d')
+				</if>
+				<if test="po.orderId != null">
+					and order_id = #{po.orderId}
+				</if>
+				<if test="po.platformId != null">
+					and cu.platform_id = #{po.platformId}
+				</if>
+				<if test="userList != null">
+					and cu.user_id in 
+					<foreach collection="userList" item="userId" open="(" close=")" separator=",">
+						#{userId}
+					</foreach>
+				</if>
+			</where>
+	</sql>
+	
+	<select id="findOfPageByBlurry" resultMap="couponUnitConditionMap">
+		SELECT
+		cu.id,
+		cu.coupon_unit_code,
+		cu.coupon_id,
+		cu.coupon_batch_id,
+		cu.order_id,
+		cu.user_id,
+		cu.used_time,
+		cu.used_count,
+		cu.effect_start_time,
+		cu.effect_end_time,
+		cu.coupon_unit_status,
+		cu.create_time,
+		cu.update_time,
+		cu.is_read,
+		c.coupon_code,
+		c.coupon_type,
+		c.title title,
+		cb.coupon_batch_code,
+		cb.coupon_batch_name,
+		cb.grant_type,
+		cb.get_type,
+		cu.received_time
+		
+		<include refid="findOfPageByBlurrySql" />
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY cu.id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPageByBlurry" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		<include refid="findOfPageByBlurrySql" />
+	</select>
+	
+	<sql id="findOfPageByUserSql">
+		FROM coupon_unit cu 
+		LEFT JOIN coupon c on c.id = cu.coupon_id 
+		LEFT JOIN coupon_batch cb on cb.id = cu.coupon_batch_id
+		<where>
+			<if test="po.id!=null">
+				AND cu.id=#{po.id}
+			</if>
+			<if test="po.receivedTime != null">
+				and cu.received_time = #{po.receivedTime}
+			</if>
+			<if test="po.userId != null">
+				and cu.user_id = #{po.userId}
+			</if>
+			<if test="po.couponType != null">
+				and c.coupon_type = #{po.couponType}
+			</if>
+			<if test="po.triggerAmount != null">
+				and c.trigger_amount &lt;= #{po.triggerAmount}
+			</if>
+			<if test="po.platformId != null">
+				and cu.platform_id = #{po.platformId}
+			</if>
+			<if test="po.couponUnitStatus != null">
+				<choose>
+					<when test="po.couponUnitStatus == 0">
+						<!-- 可使用 -->
+						and cu.coupon_unit_status = 0 
+						and (cu.effect_end_time is null or cu.effect_end_time &gt; now())
+					</when>
+					<when test="po.couponUnitStatus == 1">
+						<!-- 已过期+已使用 -->
+						and (cu.coupon_unit_status = 1 OR
+							cu.coupon_unit_status = 3 OR cu.effect_end_time &lt;= now()OR cu.coupon_unit_status = 5 OR cu.coupon_unit_status=2 OR cu.coupon_unit_status=4)
+					</when>
+					<otherwise>
+						and cu.coupon_unit_status = #{po.couponUnitStatus} 
+					</otherwise>
+				</choose>
+			</if>
+		</where>
+	</sql>
+	
+	<select id="findOfPageByUser" resultMap="couponUnitConditionMap">
+		SELECT
+		cu.id,
+		cu.effect_start_time,
+		cu.effect_end_time,
+		cu.coupon_unit_status,
+		cu.received_time,
+		cu.is_read,
+		cb.effect_start_time coupon_batch_effect_start_time,
+		cb.effect_end_time coupon_batch_effect_end_time,
+		cb.id coupon_batch_id,
+		c.coupon_type,
+		c.title title,
+		c.discount_amount,
+		c.trigger_amount,
+		c.icon_url,
+		c.detail,
+		c.jump_type,
+		c.goods_type,
+		c.goods_id,
+		c.id coupon_id
+		
+		<include refid="findOfPageByUserSql" />
+		<choose>
+			<when test="po.couponType == 0">
+			<!-- 满减卷 -->
+				ORDER BY cu.effect_start_time &lt;= now(),cu.effect_end_time,cb.create_time 
+			</when>		
+			<when test="po.couponType == 1">
+			<!-- 兑换卷 -->
+				ORDER BY cu.effect_start_time &lt;= now(),cu.effect_end_time,c.discount_amount,cb.create_time 
+			</when>		
+			<otherwise>
+				ORDER BY cu.id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPageByUser" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		<include refid="findOfPageByUserSql" />
+	</select>
+	
+	<sql id="findCouponUnitCenterOfPageSql">
+		FROM coupon_batch cb 
+		LEFT JOIN coupon c ON c.id = cb.coupon_rel_id 
+		LEFT JOIN coupon_company cc ON cc.coupon_id = cb.coupon_rel_id  
+		LEFT JOIN coupon_unit cu ON cu.coupon_batch_id = cb.id AND cu.user_id = #{po.userId}  
+		<where>
+			<if test="po.id!=null">
+				AND cu.id=#{po.id}
+			</if>
+			<if test="po.receivedTime != null">
+				and cu.received_time = #{po.receivedTime}
+			</if>
+			<if test="po.couponBatchId != null">
+				AND cb.id = #{po.couponBatchId}
+			</if>
+			<!-- 优惠券领取时不用判断是否有效 -->
+			<if test="po.couponBatchId == null">
+				AND (cb.effect_end_time &gt; now() or cb.effect_end_time is null)
+			</if>
+			<if test="true">
+				AND cb.grant_type = 1
+				AND (cb.is_display = 1 or cb.is_display is null)
+				AND cb.is_effect = 0
+				AND cb.receive_end_time>= now()
+				AND  cb.get_type!=3
+			</if>
+			<if test="po.couponRelType != null">
+				AND cb.coupon_rel_type = #{po.couponRelType} 
+			</if>
+			<if test="po.couponType != null">
+				AND c.coupon_type = #{po.couponType}
+			</if>
+			<if test="po.companyId != null">
+				AND (cc.company_id = #{po.companyId} or cc.company_id = #{companyIdByType})
+			</if>
+			<if test="po.platformId != null">
+				and c.platform_id = #{po.platformId}
+			</if>
+		</where>
+		GROUP BY cb.id 
+	</sql>
+	
+	<sql id="couponUnitConditionSql">
+			cb.id coupon_batch_id,
+			cb.effect_start_time coupon_batch_effect_start_time,
+			cb.effect_end_time coupon_batch_effect_end_time,
+			cb.receive_start_time coupon_batch_receive_start_time,
+			cb.receive_end_time coupon_batch_receive_end_time,
+			cb.grant_type, 
+			cb.grant_count,
+			cb.is_repeat,
+			cb.coupon_rel_type,
+			cb.coupon_rel_id,
+			cb.create_time,
+			cb.effect_days,
+			cb.get_type,
+			cb.coupon_batch_name,
+			cu.id,
+			cu.effect_start_time,
+			cu.effect_end_time,
+			cu.coupon_unit_status,
+			cu.received_time,
+			cu.is_read,
+			c.coupon_type,
+			c.title title,
+			c.discount_amount,
+			c.trigger_amount,
+			c.icon_url,
+			c.detail,
+			c.jump_type,
+			c.goods_type,
+			c.goods_id,
+			c.id coupon_id
+	</sql>
+	
+	<sql id="couponUnitConditionSql2">
+			t.coupon_batch_id,
+			t.coupon_batch_effect_start_time,
+			t.coupon_batch_effect_end_time,
+			t.coupon_batch_receive_start_time,
+			t.coupon_batch_receive_end_time,
+			t.grant_type,
+			t.grant_count,
+			t.is_repeat,
+			t.coupon_rel_type,
+			t.coupon_rel_id,
+			t.create_time,
+			t.effect_days,
+			t.get_type,
+			cu.id,
+			cu.effect_start_time,
+			cu.effect_end_time,
+			cu.coupon_unit_status,
+			cu.received_time,
+			cu.is_read,
+			t.coupon_type,
+			t.title title,
+			t.discount_amount,
+			t.trigger_amount,
+			t.icon_url,
+			t.detail,
+			t.jump_type,
+			t.goods_type,
+			t.goods_id,
+			t.coupon_id 
+	</sql>
+
+	<select id="findCouponUnitCenterOfPage" resultMap="couponUnitConditionMap">
+		select
+		<include refid="couponUnitConditionSql2" />
+		from
+		(
+		SELECT
+		max(cu.id) max_id,
+		<include refid="couponUnitConditionSql" />
+		<include refid="findCouponUnitCenterOfPageSql" />
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY cb.id
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+		) t
+		LEFT JOIN coupon_unit cu on t.max_id = cu.id
+	</select>
+	
+	<select id="countCouponUnitCenterOfPage" resultType="java.lang.Integer">
+		select count(t.cnt) cnt from ( 
+		SELECT
+		count(1) cnt
+		<include refid="findCouponUnitCenterOfPageSql" />
+		) t 
+	</select>
+	
+	<select id="findSUCouponBatchOfPage" resultMap="couponUnitConditionMap">
+		select 
+		<include refid="couponUnitConditionSql2" />
+		from
+		(
+		SELECT 
+		max(cu.id) max_id, 
+		<include refid="couponUnitConditionSql" />
+		FROM coupon_batch cb
+		LEFT JOIN coupon c ON c.id = cb.coupon_rel_id
+		LEFT JOIN coupon_store cs ON c.id = cs.coupon_id
+		LEFT JOIN coupon_company cc ON cc.coupon_id = cb.coupon_rel_id   
+		LEFT JOIN (select * from coupon_unit order by id desc) cu ON cu.coupon_batch_id = cb.id AND cu.user_id = #{po.userId}
+		WHERE 
+		cb.coupon_rel_type = 0<!-- 优惠卷 -->
+		<if test="po.storeId != null">
+			AND cs.store_id = #{po.storeId}
+		</if>
+		AND ((cb.receive_start_time &lt; now() and cb.receive_end_time &gt; now()) or cu.user_id = #{po.userId})
+		AND (cb.grant_type = 1 or (cb.grant_type = 0 and cu.user_id = #{po.userId}))
+		AND cb.is_effect = 0
+		AND (cb.is_display = 1 or cb.is_display is null)
+		AND (cb.effect_end_time &gt; now() or cb.effect_end_time is null)
+		AND (cc.company_id = #{po.companyId} or cc.company_id = #{companyIdByType})
+		AND c.coupon_type =0
+		AND (
+			(c.goods_type = 0 and c.goods_id = #{po.goodsId})
+			<choose>
+				<when test="goodIdList != null and goodIdList.size() > 0">
+					or (c.goods_type = 1 and c.goods_id in 
+					<foreach collection="goodIdList" item="goodsId" open="(" close=")" separator=",">
+						#{goodsId}
+					</foreach>
+					)
+				</when>
+				<otherwise>
+				</otherwise>
+			</choose>
+			)
+		GROUP BY cb.id 
+			
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY coupon_batch_id   	
+			</otherwise>
+		</choose>
+		) t
+		LEFT JOIN coupon_unit cu on t.max_id = cu.id
+	</select>
+	
+	<select id="findAll" resultMap="couponUnitMap">
+		SELECT
+		<include refid="couponUnitColumns" />
+		FROM coupon_unit
+		<where>
+			<if test="po.couponUnitCode != null">
+				and coupon_unit_code = #{po.couponUnitCode}
+			</if>
+			<if test="po.couponId != null">
+				and coupon_id = #{po.couponId}
+			</if>
+			<if test="po.couponBatchId != null">
+				and coupon_batch_id = #{po.couponBatchId}
+			</if>
+			<if test="po.orderId != null">
+				and order_id = #{po.orderId}
+			</if>
+			<if test="po.receivedTime != null">
+				and received_time = #{po.receivedTime}
+			</if>
+			<choose>
+				<when test="po.userId != null and po.userId != -1">
+					and user_id=#{po.userId}
+				</when>
+				<when test=" po.userId == -1">
+					and user_id is not NULL
+				</when>
+			</choose>
+			<if test="po.usedTime != null">
+				and used_time = #{po.usedTime}
+			</if>
+			<if test="po.usedCount != null">
+				and used_count = #{po.usedCount}
+			</if>
+			<if test="po.effectStartTime != null">
+				and effect_start_time = #{po.effectStartTime}
+			</if>
+			<if test="po.effectEndTime != null">
+				and effect_end_time = #{po.effectEndTime} 
+			</if>
+			<if test="po.couponUnitStatus != null">
+				and coupon_unit_status = #{po.couponUnitStatus}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.couponBatchName != null">
+				and coupon_batch_name = #{po.couponBatchName}
+			</if>
+			<if test="po.isRead != null">
+				and is_read = #{po.isRead}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findCouponUnitOfAllByUser" resultMap="couponUnitConditionMap">
+		SELECT
+		<include refid="couponUnitConditionSql" />
+		FROM 
+		coupon_unit cu
+		LEFT JOIN coupon_batch cb ON cb.id = cu.coupon_batch_id
+		LEFT JOIN coupon c ON c.id = cu.coupon_id 
+		
+		<where>
+			<if test="po.id != null">
+				AND cu.id = #{po.id} 
+			</if>
+			<if test="true">
+				AND cu.coupon_unit_status = 0
+				AND cu.user_id = #{po.userId}
+				AND ((cb.grant_type = 1 AND cb.is_effect = 0) or cb.grant_type = 0)
+				AND (cu.effect_end_time &gt; now() or cu.effect_end_time is null)
+				AND (cu.effect_start_time &lt;= now() or cu.effect_start_time is null)
+			</if>
+			<if test="po.couponType != null">
+				AND c.coupon_type = #{po.couponType}
+			</if>
+		</where>
+		
+		ORDER BY cu.effect_start_time &lt;= now(),cu.effect_end_time,cb.create_time 
+	</select>
+
+	<select id="findCouponUnitAllCount" resultType="java.lang.Long">
+		SELECT
+		count(1)
+		FROM coupon_unit
+		<where>
+			<if test="po.couponUnitCode != null">
+				and coupon_unit_code = #{po.couponUnitCode}
+			</if>
+			<if test="po.couponId != null">
+				and coupon_id = #{po.couponId}
+			</if>
+			<if test="po.couponBatchId != null">
+				and coupon_batch_id = #{po.couponBatchId}
+			</if>
+			<if test="po.orderId != null">
+				and order_id = #{po.orderId}
+			</if>
+			<if test="po.receivedTime != null">
+				and received_time = #{po.receivedTime}
+			</if>
+			<choose>
+				<when test="po.userId != null and po.userId != -1">
+					and user_id=#{po.userId}
+				</when>
+				<when test=" po.userId == -1">
+					and user_id is not NULL
+				</when>
+			</choose>
+			<if test="po.usedTime != null">
+				and used_time = #{po.usedTime}
+			</if>
+			<if test="po.usedCount != null">
+				and used_count = #{po.usedCount}
+			</if>
+			<if test="po.effectStartTime != null">
+				and effect_start_time = #{po.effectStartTime}
+			</if>
+			<if test="po.effectEndTime != null">
+				and effect_end_time = #{po.effectEndTime}
+			</if>
+			<if test="po.couponUnitStatus != null">
+				and coupon_unit_status = #{po.couponUnitStatus}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.couponBatchName != null">
+				and coupon_batch_name = #{po.couponBatchName}
+			</if>
+			<if test="po.isRead != null">
+				and is_read = #{po.isRead}
+			</if>
+		</where>
+	</select>
+
+
+
+	<select id="countCouponUnitExchangeOfPage" resultType="java.lang.Integer">
+		select count(t.cnt) cnt from (
+		SELECT
+		count(1) cnt
+		<include refid="findCouponUnitExchangeOfPageSql" />
+		) t
+	</select>
+
+	<sql id="findCouponUnitExchangeOfPageSql">
+		FROM coupon_batch cb
+		LEFT JOIN coupon c ON c.id = cb.coupon_rel_id
+		LEFT JOIN coupon_company cc ON cc.coupon_id = cb.coupon_rel_id
+		LEFT JOIN coupon_unit cu ON cu.coupon_batch_id = cb.id AND cu.user_id = #{po.userId}
+		<where>
+			<if test="po.id!=null">
+				AND cu.id=#{po.id}
+			</if>
+			<if test="po.receivedTime != null">
+				and cu.received_time = #{po.receivedTime}
+			</if>
+			<if test="po.couponBatchId != null">
+				AND cb.id = #{po.couponBatchId}
+			</if>
+			<!-- 优惠券领取时不用判断是否有效 -->
+			<if test="po.couponBatchId == null">
+				AND (cb.effect_end_time &gt; now() or cb.effect_end_time is null)
+			</if>
+			<if test="true">
+				AND cb.grant_type = 1
+				AND (cb.is_display = 1 or cb.is_display is null)
+				AND cb.is_effect = 0
+				AND cb.receive_end_time>= now()
+			</if>
+			<if test="po.couponRelType != null">
+				AND cb.coupon_rel_type = #{po.couponRelType}
+			</if>
+			<if test="po.couponType != null">
+				AND c.coupon_type = #{po.couponType}
+			</if>
+			<if test="po.companyId != null">
+				AND (cc.company_id = #{po.companyId} or cc.company_id = #{companyIdByType})
+			</if>
+			<if test="po.platformId != null">
+				and c.platform_id = #{po.platformId}
+			</if>
+		</where>
+		GROUP BY cb.id
+	</sql>
+
+
+
+	<select id="findCouponUnitAndBatchExchange" resultMap="couponUnitConditionMap">
+		select
+		<include refid="couponUnitConditionSql2" />
+		from
+		(
+		SELECT
+		max(cu.id) max_id,
+		<include refid="couponUnitConditionSql" />
+		<include refid="findCouponUnitExchangeOfPageSql" />
+		) t
+		LEFT JOIN coupon_unit cu on t.max_id = cu.id
+	</select>
+
+
+
+
+
+
+	<select id="findCouponUnitCountOfFreezeByParams" resultType="java.lang.Long">
+		select
+		count(1) cnt
+		from
+		coupon_unit
+		where
+		coupon_batch_id=#{couponBatchId}
+		and coupon_unit_status=2
+		and batch_index >= #{startNum}
+		and #{endNum} >= batch_index
+	</select>
+	
+	<select id="countUnreadCouponUnit" resultType="java.lang.Integer">
+		select count(1) 
+		from coupon_unit cu 
+		LEFT JOIN coupon c on cu.coupon_id = c.id 
+		where cu.user_id = #{userId} 
+		and cu.is_read = 0 
+		and c.coupon_type = #{couponType} 
+	</select>
+</mapper>
+	

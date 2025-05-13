@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.cms.dao.write.PageTabWriteDAO">
+	<insert id="insert" parameterType="com.egeo.components.cms.po.PageTabPO">
+		INSERT INTO page_tab(
+        <trim suffixOverrides=",">
+			<if test="pageTabName != null">
+				page_tab_name,
+			</if>
+			<if test="pageTabRemark != null">
+				page_tab_remark,
+			</if>
+			<if test="pageTabSort != null">
+				page_tab_sort,
+			</if>
+			<if test="isHomePage != null">
+				is_home_page,
+			</if>
+			<if test="pageTabStatus != null">
+				page_tab_status,
+			</if>
+			<if test="webTemplateId != null">
+				web_template_id,
+			</if>
+			<if test="companyId != null">
+				company_id,
+			</if>
+			<if test="updateUser != null">
+				update_user,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="platformId != null">
+				platform_id,
+			</if>
+        </trim>		
+		) VALUES (
+        <trim suffixOverrides=",">
+			<if test="pageTabName != null">
+				#{pageTabName},
+			</if>
+			<if test="pageTabRemark != null">
+				#{pageTabRemark},
+			</if>
+			<if test="pageTabSort != null">
+				#{pageTabSort},
+			</if>
+			<if test="isHomePage != null">
+				#{isHomePage},
+			</if>
+			<if test="pageTabStatus != null">
+				#{pageTabStatus},
+			</if>
+			<if test="webTemplateId != null">
+				#{webTemplateId},
+			</if>
+			<if test="companyId != null">
+				#{companyId},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="platformId != null">
+				#{platformId},
+			</if>
+        </trim>		
+		)
+		<selectKey keyProperty="id" resultType="java.lang.Long">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+
+	
+	
+	<update id="update">
+	UPDATE page_tab 
+		<set>
+			<if test="pageTabName != null">
+				page_tab_name = #{pageTabName},
+			</if>			
+			<if test="pageTabRemark != null">
+				page_tab_remark = #{pageTabRemark},
+			</if>			
+			<if test="pageTabSort != null">
+				page_tab_sort = #{pageTabSort},
+			</if>			
+			<if test="isHomePage != null">
+				is_home_page = #{isHomePage},
+			</if>			
+			<if test="pageTabStatus != null">
+				page_tab_status = #{pageTabStatus},
+			</if>			
+			<if test="webTemplateId != null">
+				web_template_id = #{webTemplateId},
+			</if>			
+			<if test="companyId != null">
+				company_id = #{companyId},
+			</if>			
+			<if test="updateUser != null">
+				update_user = #{updateUser},
+			</if>			
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>			
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>	
+			<if test="platformId != null">
+				platform_id = #{platformId},
+			</if>		
+		</set>
+			WHERE id = #{id}
+	</update>	
+	
+
+	<delete id="delete">
+		delete from page_tab where id = #{id}
+	</delete>
+
+	<delete id="deleteByPara">
+		delete from page_tab 
+		<where>
+			<if test="pageTabName != null">
+				and page_tab_name = #{pageTabName}
+			</if>
+			<if test="pageTabRemark != null">
+				and page_tab_remark = #{pageTabRemark}
+			</if>
+			<if test="pageTabSort != null">
+				and page_tab_sort = #{pageTabSort}
+			</if>
+			<if test="isHomePage != null">
+				and is_home_page = #{isHomePage}
+			</if>
+			<if test="pageTabStatus != null">
+				and page_tab_status = #{pageTabStatus}
+			</if>
+			<if test="webTemplateId != null">
+				and web_template_id = #{webTemplateId}
+			</if>
+			<if test="companyId != null">
+				and company_id = #{companyId}
+			</if>
+			<if test="updateUser != null">
+				and update_user = #{updateUser}
+			</if>
+			<if test="updateTime != null">
+				and update_time = #{updateTime}
+			</if>
+			<if test="createTime != null">
+				and create_time = #{createTime}
+			</if>
+		</where>
+	</delete>
+
+
+</mapper>
+	

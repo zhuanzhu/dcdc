@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.product.dao.read.CategoryTreeNodeRelAttValueReadDAO">
+	<resultMap type="com.egeo.components.product.po.CategoryTreeNodeRelAttValuePO" id="categoryTreeNodeRelAttValueMap">
+		<result property="id" column="id" />
+		<result property="cateTreeNodeRelAttNameId" column="cate_tree_node_rel_att_name_id" />
+		<result property="attValueId" column="att_value_id" />
+		<result property="attValueCustom" column="att_value_custom" />
+		<result property="sortValue" column="sort_value" />
+		<result property="platformId" column="platform_id" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+	</resultMap>
+
+	<sql id="categoryTreeNodeRelAttValueColumns">
+		id,
+		cate_tree_node_rel_att_name_id,
+		att_value_id,
+		att_value_custom,
+		sort_value,
+		platform_id,
+		create_time,
+		update_time
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.product.po.CategoryTreeNodeRelAttValuePO" resultMap="categoryTreeNodeRelAttValueMap">
+		SELECT
+		<include refid="categoryTreeNodeRelAttValueColumns" />
+		FROM category_tree_node_rel_att_value
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="categoryTreeNodeRelAttValueMap">
+		SELECT
+		<include refid="categoryTreeNodeRelAttValueColumns" />
+		FROM category_tree_node_rel_att_value
+		<where>
+			<if test="po.cateTreeNodeRelAttNameId != null">
+				and cate_tree_node_rel_att_name_id = #{po.cateTreeNodeRelAttNameId}
+			</if>
+			<if test="po.attValueId != null">
+				and att_value_id = #{po.attValueId}
+			</if>
+			<if test="po.attValueCustom != null">
+				and att_value_custom = #{po.attValueCustom}
+			</if>
+			<if test="po.sortValue != null">
+				and sort_value = #{po.sortValue}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY sort_value
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM category_tree_node_rel_att_value
+		<where>
+			<if test="po.cateTreeNodeRelAttNameId != null">
+				and cate_tree_node_rel_att_name_id = #{po.cateTreeNodeRelAttNameId}
+			</if>
+			<if test="po.attValueId != null">
+				and att_value_id = #{po.attValueId}
+			</if>
+			<if test="po.attValueCustom != null">
+				and att_value_custom = #{po.attValueCustom}
+			</if>
+			<if test="po.sortValue != null">
+				and sort_value = #{po.sortValue}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="categoryTreeNodeRelAttValueMap">
+		SELECT
+		<include refid="categoryTreeNodeRelAttValueColumns" />
+		FROM category_tree_node_rel_att_value
+		<where>
+			<if test="po.cateTreeNodeRelAttNameId != null">
+				and cate_tree_node_rel_att_name_id = #{po.cateTreeNodeRelAttNameId}
+			</if>
+			<if test="po.attValueId != null">
+				and att_value_id = #{po.attValueId}
+			</if>
+			<if test="po.attValueCustom != null">
+				and att_value_custom = #{po.attValueCustom}
+			</if>
+			<if test="po.sortValue != null">
+				and sort_value = #{po.sortValue}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY sort_value
+			</otherwise>
+		</choose>
+	</select>
+</mapper>
+	

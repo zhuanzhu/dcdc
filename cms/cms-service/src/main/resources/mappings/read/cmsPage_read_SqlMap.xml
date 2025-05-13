@@ -1,0 +1,416 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.cms.dao.read.CmsPageReadDAO">
+	<resultMap type="com.egeo.components.cms.po.CmsPagePO" id="cmsPageMap">
+		<result property="id" column="id" />
+		<result property="templateId" column="template_id" />
+		<result property="pageName" column="page_name" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="platformId" column="platform_id" />
+		<result property="pageStatus" column="page_status" />
+		<result property="cfgStatus" column="cfg_status" />
+		<result property="companyType" column="company_type" />
+		<result property="updateUserId" column="update_user_id" />
+	</resultMap>
+
+	<sql id="cmsPageColumns">
+		id,
+		template_id,
+		page_name,
+		create_time,
+		update_time,
+		platform_id,
+		company_type,
+		page_status,
+		cfg_status,
+		update_user_id
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.cms.po.CmsPagePO" resultMap="cmsPageMap">
+		SELECT
+		<include refid="cmsPageColumns" />
+		FROM cms_page
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="cmsPageMap">
+		SELECT
+		<include refid="cmsPageColumns" />
+		FROM cms_page
+		<where>
+			<if test="po.templateId != null">
+				and template_id = #{po.templateId}
+			</if>
+			<if test="po.pageName != null">
+				and page_name = #{po.pageName}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM cms_page
+		<where>
+			<if test="po.templateId != null">
+				and template_id = #{po.templateId}
+			</if>
+			<if test="po.pageName != null">
+				and page_name = #{po.pageName}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+	</select>
+	
+	
+	<select id="findBlurOfPage" resultMap="cmsPageCondition">
+		SELECT
+			cp.id,
+			cp.template_id,
+			cp.page_name,
+			cp.create_time,
+			cp.update_time,
+			cp.platform_id,
+			ct.name template_name,
+			ct.type template_type,
+			ct.client_type,
+			cp.page_status,
+			cp.cfg_status,
+			cp.update_user_id,
+			cpc.company_id,
+			ct.client_version_a_remark,
+			ct.client_version_i_remark
+		FROM cms_page cp 
+		LEFT JOIN cms_template ct ON cp.template_id = ct.id
+		LEFT JOIN cms_page_company cpc on cp.id = cpc.page_id
+		<where>
+			<if test="condition.templateId != null">
+				and cp.template_id = #{condition.templateId}
+			</if>
+			<if test="condition.pageName != null">
+				and cp.page_name like concat('%',#{condition.pageName},'%')
+			</if>
+			<if test="condition.createTime != null">
+				and cp.create_time = #{condition.createTime}
+			</if>
+			<if test="condition.updateTime != null">
+				and cp.update_time = #{condition.updateTime}
+			</if>
+			<if test="condition.platformId != null">
+				and cp.platform_id = #{condition.platformId}
+			</if>
+			<if test="condition.companyId != null">
+				and cp.company_id = #{condition.companyId}
+			</if>
+			<if test="condition.pageStatus != null">
+				and cp.page_status = #{condition.pageStatus}
+			</if>
+			<if test="condition.companyIds != null and condition.companyIds.size>0">
+				and cpc.company_id in
+				<foreach collection="condition.companyIds" item="companyId" open="(" close=")" separator=",">
+					#{companyId}
+				</foreach>
+			</if>
+			
+			<if test="condition.templateName != null">
+				and ct.name like concat('%',#{condition.templateName},'%')
+			</if>
+			
+			<if test="condition.templateType != null">
+				and ct.type = #{condition.templateType}
+			</if>
+			
+			<if test="condition.clientType != null">
+				and ct.client_type = #{condition.clientType}
+			</if>
+			<if test="condition.companyType != null">
+				and cp.company_type = #{condition.companyType}
+			</if>
+			<choose>
+				<when test="condition.isSingle != null and condition.isSingle == 1">
+					and cpc.company_id &gt; 0
+				</when>
+				<when test="condition.isSingle != null and condition.isSingle == 0">
+					and cpc.company_id &lt; 0
+				</when>
+			</choose>
+			<choose>
+				<when test="condition.searchType!=null and condition.searchType == 1">
+					and ct.type = 1	
+				</when>
+				<when test="condition.searchType!=null and condition.searchType == 0">
+					and ct.type != 1	
+				</when>
+			</choose>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY cp.id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countBlurOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM cms_page cp
+		LEFT JOIN cms_template ct ON cp.template_id = ct.id
+		LEFT JOIN cms_page_company cpc on cp.id = cpc.page_id
+		<where>
+			<if test="condition.templateId != null">
+				and cp.template_id = #{condition.templateId}
+			</if>
+			<if test="condition.pageName != null">
+				and cp.page_name like concat('%',#{condition.pageName},'%')
+			</if>
+			<if test="condition.createTime != null">
+				and cp.create_time = #{condition.createTime}
+			</if>
+			<if test="condition.updateTime != null">
+				and cp.update_time = #{condition.updateTime}
+			</if>
+			<if test="condition.platformId != null">
+				and cp.platform_id = #{condition.platformId}
+			</if>
+			<if test="condition.companyType != null">
+				and cp.company_type = #{condition.companyType}
+			</if>
+			<if test="condition.companyId != null">
+				and cp.company_id = #{condition.companyId}
+			</if>
+			<if test="condition.pageStatus != null">
+				and cp.page_status = #{condition.pageStatus}
+			</if>
+			<if test="condition.companyIds != null and condition.companyIds.size > 0 ">
+				and cpc.company_id in
+				<foreach collection="condition.companyIds" item="companyId" open="(" close=")" separator=",">
+					#{companyId}
+				</foreach>
+			</if>
+			
+			<if test="condition.templateName != null">
+				and ct.name like concat('%',#{condition.templateName},'%')
+			</if>
+			
+			<if test="condition.templateType != null">
+				and ct.type = #{condition.templateType}
+			</if>
+			
+			<if test="condition.clientType != null">
+				and ct.client_type = #{condition.clientType}
+			</if>
+			<choose>
+				<when test="condition.isSingle != null and condition.isSingle == 1">
+					and cpc.company_id &gt; 0
+				</when>
+				<when test="condition.isSingle != null and condition.isSingle == 0">
+					and cpc.company_id &lt; 0
+				</when>
+			</choose>
+			<choose>
+				<when test="condition.searchType!=null and condition.searchType == 1">
+					and ct.type = 1	
+				</when>
+				<when test="condition.searchType!=null and condition.searchType == 0">
+					and ct.type != 1	
+				</when>
+			</choose>
+		</where>
+	</select>
+	
+	
+	<select id="findAll" resultMap="cmsPageMap">
+		SELECT
+		<include refid="cmsPageColumns" />
+		FROM cms_page
+		<where>
+			<if test="po.templateId != null">
+				and template_id = #{po.templateId}
+			</if>
+			<if test="po.pageName != null">
+				and page_name = #{po.pageName}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+	
+	<resultMap type="com.egeo.components.cms.condition.CmsPageCondition" id="cmsPageCondition">
+		<result property="id" column="id" />
+		<result property="templateId" column="template_id" />
+		<result property="pageName" column="page_name" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="platformId" column="platform_id" />
+		<result property="clientType" column="client_type" />
+		<result property="templateName" column="template_name" />
+		<result property="templateType" column="template_type" />
+		<result property="pageStatus" column="page_status" />
+		<result property="cfgStatus" column="cfg_status" />
+		<result property="updateUserId" column="update_user_id" />
+		<result property="companyId" column="company_id" />
+		<result property="clientVersionARemark" column="client_version_a_remark" />
+		<result property="clientVersionIRemark" column="client_version_i_remark" />
+		<result property="clientVersionACode" column="client_version_a_code" />
+		<result property="clientVersionICode" column="client_version_i_code" />
+	</resultMap>
+	
+	<select id="findAllByClientType" resultMap="cmsPageCondition">
+		SELECT
+			cp.id,
+			cp.template_id,
+			cp.page_name,
+			cp.create_time,
+			cp.update_time,
+			cp.platform_id,
+			ct.name template_name,
+			ct.client_type
+			FROM cms_page cp
+			left join cms_template ct on cp.template_id = ct.id
+			<where>
+				<if test="condition.templateType != null">
+					and ct.type = #{condition.templateType}
+				</if>
+				
+				<if test="condition.clientType != null">
+					and ct.client_type = #{condition.clientType}
+				</if>
+				<if test="condition.platformId != null">
+				and cp.platform_id = #{condition.platformId}
+				</if>
+				<if test="condition.pageStatus != null">
+				and cp.page_status = #{condition.pageStatus}
+				</if>
+			</where>
+	</select>
+	
+	<select id="findSupportPageByVersionCode" resultType="java.lang.Integer">
+		SELECT 
+		COUNT(1) 
+		FROM cms_page p,cms_template t 
+		WHERE p.template_id = t.id 
+		AND p.id = #{pageId}
+		AND platform_id = #{platformId} 
+		<if test="androidVersionCode != null">
+			AND t.client_version_a_code &lt; #{androidVersionCode}
+		</if>
+		<if test="iosVersionCode != null">
+			AND t.client_version_i_code &lt; #{iosVersionCode}
+		</if>
+	</select>
+	
+	<select id="findSupportPageByPageTypeAndVersionCode" resultType="java.lang.Long">
+		SELECT 
+		p.id 
+		FROM cms_page p
+		LEFT JOIN cms_template t ON p.template_id = t.id
+		LEFT JOIN cms_page_company cp on p.id = cp.page_id
+		WHERE t.client_type = 6
+		AND p.page_status = 0
+		AND (cp.company_id = #{companyId} OR cp.company_id = #{companyAllId})
+		AND t.type = #{pageType}
+		AND platform_id = #{platformId} 
+		<if test="androidVersionCode != null">
+			AND t.client_version_a_code &lt; #{androidVersionCode} ORDER BY t.client_version_a_code DESC,cp.company_id DESC LIMIT 0,1
+		</if>
+		<if test="iosVersionCode != null">
+			AND t.client_version_i_code &lt; #{iosVersionCode} ORDER BY t.client_version_i_code DESC,cp.company_id DESC LIMIT 0,1
+		</if>
+		<if test="androidVersionCode == null and iosVersionCode == null">
+			ORDER BY cp.company_id DESC LIMIT 0,1
+		</if>
+	</select>
+	
+	<select id="findCmsPageByPageId" resultMap="cmsPageCondition">
+		SELECT 
+		cp.id,
+		cp.template_id,
+		cp.page_name,
+		cp.platform_id,
+		ct.name template_name,
+		ct.client_type,
+		ct.type template_type,
+		ct.client_version_a_code,
+		ct.client_version_i_code,
+		cpc.company_id
+		FROM cms_page cp
+		LEFT JOIN cms_template ct ON cp.template_id = ct.id
+		LEFT JOIN cms_page_company cpc on cp.id = cpc.page_id
+		where cp.id = #{po.id}
+	</select>
+	
+	<select id="findCmsPageByCompanyIdAndVersion" resultMap="cmsPageCondition">
+		SELECT 
+		cp.id,
+		cp.template_id,
+		cp.page_name,
+		cp.platform_id,
+		ct.name template_name,
+		ct.client_type,
+		ct.client_version_a_code,
+		ct.client_version_i_code,
+		cpc.company_id
+		FROM cms_page cp
+		LEFT JOIN cms_template ct ON cp.template_id = ct.id
+		LEFT JOIN cms_page_company cpc on cp.id = cpc.page_id
+		where cpc.company_id = #{condition.companyId}
+		and ct.client_version_a_code = #{condition.clientVersionACode}
+		and ct.client_version_i_code = #{condition.clientVersionICode}
+		and cp.page_status = #{condition.pageStatus}
+		and cp.platform_id = #{condition.platformId}
+		and ct.type = #{condition.templateType}
+		and ct.client_type = #{condition.clientType}
+	</select>
+	
+</mapper>
+	

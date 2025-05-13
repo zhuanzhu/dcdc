@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.cms.dao.write.SuListWriteDAO">
+	<insert id="insert"
+		parameterType="com.egeo.components.cms.po.SuListPO">
+		INSERT INTO su_list(
+		<trim suffixOverrides=",">
+			<if test="titleName != null">
+				title_name,
+			</if>
+			<if test="titleColor != null">
+				title_color,
+			</if>
+			<if test="relationType != null">
+				relation_type,
+			</if>
+			<if test="sortType != null">
+				sort_type,
+			</if>
+			<if test="instId != null">
+				inst_id,
+			</if>
+			<if test="maxShow != null">
+				max_show,
+			</if>
+			<if test="showType != null">
+				show_type,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="sucId != null">
+				suc_id,
+			</if>
+			<if test="linkableId != null">
+				linkable_id,
+			</if>
+			<if test="bannerUrl != null">
+				banner_url,
+			</if>
+		</trim>
+		) VALUES (
+		<trim suffixOverrides=",">
+			<if test="titleName != null">
+				#{titleName},
+			</if>
+			<if test="titleColor != null">
+				#{titleColor},
+			</if>
+			<if test="relationType != null">
+				#{relationType},
+			</if>
+			<if test="sortType != null">
+				#{sortType},
+			</if>
+			<if test="instId != null">
+				#{instId},
+			</if>
+			<if test="maxShow != null">
+				#{maxShow},
+			</if>
+			<if test="showType != null">
+				#{showType},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
+			</if>
+			<if test="sucId != null">
+				#{sucId},
+			</if>
+			<if test="linkableId != null">
+				#{linkableId},
+			</if>
+			<if test="bannerUrl != null">
+				#{bannerUrl},
+			</if>
+		</trim>
+		)
+		<selectKey keyProperty="id" resultType="java.lang.Long">
+			select
+			LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+
+
+
+	<update id="update">
+		UPDATE su_list
+		<set>
+			<if test="titleName != null">
+				title_name = #{titleName},
+			</if>
+			<if test="titleColor != null">
+				title_color = #{titleColor},
+			</if>
+			<if test="relationType != null">
+				relation_type = #{relationType},
+			</if>
+			<if test="sortType != null">
+				sort_type = #{sortType},
+			</if>
+			<if test="instId != null">
+				inst_id = #{instId},
+			</if>
+			<if test="maxShow != null">
+				max_show = #{maxShow},
+			</if>
+			<if test="showType != null">
+				show_type = #{showType},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>
+			<if test="sucId != null">
+				suc_id=#{sucId},
+			</if>
+			<if test="linkableId != null">
+				linkable_id=#{linkableId},
+			</if>
+			<if test="bannerUrl != null">
+				banner_url=#{bannerUrl},
+			</if>
+		</set>
+		WHERE id = #{id}
+	</update>
+
+
+	<delete id="delete">
+		delete from su_list where id = #{id}
+	</delete>
+
+	<delete id="deleteByPara">
+		delete from su_list
+		<where>
+			<if test="titleName != null">
+				and title_name = #{titleName}
+			</if>
+			<if test="titleColor != null">
+				and title_color = #{titleColor}
+			</if>
+			<if test="relationType != null">
+				and relation_type = #{relationType}
+			</if>
+			<if test="sortType != null">
+				and sort_type = #{sortType}
+			</if>
+			<if test="instId != null">
+				and inst_id = #{instId}
+			</if>
+			<if test="maxShow != null">
+				and max_show = #{maxShow}
+			</if>
+			<if test="showType != null">
+				and show_type = #{showType}
+			</if>
+			<if test="createTime != null">
+				and create_time = #{createTime}
+			</if>
+			<if test="updateTime != null">
+				and update_time = #{updateTime}
+			</if>
+			<if test="sucId != null">
+				and suc_id=#{sucId}
+			</if>
+			<if test="linkableId != null">
+				and linkable_id=#{linkableId}
+			</if>
+			<if test="bannerUrl != null">
+				and banner_url=#{bannerUrl}
+			</if>
+		</where>
+	</delete>
+
+
+</mapper>
+	

@@ -1,0 +1,532 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.promotion.dao.write.ECardWriteDAO">
+	
+	<sql id="insertAllClause">
+		<foreach collection="poList" item="po" separator=",">
+				(#{po.id},
+				#{po.batch},
+				#{po.skuId},
+				#{po.skuName},
+				#{po.skuSerialNumber},
+				#{po.type},
+				#{po.cardNumber},
+				#{po.cardThick},
+				#{po.uuid},
+				#{po.startTime},
+				#{po.endTime},
+				#{po.source},
+				#{po.faceValue},
+				#{po.remark},
+				#{po.createUserid},
+				#{po.createUsername},
+				#{po.createUserip},
+				#{po.createUsermac},
+				#{po.updateUserid},
+				#{po.updateUsername},
+				#{po.updateUserip},
+				#{po.updateUsermac},
+				#{po.clientVersionno},
+				#{po.isValid},
+				#{po.orderCode},
+				#{po.userId},
+				#{po.userLoginName},
+				#{po.isAllocation},
+				#{po.allocationTime},
+				#{po.platformId},
+				#{po.standardProductUnitId},
+			#{po.shortUrl})
+		</foreach>
+	</sql>
+	
+	<insert id="insert" parameterType="com.egeo.components.promotion.po.ECardPO">
+		INSERT INTO e_card(
+        <trim suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="batch != null">
+				batch,
+			</if>
+			<if test="skuId != null">
+				sku_id,
+			</if>
+			<if test="skuName != null">
+				sku_name,
+			</if>
+			<if test="skuSerialNumber != null">
+				sku_serial_number,
+			</if>
+			<if test="type != null">
+				type,
+			</if>
+			<if test="cardNumber != null">
+				card_number,
+			</if>
+			<if test="cardThick != null">
+				card_thick,
+			</if>
+			<if test="uuid != null">
+				uuid,
+			</if>
+			<if test="startTime != null">
+				start_time,
+			</if>
+
+				end_time,
+
+			<if test="source != null">
+				source,
+			</if>
+			<if test="faceValue != null">
+				face_value,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+			<if test="createUserid != null">
+				create_userid,
+			</if>
+			<if test="createUsername != null">
+				create_username,
+			</if>
+			<if test="createUserip != null">
+				create_userip,
+			</if>
+			<if test="createUsermac != null">
+				create_usermac,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateUserid != null">
+				update_userid,
+			</if>
+			<if test="updateUsername != null">
+				update_username,
+			</if>
+			<if test="updateUserip != null">
+				update_userip,
+			</if>
+			<if test="updateUsermac != null">
+				update_usermac,
+			</if>
+			<if test="clientVersionno != null">
+				client_versionno,
+			</if>
+			<if test="isValid != null">
+				is_valid,
+			</if>
+			<if test="orderCode != null">
+				order_code,
+			</if>
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="userLoginName != null">
+				user_login_name,
+			</if>
+			<if test="isAllocation != null">
+				is_allocation,
+			</if>
+			<if test="allocationTime != null">
+				allocation_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="platformId != null">
+				platform_id,
+			</if>
+			<if test="shortUrl != null">
+				short_url,
+			</if>
+        </trim>		
+		) VALUES (
+        <trim suffixOverrides=",">
+        	<if test="id != null">
+        		#{id},
+			</if>
+			<if test="batch != null">
+				#{batch},
+			</if>
+			<if test="skuId != null">
+				#{skuId},
+			</if>
+			<if test="skuName != null">
+				#{skuName},
+			</if>
+			<if test="skuSerialNumber != null">
+				#{skuSerialNumber},
+			</if>
+			<if test="type != null">
+				#{type},
+			</if>
+			<if test="cardNumber != null">
+				#{cardNumber},
+			</if>
+			<if test="cardThick != null">
+				#{cardThick},
+			</if>
+			<if test="uuid != null">
+				#{uuid},
+			</if>
+			<if test="startTime != null">
+				#{startTime},
+			</if>
+
+				#{endTime},
+
+			<if test="source != null">
+				#{source},
+			</if>
+			<if test="faceValue != null">
+				#{faceValue},
+			</if>
+			<if test="remark != null">
+				#{remark},
+			</if>
+			<if test="createUserid != null">
+				#{createUserid},
+			</if>
+			<if test="createUsername != null">
+				#{createUsername},
+			</if>
+			<if test="createUserip != null">
+				#{createUserip},
+			</if>
+			<if test="createUsermac != null">
+				#{createUsermac},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="updateUserid != null">
+				#{updateUserid},
+			</if>
+			<if test="updateUsername != null">
+				#{updateUsername},
+			</if>
+			<if test="updateUserip != null">
+				#{updateUserip},
+			</if>
+			<if test="updateUsermac != null">
+				#{updateUsermac},
+			</if>
+			<if test="clientVersionno != null">
+				#{clientVersionno},
+			</if>
+			<if test="isValid != null">
+				#{isValid},
+			</if>
+			<if test="orderCode != null">
+				#{orderCode},
+			</if>
+			<if test="userId != null">
+				#{userId},
+			</if>
+			<if test="userLoginName != null">
+				#{userLoginName},
+			</if>
+			<if test="isAllocation != null">
+				#{isAllocation},
+			</if>
+			<if test="allocationTime != null">
+				#{allocationTime},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
+			</if>
+			<if test="platformId != null">
+				#{platformId},
+			</if>
+			<if test="shortUrl != null">
+				#{shortUrl},
+			</if>
+        </trim>		
+		)
+		<selectKey keyProperty="id" resultType="java.lang.Long">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+	<insert id="insertAll">
+		INSERT INTO e_card(
+				id,
+				batch,
+				sku_id,
+				sku_name,
+				sku_serial_number,
+				type,
+				card_number,
+				card_thick,
+				uuid,
+				start_time,
+				end_time,
+				source,
+				face_value,
+				remark,
+				create_userid,
+				create_username,
+				create_userip,
+				create_usermac,
+				update_userid,
+				update_username,
+				update_userip,
+				update_usermac,
+				client_versionno,
+				is_valid,
+				order_code,
+				user_id,
+				user_login_name,
+				is_allocation,
+				allocation_time,
+				platform_id,
+				standard_product_unit_id,
+		short_url
+		) VALUES <include refid="insertAllClause" /> 
+	</insert>
+	
+	
+	<update id="update">
+	UPDATE e_card 
+		<set>
+			<if test="id != null">
+				id = #{id},
+			</if>	
+			<if test="batch != null">
+				batch = #{batch},
+			</if>		
+			<if test="skuId != null">
+				sku_id = #{skuId},
+			</if>	
+			<if test="skuName != null">
+				sku_name = #{skuName},
+			</if>		
+			<if test="skuSerialNumber != null">
+				sku_serial_number = #{skuSerialNumber},
+			</if>			
+			<if test="type != null">
+				type = #{type},
+			</if>			
+			<if test="cardNumber != null">
+				card_number = #{cardNumber},
+			</if>			
+			<if test="cardThick != null">
+				card_thick = #{cardThick},
+			</if>			
+			<if test="uuid != null">
+				uuid = #{uuid},
+			</if>			
+			<if test="startTime != null">
+				start_time = #{startTime},
+			</if>			
+			<if test="endTime != null">
+				end_time = #{endTime},
+			</if>			
+			<if test="source != null">
+				source = #{source},
+			</if>			
+			<if test="faceValue != null">
+				face_value = #{faceValue},
+			</if>			
+			<if test="remark != null">
+				remark = #{remark},
+			</if>			
+			<if test="createUserid != null">
+				create_userid = #{createUserid},
+			</if>			
+			<if test="createUsername != null">
+				create_username = #{createUsername},
+			</if>			
+			<if test="createUserip != null">
+				create_userip = #{createUserip},
+			</if>			
+			<if test="createUsermac != null">
+				create_usermac = #{createUsermac},
+			</if>			
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>			
+			<if test="updateUserid != null">
+				update_userid = #{updateUserid},
+			</if>			
+			<if test="updateUsername != null">
+				update_username = #{updateUsername},
+			</if>			
+			<if test="updateUserip != null">
+				update_userip = #{updateUserip},
+			</if>			
+			<if test="updateUsermac != null">
+				update_usermac = #{updateUsermac},
+			</if>			
+			<if test="clientVersionno != null">
+				client_versionno = #{clientVersionno},
+			</if>			
+			<if test="isValid != null">
+				is_valid = #{isValid},
+			</if>			
+			<if test="orderCode != null">
+				order_code = #{orderCode},
+			</if>		
+			<if test="userId != null">
+				user_id = #{userId},
+			</if>		
+			<if test="userLoginName != null">
+				user_login_name = #{userLoginName},
+			</if>			
+			<if test="isAllocation != null">
+				is_allocation = #{isAllocation},
+			</if>			
+			<if test="allocationTime != null">
+				allocation_time = #{allocationTime},
+			</if>			
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>			
+			<if test="platformId != null">
+				platform_id = #{platformId},
+			</if>
+			<if test="shortUrl != null">
+				short_url = #{shortUrl},
+			</if>
+		</set>
+			WHERE id = #{id}
+	</update>	
+	
+
+	<delete id="delete">
+		delete from e_card where id = #{id}
+	</delete>
+
+	<delete id="deleteByPara">
+		delete from e_card 
+		<where>
+			<if test="id != null">
+				id = #{id},
+			</if>	
+			<if test="batch != null">
+				and batch = #{batch}
+			</if>
+			<if test="skuId != null">
+				and sku_id = #{skuId}
+			</if>
+			<if test="skuName != null">
+				sku_name = #{skuName},
+			</if>		
+			<if test="skuSerialNumber != null">
+				and sku_serial_number = #{skuSerialNumber}
+			</if>
+			<if test="type != null">
+				and type = #{type}
+			</if>
+			<if test="cardNumber != null">
+				and card_number = #{cardNumber}
+			</if>
+			<if test="cardThick != null">
+				and card_thick = #{cardThick}
+			</if>
+			<if test="uuid != null">
+				and uuid = #{uuid}
+			</if>
+			<if test="startTime != null">
+				and start_time = #{startTime}
+			</if>
+			<if test="endTime != null">
+				and end_time = #{endTime}
+			</if>
+			<if test="source != null">
+				and source = #{source}
+			</if>
+			<if test="faceValue != null">
+				and face_value = #{faceValue}
+			</if>
+			<if test="remark != null">
+				and remark = #{remark}
+			</if>
+			<if test="createUserid != null">
+				and create_userid = #{createUserid}
+			</if>
+			<if test="createUsername != null">
+				and create_username = #{createUsername}
+			</if>
+			<if test="createUserip != null">
+				and create_userip = #{createUserip}
+			</if>
+			<if test="createUsermac != null">
+				and create_usermac = #{createUsermac}
+			</if>
+			<if test="createTime != null">
+				and create_time = #{createTime}
+			</if>
+			<if test="updateUserid != null">
+				and update_userid = #{updateUserid}
+			</if>
+			<if test="updateUsername != null">
+				and update_username = #{updateUsername}
+			</if>
+			<if test="updateUserip != null">
+				and update_userip = #{updateUserip}
+			</if>
+			<if test="updateUsermac != null">
+				and update_usermac = #{updateUsermac}
+			</if>
+			<if test="clientVersionno != null">
+				and client_versionno = #{clientVersionno}
+			</if>
+			<if test="isValid != null">
+				and is_valid = #{isValid}
+			</if>
+			<if test="orderCode != null">
+				and order_code = #{orderCode}
+			</if>
+			<if test="userLoginName != null">
+				and user_login_name = #{userLoginName}
+			</if>
+			<if test="isAllocation != null">
+				and is_allocation = #{isAllocation}
+			</if>
+			<if test="allocationTime != null">
+				and allocation_time = #{allocationTime}
+			</if>
+			<if test="updateTime != null">
+				and update_time = #{updateTime}
+			</if>
+			<if test="platformId != null">
+				and platform_id = #{platformId}
+			</if>
+		</where>
+	</delete>
+
+	<update id="updateCardTypeBySpuId">
+		UPDATE e_card set type = #{cardType} WHERE standard_product_unit_id = #{spuId}
+	</update>
+
+	<update id="updateECardByKey" parameterType="java.util.Map">
+		UPDATE e_card
+		<set>
+			<if test="isValid != null">
+				is_valid = #{isValid},
+			</if>
+			<if test="startTime != null">
+				start_time = #{startTime},
+			</if>
+			<if test="endTime != null">
+				end_time = #{endTime},
+			</if>
+			<if test="updateTime != null">
+				update_time = #{updateTime}
+			</if>
+		</set>
+		<where>
+			<if test="ids !=null and ids.size() > 0 ">
+				AND id IN
+				<foreach  collection="ids"  item="id"  open="("  separator=","   close=")">
+					#{id}
+				</foreach>
+			</if>
+		</where>
+	</update>
+
+</mapper>
+	

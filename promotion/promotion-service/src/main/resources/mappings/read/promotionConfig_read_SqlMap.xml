@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.promotion.dao.read.PromotionConfigReadDAO">
+	<resultMap type="com.egeo.components.promotion.po.PromotionConfigPO" id="promotionConfigMap">
+		<result property="id" column="id" />
+		<result property="promotionId" column="promotion_id" />
+		<result property="ruleTimeConfig1" column="rule_time_config_1" />
+		<result property="ruleTimeConfig2" column="rule_time_config_2" />
+		<result property="ruleType" column="rule_type" />
+		<result property="ruleAmount" column="rule_amount" />
+		<result property="ruleAmountExt1" column="rule_amount_ext1" />
+		<result property="ruleVal" column="rule_val" />
+		<result property="ruleVal1" column="rule_val_1" />
+		<result property="ruleValStr1" column="rule_val_str1" />
+		<result property="ruleValStr2" column="rule_val_str2" />
+		<result property="platformId" column="platform_id" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+	</resultMap>
+
+	<sql id="promotionConfigColumns">
+		id,
+		promotion_id,
+		rule_time_config_1,
+		rule_time_config_2,
+		rule_type,
+		rule_amount,
+		rule_amount_ext1,
+		rule_val,
+		rule_val_1,
+		rule_val_str1,
+		rule_val_str2,
+		platform_id,
+		create_time,
+		update_time
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.promotion.po.PromotionConfigPO" resultMap="promotionConfigMap">
+		SELECT
+		<include refid="promotionConfigColumns" />
+		FROM promotion_config
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="promotionConfigMap">
+		SELECT
+		<include refid="promotionConfigColumns" />
+		FROM promotion_config
+		<where>
+			<if test="po.promotionId != null">
+				and promotion_id = #{po.promotionId}
+			</if>
+			<if test="po.ruleTimeConfig1 != null">
+				and rule_time_config_1 = #{po.ruleTimeConfig1}
+			</if>
+			<if test="po.ruleTimeConfig2 != null">
+				and rule_time_config_2 = #{po.ruleTimeConfig2}
+			</if>
+			<if test="po.ruleType != null">
+				and rule_type = #{po.ruleType}
+			</if>
+			<if test="po.ruleAmount != null">
+				and rule_amount = #{po.ruleAmount}
+			</if>
+			<if test="po.ruleAmountExt1 != null">
+				and rule_amount_ext1 = #{po.ruleAmountExt1}
+			</if>
+			<if test="po.ruleVal != null">
+				and rule_val = #{po.ruleVal}
+			</if>
+			<if test="po.ruleVal1 != null">
+				and rule_val_1 = #{po.ruleVal1}
+			</if>
+			<if test="po.ruleValStr1 != null">
+				and rule_val_str1 = #{po.ruleValStr1}
+			</if>
+			<if test="po.ruleValStr2 != null">
+				and rule_val_str2 = #{po.ruleValStr2}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM promotion_config
+		<where>
+			<if test="po.promotionId != null">
+				and promotion_id = #{po.promotionId}
+			</if>
+			<if test="po.ruleTimeConfig1 != null">
+				and rule_time_config_1 = #{po.ruleTimeConfig1}
+			</if>
+			<if test="po.ruleTimeConfig2 != null">
+				and rule_time_config_2 = #{po.ruleTimeConfig2}
+			</if>
+			<if test="po.ruleType != null">
+				and rule_type = #{po.ruleType}
+			</if>
+			<if test="po.ruleAmount != null">
+				and rule_amount = #{po.ruleAmount}
+			</if>
+			<if test="po.ruleAmountExt1 != null">
+				and rule_amount_ext1 = #{po.ruleAmountExt1}
+			</if>
+			<if test="po.ruleVal != null">
+				and rule_val = #{po.ruleVal}
+			</if>
+			<if test="po.ruleVal1 != null">
+				and rule_val_1 = #{po.ruleVal1}
+			</if>
+			<if test="po.ruleValStr1 != null">
+				and rule_val_str1 = #{po.ruleValStr1}
+			</if>
+			<if test="po.ruleValStr2 != null">
+				and rule_val_str2 = #{po.ruleValStr2}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="promotionConfigMap">
+		SELECT
+		<include refid="promotionConfigColumns" />
+		FROM promotion_config
+		<where>
+			<if test="po.promotionId != null">
+				and promotion_id = #{po.promotionId}
+			</if>
+			<if test="po.ruleTimeConfig1 != null">
+				and rule_time_config_1 = #{po.ruleTimeConfig1}
+			</if>
+			<if test="po.ruleTimeConfig2 != null">
+				and rule_time_config_2 = #{po.ruleTimeConfig2}
+			</if>
+			<if test="po.ruleType != null">
+				and rule_type = #{po.ruleType}
+			</if>
+			<if test="po.ruleAmount != null">
+				and rule_amount = #{po.ruleAmount}
+			</if>
+			<if test="po.ruleAmountExt1 != null">
+				and rule_amount_ext1 = #{po.ruleAmountExt1}
+			</if>
+			<if test="po.ruleVal != null">
+				and rule_val = #{po.ruleVal}
+			</if>
+			<if test="po.ruleVal1 != null">
+				and rule_val_1 = #{po.ruleVal1}
+			</if>
+			<if test="po.ruleValStr1 != null">
+				and rule_val_str1 = #{po.ruleValStr1}
+			</if>
+			<if test="po.ruleValStr2 != null">
+				and rule_val_str2 = #{po.ruleValStr2}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+</mapper>
+	

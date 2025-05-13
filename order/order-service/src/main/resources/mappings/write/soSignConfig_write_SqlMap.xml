@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.order.dao.write.SoSignConfigWriteDAO">
+	<insert id="insert" parameterType="com.egeo.components.order.po.SoSignConfigPO">
+		INSERT INTO so_sign_config(
+        <trim suffixOverrides=",">
+			<if test="orderStatus != null">
+				order_status,
+			</if>
+			<if test="orderPaymentStatus != null">
+				order_payment_status,
+			</if>
+			<if test="orderPaymentType != null">
+				order_payment_type,
+			</if>
+			<if test="timeOut != null">
+				time_out,
+			</if>
+			<if test="platformId != null">
+				platform_id,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+        </trim>		
+		) VALUES (
+        <trim suffixOverrides=",">
+			<if test="orderStatus != null">
+				#{orderStatus},
+			</if>
+			<if test="orderPaymentStatus != null">
+				#{orderPaymentStatus},
+			</if>
+			<if test="orderPaymentType != null">
+				#{orderPaymentType},
+			</if>
+			<if test="timeOut != null">
+				#{timeOut},
+			</if>
+			<if test="platformId != null">
+				#{platformId},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+        </trim>		
+		)
+		<selectKey keyProperty="id" resultType="java.lang.Long">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+
+	
+	
+	<update id="update">
+	UPDATE so_sign_config 
+		<set>
+			<if test="orderStatus != null">
+				order_status = #{orderStatus},
+			</if>			
+			<if test="orderPaymentStatus != null">
+				order_payment_status = #{orderPaymentStatus},
+			</if>			
+			<if test="orderPaymentType != null">
+				order_payment_type = #{orderPaymentType},
+			</if>			
+			<if test="timeOut != null">
+				time_out = #{timeOut},
+			</if>			
+			<if test="platformId != null">
+				platform_id = #{platformId},
+			</if>			
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>			
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>			
+		</set>
+			WHERE id = #{id}
+	</update>	
+	
+
+	<delete id="delete">
+		delete from so_sign_config where id = #{id}
+	</delete>
+
+	<delete id="deleteByPara">
+		delete from so_sign_config 
+		<where>
+			<if test="orderStatus != null">
+				and order_status = #{orderStatus}
+			</if>
+			<if test="orderPaymentStatus != null">
+				and order_payment_status = #{orderPaymentStatus}
+			</if>
+			<if test="orderPaymentType != null">
+				and order_payment_type = #{orderPaymentType}
+			</if>
+			<if test="timeOut != null">
+				and time_out = #{timeOut}
+			</if>
+			<if test="platformId != null">
+				and platform_id = #{platformId}
+			</if>
+			<if test="updateTime != null">
+				and update_time = #{updateTime}
+			</if>
+			<if test="createTime != null">
+				and create_time = #{createTime}
+			</if>
+		</where>
+	</delete>
+
+
+</mapper>
+	

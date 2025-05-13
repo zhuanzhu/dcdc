@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.order.dao.write.RefundmentWriteDAO">
+	<insert id="insert" parameterType="com.egeo.components.order.po.RefundmentPO">
+		INSERT INTO refundment(
+        <trim suffixOverrides=",">
+			<if test="orderCode != null">
+				order_code,
+			</if>
+			<if test="returnCode != null">
+				return_code,
+			</if>
+			<if test="refundmentCode != null">
+				refundment_code,
+			</if>
+			<if test="amount != null">
+				amount,
+			</if>
+			<if test="channel != null">
+				channel,
+			</if>
+			<if test="applyTime != null">
+				apply_time,
+			</if>
+			<if test="refundmentTime != null">
+				refundment_time,
+			</if>
+			<if test="voucher != null">
+				voucher,
+			</if>
+			<if test="refundmentStatus != null">
+				refundment_status,
+			</if>
+			<if test="refundmentType != null">
+				refundment_type,
+			</if>
+			<if test="platformId != null">
+				platform_id,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+        </trim>		
+		) VALUES (
+        <trim suffixOverrides=",">
+			<if test="orderCode != null">
+				#{orderCode},
+			</if>
+			<if test="returnCode != null">
+				#{returnCode},
+			</if>
+			<if test="refundmentCode != null">
+				#{refundmentCode},
+			</if>
+			<if test="amount != null">
+				#{amount},
+			</if>
+			<if test="channel != null">
+				#{channel},
+			</if>
+			<if test="applyTime != null">
+				#{applyTime},
+			</if>
+			<if test="refundmentTime != null">
+				#{refundmentTime},
+			</if>
+			<if test="voucher != null">
+				#{voucher},
+			</if>
+			<if test="refundmentStatus != null">
+				#{refundmentStatus},
+			</if>
+			<if test="refundmentType != null">
+				#{refundmentType},
+			</if>
+			<if test="platformId != null">
+				#{platformId},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+        </trim>		
+		)
+		<selectKey keyProperty="id" resultType="java.lang.Long">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+
+	
+	
+	<update id="update">
+	UPDATE refundment 
+		<set>
+			<if test="orderCode != null">
+				order_code = #{orderCode},
+			</if>			
+			<if test="returnCode != null">
+				return_code = #{returnCode},
+			</if>			
+			<if test="refundmentCode != null">
+				refundment_code = #{refundmentCode},
+			</if>			
+			<if test="amount != null">
+				amount = #{amount},
+			</if>			
+			<if test="channel != null">
+				channel = #{channel},
+			</if>			
+			<if test="applyTime != null">
+				apply_time = #{applyTime},
+			</if>			
+			<if test="refundmentTime != null">
+				refundment_time = #{refundmentTime},
+			</if>			
+			<if test="voucher != null">
+				voucher = #{voucher},
+			</if>			
+			<if test="refundmentStatus != null">
+				refundment_status = #{refundmentStatus},
+			</if>			
+			<if test="refundmentType != null">
+				refundment_type = #{refundmentType},
+			</if>			
+			<if test="platformId != null">
+				platform_id = #{platformId},
+			</if>			
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>			
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>
+		</set>
+			WHERE id = #{id}
+	</update>	
+	
+
+	<delete id="delete">
+		delete from refundment where id = #{id}
+	</delete>
+
+	<delete id="deleteByPara">
+		delete from refundment 
+		<where>
+			<if test="orderCode != null">
+				and order_code = #{orderCode}
+			</if>
+			<if test="returnCode != null">
+				and return_code = #{returnCode}
+			</if>
+			<if test="refundmentCode != null">
+				and refundment_code = #{refundmentCode}
+			</if>
+			<if test="amount != null">
+				and amount = #{amount}
+			</if>
+			<if test="channel != null">
+				and channel = #{channel}
+			</if>
+			<if test="applyTime != null">
+				and apply_time = #{applyTime}
+			</if>
+			<if test="refundmentTime != null">
+				and refundment_time = #{refundmentTime}
+			</if>
+			<if test="voucher != null">
+				and voucher = #{voucher}
+			</if>
+			<if test="refundmentStatus != null">
+				and refundment_status = #{refundmentStatus}
+			</if>
+			<if test="refundmentType != null">
+				and refundment_type = #{refundmentType}
+			</if>
+			<if test="platformId != null">
+				and platform_id = #{platformId}
+			</if>
+			<if test="updateTime != null">
+				and update_time = #{updateTime}
+			</if>
+			<if test="createTime != null">
+				and create_time = #{createTime}
+			</if>
+		</where>
+	</delete>
+
+
+</mapper>
+	

@@ -1,0 +1,484 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.user.dao.write.UniAuthUserInfoMapper">
+<!-- 自定义返回结果集 --> 
+    <resultMap id="UniAuthUserInfoMap" type="com.egeo.components.user.bean.UniAuthUserInfo">
+        <id property="id" column="id" javaType="java.lang.Integer"></id>
+        <result property="uuId" column="uuid" javaType="java.lang.String"></result>
+        <result property="userId" column="user_id" javaType="java.lang.String"></result>
+        <result property="userPwd" column="user_pwd" javaType="java.lang.String"></result>
+        <result property="userName" column="user_name" javaType="java.lang.String"></result>
+        <result property="status" column="status" javaType="java.lang.Integer"></result>
+        <result property="phaseStatus" column="phase_status" javaType="java.lang.String"></result>
+        <result property="isAllot" column="is_allot" javaType="java.lang.Integer"></result>
+        <result property="createdDate" column="created_date" javaType="java.util.Date"></result>
+        <result property="company"  column="department_name" javaType="java.lang.String"></result>
+        <result property="enterpriseUuid"  column="enterprise_uuid" javaType="java.lang.String"></result>
+        <result property="departmentCode"  column="department_code" javaType="java.lang.String"></result>
+        <collection property="roles" ofType="com.egeo.components.user.bean.UniAuthRoles">
+            <id property="rid" column="rid"/>
+            <result property="rcode" column="rcode"/>
+            <result property="rname" column="rname"/>
+            <result property="departmentCode" column="department_code"/>
+            <result property="roleGroupArr" column="role_group_arr"/>
+        </collection>
+  	</resultMap>
+    <resultMap id="UserBaseInfoResponse" type="com.egeo.components.user.vo.UserBaseInfoResponse">
+        <id property="id" column="id" javaType="java.lang.Integer"></id>
+        <result property="uuId" column="uuid" javaType="java.lang.String"></result>
+        <result property="userId" column="user_id" javaType="java.lang.String"></result>
+        <result property="userPwd" column="user_pwd" javaType="java.lang.String"></result>
+        <result property="userName" column="user_name" javaType="java.lang.String"></result>
+        <result property="status" column="status" javaType="java.lang.Integer"></result>
+        <result property="phaseStatus" column="phase_status" javaType="java.lang.String"></result>
+        <result property="isAllot" column="is_allot" javaType="java.lang.Integer"></result>
+        <result property="createdDate" column="created_date" javaType="java.util.Date"></result>
+        <result property="company"  column="company" javaType="java.lang.String"></result>
+        <result property="enterpriseUuid"  column="enterprise_uuid" javaType="java.lang.String"></result>
+        <result property="userMobile"  column="user_mobile" javaType="java.lang.String"></result>
+		<collection  property="roles"  ofType="java.util.HashSet"  select="getUniAuthRoles" column="id"/>
+    </resultMap>
+  
+  	<resultMap id="uniAuthRoleMap" type="com.egeo.components.user.bean.UniAuthRoles">
+        <id property="rid" column="rid"/>
+        <result property="rcode" column="rcode"/>
+        <result property="rname" column="rname"/>
+    </resultMap>
+
+    <resultMap id="UniauthUserInfoResultMapper" type="com.egeo.components.user.bean.UniAuthUserInfo">
+        <result column="id" property="id"/>
+        <result column="uuid" property="uuId"/>
+        <result column="user_id" property="userId"/>
+        <result column="user_mobile" property="userMobile"/>
+        <result column="user_pwd" property="userPwd"/>
+        <result column="status" property="status"/>
+        <result column="user_name" property="userName"/>
+        <result column="is_allot" property="isAllot"/>
+        <result column="phase_status" property="phaseStatus"/>
+        <result column="company" property="company"/>
+        <result column="enterprise_uuid" property="enterpriseUuid"/>
+        <result column="update_date" property="updateDate"/>
+        <result column="created_date" property="createDate"/>
+        <result column="created_by" property="createdBy"/>
+        <result column="update_by" property="updateBy"/>
+    </resultMap>
+
+    <resultMap id="ListByPageInfoResultMapper" type="com.egeo.components.user.bean.UniAuthUserInfo"
+               extends="UniauthUserInfoResultMapper">
+        <collection property="roles" column="id"
+                    select="com.egeo.components.user.dao.write.UniAuthRolesMapper.findUniAuthRoleByUid"/>
+        <collection property="accountRoles" column="id"
+                    select="com.egeo.components.user.dao.write.UniAuthRolesMapper.findUniAuthAccountRoleByUid"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="com.egeo.components.user.bean.UniAuthUserInfo" keyProperty="id" useGeneratedKeys="true">
+		<![CDATA[ INSERT INTO uniauth_user_info (
+				 uuid
+				, user_id
+				, user_mobile
+				, user_pwd
+				, status
+				, user_name
+				, is_allot
+				, phase_status
+				, company
+				, update_date
+				, created_date
+				, created_by
+				, update_by
+				 ) VALUES (
+				 #{uuId}
+				, #{userId}
+				, #{userMobile}
+				, #{userPwd}
+				, #{status}
+				, #{userName}
+				, #{isAllot}
+				, #{phaseStatus}
+				, #{company}
+				, STR_TO_DATE(#{updateDate},'%Y-%m-%d %T')
+				, STR_TO_DATE(#{createDate},'%Y-%m-%d %T')
+				, #{createdBy}
+				, #{updateBy}
+  				) ]]>
+	</insert>
+    <update id="updatePart" parameterType="com.egeo.components.user.bean.UniAuthUserInfo">
+        <![CDATA[ UPDATE uniauth_user_info SET id = #{id} ]]>
+        <if test="uuId!= null">
+            , uuid=#{uuId}
+        </if>
+        <if test="userId!= null">
+            , user_id=#{userId}
+        </if>
+        <if test="userMobile!= null">
+            , user_mobile=#{userMobile}
+        </if>
+        <if test="userPwd!= null">
+            , user_pwd=#{userPwd}
+        </if>
+        <if test="status!= null">
+            , status=#{status}
+        </if>
+        <if test="userName!= null">
+            , user_name=#{userName}
+        </if>
+        <if test="isAllot!= null">
+            , is_allot=#{isAllot}
+        </if>
+        <if test="phaseStatus!= null">
+            , phase_status=#{phaseStatus}
+        </if>
+        <if test="company!= null">
+            , company=#{company}
+        </if>
+        <if test="updateDate!= null">
+            , update_date=STR_TO_DATE(#{updateDate}, '%Y-%m-%d %T')
+        </if>
+        <if test="createdDate!= null">
+            , created_date=STR_TO_DATE(#{createDate}, '%Y-%m-%d %T')
+        </if>
+        <if test="createdBy!= null">
+            , created_by=#{createdBy}
+        </if>
+        <if test="enterpriseUuid!= null">
+            , enterprise_uuid=#{enterpriseUuid}
+        </if>
+        <if test="updateBy!= null">
+            , update_by=#{updateBy}
+        </if>
+        <![CDATA[ WHERE id = #{id}  ]]>
+    </update>
+    <select id="findCountByRid" parameterType="int" resultType="int">
+        SELECT COUNT(1) FROM uniauth_user_info u, uniauth_user_role ur
+        WHERE u.id=ur.uid AND u.is_allot != 2 AND ur.rid=#{rid}
+    </select>
+    <select id="getByPK" parameterType="int" resultMap="UniauthUserInfoResultMapper">
+        SELECT u.* FROM uniauth_user_info u WHERE id = #{0}
+    </select>
+    <select id="getByUuid" parameterType="String" resultMap="UniauthUserInfoResultMapper">
+        SELECT * FROM uniauth_user_info WHERE uuid = #{0}
+    </select>
+
+    <select id="getAllCompany"  resultType="String">
+        SELECT DISTINCT u.company FROM uniauth_user_info u,uniauth_user_role ur,uniauth_role r
+        WHERE u.id = ur.uid AND ur.rid=r.rid AND u.is_allot != 2 AND u.company != '' AND u.company IS NOT NULL
+        <if test="departmentParentCode != null and departmentParentCode != ''">
+			AND r.department_code in(
+				select department_code from uniauth_department 
+					where department_code=#{departmentParentCode}
+					OR parent_codes LIKE (SELECT concat(parent_codes, department_code, '-', '%') FROM uniauth_department WHERE department_code=#{departmentParentCode})
+				)
+		</if>
+		<if test="departmentCode != null and departmentCode != ''">
+			AND r.department_code=#{departmentCode}
+		</if>
+    </select>
+    
+    <select id="getCompanyByRoles" parameterType="String" resultType="com.egeo.components.user.bean.UniAuthUserInfo">
+        SELECT DISTINCT u.company FROM uniauth_user_info u,uniauth_user_role ur 
+        WHERE u.id = ur.uid and  u.is_allot != 2 AND u.company != '' AND u.company IS NOT NULL
+        <if test="roleIds!=null and roleIds.length>0">
+        	and ur.rid in
+        	<foreach collection="roleIds" index="index" item="item" open="(" separator="," close=")">  
+		        #{item}  
+		    </foreach> 
+        </if>
+    </select>
+    
+
+    <insert id="insertRole" useGeneratedKeys="true" >
+    	insert into uniauth_role	 (rid,rname) values (#{rid},#{rname})
+    </insert>
+    <insert id="insertUserRole" useGeneratedKeys="true" >
+    	insert into uniauth_user_role (uid,rid) values (#{uid},#{rid})
+    </insert>
+
+
+    <delete id="deleteUserRole">
+    	DELETE FROM uniauth_user_role WHERE uid = #{uid}
+    </delete>
+    
+    <update id="update" parameterType="com.egeo.components.user.bean.UniAuthUserInfo">
+    	update	uniauth_user_info
+    	 <set>
+    	 	 <if test="status!=null">status = #{status},</if>
+	    	 <if test="userPwd!=null and userPwd!=''">user_pwd = #{userPwd},</if>
+	    	 <if test="phaseStatus !=null ">phase_status=#{phaseStatus},</if>
+	    	 <if test="company!=null and company!=''">company = #{company}</if>
+    	 </set>
+    	 where id = #{id}
+    </update>
+      <update id="updateNumber" parameterType="com.egeo.components.user.bean.UniAuthUserInfo">
+    	update	uniauth_user_info
+     	set
+	     number = #{number}
+    	 where user_name = #{userName}
+    </update>
+     <update id="updatePwd" parameterType="com.egeo.components.user.bean.UniAuthUserInfo">
+    	update	uniauth_user_info
+     	set
+	     user_pwd = #{userPwd}
+    	 where  id = #{id}
+    </update>
+    <update id="updateStatus" parameterType="com.egeo.components.user.bean.UniAuthUserInfo">
+    	update	uniauth_user_info set is_allot = #{isAllot}   where uuid = #{uuId}
+    </update>
+    
+     <!-- 查询所有的getUserInfoTask -->
+    <select id="getUserInfoTask" resultMap="UniAuthUserInfoMap">
+        select  *  from   uniauth_user_info  where number != 0
+    </select>
+    
+    <!-- 查询所有的UserInfo -->
+    <select id="getUserAll" resultMap="UniAuthUserInfoMap">
+        select  *  from   uniauth_user_info  where is_allot = 0
+    </select>
+    
+    <select id="queryUserAll" resultMap="UserBaseInfoResponse" parameterType="com.egeo.components.user.vo.UserBaseInfoResponse">
+    	SELECT u.* FROM uniauth_user_info u 
+   		where 1=1 
+        <if test="uniAuthUserInfo.userId!=null and uniAuthUserInfo.userId!=''">
+            AND  u.user_id = #{uniAuthUserInfo.userId}
+        </if>
+        <if test="uniAuthUserInfo.uuId!=null and uniAuthUserInfo.uuId!=''">
+            AND  u.uuid = #{uniAuthUserInfo.uuId}
+        </if>
+        <if test="uniAuthUserInfo.userName!=null and uniAuthUserInfo.userName!=''">
+          AND  u.user_name like '%${uniAuthUserInfo.userName}%'
+        </if>
+        <if test="uniAuthUserInfo.userMobile!=null and uniAuthUserInfo.userMobile!=''">
+          AND  u.user_mobile like '%${uniAuthUserInfo.userMobile}%'
+        </if>
+        <if test="null != uniAuthUserInfo.isAllot ">
+          AND  u.is_allot = #{uniAuthUserInfo.isAllot}
+        </if>
+        <if test="null != uniAuthUserInfo.company and '' != uniAuthUserInfo.company">
+            AND  u.company = #{uniAuthUserInfo.company}
+        </if>
+        <if test='uniAuthUserInfo.roleIds != null and uniAuthUserInfo.roleIds.length>0 '>
+         	AND u.id in (select ur.uid from uniauth_user_role ur where  ur.rid in
+          	<foreach collection="uniAuthUserInfo.roleIds" index="index" item="item" open="(" separator="," close=")">  
+		       #{item}  
+		   </foreach>
+           )
+        </if>
+        <if test='uniAuthUserInfo.phaseArr != null and uniAuthUserInfo.phaseArr.length>0 '>
+          	AND ( 1 = 0
+          	<foreach collection="uniAuthUserInfo.phaseArr" index="index" item="item">  
+		       or FIND_IN_SET(#{item},phase_status)
+		   	</foreach>
+           	)
+        </if>
+        order by u.id asc
+    </select>
+    
+    <select id="getUniAuthRoles" parameterType="java.lang.Integer" resultMap="uniAuthRoleMap">
+    	SELECT r.* FROM  uniauth_role r where rid in (select rid from uniauth_user_role ur where uid = #{id})
+    </select>
+    
+    <select id="selectUserId" resultMap="UniAuthUserInfoMap">
+    	SELECT u.*,r.*,rg.role_group_arr FROM uniauth_user_info u 
+	    inner join uniauth_user_role ur on ur.uid=u.id   
+   		inner join uniauth_role r on r.rid=ur.rid
+   		left join (
+	   			select rid,group_concat(role_group_code) role_group_arr
+				from uniauth_role_group
+				group by rid) rg on r.rid=rg.rid
+        WHERE u.user_id = #{0}
+        and u.is_allot in(0,1)
+    </select>
+    <select id="selectUserIsNotId" resultMap="UniAuthUserInfoMap">
+    	SELECT  *  FROM uniauth_user_info WHERE user_id = #{0} and is_allot in(0,1)
+    </select>
+     <select id="selectAdmin" resultMap="UniAuthUserInfoMap">
+	    SELECT u.*,r.* FROM uniauth_user_info u 
+	    inner join uniauth_user_role ur on ur.uid=u.id   
+   		inner join uniauth_role r on r.rid=ur.rid
+        WHERE user_id = #{0}
+     </select>
+     
+     <select id="select" resultMap="UniAuthUserInfoMap">
+	     select  *  from uniauth_user_info where id = #{0}
+     </select>
+     <select id="selectUserName" resultMap="UniAuthUserInfoMap">
+     	 select * from uniauth_user_info where user_name =#{0}  
+     </select>
+     <select id="selectUuid" resultMap="UniAuthUserInfoMap">
+     	 SELECT u.*,r.rid,r.rname,r.rcode,r.department_code,rg.role_group_arr FROM uniauth_user_info u 
+		    inner join uniauth_user_role ur on ur.uid=u.id   
+	   		inner join uniauth_role r on r.rid=ur.rid
+	   		left join (
+	   			select rid,group_concat(role_group_code) role_group_arr
+				from uniauth_role_group
+				group by rid) rg on r.rid=rg.rid
+	        WHERE u.uuid = #{0}
+     </select>
+     <select id="selectOperator" resultMap="UniAuthUserInfoMap">
+     	 SELECT u.uuid,u.user_name,d.department_name,r.department_code
+     	 FROM uniauth_user_info u 
+		    inner join uniauth_user_role ur on ur.uid=u.id   
+	   		inner join uniauth_role r on r.rid=ur.rid
+	   		inner join uniauth_role_group rg on r.rid=rg.rid
+	   		inner join uniauth_department d on d.department_code=r.department_code
+	        WHERE u.user_mobile = #{userMobile}
+	        and rg.role_group_code = #{roleGroupCode}
+	        and u.is_allot in(0,1)
+     </select>
+     <select id="getUserList" resultMap="UniAuthUserInfoMap">
+     	 select * from uniauth_user_info where is_allot = 0 and phase_status != '0'
+     </select>
+     <select id="getCompanyStatus" resultMap="UniAuthUserInfoMap"   parameterType="com.egeo.components.user.bean.UniAuthUserInfo">
+    	  select * from uniauth_user_info where is_allot = 0
+    	  <if test="phaseStatus!=null and phaseStatus!=''">
+    	  	AND FIND_IN_SET(#{phaseStatus},phase_status) 
+    	  </if>
+    	  <if test="company!=null and company !=''">
+    	  	AND company= #{company} 
+    	  </if>
+    	  <if test="roleIds!=null and roleIds.length>0">
+       		AND id in (select uid from uniauth_user_role where  rid in
+			<foreach collection="roleIds" index="index" item="item" open="(" separator="," close=")">  
+	        #{item}
+	    	</foreach>  
+			)
+        </if>
+     </select>
+
+    <select id="getUserByRole" parameterType="java.lang.Integer"  resultMap="UniAuthUserInfoMap">
+        SELECT u.* FROM uniauth_user_info u JOIN uniauth_user_role ur  ON u.id = ur.uid AND ur.rid = #{rid}
+    </select>
+    
+    <select id="getUniauthUserList"  resultMap="UserBaseInfoResponse" parameterType="com.egeo.components.user.controller.views.request.UniAuthUserInfoParam">
+        SELECT u.* FROM uniauth_user_info u 
+   		where 1=1 
+            <if test="userParam.userId!=null and userParam.userId!=''">
+                AND  u.user_id = #{userParam.userId}
+            </if>
+            <if test="userParam.userName!=null and userParam.userName!=''">
+              AND  u.user_name like '%${userParam.userName}%'
+            </if>
+             <if test="userParam.company!= null and userParam.company!= ''">
+                AND  u.company = #{userParam.company}
+            </if>
+            <if test="userParam.userUuids!=null and userParam.userUuids.length>0">
+              	AND  u.uuid in 
+			    <foreach collection="userParam.userUuids" index="index" item="item" open="(" separator="," close=")">  
+			        #{item}  
+			    </foreach>  
+            </if>
+            <if test="userParam.roleIds!=null and userParam.roleIds.length>0">
+              	AND u.id in (select ur.uid from uniauth_user_role ur where  ur.rid in
+ 				<foreach collection="userParam.roleIds" index="index" item="item" open="(" separator="," close=")">  
+			        #{item}  
+			    </foreach>  
+				)
+            </if>
+            <if test="userParam.roleParams!=null and userParam.roleParams.length>0">
+              	AND u.id in (select ur.uid from uniauth_user_role ur ,uniauth_role r  where ur.rid=r.rid 
+				AND ( 1 = 0
+	          	<foreach collection="userParam.roleParams" index="index" item="item">  
+			       or FIND_IN_SET(#{item},r.params)
+			   	</foreach>
+	           	))
+            </if>
+           	<if test="userParam.isAllots!=null and userParam.isAllots.length>0">
+              	AND  u.is_allot in 
+			    <foreach collection="userParam.isAllots" index="index" item="item" open="(" separator="," close=")">  
+			        #{item}  
+			    </foreach>  
+            </if>
+    </select>
+
+    <select id="listByPageInfo" parameterType="com.egeo.components.user.bean.UniAuthUserInfo" resultMap="ListByPageInfoResultMapper">
+        SELECT
+            id
+            , uuid
+            , user_id
+            , user_mobile
+            , status
+            , user_name
+            , is_allot
+            , phase_status
+            , company
+            , DATE_FORMAT(update_date, '%Y-%m-%d %T') update_date
+            , DATE_FORMAT(created_date, '%Y-%m-%d %T') created_date
+            , created_by
+            , update_by
+        FROM uniauth_user_info u where u.is_allot != 2
+        <if test="uniAuthUserInfo.userId!=null and uniAuthUserInfo.userId!=''">
+            AND  u.user_id = #{uniAuthUserInfo.userId}
+        </if>
+        <if test="uniAuthUserInfo.userName!=null and uniAuthUserInfo.userName!=''">
+            AND  u.user_name like '%${uniAuthUserInfo.userName}%'
+        </if>
+        <if test="null != uniAuthUserInfo.isAllot ">
+            AND  u.is_allot = #{uniAuthUserInfo.isAllot}
+        </if>
+        <if test="null != uniAuthUserInfo.company and '' != uniAuthUserInfo.company">
+            AND  u.company = #{uniAuthUserInfo.company}
+        </if>
+        <if test="null != uniAuthUserInfo.roleId ">
+            AND u.id IN (SELECT ur.uid FROM  uniauth_user_role ur WHERE ur.rid = #{uniAuthUserInfo.roleId})
+        </if>
+        <if test="null != uniAuthUserInfo.departmentCode and uniAuthUserInfo.departmentCode !=''">
+            AND u.id IN (SELECT ur.uid FROM uniauth_role r, uniauth_user_role ur WHERE r.rid=ur.rid
+              AND r.department_code=#{uniAuthUserInfo.departmentCode}
+            )
+        </if>
+        <if test="uniAuthUserInfo.parentCode != null and uniAuthUserInfo.parentCode != ''">
+            AND u.id IN (SELECT ur.uid FROM uniauth_role r, uniauth_user_role ur WHERE r.rid=ur.rid
+                AND r.department_code IN (
+                    SELECT
+                    department_code
+                    FROM uniauth_department
+                    WHERE parent_codes LIKE (
+                        SELECT concat(parent_codes, department_code, '-%')
+                        FROM uniauth_department
+                        WHERE department_code=#{uniAuthUserInfo.parentCode}
+                    )
+                    UNION
+                    SELECT #{uniAuthUserInfo.parentCode} department_code
+                )
+            )
+        </if>
+    </select>
+    
+    <select id="getUserByMenuId"  resultMap="UniAuthUserInfoMap">
+        select u.*
+        from uniauth_user_info u,uniauth_user_role ur,uniauth_role_menu rm,uniauth_menu m
+		where u.id=ur.uid
+		and ur.rid=rm.rid
+		and rm.menu_code=m.menu_code
+		and m.mid=#{menuId}
+    </select>
+    <select id="selectByUserMobile" parameterType="java.lang.String" resultMap="UniAuthUserInfoMap">
+      SELECT * FROM uniauth_user_info WHERE user_mobile = #{0}
+    </select>
+
+
+    <select id="selectByUuidList" parameterType="String" resultMap="UniauthUserInfoResultMapper">
+        SELECT * FROM uniauth_user_info WHERE uuid in 
+        <foreach collection="uuidList" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>    
+    <select id="selectByLoanABussType" resultMap="UniAuthUserInfoMap">
+        select a.* from uniauth_user_info a ,uniauth_user_role b, uniauth_role c, uniauth_user_data_permission d
+        where a.id = b.uid and b.rid = c.rid and a.uuid = d.user_uuid and a.is_allot = 0
+        and c.rcode in
+        <foreach collection="roleCodeList" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        and d.type = 3 and d.codes like '%${bussType}%'
+        order by a.user_name
+    </select>
+    <select id="selectByLoanAid" resultMap="UniAuthUserInfoMap">
+        select a.* from uniauth_user_info a ,uniauth_user_role b, uniauth_role c, uniauth_user_data_permission d
+        where a.id = b.uid and b.rid = c.rid and a.uuid = d.user_uuid
+        and c.rcode in
+        <foreach collection="roleCodeList" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        order by a.user_name
+    </select>
+</mapper>

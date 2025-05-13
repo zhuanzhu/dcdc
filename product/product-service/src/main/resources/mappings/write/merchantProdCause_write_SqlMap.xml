@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.product.dao.write.MerchantProdCauseWriteDAO">
+	<insert id="insert" parameterType="com.egeo.components.product.po.MerchantProdCausePO">
+		INSERT INTO merchant_prod_cause(
+        <trim suffixOverrides=",">
+			<if test="cause != null">
+				cause,
+			</if>
+			<if test="sortValue != null">
+				sort_value,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="platformId != null">
+				platform_id,
+			</if>
+			<if test="merchantProdId != null">
+				merchant_prod_id,
+			</if>
+        </trim>		
+		) VALUES (
+        <trim suffixOverrides=",">
+			<if test="cause != null">
+				#{cause},
+			</if>
+			<if test="sortValue != null">
+				#{sortValue},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="platformId != null">
+				#{platformId},
+			</if>
+			<if test="merchantProdId != null">
+				#{merchantProdId},
+			</if>
+        </trim>		
+		)
+		<selectKey keyProperty="id" resultType="java.lang.Long">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+
+	
+	
+	<update id="update">
+	UPDATE merchant_prod_cause 
+		<set>
+			<if test="cause != null">
+				cause = #{cause},
+			</if>			
+			<if test="sortValue != null">
+				sort_value = #{sortValue},
+			</if>			
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>			
+			<if test="platformId != null">
+				platform_id = #{platformId},
+			</if>			
+			<if test="merchantProdId != null">
+				merchant_prod_id = #{merchantProdId},
+			</if>			
+		</set>
+			WHERE id = #{id}
+	</update>	
+	
+
+	<delete id="delete">
+		delete from merchant_prod_cause where id = #{id}
+	</delete>
+
+	<delete id="deleteByPara">
+		delete from merchant_prod_cause 
+		<where>
+			<if test="cause != null">
+				and cause = #{cause}
+			</if>
+			<if test="sortValue != null">
+				and sort_value = #{sortValue}
+			</if>
+			<if test="createTime != null">
+				and create_time = #{createTime}
+			</if>
+			<if test="platformId != null">
+				and platform_id = #{platformId}
+			</if>
+			<if test="merchantProdId != null">
+				and merchant_prod_id = #{merchantProdId}
+			</if>
+		</where>
+	</delete>
+
+
+</mapper>
+	

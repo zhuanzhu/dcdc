@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.promotion.dao.write.CouponBatchWriteDAO">
+	<insert id="insert" parameterType="com.egeo.components.promotion.po.CouponBatchPO">
+		INSERT INTO coupon_batch(
+        <trim suffixOverrides=",">
+			<if test="couponBatchCode != null">
+				coupon_batch_code,
+			</if>
+			<if test="couponBatchName != null">
+				coupon_batch_name,
+			</if>
+			<if test="couponRelType != null">
+				coupon_rel_type,
+			</if>
+			<if test="couponRelId != null">
+				coupon_rel_id,
+			</if>
+			<if test="grantType != null">
+				grant_type,
+			</if>
+			<if test="getType != null">
+				get_type,
+			</if>
+			<if test="chooseWay != null">
+				choose_way,
+			</if>
+			<if test="companyId != null">
+				company_id,
+			</if>
+			<if test="grantCount != null">
+				grant_count,
+			</if>
+			<if test="isRepeat != null">
+				is_repeat,
+			</if>
+			<if test="isDisplay != null">
+				is_display,
+			</if>
+			<if test="receiveStartTime != null">
+				receive_start_time,
+			</if>
+			<if test="receiveEndTime != null">
+				receive_end_time,
+			</if>
+			<if test="effectStartTime != null">
+				effect_start_time,
+			</if>
+			<if test="effectEndTime != null">
+				effect_end_time,
+			</if>
+			<if test="effectDays != null">
+				effect_days,
+			</if>
+			<if test="isEffect != null">
+				is_effect,
+			</if>
+			<if test="creator != null">
+				creator,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="platformId != null">
+				platform_id,
+			</if>
+			<if test="linkableId != null">
+				linkable_id,
+			</if>
+        </trim>		
+		) VALUES (
+        <trim suffixOverrides=",">
+			<if test="couponBatchCode != null">
+				#{couponBatchCode},
+			</if>
+			<if test="couponBatchName != null">
+				#{couponBatchName},
+			</if>
+			<if test="couponRelType != null">
+				#{couponRelType},
+			</if>
+			<if test="couponRelId != null">
+				#{couponRelId},
+			</if>
+			<if test="grantType != null">
+				#{grantType},
+			</if>
+			<if test="getType != null">
+				#{getType},
+			</if>
+			<if test="chooseWay != null">
+				#{chooseWay},
+			</if>
+			<if test="companyId != null">
+				#{companyId},
+			</if>
+			<if test="grantCount != null">
+				#{grantCount},
+			</if>
+			<if test="isRepeat != null">
+				#{isRepeat},
+			</if>
+			<if test="isDisplay != null">
+				#{isDisplay},
+			</if>
+			<if test="receiveStartTime != null">
+				#{receiveStartTime},
+			</if>
+			<if test="receiveEndTime != null">
+				#{receiveEndTime},
+			</if>
+			<if test="effectStartTime != null">
+				#{effectStartTime},
+			</if>
+			<if test="effectEndTime != null">
+				#{effectEndTime},
+			</if>
+			<if test="effectDays != null">
+				#{effectDays},
+			</if>
+			<if test="isEffect != null">
+				#{isEffect},
+			</if>
+			<if test="creator != null">
+				#{creator},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
+			</if>
+			<if test="platformId != null">
+				#{platformId},
+			</if>
+			<if test="linkableId != null">
+				#{linkableId},
+			</if>
+        </trim>		
+		)
+		<selectKey keyProperty="id" resultType="java.lang.Long">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+
+	
+	
+	<update id="update">
+	UPDATE coupon_batch 
+		<set>
+			<if test="couponBatchCode != null">
+				coupon_batch_code = #{couponBatchCode},
+			</if>
+			<if test="couponBatchName != null">
+				coupon_batch_name = #{couponBatchName},
+			</if>
+			<if test="couponRelType != null">
+				coupon_rel_type = #{couponRelType},
+			</if>			
+			<if test="couponRelId != null">
+				coupon_rel_id = #{couponRelId},
+			</if>			
+			<if test="grantType != null">
+				grant_type = #{grantType},
+			</if>
+			<if test="getType != null">
+				get_type = #{getType},
+			</if>
+			<if test="chooseWay != null">
+				choose_way = #{chooseWay},
+			</if>			
+			<if test="companyId != null">
+				company_id = #{companyId},
+			</if>			
+			<if test="grantCount != null">
+				grant_count = #{grantCount},
+			</if>			
+			<if test="isRepeat != null">
+				is_repeat = #{isRepeat},
+			</if>			
+			<if test="isDisplay != null">
+				is_display = #{isDisplay},
+			</if>			
+			<if test="receiveStartTime != null">
+				receive_start_time = #{receiveStartTime},
+			</if>			
+			<if test="receiveEndTime != null">
+				receive_end_time = #{receiveEndTime},
+			</if>			
+
+				effect_start_time = #{effectStartTime},
+
+				effect_end_time = #{effectEndTime},
+
+			<if test="effectDays != null">
+				effect_days = #{effectDays},
+			</if>			
+			<if test="isEffect != null">
+				is_effect = #{isEffect},
+			</if>			
+			<if test="creator != null">
+				creator = #{creator},
+			</if>			
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>			
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>		
+			<if test="platformId != null">
+				platform_id = #{platformId},
+			</if>	
+			<if test="platformId != null">
+				linkable_id = #{linkableId},
+			</if>
+		</set>
+			WHERE id = #{id}
+	</update>	
+	
+
+	<delete id="delete">
+		delete from coupon_batch where id = #{id}
+	</delete>
+
+	<delete id="deleteByPara">
+		delete from coupon_batch 
+		<where>
+			<if test="couponBatchCode != null">
+				and coupon_batch_code = #{couponBatchCode}
+			</if>
+			<if test="couponBatchName != null">
+				and coupon_batch_name = #{couponBatchName}
+			</if>
+			<if test="couponRelType != null">
+				and coupon_rel_type = #{couponRelType}
+			</if>
+			<if test="couponRelId != null">
+				and coupon_rel_id = #{couponRelId}
+			</if>
+			<if test="grantType != null">
+				and grant_type = #{grantType}
+			</if>
+			<if test="getType != null">
+				and get_type = #{getType}
+			</if>
+			<if test="chooseWay != null">
+				and choose_way = #{chooseWay}
+			</if>
+			<if test="companyId != null">
+				and company_id = #{companyId}
+			</if>
+			<if test="grantCount != null">
+				and grant_count = #{grantCount}
+			</if>
+			<if test="isRepeat != null">
+				and is_repeat = #{isRepeat}
+			</if>
+			<if test="isDisplay != null">
+				and is_display = #{isDisplay}
+			</if>
+			<if test="receiveStartTime != null">
+				and receive_start_time = #{receiveStartTime}
+			</if>
+			<if test="receiveEndTime != null">
+				and receive_end_time = #{receiveEndTime}
+			</if>
+			<if test="effectStartTime != null">
+				and effect_start_time = #{effectStartTime}
+			</if>
+			<if test="effectEndTime != null">
+				and effect_end_time = #{effectEndTime}
+			</if>
+			<if test="effectDays != null">
+				and effect_days = #{effectDays}
+			</if>
+			<if test="isEffect != null">
+				and is_effect = #{isEffect}
+			</if>
+			<if test="creator != null">
+				and creator = #{creator}
+			</if>
+			<if test="createTime != null">
+				and create_time = #{createTime}
+			</if>
+			<if test="updateTime != null">
+				and update_time = #{updateTime}
+			</if>
+		</where>
+	</delete>
+
+	<update id="hideCouponBatch">
+		update coupon_batch set is_display = 0 where receive_end_time &lt;= now();
+	</update>
+
+</mapper>
+	

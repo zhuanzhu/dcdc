@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.order.dao.write.SoGiftcardSendWriteDAO">
+	<insert id="insert" parameterType="com.egeo.components.order.po.SoGiftcardSendPO">
+		INSERT INTO so_giftcard_send(
+        <trim suffixOverrides=",">
+			<if test="orderCode != null">
+				order_code,
+			</if>
+			<if test="parentOrderCode != null">
+				parent_order_code,
+			</if>
+			<if test="giftcardId != null">
+				giftcard_id,
+			</if>
+			<if test="giftcardNo != null">
+				giftcard_no,
+			</if>
+			<if test="giftcardPass != null">
+				giftcard_pass,
+			</if>
+			<if test="cardAmount != null">
+				card_amount,
+			</if>
+			<if test="platformId != null">
+				platform_id,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+        </trim>		
+		) VALUES (
+        <trim suffixOverrides=",">
+			<if test="orderCode != null">
+				#{orderCode},
+			</if>
+			<if test="parentOrderCode != null">
+				#{parentOrderCode},
+			</if>
+			<if test="giftcardId != null">
+				#{giftcardId},
+			</if>
+			<if test="giftcardNo != null">
+				#{giftcardNo},
+			</if>
+			<if test="giftcardPass != null">
+				#{giftcardPass},
+			</if>
+			<if test="cardAmount != null">
+				#{cardAmount},
+			</if>
+			<if test="platformId != null">
+				#{platformId},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+        </trim>		
+		)
+		<selectKey keyProperty="id" resultType="java.lang.Long">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+
+	
+	
+	<update id="update">
+	UPDATE so_giftcard_send 
+		<set>
+			<if test="orderCode != null">
+				order_code = #{orderCode},
+			</if>			
+			<if test="parentOrderCode != null">
+				parent_order_code = #{parentOrderCode},
+			</if>			
+			<if test="giftcardId != null">
+				giftcard_id = #{giftcardId},
+			</if>			
+			<if test="giftcardNo != null">
+				giftcard_no = #{giftcardNo},
+			</if>			
+			<if test="giftcardPass != null">
+				giftcard_pass = #{giftcardPass},
+			</if>			
+			<if test="cardAmount != null">
+				card_amount = #{cardAmount},
+			</if>			
+			<if test="platformId != null">
+				platform_id = #{platformId},
+			</if>			
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>			
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>			
+		</set>
+			WHERE id = #{id}
+	</update>	
+	
+
+	<delete id="delete">
+		delete from so_giftcard_send where id = #{id}
+	</delete>
+
+	<delete id="deleteByPara">
+		delete from so_giftcard_send 
+		<where>
+			<if test="orderCode != null">
+				and order_code = #{orderCode}
+			</if>
+			<if test="parentOrderCode != null">
+				and parent_order_code = #{parentOrderCode}
+			</if>
+			<if test="giftcardId != null">
+				and giftcard_id = #{giftcardId}
+			</if>
+			<if test="giftcardNo != null">
+				and giftcard_no = #{giftcardNo}
+			</if>
+			<if test="giftcardPass != null">
+				and giftcard_pass = #{giftcardPass}
+			</if>
+			<if test="cardAmount != null">
+				and card_amount = #{cardAmount}
+			</if>
+			<if test="platformId != null">
+				and platform_id = #{platformId}
+			</if>
+			<if test="updateTime != null">
+				and update_time = #{updateTime}
+			</if>
+			<if test="createTime != null">
+				and create_time = #{createTime}
+			</if>
+		</where>
+	</delete>
+
+
+</mapper>
+	

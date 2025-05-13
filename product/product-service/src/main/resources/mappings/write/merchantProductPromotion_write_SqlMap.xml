@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.product.dao.write.MerchantProductPromotionWriteDAO">
+	<insert id="insert" parameterType="com.egeo.components.product.po.MerchantProductPromotionPO">
+		INSERT INTO merchant_product_promotion(
+        <trim suffixOverrides=",">
+			<if test="merchantProductId != null">
+				merchant_product_id,
+			</if>
+			<if test="productId != null">
+				product_id,
+			</if>
+			<if test="skuId != null">
+				sku_id,
+			</if>
+			<if test="merchantId != null">
+				merchant_id,
+			</if>
+			<if test="promotionId != null">
+				promotion_id,
+			</if>
+			<if test="promotionType != null">
+				promotion_type,
+			</if>
+			<if test="promotionPrice != null">
+				promotion_price,
+			</if>
+			<if test="promotionStartTime != null">
+				promotion_start_time,
+			</if>
+			<if test="promotionEndTime != null">
+				promotion_end_time,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="platformId != null">
+				platform_id,
+			</if>
+        </trim>		
+		) VALUES (
+        <trim suffixOverrides=",">
+			<if test="merchantProductId != null">
+				#{merchantProductId},
+			</if>
+			<if test="productId != null">
+				#{productId},
+			</if>
+			<if test="skuId != null">
+				#{skuId},
+			</if>
+			<if test="merchantId != null">
+				#{merchantId},
+			</if>
+			<if test="promotionId != null">
+				#{promotionId},
+			</if>
+			<if test="promotionType != null">
+				#{promotionType},
+			</if>
+			<if test="promotionPrice != null">
+				#{promotionPrice},
+			</if>
+			<if test="promotionStartTime != null">
+				#{promotionStartTime},
+			</if>
+			<if test="promotionEndTime != null">
+				#{promotionEndTime},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
+			</if>
+			<if test="platformId != null">
+				#{platformId},
+			</if>
+        </trim>		
+		)
+		<selectKey keyProperty="id" resultType="java.lang.Long">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+
+	
+	
+	<update id="update">
+	UPDATE merchant_product_promotion 
+		<set>
+			<if test="merchantProductId != null">
+				merchant_product_id = #{merchantProductId},
+			</if>			
+			<if test="productId != null">
+				product_id = #{productId},
+			</if>			
+			<if test="skuId != null">
+				sku_id = #{skuId},
+			</if>			
+			<if test="merchantId != null">
+				merchant_id = #{merchantId},
+			</if>			
+			<if test="promotionId != null">
+				promotion_id = #{promotionId},
+			</if>			
+			<if test="promotionType != null">
+				promotion_type = #{promotionType},
+			</if>			
+			<if test="promotionPrice != null">
+				promotion_price = #{promotionPrice},
+			</if>			
+			<if test="promotionStartTime != null">
+				promotion_start_time = #{promotionStartTime},
+			</if>			
+			<if test="promotionEndTime != null">
+				promotion_end_time = #{promotionEndTime},
+			</if>			
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>			
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>			
+			<if test="platformId != null">
+				platform_id = #{platformId},
+			</if>			
+		</set>
+			WHERE id = #{id}
+	</update>	
+	
+
+	<delete id="delete">
+		delete from merchant_product_promotion where id = #{id}
+	</delete>
+
+	<delete id="deleteByPara">
+		delete from merchant_product_promotion 
+		<where>
+			<if test="merchantProductId != null">
+				and merchant_product_id = #{merchantProductId}
+			</if>
+			<if test="productId != null">
+				and product_id = #{productId}
+			</if>
+			<if test="skuId != null">
+				and sku_id = #{skuId}
+			</if>
+			<if test="merchantId != null">
+				and merchant_id = #{merchantId}
+			</if>
+			<if test="promotionId != null">
+				and promotion_id = #{promotionId}
+			</if>
+			<if test="promotionType != null">
+				and promotion_type = #{promotionType}
+			</if>
+			<if test="promotionPrice != null">
+				and promotion_price = #{promotionPrice}
+			</if>
+			<if test="promotionStartTime != null">
+				and promotion_start_time = #{promotionStartTime}
+			</if>
+			<if test="promotionEndTime != null">
+				and promotion_end_time = #{promotionEndTime}
+			</if>
+			<if test="createTime != null">
+				and create_time = #{createTime}
+			</if>
+			<if test="updateTime != null">
+				and update_time = #{updateTime}
+			</if>
+			<if test="platformId != null">
+				and platform_id = #{platformId}
+			</if>
+		</where>
+	</delete>
+
+
+</mapper>
+	

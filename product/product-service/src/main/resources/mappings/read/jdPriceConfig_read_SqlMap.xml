@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.product.dao.read.JdPriceConfigReadDAO">
+	<resultMap type="com.egeo.components.product.po.JdPriceConfigPO" id="jdPriceConfigMap">
+		<result property="id" column="id" />
+		<result property="standardCompanyRate" column="standard_company_rate" />
+		<result property="democompanysCompanyRate" column="demoCompanys_company_rate" />
+		<result property="competingCompanyRate" column="competing_company_rate" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+	</resultMap>
+
+	<sql id="jdPriceConfigColumns">
+		id,
+		standard_company_rate,
+		demoCompanys_company_rate,
+		competing_company_rate,
+		create_time,
+		update_time
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.product.po.JdPriceConfigPO" resultMap="jdPriceConfigMap">
+		SELECT
+		<include refid="jdPriceConfigColumns" />
+		FROM jd_price_config
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="jdPriceConfigMap">
+		SELECT
+		<include refid="jdPriceConfigColumns" />
+		FROM jd_price_config
+		<where>
+			<if test="po.standardCompanyRate != null">
+				and standard_company_rate = #{po.standardCompanyRate}
+			</if>
+			<if test="po.democompanysCompanyRate != null">
+				and demoCompanys_company_rate = #{po.democompanysCompanyRate}
+			</if>
+			<if test="po.competingCompanyRate != null">
+				and competing_company_rate = #{po.competingCompanyRate}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM jd_price_config
+		<where>
+			<if test="po.standardCompanyRate != null">
+				and standard_company_rate = #{po.standardCompanyRate}
+			</if>
+			<if test="po.democompanysCompanyRate != null">
+				and demoCompanys_company_rate = #{po.democompanysCompanyRate}
+			</if>
+			<if test="po.competingCompanyRate != null">
+				and competing_company_rate = #{po.competingCompanyRate}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="jdPriceConfigMap">
+		SELECT
+		<include refid="jdPriceConfigColumns" />
+		FROM jd_price_config
+		<where>
+			<if test="po.standardCompanyRate != null">
+				and standard_company_rate = #{po.standardCompanyRate}
+			</if>
+			<if test="po.democompanysCompanyRate != null">
+				and demoCompanys_company_rate = #{po.democompanysCompanyRate}
+			</if>
+			<if test="po.competingCompanyRate != null">
+				and competing_company_rate = #{po.competingCompanyRate}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+</mapper>
+	

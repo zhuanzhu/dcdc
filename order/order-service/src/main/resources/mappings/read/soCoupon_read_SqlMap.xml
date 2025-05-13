@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.order.dao.read.SoCouponReadDAO">
+	<resultMap type="com.egeo.components.order.po.SoCouponPO" id="soCouponMap">
+		<result property="id" column="id" />
+		<result property="orderCode" column="order_code" />
+		<result property="parentOrderCode" column="parent_order_code" />
+		<result property="couponCode" column="coupon_code" />
+		<result property="couponShareType" column="coupon_share_type" />
+		<result property="couponAmount" column="coupon_amount" />
+		<result property="couponNum" column="coupon_num" />
+		<result property="platformId" column="platform_id" />
+		<result property="couponId" column="coupon_id" />
+		<result property="updateTime" column="update_time" />
+		<result property="createTime" column="create_time" />
+	</resultMap>
+
+	<sql id="soCouponColumns">
+		id,
+		order_code,
+		parent_order_code,
+		coupon_code,
+		coupon_share_type,
+		coupon_amount,
+		coupon_num,
+		platform_id,
+		coupon_id,
+		update_time,
+		create_time
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.order.po.SoCouponPO" resultMap="soCouponMap">
+		SELECT
+		<include refid="soCouponColumns" />
+		FROM so_coupon
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="soCouponMap">
+		SELECT
+		<include refid="soCouponColumns" />
+		FROM so_coupon
+		<where>
+			<if test="po.orderCode != null">
+				and order_code = #{po.orderCode}
+			</if>
+			<if test="po.parentOrderCode != null">
+				and parent_order_code = #{po.parentOrderCode}
+			</if>
+			<if test="po.couponCode != null">
+				and coupon_code = #{po.couponCode}
+			</if>
+			<if test="po.couponShareType != null">
+				and coupon_share_type = #{po.couponShareType}
+			</if>
+			<if test="po.couponAmount != null">
+				and coupon_amount = #{po.couponAmount}
+			</if>
+			<if test="po.couponNum != null">
+				and coupon_num = #{po.couponNum}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.couponId != null">
+				and coupon_id = #{po.couponId}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM so_coupon
+		<where>
+			<if test="po.orderCode != null">
+				and order_code = #{po.orderCode}
+			</if>
+			<if test="po.parentOrderCode != null">
+				and parent_order_code = #{po.parentOrderCode}
+			</if>
+			<if test="po.couponCode != null">
+				and coupon_code = #{po.couponCode}
+			</if>
+			<if test="po.couponShareType != null">
+				and coupon_share_type = #{po.couponShareType}
+			</if>
+			<if test="po.couponAmount != null">
+				and coupon_amount = #{po.couponAmount}
+			</if>
+			<if test="po.couponNum != null">
+				and coupon_num = #{po.couponNum}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.couponId != null">
+				and coupon_id = #{po.couponId}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="soCouponMap">
+		SELECT
+		<include refid="soCouponColumns" />
+		FROM so_coupon
+		<where>
+			<if test="po.orderCode != null">
+				and order_code = #{po.orderCode}
+			</if>
+			<if test="po.parentOrderCode != null">
+				and parent_order_code = #{po.parentOrderCode}
+			</if>
+			<if test="po.couponCode != null">
+				and coupon_code = #{po.couponCode}
+			</if>
+			<if test="po.couponShareType != null">
+				and coupon_share_type = #{po.couponShareType}
+			</if>
+			<if test="po.couponAmount != null">
+				and coupon_amount = #{po.couponAmount}
+			</if>
+			<if test="po.couponNum != null">
+				and coupon_num = #{po.couponNum}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.couponId != null">
+				and coupon_id = #{po.couponId}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+</mapper>
+	

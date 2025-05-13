@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.cms.dao.write.CmsTemplateWriteDAO">
+	<insert id="insert" parameterType="com.egeo.components.cms.po.CmsTemplatePO">
+		INSERT INTO cms_template(
+        <trim suffixOverrides=",">
+			<if test="name != null">
+				name,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="clientType != null">
+				client_type,
+			</if>
+			<if test="clientVersionAId != null">
+				client_version_a_id,
+			</if>
+			<if test="clientVersionIId != null">
+				client_version_i_id,
+			</if>
+			<if test="clientVersionARemark != null">
+				client_version_a_remark,
+			</if>
+			<if test="clientVersionIRemark != null">
+				client_version_i_remark,
+			</if>
+			<if test="clientVersionACode != null">
+				client_version_a_code,
+			</if>
+			<if test="clientVersionICode != null">
+				client_version_i_code,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+			<if test="type != null">
+				type,
+			</if>
+			<if test="showFgj != null">
+				show_fgj,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+        </trim>		
+		) VALUES (
+        <trim suffixOverrides=",">
+			<if test="name != null">
+				#{name},
+			</if>
+			<if test="status != null">
+				#{status},
+			</if>
+			<if test="clientType != null">
+				#{clientType},
+			</if>
+			<if test="clientVersionAId != null">
+				#{clientVersionAId},
+			</if>
+			<if test="clientVersionIId != null">
+				#{clientVersionIId},
+			</if>
+			<if test="clientVersionARemark != null">
+				#{clientVersionARemark},
+			</if>
+			<if test="clientVersionIRemark != null">
+				#{clientVersionIRemark},
+			</if>
+			<if test="clientVersionACode != null">
+				#{clientVersionACode},
+			</if>
+			<if test="clientVersionICode != null">
+				#{clientVersionICode},
+			</if>
+			<if test="remark != null">
+				#{remark},
+			</if>
+			<if test="type != null">
+				#{type},
+			</if>
+			<if test="showFgj != null">
+				#{showFgj},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
+			</if>
+        </trim>		
+		)
+		<selectKey keyProperty="id" resultType="java.lang.Long">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+
+	
+	
+	<update id="update">
+	UPDATE cms_template 
+		<set>
+			<if test="name != null">
+				name = #{name},
+			</if>			
+			<if test="status != null">
+				status = #{status},
+			</if>			
+			<if test="clientType != null">
+				client_type = #{clientType},
+			</if>			
+			<if test="clientVersionAId != null">
+				client_version_a_id = #{clientVersionAId},
+			</if>			
+			<if test="clientVersionIId != null">
+				client_version_i_id = #{clientVersionIId},
+			</if>			
+			<if test="clientVersionARemark != null">
+				client_version_a_remark = #{clientVersionARemark},
+			</if>			
+			<if test="clientVersionIRemark != null">
+				client_version_i_remark = #{clientVersionIRemark},
+			</if>			
+			<if test="clientVersionACode != null">
+				client_version_a_code = #{clientVersionACode},
+			</if>			
+			<if test="clientVersionICode != null">
+				client_version_i_code = #{clientVersionICode},
+			</if>			
+			<if test="remark != null">
+				remark = #{remark},
+			</if>			
+			<if test="type != null">
+				type = #{type},
+			</if>			
+			<if test="showFgj != null">
+				show_fgj = #{showFgj},
+			</if>			
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>			
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>			
+		</set>
+			WHERE id = #{id}
+	</update>	
+	
+
+	<delete id="delete">
+		delete from cms_template where id = #{id}
+	</delete>
+
+	<delete id="deleteByPara">
+		delete from cms_template 
+		<where>
+			<if test="name != null">
+				and name = #{name}
+			</if>
+			<if test="status != null">
+				and status = #{status}
+			</if>
+			<if test="clientType != null">
+				and client_type = #{clientType}
+			</if>
+			<if test="clientVersionAId != null">
+				and client_version_a_id = #{clientVersionAId}
+			</if>
+			<if test="clientVersionIId != null">
+				and client_version_i_id = #{clientVersionIId}
+			</if>
+			<if test="clientVersionARemark != null">
+				and client_version_a_remark = #{clientVersionARemark}
+			</if>
+			<if test="clientVersionIRemark != null">
+				and client_version_i_remark = #{clientVersionIRemark}
+			</if>
+			<if test="clientVersionACode != null">
+				and client_version_a_code = #{clientVersionACode}
+			</if>
+			<if test="clientVersionICode != null">
+				and client_version_i_code = #{clientVersionICode}
+			</if>
+			<if test="remark != null">
+				and remark = #{remark}
+			</if>
+			<if test="type != null">
+				and type = #{type}
+			</if>
+			<if test="showFgj != null">
+				and show_fgj = #{showFgj}
+			</if>
+			<if test="createTime != null">
+				and create_time = #{createTime}
+			</if>
+			<if test="updateTime != null">
+				and update_time = #{updateTime}
+			</if>
+		</where>
+	</delete>
+
+
+</mapper>
+	

@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.user.dao.read.UrlWhiteListReadDAO">
+	<resultMap type="com.egeo.components.user.po.UrlWhiteListPO" id="urlWhiteListMap">
+		<result property="id" column="id" />
+		<result property="urlId" column="url_id" />
+		<result property="platformId" column="platform_id" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="updateUserId" column="update_user_id" />
+		<result property="updateUserName" column="update_user_name" />
+		<result property="remark" column="remark" />
+	</resultMap>
+	
+	<resultMap type="com.egeo.components.user.condition.UrlWhiteListCondition" id="urlWhiteListConditionMap" extends="urlWhiteListMap">
+		<result property="url" column="url" />
+		<result property="name" column="name" />
+		<result property="platformName" column="platform_name" />
+	</resultMap>
+
+	<sql id="urlWhiteListColumns">
+		id,
+		url_id,
+		platform_id,
+		create_time,
+		update_time,
+		update_user_id,
+		update_user_name,
+		remark
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.user.po.UrlWhiteListPO" resultMap="urlWhiteListMap">
+		SELECT
+		<include refid="urlWhiteListColumns" />
+		FROM u_url_white_list
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="urlWhiteListMap">
+		SELECT
+		<include refid="urlWhiteListColumns" />
+		FROM u_url_white_list
+		<where>
+			<if test="po.urlId != null">
+				and url_id = #{po.urlId}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM u_url_white_list
+		<where>
+			<if test="po.urlId != null">
+				and url_id = #{po.urlId}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="urlWhiteListMap">
+		SELECT
+		<include refid="urlWhiteListColumns" />
+		FROM u_url_white_list
+		<where>
+			<if test="po.urlId != null">
+				and url_id = #{po.urlId}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllUrlWhiteListCondition" resultMap="urlWhiteListConditionMap">
+		SELECT
+		uwt.id,
+		uwt.url_id,
+		uwt.platform_id,
+		uwt.create_time,
+		uwt.remark,
+		uu.url,
+		uu.name
+		FROM u_url_white_list uwt, u_url uu
+		<where>
+			<if test="true">
+				and uwt.url_id = uu.id
+			</if>
+			<if test="po.id != null">
+				and uwt.id = #{po.id}
+			</if>
+			<if test="po.urlId != null">
+				and uwt.url_id = #{po.urlId}
+			</if>
+			<if test="po.platformId != null">
+				and uwt.platform_id = #{po.platformId}
+			</if>
+			<if test="po.createTime != null">
+				and uwt.create_time = #{po.createTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY uwt.id desc		
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findUrlWhiteListConditionOfPage" resultMap="urlWhiteListConditionMap">
+		SELECT
+		uwt.id,
+		uwt.url_id,
+		uwt.platform_id,
+		uwt.create_time,
+		uwt.update_time,
+		uwt.update_user_name,
+		uwt.update_user_id,
+		uwt.remark,
+		uu.url,
+		uu.name,
+		up.name AS platform_name
+		FROM u_url_white_list uwt
+		left join u_url uu on uwt.url_id = uu.id
+		left join u_platform up on uwt.platform_id = up.id
+		<where>
+			<if test="po.platformId != null">
+				and uwt.platform_id = #{po.platformId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY uwt.id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+			limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+
+	<select id="findUrlWhiteList" resultType="java.lang.String">
+		SELECT
+		<include refid="urlWhiteListColumns" />
+		FROM u_url_white_list
+		WHERE platform_id = #{platformId}
+	</select>
+</mapper>
+	

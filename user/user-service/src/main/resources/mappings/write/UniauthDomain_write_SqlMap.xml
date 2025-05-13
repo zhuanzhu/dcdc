@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!-- 
+ **
+ * Created By: XI
+ * Created On: 2018-10-23 17:53:41
+ *
+ * Amendment History:
+ * 
+ * Amended By       Amended On      Amendment Description
+ * ************     ***********     *********************************************
+ *
+ **
+ -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.user.dao.write.UniauthDomainMapper">
+	<resultMap id="UniauthDomainResultMapper" type="com.egeo.components.user.bean.UniAuthDomain">
+		<result column="id" property="id"/>
+		<result column="code" property="code"/>
+		<result column="name" property="name"/>
+		<result column="desc" property="desc"/>
+		<result column="status" property="status"/>
+		<result column="tenancy_id" property="tenancyId"/>
+		<result column="domain_url" property="domainUrl"/>
+	</resultMap>
+	
+	<sql id="commonColumns">
+		 id
+		, code
+		, `name`
+		, `desc`
+		, status
+		, tenancy_id
+		, domain_url
+	</sql>
+	
+	<sql id="commonCondition">
+		<if test="id!= null and id!= ''"> 
+			AND id=#{id}
+		</if>
+		<if test="code!= null and code!= ''"> 
+			AND code=#{code}
+		</if>
+		<if test="name!= null and name!= ''"> 
+			AND `name`=#{name}
+		</if>
+		<if test="desc!= null and desc!= ''"> 
+			AND `desc`=#{desc}
+		</if>
+		<if test="status!= null and status!= ''"> 
+			AND status=#{status}
+		</if>
+		<if test="tenancyId!= null and tenancyId!= ''"> 
+			AND tenancy_id=#{tenancyId}
+		</if>
+		<if test="domainUrl!= null and domainUrl!= ''"> 
+			AND domain_url=#{domainUrl}
+		</if>
+	</sql>
+	
+	<insert id="insert" parameterType="com.egeo.components.user.bean.UniAuthDomain" keyProperty="id" useGeneratedKeys="true">
+		<![CDATA[ INSERT INTO uniauth_domain (
+				 code
+				, `name`
+				, `desc`
+				, status
+				, tenancy_id
+				, domain_url
+				 ) VALUES (
+				 #{code}
+				, #{name}
+				, #{desc}
+				, #{status}
+				, #{tenancyId}
+				, #{domainUrl}
+  				) ]]>
+	</insert>
+
+	<select id="listByProperty" parameterType="com.egeo.components.user.bean.UniAuthDomain" resultMap="UniauthDomainResultMapper">
+		<![CDATA[ SELECT ]]>
+			<include refid="commonColumns"/>
+		FROM uniauth_domain WHERE 1=1 
+		<include refid="commonCondition"/>
+	</select>
+
+	<select id="getByPK" parameterType="java.lang.Integer" resultMap="UniauthDomainResultMapper">
+		<![CDATA[ SELECT ]]>
+		<include refid="commonColumns"/>
+		FROM uniauth_domain WHERE id = #{id}
+	</select>
+</mapper>

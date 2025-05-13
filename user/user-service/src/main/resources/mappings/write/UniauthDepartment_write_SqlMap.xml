@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!-- 
+ **
+ * Created By: XI
+ * Created On: 2018-10-16 10:47:21
+ *
+ * Amendment History:
+ * 
+ * Amended By       Amended On      Amendment Description
+ * ************     ***********     *********************************************
+ *
+ **
+ -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.user.dao.write.UniauthDepartmentMapper">
+	<resultMap id="UniauthDepartmentResultMapper" type="com.egeo.components.user.bean.UniauthDepartment">
+		<result column="department_id" property="departmentId"/>
+		<result column="department_code" property="departmentCode"/>
+		<result column="department_name" property="departmentName"/>
+		<result column="parent_code" property="parentCode"/>
+		<result column="parent_codes" property="parentCodes"/>
+		<result column="department_state" property="departmentState"/>
+		<result column="create_time" property="createTime"/>
+		<result column="update_time" property="updateTime"/>
+		<result column="create_by" property="createBy"/>
+		<result column="update_by" property="updateBy"/>
+		<result column="remark" property="remark"/>
+	</resultMap>
+	
+	<resultMap id="ListByPageInfoResultMapper" type="com.egeo.components.user.bean.UniauthDepartment" extends="UniauthDepartmentResultMapper">
+		<association property="parentName" column="parent_code" select="findNameByCode"/>
+	</resultMap>
+	
+	<sql id="commonColumns">
+		 department_id
+		, department_code
+		, department_name
+		, parent_code
+		, parent_codes
+		, department_state
+		, DATE_FORMAT(create_time, '%Y-%m-%d %T') create_time
+		, DATE_FORMAT(update_time, '%Y-%m-%d %T') update_time
+		, create_by
+		, update_by
+		, remark
+	</sql>
+	
+	<sql id="commonCondition">
+		<if test="departmentId!= null and departmentId!= ''"> 
+			AND department_id=#{departmentId}
+		</if>
+		<if test="departmentCode!= null and departmentCode!= ''"> 
+			AND department_code=#{departmentCode}
+		</if>
+		<if test="departmentName!= null and departmentName!= ''"> 
+			AND department_name=#{departmentName}
+		</if>
+		<if test="parentCode!= null and parentCode!= ''"> 
+			AND parent_code=#{parentCode}
+		</if>
+		<if test="parentCodes!= null and parentCodes!= ''"> 
+			AND parent_codes=#{parentCodes}
+		</if>
+		<if test="departmentState!= null and departmentState!= ''"> 
+			AND department_state=#{departmentState}
+		</if>
+		<if test="createTime!= null and createTime!= ''"> 
+			AND create_time=STR_TO_DATE(#{createTime},'%Y-%m-%d %T')
+		</if>
+		<if test="updateTime!= null and updateTime!= ''"> 
+			AND update_time=STR_TO_DATE(#{updateTime},'%Y-%m-%d %T')
+		</if>
+		<if test="createBy!= null and createBy!= ''"> 
+			AND create_by=#{createBy}
+		</if>
+		<if test="updateBy!= null and updateBy!= ''"> 
+			AND update_by=#{updateBy}
+		</if>
+		<if test="remark!= null and remark!= ''"> 
+			AND remark=#{remark}
+		</if>
+	</sql>
+	
+	<insert id="insert" parameterType="com.egeo.components.user.bean.UniauthDepartment" keyProperty="id" useGeneratedKeys="true">
+		<![CDATA[ INSERT INTO uniauth_department (
+				 department_code
+				, department_name
+				, parent_code
+				, parent_codes
+				, department_state
+				, create_time
+				, update_time
+				, create_by
+				, update_by
+				, remark
+				 ) VALUES (
+				 #{departmentCode}
+				, #{departmentName}
+				, #{parentCode}
+				, #{parentCodes}
+				, #{departmentState}
+				, STR_TO_DATE(#{createTime},'%Y-%m-%d %T')
+				, STR_TO_DATE(#{updateTime},'%Y-%m-%d %T')
+				, #{createBy}
+				, #{updateBy}
+				, #{remark}
+  				) ]]>
+	</insert>
+
+    <update id="updatePart" parameterType="com.egeo.components.user.bean.UniauthDepartment">
+        <![CDATA[ UPDATE uniauth_department SET department_id = #{departmentId} ]]>
+			<if test="departmentCode!= null">
+					, department_code=#{departmentCode}
+			</if>
+			<if test="departmentName!= null">
+					, department_name=#{departmentName}
+			</if>
+			<if test="parentCode!= null">
+					, parent_code=#{parentCode}
+			</if>
+			<if test="parentCodes!= null">
+					, parent_codes=#{parentCodes}
+			</if>
+			<if test="departmentState!= null">
+					, department_state=#{departmentState}
+			</if>
+			<if test="createTime!= null">
+					, create_time=STR_TO_DATE(#{createTime}, '%Y-%m-%d %T')
+			</if>
+			<if test="updateTime!= null">
+					, update_time=STR_TO_DATE(#{updateTime}, '%Y-%m-%d %T')
+			</if>
+			<if test="createBy!= null">
+					, create_by=#{createBy}
+			</if>
+			<if test="updateBy!= null">
+					, update_by=#{updateBy}
+			</if>
+			<if test="remark!= null">
+					, remark=#{remark}
+			</if>
+        <![CDATA[ WHERE department_id = #{departmentId}  ]]>
+    </update>
+
+	<update id="updateParentCodes" parameterType="Map">
+		UPDATE uniauth_department SET parent_codes = replace(parent_codes, #{oldParentCodes}, #{newParentCodes})
+		<if test="updateTime!= null">
+			, update_time=STR_TO_DATE(#{updateTime}, '%Y-%m-%d %T')
+		</if>
+		<if test="updateBy!= null">
+			, update_by=#{updateBy}
+		</if>
+		WHERE parent_codes LIKE CONCAT(#{oldParentCodes}, '%')
+	</update>
+
+	<select id="getByUniauthDepartment" parameterType="com.egeo.components.user.bean.UniauthDepartment" resultMap="UniauthDepartmentResultMapper">
+		<![CDATA[ SELECT ]]>
+			 <include refid="commonColumns"/>
+		FROM uniauth_department WHERE 1=1
+		<include refid="commonCondition"/>
+	</select>
+
+	<select id="listByPageInfo" parameterType="com.egeo.components.user.bean.UniauthDepartment" 
+			resultMap="ListByPageInfoResultMapper">
+		<![CDATA[ SELECT ]]>
+			department_id
+			, department_code
+			, department_name
+			, parent_code
+			, DATE_FORMAT(create_time, '%Y-%m-%d %T') create_time
+			, update_by
+			, remark
+		FROM uniauth_department WHERE department_state != -1
+		<if test="departmentCode!= null and departmentCode!= ''">
+			AND department_code=#{departmentCode}
+		</if>
+		<if test="departmentName!= null and departmentName!= ''">
+			AND department_name = #{departmentName}
+		</if>
+		<if test="minCreateTime!= null and minCreateTime!= ''">
+			AND create_time >= STR_TO_DATE(#{minCreateTime},'%Y-%m-%d %T')
+		</if>
+		<if test="maxCreateTime!= null and maxCreateTime!= ''">
+			AND create_time <![CDATA[ < ]]> DATE_ADD(#{maxCreateTime},INTERVAL 1 DAY)
+		</if>
+        <if test="parentCode!= null and parentCode!= ''">
+            AND (department_code=#{parentCode}
+				OR (parent_codes LIKE (
+					SELECT concat(parent_codes, department_code, '-', '%')
+					FROM uniauth_department
+					WHERE department_code=#{parentCode}
+					AND department_state != -1
+				))
+			)
+        </if>
+	</select>
+
+	<select id="getByParentCode" parameterType="String" resultMap="UniauthDepartmentResultMapper">
+		<![CDATA[ SELECT ]]>
+			department_id
+			, department_code
+			, department_name
+			, parent_code
+		FROM uniauth_department WHERE department_state != -1
+		<if test="parentCode!= null and parentCode!= ''">
+			AND (department_code=#{parentCode}
+				OR (parent_codes LIKE (
+					SELECT concat(parent_codes, department_code, '-', '%')
+					FROM uniauth_department
+					WHERE department_code=#{parentCode}
+					AND department_state != -1
+				))
+			)
+		</if>
+		ORDER BY department_code
+	</select>
+
+	<select id="findByCount" parameterType="com.egeo.components.user.bean.UniauthDepartment" resultType="int">
+		SELECT count(1) AS totalcount FROM uniauth_department WHERE department_state != -1
+		<include refid="commonCondition"/>
+	</select>
+
+	<select id="findNameByCode" resultType="String" parameterType="String">
+		SELECT department_name FROM uniauth_department WHERE department_code=#{departmentCode} LIMIT 1
+	</select>
+</mapper>

@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.cms.dao.write.CmsCfgKeyWriteDAO">
+	<insert id="insert" parameterType="com.egeo.components.cms.po.CmsCfgKeyPO">
+		INSERT INTO cms_cfg_key(
+        <trim suffixOverrides=",">
+			<if test="elementId != null">
+				element_id,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="code != null">
+				code,
+			</if>
+			<if test="type != null">
+				type,
+			</if>
+			<if test="sort != null">
+				sort,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="units != null">
+				units,
+			</if>
+			<if test="defaultValue != null">
+				default_value,
+			</if>
+			<if test="verifyRegex != null">
+				verify_regex,
+			</if>
+			<if test="cfgGroup != null">
+				cfg_group,
+			</if>
+			<if test="description != null">
+				description,
+			</if>
+			<if test="cfgKind != null">
+				cfg_kind,
+			</if>
+			<if test="parentId != null">
+				parent_id,
+			</if>
+			<if test="label != null">
+				label,
+			</if>
+			<if test="mandatory != null">
+				mandatory,
+			</if>
+			<if test="mandatoryCondition != null">
+				mandatory_condition,
+			</if>
+        </trim>		
+		) VALUES (
+        <trim suffixOverrides=",">
+			<if test="elementId != null">
+				#{elementId},
+			</if>
+			<if test="name != null">
+				#{name},
+			</if>
+			<if test="code != null">
+				#{code},
+			</if>
+			<if test="type != null">
+				#{type},
+			</if>
+			<if test="sort != null">
+				#{sort},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
+			</if>
+			<if test="units != null">
+				#{units},
+			</if>
+			<if test="defaultValue != null">
+				#{defaultValue},
+			</if>
+			<if test="verifyRegex != null">
+				#{verifyRegex},
+			</if>
+			<if test="cfgGroup != null">
+				#{cfgGroup},
+			</if>
+			<if test="description != null">
+				#{description},
+			</if>
+			<if test="cfgKind != null">
+				#{cfgKind},
+			</if>
+			<if test="parentId != null">
+				#{parentId},
+			</if>
+			<if test="label != null">
+				#{label},
+			</if>
+			<if test="mandatory != null">
+				#{mandatory},
+			</if>
+			<if test="mandatoryCondition != null">
+				#{mandatoryCondition},
+			</if>
+        </trim>		
+		)
+		<selectKey keyProperty="id" resultType="java.lang.Long">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+
+	
+	
+	<update id="update">
+	UPDATE cms_cfg_key 
+		<set>
+			<if test="elementId != null">
+				element_id = #{elementId},
+			</if>			
+			<if test="name != null">
+				name = #{name},
+			</if>			
+			<if test="code != null">
+				code = #{code},
+			</if>			
+			<if test="type != null">
+				type = #{type},
+			</if>			
+			<if test="sort != null">
+				sort = #{sort},
+			</if>			
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>			
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>			
+			<if test="units != null">
+				units = #{units},
+			</if>
+			<if test="defaultValue != null">
+				default_value = #{defaultValue},
+			</if>
+			<if test="verifyRegex != null">
+				verify_regex = #{verifyRegex},
+			</if>
+			<if test="cfgGroup != null">
+				cfg_group = #{cfgGroup},
+			</if>
+			<if test="description != null">
+				description = #{description},
+			</if>
+			<if test="cfgKind != null">
+				cfg_kind = #{cfgKind},
+			</if>
+			<if test="parentId != null">
+				parent_id = #{parentId},
+			</if>
+			<if test="label != null">
+				label = #{label},
+			</if>			
+			<if test="mandatory != null">
+				mandatory = #{mandatory},
+			</if>			
+			<if test="mandatoryCondition != null">
+				mandatory_condition = #{mandatoryCondition},
+			</if>			
+		</set>
+			WHERE id = #{id}
+	</update>	
+	
+
+	<delete id="delete">
+		delete from cms_cfg_key where id = #{id}
+	</delete>
+
+	<delete id="deleteByPara">
+		delete from cms_cfg_key 
+		<where>
+			<if test="elementId != null">
+				and element_id = #{elementId}
+			</if>
+			<if test="name != null">
+				and name = #{name}
+			</if>
+			<if test="code != null">
+				and code = #{code}
+			</if>
+			<if test="type != null">
+				and type = #{type}
+			</if>
+			<if test="sort != null">
+				and sort = #{sort}
+			</if>
+			<if test="createTime != null">
+				and create_time = #{createTime}
+			</if>
+			<if test="updateTime != null">
+				and update_time = #{updateTime}
+			</if>
+			<if test="defaultValue != null">
+				and default_value = #{defaultValue}
+			</if>
+			<if test="verifyRegex != null">
+				and verify_regex = #{verifyRegex}
+			</if>
+			<if test="cfgGroup != null">
+				and cfg_group = #{cfgGroup}
+			</if>
+			<if test="description != null">
+				and description = #{description}
+			</if>
+			<if test="cfgKind != null">
+				and cfg_kind = #{cfgKind}
+			</if>
+			<if test="parentId != null">
+				and parent_id = #{parentId}
+			</if>
+			<if test="label != null">
+				and label = #{label}
+			</if>
+			<if test="mandatory != null">
+				and mandatory = #{mandatory}
+			</if>
+			<if test="mandatoryCondition != null">
+				and mandatory_condition = #{mandatoryCondition}
+			</if>
+		</where>
+	</delete>
+
+
+</mapper>
+	

@@ -1,0 +1,528 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.order.dao.read.SoItemReadDAO">
+
+	<select id="querySoItemListBySoId" resultMap="soItemMap">
+		select * from so_item
+		where so_id=#{id}
+	</select>
+	<select id="findPuIdBySoChildId" resultType="java.lang.Long">
+		select pu_id from so_item
+		where so_child_id=#{soChildId}
+	</select>
+	<select id="findPuIdBySoId" resultType="java.lang.Long">
+		select pu_id from so_item
+		where so_id=#{id}
+	</select>
+
+	<select id="querySoItemListByMerchantIds" resultMap="soItemMap">
+		select * from so_item
+		where mp_id
+		<include refid="inClause" />
+		and platform_id=#{platformId}
+	</select>
+	<select id="findPUNum" resultType="java.lang.Long">
+		select sum(pu_count) from so_item
+		where so_id=#{id}
+	</select>
+	<select id="findSoChildPUNum" resultType="java.lang.Long">
+		select sum(pu_count) from so_item
+		where so_child_id=#{id}
+	</select>
+
+	<select id="soItemByPackageId" resultMap="soItemMap">
+		select * from so_item where pack_id = #{id}
+	</select>
+
+	<sql id="inClause">
+		in
+		<foreach collection="ids" item="id" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</sql>
+
+	<resultMap type="com.egeo.components.order.po.SoItemPO" id="soItemMap">
+		<result property="id" column="id" />
+		<result property="soChildId" column="so_child_id" />
+		<result property="userId" column="user_id" />
+		<result property="unitExist" column="unit_exist" />
+		<result property="puId" column="pu_id" />
+		<result property="puCount" column="pu_count" />
+		<result property="cartType" column="cart_type" />
+		<result property="promotionId" column="promotion_id" />
+		<result property="price" column="price" />
+		<result property="promotionAver" column="promotion_aver" />
+		<result property="finalPromotionAver" column="final_promotion_aver" />
+		<result property="soId" column="so_id" />
+		<result property="updateTime" column="update_time" />
+		<result property="createTime" column="create_time" />
+		<result property="platformId" column="platform_id" />
+		<result property="puPicUrl" column="pu_pic_url" />
+		<result property="snapshot" column="snapshot" />
+		<result property="source" column="source" />
+		<result property="supplierId" column="supplier_id" />
+		<result property="puName" column="pu_name" />
+		<result property="externalSkuId" column="external_sku_id" />
+		<result property="afterDiscountPriceAver" column="after_discount_price_aver" />
+		<result property="deliveryFeeAver" column="delivery_fee_aver" />
+		<result property="storeDiscountAver" column="store_discount_aver" />
+		<result property="deliveryFeeDiscountAver" column="delivery_fee_discount_aver" />
+		<result property="refundCount" column="refund_count" />
+		<result property="refundAmount" column="refund_amount" />
+		<result property="refundDeliveryFee" column="refund_delivery_fee"/>
+		<result property="taxRate" column="tax_rate" />
+		<result property="taxCode" column="tax_code" />
+		<result property="taxUnit" column="tax_unit" />
+		<result property="externalProductId" column="external_product_id" />
+		<result property="subBizId" column="sub_biz_id"/>
+	</resultMap>
+
+	<resultMap type="com.egeo.components.order.condition.SoItemCondition" id="soItemCondition" extends="soItemMap">
+		<result property="skuId" column="sku_id" />
+		<result property="orderCode" column="order_code" />
+	</resultMap>
+
+	<sql id="soItemColumns">
+		id,
+		so_child_id,
+		user_id,
+		unit_exist,
+		pu_id,
+		pu_count,
+		cart_type,
+		promotion_id,
+		price,
+		promotion_aver,
+		final_promotion_aver,
+		so_id,
+		source,
+		supplier_id,
+		snapshot,
+		update_time,
+		create_time,
+		platform_id,
+		pu_pic_url,
+		pu_name,
+		external_sku_id,
+		after_discount_price_aver,
+		delivery_fee_aver,
+		store_discount_aver,
+		delivery_fee_discount_aver,
+		refund_count,refund_amount,refund_delivery_fee,tax_rate,tax_code,tax_unit,
+		external_product_id,
+		 sub_biz_id
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.order.po.SoItemPO" resultMap="soItemMap">
+		SELECT
+		<include refid="soItemColumns" />
+		FROM so_item
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="soItemMap">
+		SELECT
+		<include refid="soItemColumns" />
+		FROM so_item
+		<where>
+			<if test="po.soChildId != null">
+				and so_child_id = #{po.soChildId}
+			</if>
+			<if test="po.userId != null">
+				and user_id = #{po.userId}
+			</if>
+			<if test="po.unitExist != null">
+				and unit_exist = #{po.unitExist}
+			</if>
+			<if test="po.puId != null">
+				and pu_id = #{po.puId}
+			</if>
+			<if test="po.puCount != null">
+				and pu_count = #{po.puCount}
+			</if>
+			<if test="po.cartType != null">
+				and cart_type = #{po.cartType}
+			</if>
+			<if test="po.promotionId != null">
+				and promotion_id = #{po.promotionId}
+			</if>
+			<if test="po.source != null">
+				and source = #{po.source}
+			</if>
+			<if test="po.snapshot != null">
+				and snapshot = #{po.snapshot}
+			</if>
+			<if test="po.price != null">
+				and price = #{po.price}
+			</if>
+			<if test="po.promotionAver != null">
+				and promotion_aver = #{po.promotionAver}
+			</if>
+			<if test="po.source != null">
+				and source = #{po.source}
+			</if>
+			<if test="po.snapshot != null">
+				and snapshot = #{po.snapshot}
+			</if>
+			<if test="po.finalPromotionAver != null">
+				and final_promotion_aver = #{po.finalPromotionAver}
+			</if>
+			<if test="po.soId != null">
+				and so_id = #{po.soId}
+			</if>
+			<if test="po.supplierId != null">
+				and supplier_id = #{po.supplierId}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.puPicUrl != null">
+				and pu_pic_url = #{po.puPicUrl}
+			</if>
+			<if test="po.puName != null">
+				and pu_name = #{po.puName}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY id desc
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM so_item
+		<where>
+			<if test="po.soChildId != null">
+				and so_child_id = #{po.soChildId}
+			</if>
+			<if test="po.userId != null">
+				and user_id = #{po.userId}
+			</if>
+			<if test="po.unitExist != null">
+				and unit_exist = #{po.unitExist}
+			</if>
+			<if test="po.puId != null">
+				and pu_id = #{po.puId}
+			</if>
+			<if test="po.puCount != null">
+				and pu_count = #{po.puCount}
+			</if>
+			<if test="po.cartType != null">
+				and cart_type = #{po.cartType}
+			</if>
+			<if test="po.promotionId != null">
+				and promotion_id = #{po.promotionId}
+			</if>
+			<if test="po.source != null">
+				and source = #{po.source}
+			</if>
+			<if test="po.snapshot != null">
+				and snapshot = #{po.snapshot}
+			</if>
+			<if test="po.price != null">
+				and price = #{po.price}
+			</if>
+			<if test="po.promotionAver != null">
+				and promotion_aver = #{po.promotionAver}
+			</if>
+			<if test="po.finalPromotionAver != null">
+				and final_promotion_aver = #{po.finalPromotionAver}
+			</if>
+			<if test="po.soId != null">
+				and so_id = #{po.soId}
+			</if>
+			<if test="po.supplierId != null">
+				and supplier_id = #{po.supplierId}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.puPicUrl != null">
+				and pu_pic_url = #{po.puPicUrl}
+			</if>
+			<if test="po.puName != null">
+				and pu_name = #{po.puName}
+			</if>
+		</where>
+	</select>
+
+	<select id="findAll" resultMap="soItemMap">
+		SELECT
+		<include refid="soItemColumns" />
+		FROM so_item
+		<where>
+			<if test="po.soChildId != null">
+				and so_child_id = #{po.soChildId}
+			</if>
+			<if test="po.userId != null">
+				and user_id = #{po.userId}
+			</if>
+			<if test="po.unitExist != null">
+				and unit_exist = #{po.unitExist}
+			</if>
+			<if test="po.puId != null">
+				and pu_id = #{po.puId}
+			</if>
+			<if test="po.puCount != null">
+				and pu_count = #{po.puCount}
+			</if>
+			<if test="po.cartType != null">
+				and cart_type = #{po.cartType}
+			</if>
+			<if test="po.promotionId != null">
+				and promotion_id = #{po.promotionId}
+			</if>
+			<if test="po.source != null">
+				and source = #{po.source}
+			</if>
+			<if test="po.snapshot != null">
+				and snapshot = #{po.snapshot}
+			</if>
+			<if test="po.price != null">
+				and price = #{po.price}
+			</if>
+			<if test="po.promotionAver != null">
+				and promotion_aver = #{po.promotionAver}
+			</if>
+			<if test="po.finalPromotionAver != null">
+				and final_promotion_aver = #{po.finalPromotionAver}
+			</if>
+			<if test="po.soId != null">
+				and so_id = #{po.soId}
+			</if>
+			<if test="po.supplierId != null">
+				and supplier_id = #{po.supplierId}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.puPicUrl != null">
+				and pu_pic_url = #{po.puPicUrl}
+			</if>
+			<if test="po.puName != null">
+				and pu_name = #{po.puName}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY id desc
+			</otherwise>
+		</choose>
+	</select>
+
+	<select id="findAllBySoIdAndUnitExist" resultMap="soItemCondition">
+	SELECT
+		<include refid="soItemColumns" />
+		FROM so_item
+		<where>
+			<if test="po.soChildId != null">
+				and so_child_id = #{po.soChildId}
+			</if>
+			<if test="po.userId != null">
+				and user_id = #{po.userId}
+			</if>
+			<if test="po.unitExist != null">
+				and unit_exist = #{po.unitExist}
+			</if>
+			<if test="po.puId != null">
+				and pu_id = #{po.puId}
+			</if>
+			<if test="po.puCount != null">
+				and pu_count = #{po.puCount}
+			</if>
+			<if test="po.cartType != null">
+				and cart_type = #{po.cartType}
+			</if>
+			<if test="po.promotionId != null">
+				and promotion_id = #{po.promotionId}
+			</if>
+			<if test="po.source != null">
+				and source = #{po.source}
+			</if>
+			<if test="po.snapshot != null">
+				and snapshot = #{po.snapshot}
+			</if>
+			<if test="po.price != null">
+				and price = #{po.price}
+			</if>
+			<if test="po.promotionAver != null">
+				and promotion_aver = #{po.promotionAver}
+			</if>
+			<if test="po.finalPromotionAver != null">
+				and final_promotion_aver = #{po.finalPromotionAver}
+			</if>
+			<if test="po.soId != null">
+				and so_id = #{po.soId}
+			</if>
+			<if test="po.supplierId != null">
+				and supplier_id = #{po.supplierId}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+			<if test="po.puPicUrl != null">
+				and pu_pic_url = #{po.puPicUrl}
+			</if>
+			<if test="po.puName != null">
+				and pu_name = #{po.puName}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY id desc
+			</otherwise>
+		</choose>
+	</select>
+
+	<select id="findSoByPuId" resultMap="soItemCondition">
+		select
+		si.id,
+		si.so_child_id,
+		si.user_id,
+		si.unit_exist,
+		si.pu_id,
+		si.pu_count,
+		si.cart_type,
+		si.promotion_id,
+		si.price,
+		si.promotion_aver,
+		si.final_promotion_aver,
+		si.so_id,
+		si.source,
+		si.snapshot
+		si.update_time,
+		si.create_time,
+		si.platform_id,
+		si.supplier_id,
+		si.pu_pic_url,
+		si.pu_name,
+		si.external_sku_id,
+		si.after_discount_price_aver,
+		si.delivery_fee_aver,
+		si.store_discount_aver,
+		si.delivery_fee_discount_aver,
+		si.external_product_id,
+		so.order_code,
+		si.refund_count,si.refund_amount,si.refund_delivery_fee,si.tax_rate,si.tax_code,si.tax_unit
+		from so_item si
+		LEFT JOIN so ON si.so_id = so.id
+
+		where
+		so.order_confirm_status = #{orderConfirmStatus}
+		and so.order_status = #{orderConfirmStatus}
+		and si.pu_id = #{puId}
+
+	</select>
+
+	<select id="findSoByPuIds" resultMap="soItemCondition">
+		select
+		si.id,
+		si.so_child_id,
+		si.user_id,
+		si.unit_exist,
+		si.pu_id,
+		si.pu_count,
+		si.cart_type,
+		si.promotion_id,
+		si.price,
+		si.promotion_aver,
+		si.final_promotion_aver,
+		si.so_id,
+		si.update_time,
+		si.create_time,
+		si.platform_id,
+		si.pu_pic_url,
+		si.source,
+		si.supplier_id,
+		si.snapshot
+		si.pu_name,
+		si.external_sku_id,
+		si.after_discount_price_aver,
+		si.delivery_fee_aver,
+		si.store_discount_aver,
+		si.delivery_fee_discount_aver,
+		si.external_product_id,
+		so.order_code,
+		si.refund_count,si.refund_amount,si.refund_delivery_fee,si.tax_rate,si.tax_code,si.tax_unit
+		from so_item si
+		LEFT JOIN so ON si.so_id = so.id
+		where
+		so.order_confirm_status = #{orderConfirmStatus}
+		and so.order_status = #{orderConfirmStatus}
+		and si.pu_id in
+		<foreach collection="puIds" item="puId" open="(" separator="," close=")">
+			#{puId}
+		</foreach>
+	</select>
+
+
+	<select id="findSoItemsBySoIds" resultMap="soItemMap">
+		select
+		si.*
+		from so_item si
+		where si.so_id in
+		<foreach collection="soIds" item="soId" open="(" separator="," close=")">
+			#{soId}
+		</foreach>
+	</select>
+
+	<select id="findProductIdsSoChild" resultType="java.lang.String">
+		select external_product_id from so_item
+		where so_child_id=#{soChildId}
+		and external_product_id is not null
+	</select>
+
+	<select id="findSoItemsSoChild" resultMap="soItemMap">
+		select * from so_item
+		where so_child_id=#{soChildId}
+	</select>
+
+	<select id="getByIds" resultMap="soItemMap">
+		select
+		si.*
+		from so_item si
+		where si.id in
+		<foreach collection="ids" item="id" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</select>
+</mapper>

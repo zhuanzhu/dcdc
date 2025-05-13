@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.order.dao.write.SoThirdpartyWriteDAO">
+	<insert id="insert" parameterType="com.egeo.components.order.po.SoThirdpartyPO">
+		INSERT INTO so_thirdparty(
+        <trim suffixOverrides=",">
+			<if test="soChildId != null">
+				so_child_id,
+			</if>
+			<if test="thirdpartyId != null">
+				thirdparty_id,
+			</if>
+			<if test="thirdpartyStatus != null">
+				thirdparty_status,
+			</if>
+			<if test="userName != null">
+				user_name,
+			</if>
+			<if test="idCardNum != null">
+				id_card_num,
+			</if>
+			<if test="phone != null">
+				phone,
+			</if>
+			<if test="oidCardNum != null">
+				oid_card_num,
+			</if>
+			<if test="comment != null">
+				comment,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="soChildCode != null">
+				so_child_code,
+			</if>
+        </trim>		
+		) VALUES (
+        <trim suffixOverrides=",">
+			<if test="soChildId != null">
+				#{soChildId},
+			</if>
+			<if test="thirdpartyId != null">
+				#{thirdpartyId},
+			</if>
+			<if test="thirdpartyStatus != null">
+				#{thirdpartyStatus},
+			</if>
+			<if test="userName != null">
+				#{userName},
+			</if>
+			<if test="idCardNum != null">
+				#{idCardNum},
+			</if>
+			<if test="phone != null">
+				#{phone},
+			</if>
+			<if test="oidCardNum != null">
+				#{oidCardNum},
+			</if>
+			<if test="comment != null">
+				#{comment},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
+			</if>
+			<if test="soChildCode != null">
+				#{soChildCode},
+			</if>
+        </trim>		
+		)
+		<selectKey keyProperty="id" resultType="java.lang.Long">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+
+	
+	
+	<update id="update">
+	UPDATE so_thirdparty 
+		<set>
+			<if test="soChildId != null">
+				so_child_id = #{soChildId},
+			</if>			
+			<if test="thirdpartyId != null">
+				thirdparty_id = #{thirdpartyId},
+			</if>			
+			<if test="thirdpartyStatus != null">
+				thirdparty_status = #{thirdpartyStatus},
+			</if>			
+			<if test="userName != null">
+				user_name = #{userName},
+			</if>			
+			<if test="idCardNum != null">
+				id_card_num = #{idCardNum},
+			</if>			
+			<if test="phone != null">
+				phone = #{phone},
+			</if>			
+			<if test="oidCardNum != null">
+				oid_card_num = #{oidCardNum},
+			</if>			
+			<if test="comment != null">
+				comment = #{comment},
+			</if>			
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>			
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>
+			<if test="soChildCode != null">
+				so_child_code = #{soChildCode},
+			</if>
+		</set>
+			WHERE id = #{id}
+	</update>	
+	
+
+	<delete id="delete">
+		delete from so_thirdparty where id = #{id}
+	</delete>
+
+	<delete id="deleteByPara">
+		delete from so_thirdparty 
+		<where>
+			<if test="soChildId != null">
+				and so_child_id = #{soChildId}
+			</if>
+			<if test="thirdpartyId != null">
+				and thirdparty_id = #{thirdpartyId}
+			</if>
+			<if test="thirdpartyStatus != null">
+				and thirdparty_status = #{thirdpartyStatus}
+			</if>
+			<if test="userName != null">
+				and user_name = #{userName}
+			</if>
+			<if test="idCardNum != null">
+				and id_card_num = #{idCardNum}
+			</if>
+			<if test="phone != null">
+				and phone = #{phone}
+			</if>
+			<if test="oidCardNum != null">
+				and oid_card_num = #{oidCardNum}
+			</if>
+			<if test="comment != null">
+				and comment = #{comment}
+			</if>
+			<if test="createTime != null">
+				and create_time = #{createTime}
+			</if>
+			<if test="updateTime != null">
+				and update_time = #{updateTime}
+			</if>
+		</where>
+	</delete>
+
+	<update id="updateSoThirdpartyByCodeWithTx">
+		UPDATE so_thirdparty
+		<set>
+			<if test="po.soChildId != null">
+				so_child_id = #{po.soChildId},
+			</if>
+			<if test="po.thirdpartyId != null">
+				thirdparty_id = #{po.thirdpartyId},
+			</if>
+			<if test="po.thirdpartyStatus != null">
+				thirdparty_status = #{po.thirdpartyStatus},
+			</if>
+			<if test="po.userName != null">
+				user_name = #{po.userName},
+			</if>
+			<if test="po.idCardNum != null">
+				id_card_num = #{po.idCardNum},
+			</if>
+			<if test="po.phone != null">
+				phone = #{po.phone},
+			</if>
+			<if test="po.oidCardNum != null">
+				oid_card_num = #{po.oidCardNum},
+			</if>
+			<if test="po.comment != null">
+				comment = #{po.comment},
+			</if>
+			<if test="po.createTime != null">
+				create_time = #{po.createTime},
+			</if>
+			<if test="po.updateTime != null">
+				update_time = #{po.updateTime},
+			</if>
+			<if test="po.thirdpartyPayAmount!= null">
+				thirdparty_pay_amount = #{po.thirdpartyPayAmount},
+			</if>
+			<if test="po.thirdpartyPayTime != null">
+				thirdparty_pay_time = #{po.thirdpartyPayTime},
+			</if>
+		</set>
+		WHERE so_child_code = #{po.soChildCode}
+	</update>
+
+
+	<update id="updateSoThirdpartyByThirdIdWithTx">
+		UPDATE so_thirdparty
+		<set>
+			<if test="po.soChildId != null">
+				so_child_id = #{po.soChildId},
+			</if>
+			<if test="po.thirdpartyId != null">
+				thirdparty_id = #{po.thirdpartyId},
+			</if>
+			<if test="po.thirdpartyStatus != null">
+				thirdparty_status = #{po.thirdpartyStatus},
+			</if>
+			<if test="po.userName != null">
+				user_name = #{po.userName},
+			</if>
+			<if test="po.idCardNum != null">
+				id_card_num = #{po.idCardNum},
+			</if>
+			<if test="po.phone != null">
+				phone = #{po.phone},
+			</if>
+			<if test="po.oidCardNum != null">
+				oid_card_num = #{po.oidCardNum},
+			</if>
+			<if test="po.comment != null">
+				comment = #{po.comment},
+			</if>
+			<if test="po.createTime != null">
+				create_time = #{po.createTime},
+			</if>
+			<if test="po.updateTime != null">
+				update_time = #{po.updateTime},
+			</if>
+		</set>
+		WHERE thirdparty_id = #{po.thirdpartyId}
+	</update>
+</mapper>
+	

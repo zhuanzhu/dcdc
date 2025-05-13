@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.user.dao.write.UniAuthElementMapper">
+<!-- 自定义返回结果集 -->
+    <resultMap id="ElementMap" type="com.egeo.components.user.bean.UniAuthElement">
+        <id property="eleId" column="eleid" javaType="java.lang.Integer"></id>
+        <result property="eleName" column="ele_name" javaType="java.lang.String"></result>
+        <result property="menuCode" column="menu_code" javaType="java.lang.String"></result>
+        <result property="eleType" column="ele_type" javaType="java.lang.String"></result>
+        <result property="eleRef" column="ele_ref" javaType="java.lang.String"></result>
+  </resultMap>	
+  <select id="byRid" resultMap="ElementMap">
+  		SELECT e.* FROM uniauth_element e JOIN uniauth_role_element re ON e.eleid = re.eleid 
+		AND re.rid = #{rid}
+  </select>
+  
+   <select id="queryByParams" parameterType="com.egeo.components.user.bean.UniAuthMenu" resultMap="ElementMap">
+		SELECT * FROM uniauth_element
+		<where>
+			<if test="menuCode != null">
+				menu_code = #{menuCode}
+			</if>
+		</where>
+	</select>
+  
+  	<insert id="insert" useGeneratedKeys="true" keyProperty="id">
+  		INSERT INTO uniauth_role_element(rid, eleid) VALUES(#{rid}, #{eleId})
+  	</insert>
+  	
+  	<delete id="delete">
+  		DELETE FROM uniauth_role_element WHERE rid = #{rid}
+  	</delete>
+</mapper>

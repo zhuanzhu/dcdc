@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.finance.dao.write.AccountFlowWriteDAO">
+	<insert id="batchInsert" parameterType="com.egeo.components.finance.po.AccountFlowPO">
+		insert into account_flow
+		(
+		outflow_accountid,
+		outflow_accounttype,
+		inflow_accountid,
+		inflow_accounttype,
+		sum,
+		reason_id,
+		remark,
+		batch_id,
+		platform_id,
+		ledger_plateform,
+		enterprise_id,
+		ledger_enterprise,
+		type,
+		order_id,
+		order_Code,
+		currency_type,
+		is_read
+		)
+		values
+		<foreach collection="afs" item="af" separator=",">
+			(
+			#{af.outflowAccountid},
+			#{af.outflowAccounttype},
+			#{af.inflowAccountid},
+			#{af.inflowAccounttype},
+			#{af.sum},
+			#{af.reasonId},
+			#{af.remark},
+			#{af.batchId},
+			#{af.platformId},
+			#{af.ledgerPlateform},
+			#{af.enterpriseId},
+			#{af.ledgerEnterprise},
+			#{af.type},
+			#{af.orderId},
+			#{af.orderCode},
+			#{af.currencyType},
+			#{af.isRead}
+			)
+		</foreach>
+	</insert>
+
+	<insert id="insert" parameterType="com.egeo.components.finance.po.AccountFlowPO">
+		INSERT INTO account_flow(
+		<trim suffixOverrides=",">
+			<if test="outflowAccountid != null">
+				outflow_accountid,
+			</if>
+			<if test="outflowAccounttype != null">
+				outflow_accounttype,
+			</if>
+			<if test="inflowAccountid != null">
+				inflow_accountid,
+			</if>
+			<if test="inflowAccounttype != null">
+				inflow_accounttype,
+			</if>
+			<if test="sum != null">
+				sum,
+			</if>
+			<if test="reasonId != null">
+				reason_id,
+			</if>
+			<if test="reason != null">
+				reason,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+			<if test="batchId != null">
+				batch_id,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="platformId != null">
+				platform_id,
+			</if>
+			<if test="ledgerPlateform != null">
+				ledger_plateform,
+			</if>
+			<if test="enterpriseId != null">
+				enterprise_id,
+			</if>
+			<if test="ledgerEnterprise != null">
+				ledger_enterprise,
+			</if>
+			<if test="type != null">
+				type,
+			</if>
+			<if test="orderId != null">
+				order_id,
+			</if>
+			<if test="orderCode != null">
+				order_Code,
+			</if>
+			<if test="currencyType != null">
+				currency_type,
+			</if>
+			<if test="isRead != null">
+				is_read,
+			</if>
+		</trim>
+		) VALUES (
+		<trim suffixOverrides=",">
+			<if test="outflowAccountid != null">
+				#{outflowAccountid},
+			</if>
+			<if test="outflowAccounttype != null">
+				#{outflowAccounttype},
+			</if>
+			<if test="inflowAccountid != null">
+				#{inflowAccountid},
+			</if>
+			<if test="inflowAccounttype != null">
+				#{inflowAccounttype},
+			</if>
+			<if test="sum != null">
+				#{sum},
+			</if>
+			<if test="reasonId != null">
+				#{reasonId},
+			</if>
+			<if test="reason != null">
+				#{reason},
+			</if>
+			<if test="remark != null">
+				#{remark},
+			</if>
+			<if test="batchId != null">
+				#{batchId},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
+			</if>
+			<if test="platformId != null">
+				#{platformId},
+			</if>
+			<if test="ledgerPlateform != null">
+				#{ledgerPlateform},
+			</if>
+			<if test="enterpriseId != null">
+				#{enterpriseId},
+			</if>
+			<if test="ledgerEnterprise != null">
+				#{ledgerEnterprise},
+			</if>
+			<if test="type != null">
+				#{type},
+			</if>
+			<if test="orderId != null">
+				#{orderId},
+			</if>
+			<if test="orderCode != null">
+				#{orderCode},
+			</if>
+			<if test="currencyType != null">
+				#{currencyType},
+			</if>
+			<if test="isRead != null">
+				#{isRead},
+			</if>
+		</trim>
+		)
+		<selectKey keyProperty="id" resultType="java.lang.Long">
+			select
+			LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+
+
+
+	<update id="update">
+		UPDATE account_flow
+		<set>
+			<if test="outflowAccountid != null">
+				outflow_accountid = #{outflowAccountid},
+			</if>
+			<if test="outflowAccounttype != null">
+				outflow_accounttype = #{outflowAccounttype},
+			</if>
+			<if test="inflowAccountid != null">
+				inflow_accountid = #{inflowAccountid},
+			</if>
+			<if test="inflowAccounttype != null">
+				inflow_accounttype = #{inflowAccounttype},
+			</if>
+			<if test="sum != null">
+				sum = #{sum},
+			</if>
+			<if test="reasonId != null">
+				reason_id = #{reasonId},
+			</if>
+			<if test="reason != null">
+				reason=#{reason},
+			</if>
+			<if test="remark != null">
+				remark = #{remark},
+			</if>
+			<if test="batchId != null">
+				batch_id = #{batchId},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>
+			<if test="platformId != null">
+				platform_id=#{platformId},
+			</if>
+			<if test="ledgerPlateform != null">
+				ledger_plateform=#{ledgerPlateform},
+			</if>
+			<if test="enterpriseId != null">
+				enterprise_id=#{enterpriseId},
+			</if>
+			<if test="ledgerEnterprise != null">
+				ledger_enterprise=#{ledgerEnterprise},
+			</if>
+			<if test="type != null">
+				type=#{type},
+			</if>
+			<if test="orderId != null">
+				order_id=#{orderId},
+			</if>
+			<if test="orderCode != null">
+				order_code=#{orderCode},
+			</if>
+			<if test="currencyType != null">
+				currency_type=#{currencyType},
+			</if>
+			<if test="isRead != null">
+				is_read=#{isRead},
+			</if>
+		</set>
+		WHERE id = #{id}
+	</update>
+
+
+	<delete id="delete">
+		delete from account_flow where id = #{id}
+	</delete>
+
+	<delete id="deleteByPara">
+		delete from account_flow
+		<where>
+			<if test="outflowAccountid != null">
+				and outflow_accountid = #{outflowAccountid}
+			</if>
+			<if test="outflowAccounttype != null">
+				and outflow_accounttype = #{outflowAccounttype}
+			</if>
+			<if test="inflowAccountid != null">
+				and inflow_accountid = #{inflowAccountid}
+			</if>
+			<if test="inflowAccounttype != null">
+				and inflow_accounttype = #{inflowAccounttype}
+			</if>
+			<if test="sum != null">
+				and sum = #{sum}
+			</if>
+			<if test="reasonId != null">
+				and reason_id = #{reasonId}
+			</if>
+			<if test="reason != null">
+				and reason=#{reason}
+			</if>
+			<if test="remark != null">
+				and remark = #{remark}
+			</if>
+			<if test="batchId != null">
+				and batch_id = #{batchId}
+			</if>
+			<if test="createTime != null">
+				and create_time = #{createTime}
+			</if>
+			<if test="updateTime != null">
+				and update_time = #{updateTime}
+			</if>
+			<if test="type != null">
+				and type=#{type}
+			</if>
+			<if test="orderId != null">
+				and order_id=#{orderId}
+			</if>
+			<if test="orderCode != null">
+				and order_code=#{orderCode}
+			</if>
+			<if test="currencyType != null">
+				and currency_type=#{currencyType}
+			</if>
+			<if test="isRead != null">
+				and is_read=#{isRead}
+			</if>
+		</where>
+	</delete>
+
+	<update id="updateAccountFlowReadStatus">
+		UPDATE account_flow SET is_read = 1 
+		WHERE id IN
+		(
+		<foreach collection="ids" item="id" separator=",">
+			#{id}
+		</foreach>
+		)
+	</update>
+
+</mapper>
+	

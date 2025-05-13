@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.promotion.dao.read.CouponGroupReadDAO">
+	<resultMap type="com.egeo.components.promotion.po.CouponGroupPO" id="couponGroupMap">
+		<result property="id" column="id" />
+		<result property="groupName" column="group_name" />
+		<result property="groupDescp" column="group_descp" />
+		<result property="updateUser" column="update_user" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="platformId" column="platform_id" />
+	</resultMap>
+
+	<sql id="couponGroupColumns">
+		id,
+		group_name,
+		group_descp,
+		update_user,
+		create_time,
+		update_time,
+		platform_id
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.promotion.po.CouponGroupPO" resultMap="couponGroupMap">
+		SELECT
+		<include refid="couponGroupColumns" />
+		FROM coupon_group
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="couponGroupMap">
+		SELECT
+		<include refid="couponGroupColumns" />
+		FROM coupon_group
+		<where>
+			<if test="po.groupName != null">
+				and group_name = #{po.groupName}
+			</if>
+			<if test="po.groupDescp != null">
+				and group_descp = #{po.groupDescp}
+			</if>
+			<if test="po.updateUser != null">
+				and update_user = #{po.updateUser}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM coupon_group
+		<where>
+			<if test="po.groupName != null">
+				and group_name = #{po.groupName}
+			</if>
+			<if test="po.groupDescp != null">
+				and group_descp = #{po.groupDescp}
+			</if>
+			<if test="po.updateUser != null">
+				and update_user = #{po.updateUser}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+	</select>
+	
+	<sql id="findOfPageByBlurrySql">
+		FROM coupon_group
+			<where>
+				<if test="po.groupName != null">
+					and group_name like concat('%',#{po.groupName},'%')
+				</if>
+				<if test="po.groupDescp != null">
+					and group_descp = #{po.groupDescp}
+				</if>
+				<if test="po.updateUser != null">
+					and update_user = #{po.updateUser}
+				</if>
+				<if test="po.createTime != null">
+					and create_time = #{po.createTime}
+				</if>
+				<if test="po.updateTime != null">
+					and update_time = #{po.updateTime}
+				</if>
+				<if test="po.platformId != null">
+					and platform_id = #{po.platformId}
+				</if>
+			</where>
+	</sql>
+	
+	<select id="findOfPageByBlurry" resultMap="couponGroupMap">
+		SELECT
+		<include refid="couponGroupColumns" />
+		<include refid="findOfPageByBlurrySql" />
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPageByBlurry" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		<include refid="findOfPageByBlurrySql" />
+	</select>
+	
+	<select id="findAll" resultMap="couponGroupMap">
+		SELECT
+		<include refid="couponGroupColumns" />
+		FROM coupon_group
+		<where>
+			<if test="po.groupName != null">
+				and group_name = #{po.groupName}
+			</if>
+			<if test="po.groupDescp != null">
+				and group_descp = #{po.groupDescp}
+			</if>
+			<if test="po.updateUser != null">
+				and update_user = #{po.updateUser}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+			<if test="po.platformId != null">
+				and platform_id = #{po.platformId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+</mapper>
+	

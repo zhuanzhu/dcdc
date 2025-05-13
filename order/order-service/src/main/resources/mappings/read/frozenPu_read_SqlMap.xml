@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egeo.components.order.dao.read.FrozenPuReadDAO">
+	<resultMap type="com.egeo.components.order.po.FrozenPuPO" id="frozenPuMap">
+		<result property="id" column="id" />
+		<result property="skuId" column="sku_id" />
+		<result property="puId" column="pu_id" />
+		<result property="soId" column="so_id" />
+		<result property="soChildId" column="so_child_id" />
+		<result property="frozenCount" column="frozen_count" />
+		<result property="freezeStatus" column="freeze_status" />
+		<result property="unfreezeReason" column="unfreeze_reason" />
+		<result property="unfreezeTime" column="unfreeze_time" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+	</resultMap>
+
+	<sql id="frozenPuColumns">
+		id,
+		sku_id,
+		pu_id,
+		so_id,
+		so_child_id,
+		frozen_count,
+		freeze_status,
+		unfreeze_reason,
+		unfreeze_time,
+		create_time,
+		update_time
+	</sql>
+
+	<select id="findById" parameterType="com.egeo.components.order.po.FrozenPuPO" resultMap="frozenPuMap">
+		SELECT
+		<include refid="frozenPuColumns" />
+		FROM frozen_pu
+		WHERE id = #{po.id}
+	</select>
+
+	<select id="findOfPage" resultMap="frozenPuMap">
+		SELECT
+		<include refid="frozenPuColumns" />
+		FROM frozen_pu
+		<where>
+			<if test="po.skuId != null">
+				and sku_id = #{po.skuId}
+			</if>
+			<if test="po.puId != null">
+				and pu_id = #{po.puId}
+			</if>
+			<if test="po.soId != null">
+				and so_id = #{po.soId}
+			</if>
+			<if test="po.soChildId != null">
+				and so_child_id = #{po.soChildId}
+			</if>
+			<if test="po.frozenCount != null">
+				and frozen_count = #{po.frozenCount}
+			</if>
+			<if test="po.freezeStatus != null">
+				and freeze_status = #{po.freezeStatus}
+			</if>
+			<if test="po.unfreezeReason != null">
+				and unfreeze_reason = #{po.unfreezeReason}
+			</if>
+			<if test="po.unfreezeTime != null">
+				and unfreeze_time = #{po.unfreezeTime}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>		
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+		<if test="page != null">
+		limit #{page.limitStart},#{page.pageSize}
+		</if>
+	</select>
+	
+	<select id="countOfPage" resultType="java.lang.Integer">
+		SELECT
+		count(1) cnt
+		FROM frozen_pu
+		<where>
+			<if test="po.skuId != null">
+				and sku_id = #{po.skuId}
+			</if>
+			<if test="po.puId != null">
+				and pu_id = #{po.puId}
+			</if>
+			<if test="po.soId != null">
+				and so_id = #{po.soId}
+			</if>
+			<if test="po.soChildId != null">
+				and so_child_id = #{po.soChildId}
+			</if>
+			<if test="po.frozenCount != null">
+				and frozen_count = #{po.frozenCount}
+			</if>
+			<if test="po.freezeStatus != null">
+				and freeze_status = #{po.freezeStatus}
+			</if>
+			<if test="po.unfreezeReason != null">
+				and unfreeze_reason = #{po.unfreezeReason}
+			</if>
+			<if test="po.unfreezeTime != null">
+				and unfreeze_time = #{po.unfreezeTime}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAll" resultMap="frozenPuMap">
+		SELECT
+		<include refid="frozenPuColumns" />
+		FROM frozen_pu
+		<where>
+			<if test="po.skuId != null">
+				and sku_id = #{po.skuId}
+			</if>
+			<if test="po.puId != null">
+				and pu_id = #{po.puId}
+			</if>
+			<if test="po.soId != null">
+				and so_id = #{po.soId}
+			</if>
+			<if test="po.soChildId != null">
+				and so_child_id = #{po.soChildId}
+			</if>
+			<if test="po.frozenCount != null">
+				and frozen_count = #{po.frozenCount}
+			</if>
+			<if test="po.freezeStatus != null">
+				and freeze_status = #{po.freezeStatus}
+			</if>
+			<if test="po.unfreezeReason != null">
+				and unfreeze_reason = #{po.unfreezeReason}
+			</if>
+			<if test="po.unfreezeTime != null">
+				and unfreeze_time = #{po.unfreezeTime}
+			</if>
+			<if test="po.createTime != null">
+				and create_time = #{po.createTime}
+			</if>
+			<if test="po.updateTime != null">
+				and update_time = #{po.updateTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>			
+			<otherwise>
+				ORDER BY id desc		
+			</otherwise>
+		</choose>
+	</select>
+</mapper>
+	
